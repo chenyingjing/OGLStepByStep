@@ -143,7 +143,7 @@ void init()
     
     glUseProgram(program);
     
-    glClearColor(0.6784313725490196, 0.607843137254902, 0.3215686274509804, 1);
+    //glClearColor(0.6784313725490196, 0.607843137254902, 0.3215686274509804, 1);
 }
 
 void Render(GLFWwindow* window)
@@ -180,12 +180,13 @@ int main(void)
     //glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
     
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(1024, 768, "Tutorial 03", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
         return -1;
     }
+    glfwSetWindowPos(window, 100, 100);
     
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
