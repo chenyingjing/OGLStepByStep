@@ -30,8 +30,8 @@ Tutorial 21 - Spot Light
 #include "lighting_technique.h"
 #include "ogldev_glut_backend.h"
 
-#define WINDOW_WIDTH  1920
-#define WINDOW_HEIGHT 1200
+#define WINDOW_WIDTH  1800
+#define WINDOW_HEIGHT 800
 
 struct Vertex
 {

@@ -102,6 +102,9 @@
       <AdditionalDependencies>glew32.lib;Common.lib;CORE_DB_Magick++_.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\..\..\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)..\..\DGDLL\  $(SolutionDir)..\..\$(Configuration)\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -138,6 +141,9 @@
       <AdditionalDependencies>glew32.lib;Common.lib;CORE_DB_Magick++_.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\..\..\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)..\..\DGDLL\  $(SolutionDir)..\..\$(Configuration)\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -158,11 +164,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="freeglut.h" />
-    <ClInclude Include="freeglut_ext.h" />
-    <ClInclude Include="freeglut_std.h" />
-    <ClInclude Include="glew.h" />
-    <ClInclude Include="glut.h" />
     <ClInclude Include="lighting_technique.h" />
   </ItemGroup>
   <ItemGroup>
