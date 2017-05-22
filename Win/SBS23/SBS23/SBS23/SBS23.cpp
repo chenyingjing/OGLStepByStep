@@ -33,7 +33,7 @@ Tutorial 23 - Shadow Mapping - Part 1
 #include "shadow_map_fbo.h"
 
 #define WINDOW_WIDTH  1920
-#define WINDOW_HEIGHT 1200
+#define WINDOW_HEIGHT 1080
 
 class Tutorial23 : public ICallbacks, public OgldevApp
 {
@@ -95,7 +95,8 @@ public:
 
 		m_pMesh = new Mesh();
 
-		return m_pMesh->LoadMesh("../../../Content/phoenix_ugv.md2");
+		//return m_pMesh->LoadMesh("../../../Content/phoenix_ugv.md2");
+		return m_pMesh->LoadMesh("../../../Content/momo/model.obj");
 	}
 
 	void Run()
@@ -106,7 +107,7 @@ public:
 	virtual void RenderSceneCB()
 	{
 		m_pGameCamera->OnRender();
-		m_scale += 0.05f;
+		m_scale += 0.02f;
 
 		ShadowMapPass();
 		RenderPass();
@@ -121,9 +122,12 @@ public:
 		glClear(GL_DEPTH_BUFFER_BIT);
 
 		Pipeline p;
-		p.Scale(0.1f, 0.1f, 0.1f);
+		//p.Scale(0.1f, 0.1f, 0.1f);
+		float s = 5.0f;
+		p.Scale(s, s, s);
 		p.Rotate(0.0f, m_scale, 0.0f);
 		p.WorldPos(0.0f, 0.0f, 5.0f);
+		//p.WorldPos(-15.0f, 15.0f, 5.0f);
 		p.SetCamera(m_spotLight.Position, m_spotLight.Direction, Vector3f(0.0f, 1.0f, 0.0f));
 		p.SetPerspectiveProj(m_persProjInfo);
 		m_pShadowMapTech->SetWVP(p.GetWVPTrans());
@@ -143,6 +147,7 @@ public:
 		p.Scale(5.0f, 5.0f, 5.0f);
 		p.WorldPos(0.0f, 0.0f, 10.0f);
 		p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
+		//p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), Vector3f(0.0f, -1.0f, 0.0f));
 		p.SetPerspectiveProj(m_persProjInfo);
 		m_pShadowMapTech->SetWVP(p.GetWVPTrans());
 		m_pQuad->Render();
