@@ -61,10 +61,18 @@ float CalcShadowFactor(vec4 LightSpacePos)
     vec2 UVCoords;                                                                          
     UVCoords.x = 0.5 * ProjCoords.x + 0.5;                                                  
     UVCoords.y = 0.5 * ProjCoords.y + 0.5;                                                  
-    float z = 0.5 * ProjCoords.z + 0.5;                                                     
-    float Depth = texture(gShadowMap, UVCoords).x;                                          
-    if (Depth < z + 0.00001)                                                                 
+    float z = 0.5 * ProjCoords.z + 0.5;
+
+//    UVCoords.x = ProjCoords.x;
+//    UVCoords.y = ProjCoords.y;
+//    z = ProjCoords.z;
+
+
+    float Depth = texture(gShadowMap, UVCoords).x;     
+    //Depth =  1 - (1 - Depth) * 25;
+    if (Depth < z - 0.0001)                                                                 
         return 0.5;                                                                         
+        //return 0.0;                                                                         
     else                                                                                    
         return 1.0;                                                                         
 }                                                                                           
@@ -137,7 +145,7 @@ void main()
     }                                                                                       
                                                                                             
     for (int i = 0 ; i < gNumSpotLights ; i++) {                                            
-        TotalLight += CalcSpotLight(gSpotLights[i], Normal, LightSpacePos);                 
+        TotalLight += CalcSpotLight(gSpotLights[i], Normal, LightSpacePos);
     }                                                                                       
                                                                                             
     vec4 SampledColor = texture2D(gSampler, TexCoord0.xy);                                  

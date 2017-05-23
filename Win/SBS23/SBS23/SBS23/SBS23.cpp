@@ -34,6 +34,8 @@ Tutorial 23 - Shadow Mapping - Part 1
 
 #define WINDOW_WIDTH  1920
 #define WINDOW_HEIGHT 1080
+//#define WINDOW_WIDTH  800
+//#define WINDOW_HEIGHT 600
 
 class Tutorial23 : public ICallbacks, public OgldevApp
 {
@@ -51,8 +53,8 @@ public:
 		m_spotLight.DiffuseIntensity = 0.9f;
 		m_spotLight.Color = Vector3f(1.0f, 1.0f, 1.0f);
 		m_spotLight.Attenuation.Linear = 0.01f;
-		m_spotLight.Position = Vector3f(-20.0, 20.0, 5.0f);
-		m_spotLight.Direction = Vector3f(1.0f, -1.0f, 0.0f);
+		m_spotLight.Position = Vector3f(0.0, 0.0, -5.0f);
+		m_spotLight.Direction = Vector3f(0.0f, 0.0f, 1.0f);
 		m_spotLight.Cutoff = 20.0f;
 
 		m_persProjInfo.FOV = 60.0f;
@@ -126,7 +128,7 @@ public:
 		float s = 5.0f;
 		p.Scale(s, s, s);
 		p.Rotate(0.0f, m_scale, 0.0f);
-		p.WorldPos(0.0f, 0.0f, 5.0f);
+		p.WorldPos(0.0f, 0.0f, 0.0f);
 		//p.WorldPos(-15.0f, 15.0f, 5.0f);
 		p.SetCamera(m_spotLight.Position, m_spotLight.Direction, Vector3f(0.0f, 1.0f, 0.0f));
 		p.SetPerspectiveProj(m_persProjInfo);
@@ -169,7 +171,7 @@ public:
 
 	virtual void PassiveMouseCB(int x, int y)
 	{
-		m_pGameCamera->OnMouse(x, y);
+		//m_pGameCamera->OnMouse(x, y);
 	}
 
 private:

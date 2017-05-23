@@ -32,9 +32,10 @@ Tutorial 24 - Shadow Mapping - Part 2
 #include "mesh.h"
 #include "ogldev_shadow_map_fbo.h"
 
-#define WINDOW_WIDTH  1920
-#define WINDOW_HEIGHT 1200
-
+//#define WINDOW_WIDTH  1920
+//#define WINDOW_HEIGHT 1200
+#define WINDOW_WIDTH  800
+#define WINDOW_HEIGHT 800
 
 class Tutorial24 : public ICallbacks, public OgldevApp
 {
@@ -50,19 +51,26 @@ public:
 		m_scale = 0.0f;
 		m_pGroundTex = NULL;
 
-		m_spotLight.AmbientIntensity = 0.1f;
+		m_spotLight.AmbientIntensity = 0.01f;
 		m_spotLight.DiffuseIntensity = 0.9f;
 		m_spotLight.Color = Vector3f(1.0f, 1.0f, 1.0f);
 		m_spotLight.Attenuation.Linear = 0.01f;
-		m_spotLight.Position = Vector3f(-20.0, 20.0, 1.0f);
+		m_spotLight.Position = Vector3f(-20.0, 20.0, 0.0f);
 		m_spotLight.Direction = Vector3f(1.0f, -1.0f, 0.0f);
-		m_spotLight.Cutoff = 20.0f;
+		//Vector3f target(0, 0, 0);
+		//m_spotLight.Direction = target - m_spotLight.Position;
+		m_spotLight.Cutoff = 80.0f;
 
 		m_persProjInfo.FOV = 60.0f;
 		m_persProjInfo.Height = WINDOW_HEIGHT;
 		m_persProjInfo.Width = WINDOW_WIDTH;
 		m_persProjInfo.zNear = 1.0f;
 		m_persProjInfo.zFar = 50.0f;
+
+		m_scale_model = 2.0f;
+		m_x_rotate = -90.0f;
+		//m_x_rotate = 0.0f;
+		m_y_up = 1.5f;
 	}
 
 
@@ -79,8 +87,10 @@ public:
 
 	bool Init()
 	{
-		Vector3f Pos(3.0f, 8.0f, -10.0f);
-		Vector3f Target(0.0f, -0.2f, 1.0f);
+		Vector3f Pos(0.0f, 8.0f, -20.0f);
+		//Vector3f Pos(-20.0f, 20.0f, 0.0f);
+		Vector3f Target(0.0f, 0.0f, 1.0f);
+		//Vector3f Target(1.0f, -1.0f, 0.0f);
 		Vector3f Up(0.0, 1.0f, 0.0f);
 
 		if (!m_shadowMapFBO.Init(WINDOW_WIDTH, WINDOW_HEIGHT)) {
@@ -110,7 +120,8 @@ public:
 
 		m_pQuad = new Mesh();
 
-		if (!m_pQuad->LoadMesh("../../../Content/quad.obj")) {
+		//if (!m_pQuad->LoadMesh("../../../Content/quad.obj")) {
+		if (!m_pQuad->LoadMesh("../../../Content/quad1.obj")) {
 			return false;
 		}
 
@@ -122,7 +133,8 @@ public:
 
 		m_pMesh = new Mesh();
 
-		return m_pMesh->LoadMesh("../../../Content/phoenix_ugv.md2");
+		//return m_pMesh->LoadMesh("../../../Content/phoenix_ugv.md2");
+		return m_pMesh->LoadMesh("../../../Content/momo/model.obj");
 	}
 
 
@@ -135,10 +147,11 @@ public:
 	virtual void RenderSceneCB()
 	{
 		m_pGameCamera->OnRender();
-		m_scale += 0.02f;
+		m_scale += 0.01f;
 
 		ShadowMapPass();
 		RenderPass();
+		//RenderPass1();
 
 		glutSwapBuffers();
 	}
@@ -153,9 +166,11 @@ public:
 		m_pShadowMapEffect->Enable();
 
 		Pipeline p;
-		p.Scale(0.1f, 0.1f, 0.1f);
-		p.Rotate(0.0f, m_scale, 0.0f);
-		p.WorldPos(0.0f, 0.0f, 3.0f);
+		//p.Scale(0.1f, 0.1f, 0.1f);
+		float scale_model = m_scale_model;// *1.8;
+		p.Scale(scale_model, scale_model, scale_model);
+		p.Rotate(m_x_rotate, m_scale, 0.0f);
+		p.WorldPos(0.0f, m_y_up, 0.0f);
 		p.SetCamera(m_spotLight.Position, m_spotLight.Direction, Vector3f(0.0f, 1.0f, 0.0f));
 		p.SetPerspectiveProj(m_persProjInfo);
 		m_pShadowMapEffect->SetWVP(p.GetWVPTrans());
@@ -179,25 +194,51 @@ public:
 		p.SetPerspectiveProj(m_persProjInfo);
 
 		p.Scale(10.0f, 10.0f, 10.0f);
-		p.WorldPos(0.0f, 0.0f, 1.0f);
-		p.Rotate(90.0f, 0.0f, 0.0f);
+		p.WorldPos(0.0f, 0.0f, 0.0f);
+		//p.Rotate(180.0f, 0.0f, 0.0f);
 		p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
 		m_pLightingEffect->SetWVP(p.GetWVPTrans());
 		m_pLightingEffect->SetWorldMatrix(p.GetWorldTrans());
+
+		//Pipeline p1;
+		////p.Scale(0.1f, 0.1f, 0.1f);
+		//float scale_model = m_scale_model;// *1.8;
+		//p1.Scale(scale_model, scale_model, scale_model);
+		//p1.Rotate(m_x_rotate, m_scale, 0.0f);
+		//p1.WorldPos(0.0f, 0.0f, 3.0f);
 		p.SetCamera(m_spotLight.Position, m_spotLight.Direction, Vector3f(0.0f, 1.0f, 0.0f));
+		//p1.SetPerspectiveProj(m_persProjInfo);
+
 		m_pLightingEffect->SetLightWVP(p.GetWVPTrans());
 		m_pGroundTex->Bind(GL_TEXTURE0);
 		m_pQuad->Render();
 
-		p.Scale(0.1f, 0.1f, 0.1f);
-		p.Rotate(0.0f, m_scale, 0.0f);
-		p.WorldPos(0.0f, 0.0f, 3.0f);
+		//p.Scale(0.1f, 0.1f, 0.1f);
+		p.Scale(m_scale_model, m_scale_model, m_scale_model);
+		p.Rotate(m_x_rotate, m_scale, 0.0f);
+		p.WorldPos(0.0f, m_y_up, 0.0f);
 		p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
 		m_pLightingEffect->SetWVP(p.GetWVPTrans());
 		m_pLightingEffect->SetWorldMatrix(p.GetWorldTrans());
 		p.SetCamera(m_spotLight.Position, m_spotLight.Direction, Vector3f(0.0f, 1.0f, 0.0f));
 		m_pLightingEffect->SetLightWVP(p.GetWVPTrans());
 		m_pMesh->Render();
+	}
+
+	void RenderPass1()
+	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		m_pShadowMapEffect->SetTextureUnit(0);
+		m_shadowMapFBO.BindForReading(GL_TEXTURE0);
+
+		Pipeline p;
+		p.Scale(10.0f, 10.0f, 10.0f);
+		p.WorldPos(0.0f, 0.0f, 10.0f);
+		p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
+		p.SetPerspectiveProj(m_persProjInfo);
+		m_pShadowMapEffect->SetWVP(p.GetWVPTrans());
+		m_pQuad->Render();
 	}
 
 
@@ -225,6 +266,9 @@ private:
 	ShadowMapTechnique* m_pShadowMapEffect;
 	Camera* m_pGameCamera;
 	float m_scale;
+	float m_scale_model;
+	float m_x_rotate;
+	float m_y_up;
 	SpotLight m_spotLight;
 	Mesh* m_pMesh;
 	Mesh* m_pQuad;
