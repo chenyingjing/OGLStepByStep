@@ -410,7 +410,7 @@ int main(void)
 	Light spotlight;
 	spotlight.position = glm::vec4(-4, 0, 10, 1);
 	spotlight.intensities = glm::vec3(2, 2, 2); //strong white light
-	spotlight.attenuation = 0.1f;
+	spotlight.attenuation = 0.01f;
 	spotlight.ambientCoefficient = 0.0f; //no ambient light
 	spotlight.coneAngle = 15.0f;
 	spotlight.coneDirection = glm::vec3(0, 0, -1);
