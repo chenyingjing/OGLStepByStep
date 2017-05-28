@@ -47,6 +47,8 @@ struct Light {
 };
 
 ModelAsset gWoodenCrate;
+ModelAsset gGround;
+
 std::list<ModelInstance> gInstances;
 
 std::vector<Light> gLights;
@@ -62,6 +64,48 @@ static tdogl::Texture* LoadTexture(const char *textureFile) {
 	tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(textureFile);
 	bmp.flipVertically();
 	return new tdogl::Texture(bmp);
+}
+
+static void LoadGroundAsset() {
+    gGround.shaders = gWoodenCrate.shaders;
+    gGround.drawType = GL_TRIANGLES;
+    gGround.drawStart = 0;
+    gGround.drawCount = 2 * 3;
+    gGround.texture = LoadTexture("test.png");
+    gGround.shininess = 80.0;
+    gGround.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    
+    glGenBuffers(1, &gGround.vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, gGround.vbo);
+    
+    glGenVertexArrays(1, &gGround.vao);
+    glBindVertexArray(gGround.vao);
+
+    // Make a quad out of 2 triangles
+    GLfloat vertexData[] = {
+        //  X     Y     Z       U     V          Normal
+        1.0f,0.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+        -1.0f,0.0f,-1.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+        -1.0f,0.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+        1.0f,0.0f,1.0f,   1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+        1.0f,0.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+        -1.0f,0.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f
+    };
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+    
+    // connect the xyz to the "vert" attribute of the vertex shader
+    glEnableVertexAttribArray(gGround.shaders->attrib("vert"));
+    glVertexAttribPointer(gGround.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+    
+    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+    glEnableVertexAttribArray(gGround.shaders->attrib("vertTexCoord"));
+    glVertexAttribPointer(gGround.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+    
+    glEnableVertexAttribArray(gGround.shaders->attrib("vertNormal"));
+    glVertexAttribPointer(gGround.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+    
+    // unbind the VAO
+    glBindVertexArray(0);
 }
 
 static void LoadWoodenCrateAsset() {
@@ -184,6 +228,13 @@ static void CreateInstances() {
 	hMid.asset = &gWoodenCrate;
 	hMid.transform = translate(-6, 0, 0) * scale(2, 1, 0.8f);
 	gInstances.push_back(hMid);
+    
+    ModelInstance ground;
+    ground.asset = &gGround;
+    float groundScale = 20.0;
+    ground.transform = translate(-4, -6, 0) * scale(groundScale, groundScale, groundScale);
+    gInstances.push_back(ground);
+    
 }
 
 // records how far the y axis has been scrolled
@@ -395,6 +446,7 @@ int main(void)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	LoadWoodenCrateAsset();
+    LoadGroundAsset();
 
 	CreateInstances();
 

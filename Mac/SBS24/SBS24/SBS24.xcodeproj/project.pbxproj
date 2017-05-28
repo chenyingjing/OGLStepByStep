@@ -133,6 +133,7 @@
 		23323B801EDA8069001A5CFF /* vector_angle.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23323AFD1EDA8069001A5CFF /* vector_angle.inl */; };
 		23323B811EDA8069001A5CFF /* vector_query.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23323AFF1EDA8069001A5CFF /* vector_query.inl */; };
 		23323B821EDA8069001A5CFF /* wrap.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23323B011EDA8069001A5CFF /* wrap.inl */; };
+		23323B841EDAA201001A5CFF /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 23323B831EDAA201001A5CFF /* test.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -414,6 +415,7 @@
 		23323B101EDA8069001A5CFF /* vec3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vec3.hpp; sourceTree = "<group>"; };
 		23323B111EDA8069001A5CFF /* vec4.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vec4.hpp; sourceTree = "<group>"; };
 		23323B121EDA8069001A5CFF /* vector_relational.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vector_relational.hpp; sourceTree = "<group>"; };
+		23323B831EDAA201001A5CFF /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -452,6 +454,7 @@
 		2332385F1EDA7D64001A5CFF /* SBS24 */ = {
 			isa = PBXGroup;
 			children = (
+				23323B831EDAA201001A5CFF /* test.png */,
 				23323A111EDA8068001A5CFF /* glm */,
 				233238741EDA7E59001A5CFF /* filePath.h */,
 				233238751EDA7E59001A5CFF /* filePath.mm */,
@@ -946,6 +949,7 @@
 				23323B7B1EDA8069001A5CFF /* std_based_type.inl in Resources */,
 				23323B321EDA8069001A5CFF /* type_vec1.inl in Resources */,
 				23323B511EDA8069001A5CFF /* compatibility.inl in Resources */,
+				23323B841EDAA201001A5CFF /* test.png in Resources */,
 				23323B771EDA8069001A5CFF /* simd_mat4.inl in Resources */,
 				23323B2D1EDA8069001A5CFF /* type_mat3x4.inl in Resources */,
 				23323B6E1EDA8069001A5CFF /* orthonormalize.inl in Resources */,
