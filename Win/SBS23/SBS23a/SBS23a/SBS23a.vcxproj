@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="glew.h" />
     <ClInclude Include="glfw3.h" />
+    <ClInclude Include="shadow_map_fbo.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="tdogl\Bitmap.h" />
     <ClInclude Include="tdogl\Camera.h" />
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SBS23a.cpp" />
+    <ClCompile Include="shadow_map_fbo.cpp" />
     <ClCompile Include="tdogl\Bitmap.cpp" />
     <ClCompile Include="tdogl\Camera.cpp" />
     <ClCompile Include="tdogl\Program.cpp" />
