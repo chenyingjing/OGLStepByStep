@@ -134,6 +134,9 @@
 		23323B811EDA8069001A5CFF /* vector_query.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23323AFF1EDA8069001A5CFF /* vector_query.inl */; };
 		23323B821EDA8069001A5CFF /* wrap.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23323B011EDA8069001A5CFF /* wrap.inl */; };
 		23323B841EDAA201001A5CFF /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 23323B831EDAA201001A5CFF /* test.png */; };
+		23323B871EDAD523001A5CFF /* shadow_map_fbo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23323B851EDAD523001A5CFF /* shadow_map_fbo.cpp */; };
+		23C2BAA81EDBF3F300AE821C /* shadow_map.fs in Resources */ = {isa = PBXBuildFile; fileRef = 23C2BAA61EDBF3F300AE821C /* shadow_map.fs */; };
+		23C2BAA91EDBF3F300AE821C /* shadow_map.vs in Resources */ = {isa = PBXBuildFile; fileRef = 23C2BAA71EDBF3F300AE821C /* shadow_map.vs */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -416,6 +419,10 @@
 		23323B111EDA8069001A5CFF /* vec4.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vec4.hpp; sourceTree = "<group>"; };
 		23323B121EDA8069001A5CFF /* vector_relational.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vector_relational.hpp; sourceTree = "<group>"; };
 		23323B831EDAA201001A5CFF /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
+		23323B851EDAD523001A5CFF /* shadow_map_fbo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shadow_map_fbo.cpp; sourceTree = "<group>"; };
+		23323B861EDAD523001A5CFF /* shadow_map_fbo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shadow_map_fbo.h; sourceTree = "<group>"; };
+		23C2BAA61EDBF3F300AE821C /* shadow_map.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadow_map.fs; sourceTree = "<group>"; };
+		23C2BAA71EDBF3F300AE821C /* shadow_map.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadow_map.vs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -454,6 +461,10 @@
 		2332385F1EDA7D64001A5CFF /* SBS24 */ = {
 			isa = PBXGroup;
 			children = (
+				23C2BAA61EDBF3F300AE821C /* shadow_map.fs */,
+				23C2BAA71EDBF3F300AE821C /* shadow_map.vs */,
+				23323B851EDAD523001A5CFF /* shadow_map_fbo.cpp */,
+				23323B861EDAD523001A5CFF /* shadow_map_fbo.h */,
 				23323B831EDAA201001A5CFF /* test.png */,
 				23323A111EDA8068001A5CFF /* glm */,
 				233238741EDA7E59001A5CFF /* filePath.h */,
@@ -857,6 +868,7 @@
 				23323B541EDA8069001A5CFF /* euler_angles.inl in Resources */,
 				23323B171EDA8069001A5CFF /* func_geometric.inl in Resources */,
 				23323B131EDA8069001A5CFF /* CMakeLists.txt in Resources */,
+				23C2BAA91EDBF3F300AE821C /* shadow_map.vs in Resources */,
 				23323B5B1EDA8069001A5CFF /* handed_coordinate_space.inl in Resources */,
 				23323B451EDA8069001A5CFF /* reciprocal.inl in Resources */,
 				23323B761EDA8069001A5CFF /* scalar_relational.inl in Resources */,
@@ -896,6 +908,7 @@
 				23323B261EDA8069001A5CFF /* type_half.inl in Resources */,
 				23323B701EDA8069001A5CFF /* polar_coordinates.inl in Resources */,
 				23323B731EDA8069001A5CFF /* raw_data.inl in Resources */,
+				23C2BAA81EDBF3F300AE821C /* shadow_map.fs in Resources */,
 				23323B2B1EDA8069001A5CFF /* type_mat3x2.inl in Resources */,
 				23323B561EDA8069001A5CFF /* extented_min_max.inl in Resources */,
 				23323B241EDA8069001A5CFF /* intrinsic_vector_relational.inl in Resources */,
@@ -968,6 +981,7 @@
 			files = (
 				23323A041EDA7E5A001A5CFF /* Shader.cpp in Sources */,
 				2332398E1EDA7E5A001A5CFF /* glew.c in Sources */,
+				23323B871EDAD523001A5CFF /* shadow_map_fbo.cpp in Sources */,
 				23323A021EDA7E5A001A5CFF /* Camera.cpp in Sources */,
 				23323A011EDA7E5A001A5CFF /* Bitmap.cpp in Sources */,
 				23323A051EDA7E5A001A5CFF /* Texture.cpp in Sources */,

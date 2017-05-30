@@ -15,14 +15,21 @@
 #include<list>
 #include <sstream>
 #include <string>
+#include "shadow_map_fbo.h"
+
+#define WINDOW_WIDTH  800
+#define WINDOW_HEIGHT 600
+
 
 float gDegreesRotated = 45.0f;
 tdogl::Camera gCamera;
+tdogl::Camera gCameraFromLight;
 double gScrollY = 0.0;
 
 struct ModelAsset {
 	tdogl::Program* shaders;
-	tdogl::Texture* texture;
+    tdogl::Program* shadersShadowMap;
+	//tdogl::Texture* texture;
 	GLuint vbo;
 	GLuint vao;
 	GLenum drawType;
@@ -50,8 +57,11 @@ ModelAsset gWoodenCrate;
 ModelAsset gGround;
 
 std::list<ModelInstance> gInstances;
+std::list<ModelInstance> gInstancesShadowMap;
 
 std::vector<Light> gLights;
+
+ShadowMapFBO gShadowMapFBO;
 
 static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFile2) {
 	std::vector<tdogl::Shader> shaders;
@@ -60,20 +70,21 @@ static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFi
 	return new tdogl::Program(shaders);
 }
 
-static tdogl::Texture* LoadTexture(const char *textureFile) {
-	tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(textureFile);
-	bmp.flipVertically();
-	return new tdogl::Texture(bmp);
-}
+//static tdogl::Texture* LoadTexture(const char *textureFile) {
+//	tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(textureFile);
+//	bmp.flipVertically();
+//	return new tdogl::Texture(bmp);
+//}
 
 static void LoadGroundAsset() {
-    gGround.shaders = gWoodenCrate.shaders;
+    //gGround.shaders = gWoodenCrate.shaders;
+    gGround.shadersShadowMap = gWoodenCrate.shadersShadowMap;
     gGround.drawType = GL_TRIANGLES;
     gGround.drawStart = 0;
     gGround.drawCount = 2 * 3;
-    gGround.texture = LoadTexture("test.png");
-    gGround.shininess = 80.0;
-    gGround.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    //gGround.texture = LoadTexture("test.png");
+//    gGround.shininess = 80.0;
+//    gGround.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
     glGenBuffers(1, &gGround.vbo);
     glBindBuffer(GL_ARRAY_BUFFER, gGround.vbo);
@@ -91,31 +102,50 @@ static void LoadGroundAsset() {
         1.0f,0.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
         -1.0f,0.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f
     };
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+    GLuint index = 0;
+//    gGround.shaders->use();
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+//    
+//    // connect the xyz to the "vert" attribute of the vertex shader
+//    glEnableVertexAttribArray(gGround.shaders->attrib("vert"));
+//    glVertexAttribPointer(gGround.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+//    
+//    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+//    glEnableVertexAttribArray(gGround.shaders->attrib("vertTexCoord"));
+//    glVertexAttribPointer(gGround.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+//    
+//    glEnableVertexAttribArray(gGround.shaders->attrib("vertNormal"));
+//    glVertexAttribPointer(gGround.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+//    gGround.shaders->stopUsing();
     
+//    gGround.shadersShadowMap->use();
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
     // connect the xyz to the "vert" attribute of the vertex shader
-    glEnableVertexAttribArray(gGround.shaders->attrib("vert"));
-    glVertexAttribPointer(gGround.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+    index = gGround.shadersShadowMap->attrib("vert");
+    glEnableVertexAttribArray(index);
+    glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
     
     // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-    glEnableVertexAttribArray(gGround.shaders->attrib("vertTexCoord"));
-    glVertexAttribPointer(gGround.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+    index = gGround.shadersShadowMap->attrib("vertTexCoord");
+    glEnableVertexAttribArray(index);
+    glVertexAttribPointer(index, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+//    gGround.shadersShadowMap->stopUsing();
     
-    glEnableVertexAttribArray(gGround.shaders->attrib("vertNormal"));
-    glVertexAttribPointer(gGround.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+    
     
     // unbind the VAO
     glBindVertexArray(0);
 }
 
 static void LoadWoodenCrateAsset() {
-	gWoodenCrate.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
+	//gWoodenCrate.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
+    gWoodenCrate.shadersShadowMap = LoadShaders("shadow_map.vs", "shadow_map.fs");
 	gWoodenCrate.drawType = GL_TRIANGLES;
 	gWoodenCrate.drawStart = 0;
 	gWoodenCrate.drawCount = 6 * 2 * 3;
-	gWoodenCrate.texture = LoadTexture("wooden-crate.jpg");
-	gWoodenCrate.shininess = 80.0;
-	gWoodenCrate.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+	//gWoodenCrate.texture = LoadTexture("wooden-crate.jpg");
+//	gWoodenCrate.shininess = 80.0;
+//	gWoodenCrate.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
 	
 	glGenBuffers(1, &gWoodenCrate.vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, gWoodenCrate.vbo);
@@ -174,20 +204,39 @@ static void LoadWoodenCrateAsset() {
 		1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
 		1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   1.0f, 0.0f, 0.0f
 	};
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
-	// connect the xyz to the "vert" attribute of the vertex shader
-	glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vert"));
-	glVertexAttribPointer(gWoodenCrate.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+    GLuint index = 0;
+//    gWoodenCrate.shaders->use();
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+//    // connect the xyz to the "vert" attribute of the vertex shader
+//    index = gWoodenCrate.shaders->attrib("vert");
+//	glEnableVertexAttribArray(index);
+//	glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+//
+//	// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+//    index = gWoodenCrate.shaders->attrib("vertTexCoord");
+//	glEnableVertexAttribArray(index);
+//	glVertexAttribPointer(index, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+//
+//	glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertNormal"));
+//	glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+//    gWoodenCrate.shaders->stopUsing();
 
-	// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-	glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertTexCoord"));
-	glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
 
-	glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertNormal"));
-	glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
-
-	// unbind the VAO
+    //gWoodenCrate.shadersShadowMap->use();
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+    // connect the xyz to the "vert" attribute of the vertex shader
+    index = gWoodenCrate.shadersShadowMap->attrib("vert");
+    glEnableVertexAttribArray(index);
+    glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+    
+    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+    index = gWoodenCrate.shadersShadowMap->attrib("vertTexCoord");
+    glEnableVertexAttribArray(index);
+    glVertexAttribPointer(index, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+    //gWoodenCrate.shadersShadowMap->stopUsing();
+    
+    // unbind the VAO
 	glBindVertexArray(0);
 }
 
@@ -208,26 +257,31 @@ static void CreateInstances() {
 	dot.asset = &gWoodenCrate;
 	dot.transform = glm::mat4();
 	gInstances.push_back(dot);
+    gInstancesShadowMap.push_back(dot);
 
 	ModelInstance i;
 	i.asset = &gWoodenCrate;
 	i.transform = translate(0, -4, 0) * scale(1, 2, 1);
 	gInstances.push_back(i);
+    gInstancesShadowMap.push_back(i);
 
 	ModelInstance hLeft;
 	hLeft.asset = &gWoodenCrate;
 	hLeft.transform = translate(-8, 0, 0) * scale(1, 6, 1);
 	gInstances.push_back(hLeft);
+    gInstancesShadowMap.push_back(hLeft);
 
 	ModelInstance hRight;
 	hRight.asset = &gWoodenCrate;
 	hRight.transform = translate(-4, 0, 0) * scale(1, 6, 1);
 	gInstances.push_back(hRight);
+    gInstancesShadowMap.push_back(hRight);
 
 	ModelInstance hMid;
 	hMid.asset = &gWoodenCrate;
 	hMid.transform = translate(-6, 0, 0) * scale(2, 1, 0.8f);
 	gInstances.push_back(hMid);
+    gInstancesShadowMap.push_back(hMid);
     
     ModelInstance ground;
     ground.asset = &gGround;
@@ -248,6 +302,7 @@ void Update(float secondsElapsed, GLFWwindow* window) {
 	gDegreesRotated += secondsElapsed * degreesPerSecond;
 	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
 	gInstances.front().transform = glm::rotate(glm::mat4(), gDegreesRotated, glm::vec3(0, 1, 0));
+    gInstancesShadowMap.front().transform = gInstances.front().transform;
 
 	//move position of camera based on WASD keys
 	const float moveSpeed = 4.0; //units per second
@@ -275,6 +330,7 @@ void Update(float secondsElapsed, GLFWwindow* window) {
 	if (glfwGetKey(window, '1')) {
 		gLights[0].position = glm::vec4(gCamera.position(), 1.0);
 		gLights[0].coneDirection = gCamera.forward();
+        gCameraFromLight = gCamera;
 	}
 
 	// change light color
@@ -337,60 +393,137 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
 	shaders->setUniform(uniformName.c_str(), value);
 }
 
-static void RenderInstance(const ModelInstance& inst) {
-	ModelAsset* asset = inst.asset;
-	tdogl::Program* shaders = asset->shaders;
+static void RenderInstanceMap(const ModelInstance& inst) {
+    ModelAsset* asset = inst.asset;
+    tdogl::Program* shaders = asset->shadersShadowMap;
+    
+    //bind the shaders
+    shaders->use();
 
-	//bind the shaders
-	shaders->use();
+    //set the shader uniforms
+    shaders->setUniform("camera", gCameraFromLight.matrix());
+    shaders->setUniform("model", inst.transform);
 
-	shaders->setUniform("numLights", (int)gLights.size());
+    //bind VAO and draw
+    glBindVertexArray(asset->vao);
+    glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+    
+    //unbind everything
+    glBindVertexArray(0);
 
-	for (size_t i = 0; i < gLights.size(); ++i) {
-		SetLightUniform(shaders, "position", i, gLights[i].position);
-		SetLightUniform(shaders, "intensities", i, gLights[i].intensities);
-		SetLightUniform(shaders, "attenuation", i, gLights[i].attenuation);
-		SetLightUniform(shaders, "ambientCoefficient", i, gLights[i].ambientCoefficient);
-		SetLightUniform(shaders, "coneAngle", i, gLights[i].coneAngle);
-		SetLightUniform(shaders, "coneDirection", i, gLights[i].coneDirection);
-	}
+    shaders->stopUsing();
+}
 
+static void RenderInstance1(const ModelInstance& inst) {
+    ModelAsset* asset = inst.asset;
+    tdogl::Program* shaders = asset->shadersShadowMap;
+    
+    //bind the shaders
+    shaders->use();
+    
+    shaders->setUniform("gShadowMap", 0);
+    
+    //set the shader uniforms
+    shaders->setUniform("camera", gCamera.matrix());
+    shaders->setUniform("model", inst.transform);
+    
+    //bind VAO and draw
+    glBindVertexArray(asset->vao);
+    glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+    
+    //unbind everything
+    glBindVertexArray(0);
+    
+    shaders->stopUsing();
+}
 
+//static void RenderInstance(const ModelInstance& inst) {
+//	ModelAsset* asset = inst.asset;
+//	tdogl::Program* shaders = asset->shaders;
+//
+//	//bind the shaders
+//	shaders->use();
+//
+//	shaders->setUniform("numLights", (int)gLights.size());
+//
+//	for (size_t i = 0; i < gLights.size(); ++i) {
+//		SetLightUniform(shaders, "position", i, gLights[i].position);
+//		SetLightUniform(shaders, "intensities", i, gLights[i].intensities);
+//		SetLightUniform(shaders, "attenuation", i, gLights[i].attenuation);
+//		SetLightUniform(shaders, "ambientCoefficient", i, gLights[i].ambientCoefficient);
+//		SetLightUniform(shaders, "coneAngle", i, gLights[i].coneAngle);
+//		SetLightUniform(shaders, "coneDirection", i, gLights[i].coneDirection);
+//	}
+//
+//
+//
+//	shaders->setUniform("cameraPosition", gCamera.position());
+//
+//	//set the shader uniforms
+//	shaders->setUniform("camera", gCamera.matrix());
+//	shaders->setUniform("model", inst.transform);
+//	shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+//
+//	shaders->setUniform("materialShininess", asset->shininess);
+//	shaders->setUniform("materialSpecularColor", asset->specularColor);
+//
+//
+//								   //bind the texture
+//	glActiveTexture(GL_TEXTURE0);
+//	glBindTexture(GL_TEXTURE_2D, asset->texture->object());
+//
+//	//bind VAO and draw
+//	glBindVertexArray(asset->vao);
+//	glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+//
+//	//unbind everything
+//	glBindVertexArray(0);
+//	glBindTexture(GL_TEXTURE_2D, 0);
+//	shaders->stopUsing();
+//}
 
-	shaders->setUniform("cameraPosition", gCamera.position());
+bool Init()
+{
+    if (!gShadowMapFBO.Init(WINDOW_WIDTH, WINDOW_HEIGHT)) {
+        return false;
+    }
+    return true;
+}
 
-	//set the shader uniforms
-	shaders->setUniform("camera", gCamera.matrix());
-	shaders->setUniform("model", inst.transform);
-	shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+void ShadowMapPass()
+{
+    gShadowMapFBO.BindForWriting();
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    glDepthMask(true);
+    glClearDepth(.999);
+    glClear(GL_DEPTH_BUFFER_BIT);
+    
+    std::list<ModelInstance>::const_iterator it;
+    for (it = gInstancesShadowMap.begin(); it != gInstancesShadowMap.end(); ++it) {
+        RenderInstanceMap(*it);
+    }
+//    RenderInstanceMap(gInstancesShadowMap.front());
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
 
-	shaders->setUniform("materialShininess", asset->shininess);
-	shaders->setUniform("materialSpecularColor", asset->specularColor);
-
-
-								   //bind the texture
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, asset->texture->object());
-
-	//bind VAO and draw
-	glBindVertexArray(asset->vao);
-	glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
-
-	//unbind everything
-	glBindVertexArray(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	shaders->stopUsing();
+void RenderPass()
+{
+    glClearDepth(1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    gShadowMapFBO.BindForReading(GL_TEXTURE0);
+    RenderInstance1(gInstances.back());
+    
+    
 }
 
 void Render(GLFWwindow* window)
 {
-	// clear everything
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	std::list<ModelInstance>::const_iterator it;
-	for (it = gInstances.begin(); it != gInstances.end(); ++it) {
-		RenderInstance(*it);
-	}
+    ShadowMapPass();
+    
+    RenderPass();
 
 	glfwSwapBuffers(window);
 }
@@ -410,7 +543,7 @@ int main(void)
     //glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
     /* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(800, 600, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -433,7 +566,7 @@ int main(void)
 		return -1;
 	}
 
-	// print out some info about the graphics drivers
+    // print out some info about the graphics drivers
 	std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
 	std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 	std::cout << "Vendor: " << glGetString(GL_VENDOR) << std::endl;
@@ -442,22 +575,28 @@ int main(void)
 	// OpenGL settings
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_CULL_FACE);
+//	glEnable(GL_BLEND);
+//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//    glEnable(GL_CULL_FACE);
 
+    
+    if (!Init()) {
+        return -1;
+    }
+    
 	LoadWoodenCrateAsset();
     LoadGroundAsset();
 
 	CreateInstances();
 
-	//glClearColor(0.196078431372549f, 0.3137254901960784f, 0.5882352941176471f, 1);
-	glClearColor(0.0f, 0.0f, 0.0f, 1);
+	glClearColor(0.196078431372549f, 0.3137254901960784f, 0.5882352941176471f, 1);
+	//glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
-	gCamera.setPosition(glm::vec3(-4, 0, 17));
-	gCamera.setViewportAspectRatio(800.0f / 600.0f);
+	gCamera.setPosition(glm::vec3(-1, 0, 17));
+	gCamera.setViewportAspectRatio(WINDOW_WIDTH / WINDOW_HEIGHT);
 	gCamera.setNearAndFarPlanes(0.5f, 100.0f);
+    gCameraFromLight = gCamera;
 
 	// setup lights
 	Light spotlight;
@@ -467,6 +606,9 @@ int main(void)
 	spotlight.ambientCoefficient = 0.0f; //no ambient light
 	spotlight.coneAngle = 15.0f;
 	spotlight.coneDirection = glm::vec3(0, 0, -1);
+    gCameraFromLight.setPosition(glm::vec3(spotlight.position));
+    gCameraFromLight.lookAt(glm::vec3(spotlight.position) + spotlight.coneDirection);
+    
 
 	Light directionalLight;
 	directionalLight.position = glm::vec4(1, 0.8, 0.6, 0); //w == 0 indications a directional light
