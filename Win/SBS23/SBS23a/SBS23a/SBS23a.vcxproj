@@ -93,6 +93,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -125,6 +127,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -146,6 +150,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="glew.h" />
+    <ClInclude Include="glfw3.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="tdogl\Bitmap.h" />
+    <ClInclude Include="tdogl\Camera.h" />
+    <ClInclude Include="tdogl\Program.h" />
+    <ClInclude Include="tdogl\Shader.h" />
+    <ClInclude Include="tdogl\Texture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SBS23a.cpp" />
+    <ClCompile Include="tdogl\Bitmap.cpp" />
+    <ClCompile Include="tdogl\Camera.cpp" />
+    <ClCompile Include="tdogl\Program.cpp" />
+    <ClCompile Include="tdogl\Shader.cpp" />
+    <ClCompile Include="tdogl\Texture.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="wooden-crate.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="fragment-shader.txt" />
+    <Text Include="vertex-shader.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
