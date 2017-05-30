@@ -32,8 +32,8 @@ Tutorial 23 - Shadow Mapping - Part 1
 #include "mesh.h"
 #include "shadow_map_fbo.h"
 
-#define WINDOW_WIDTH  1920
-#define WINDOW_HEIGHT 1080
+#define WINDOW_WIDTH  1500
+#define WINDOW_HEIGHT 800
 //#define WINDOW_WIDTH  800
 //#define WINDOW_HEIGHT 600
 
@@ -125,7 +125,7 @@ public:
 
 		Pipeline p;
 		//p.Scale(0.1f, 0.1f, 0.1f);
-		float s = 5.0f;
+		float s = 2.0f;
 		p.Scale(s, s, s);
 		p.Rotate(0.0f, m_scale, 0.0f);
 		p.WorldPos(0.0f, 0.0f, 0.0f);
@@ -142,8 +142,8 @@ public:
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		m_pShadowMapTech->SetTextureUnit(0);
 		m_shadowMapFBO.BindForReading(GL_TEXTURE0);
+		m_pShadowMapTech->SetTextureUnit(0);
 
 		Pipeline p;
 		p.Scale(5.0f, 5.0f, 5.0f);

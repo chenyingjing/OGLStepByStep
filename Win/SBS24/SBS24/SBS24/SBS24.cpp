@@ -34,7 +34,7 @@ Tutorial 24 - Shadow Mapping - Part 2
 
 //#define WINDOW_WIDTH  1920
 //#define WINDOW_HEIGHT 1200
-#define WINDOW_WIDTH  800
+#define WINDOW_WIDTH  1500
 #define WINDOW_HEIGHT 800
 
 class Tutorial24 : public ICallbacks, public OgldevApp
@@ -55,11 +55,11 @@ public:
 		m_spotLight.DiffuseIntensity = 0.9f;
 		m_spotLight.Color = Vector3f(1.0f, 1.0f, 1.0f);
 		m_spotLight.Attenuation.Linear = 0.01f;
-		m_spotLight.Position = Vector3f(-20.0, 20.0, 0.0f);
+		m_spotLight.Position = Vector3f(-20.0, 20.0, -10.0f);
 		m_spotLight.Direction = Vector3f(1.0f, -1.0f, 0.0f);
 		//Vector3f target(0, 0, 0);
 		//m_spotLight.Direction = target - m_spotLight.Position;
-		m_spotLight.Cutoff = 80.0f;
+		m_spotLight.Cutoff = 40.0f;
 
 		m_persProjInfo.FOV = 60.0f;
 		m_persProjInfo.Height = WINDOW_HEIGHT;

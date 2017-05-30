@@ -224,7 +224,8 @@ void GLUTBackendRun(ICallbacks* pCallbacks)
         return;
     }
 
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.196, 0.314, 0.588, 1);
+    //glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glFrontFace(GL_CW);
     glCullFace(GL_BACK);
     glEnable(GL_CULL_FACE);
