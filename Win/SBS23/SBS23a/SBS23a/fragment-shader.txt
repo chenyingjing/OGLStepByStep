@@ -56,9 +56,13 @@ vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec3 surfacePos, ve
         attenuation = 1.0 / (1.0 + light.attenuation * pow(distanceToLight, 2));
 
         //cone restrictions (affects attenuation)
-        float lightToSurfaceAngle = degrees(acos(dot(-surfaceToLight, normalize(light.coneDirection))));
+        float spotFactor = dot(-surfaceToLight, normalize(light.coneDirection));
+        float lightToSurfaceAngle = degrees(acos(spotFactor));
         if(lightToSurfaceAngle > light.coneAngle){
             attenuation = 0.0;
+        } else {
+            float cutoff = cos(radians(light.coneAngle));
+            attenuation *= (1.0 - (1.0 - spotFactor) * 1.0/(1.0 - cutoff));
         }
     }
 
