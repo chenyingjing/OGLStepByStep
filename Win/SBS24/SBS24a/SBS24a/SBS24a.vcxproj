@@ -170,6 +170,7 @@
     <ClCompile Include="tdogl\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="test.png" />
     <Image Include="wooden-crate.jpg" />
   </ItemGroup>
   <ItemGroup>
