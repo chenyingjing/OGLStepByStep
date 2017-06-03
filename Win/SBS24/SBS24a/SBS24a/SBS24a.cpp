@@ -32,6 +32,7 @@ struct ModelAsset {
 	tdogl::Texture* texture;
 	GLuint vbo;
 	GLuint vao;
+	GLuint vaoShadowMap;
 	GLenum drawType;
 	GLint drawStart;
 	GLint drawCount;
@@ -89,9 +90,6 @@ static void LoadGroundAsset() {
     glGenBuffers(1, &gGround.vbo);
     glBindBuffer(GL_ARRAY_BUFFER, gGround.vbo);
     
-    glGenVertexArrays(1, &gGround.vao);
-    glBindVertexArray(gGround.vao);
-
     // Make a quad out of 2 triangles
     GLfloat vertexData[] = {
         //  X     Y     Z       U     V          Normal
@@ -102,9 +100,12 @@ static void LoadGroundAsset() {
         1.0f,0.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
         -1.0f,0.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f
     };
-    GLuint index = 0;
-    gGround.shaders->use();
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+
+	glGenVertexArrays(1, &gGround.vao);
+	glBindVertexArray(gGround.vao);
+
+    gGround.shaders->use();
     
     // connect the xyz to the "vert" attribute of the vertex shader
     glEnableVertexAttribArray(gGround.shaders->attrib("vert"));
@@ -117,11 +118,17 @@ static void LoadGroundAsset() {
     glEnableVertexAttribArray(gGround.shaders->attrib("vertNormal"));
     glVertexAttribPointer(gGround.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
     gGround.shaders->stopUsing();
-    
+
+	glBindVertexArray(0);
+
+
+	glGenVertexArrays(1, &gGround.vaoShadowMap);
+	glBindVertexArray(gGround.vaoShadowMap);
+
     gGround.shadersShadowMap->use();
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+    //glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
     // connect the xyz to the "vert" attribute of the vertex shader
-    index = gGround.shadersShadowMap->attrib("vert");
+	GLuint index = gGround.shadersShadowMap->attrib("vert");
     glEnableVertexAttribArray(index);
     glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
     
@@ -130,8 +137,6 @@ static void LoadGroundAsset() {
     glEnableVertexAttribArray(index);
     glVertexAttribPointer(index, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
     gGround.shadersShadowMap->stopUsing();
-    
-    
     
     // unbind the VAO
     glBindVertexArray(0);
@@ -149,9 +154,6 @@ static void LoadWoodenCrateAsset() {
 	
 	glGenBuffers(1, &gWoodenCrate.vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, gWoodenCrate.vbo);
-
-	glGenVertexArrays(1, &gWoodenCrate.vao);
-	glBindVertexArray(gWoodenCrate.vao);
 
 	// Make a cube out of triangles (two triangles per side)
 	GLfloat vertexData[] = {
@@ -204,38 +206,46 @@ static void LoadWoodenCrateAsset() {
 		1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
 		1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   1.0f, 0.0f, 0.0f
 	};
-
-    GLuint index = 0;
-    gWoodenCrate.shaders->use();
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+
+	glGenVertexArrays(1, &gWoodenCrate.vao);
+	glBindVertexArray(gWoodenCrate.vao);
+
+    gWoodenCrate.shaders->use();
     // connect the xyz to the "vert" attribute of the vertex shader
-    index = gWoodenCrate.shaders->attrib("vert");
-	glEnableVertexAttribArray(index);
-	glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+	GLuint indexVert = gWoodenCrate.shaders->attrib("vert");
+	glEnableVertexAttribArray(indexVert);
+	glVertexAttribPointer(indexVert, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
 
 	// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-    index = gWoodenCrate.shaders->attrib("vertTexCoord");
-	glEnableVertexAttribArray(index);
-	glVertexAttribPointer(index, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+	GLuint indexTexCor = gWoodenCrate.shaders->attrib("vertTexCoord");
+	glEnableVertexAttribArray(indexTexCor);
+	glVertexAttribPointer(indexTexCor, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
 
-	index = gWoodenCrate.shaders->attrib("vertNormal");
-	glEnableVertexAttribArray(index);
-	glVertexAttribPointer(index, 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+	GLuint indexNormal = gWoodenCrate.shaders->attrib("vertNormal");
+	glEnableVertexAttribArray(indexNormal);
+	glVertexAttribPointer(indexNormal, 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
     gWoodenCrate.shaders->stopUsing();
 
+	glBindVertexArray(0);
 
-    //gWoodenCrate.shadersShadowMap->use();
+
+
+	glGenVertexArrays(1, &gWoodenCrate.vaoShadowMap);
+	glBindVertexArray(gWoodenCrate.vaoShadowMap);
+	
+	gWoodenCrate.shadersShadowMap->use();
     //glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
-    //// connect the xyz to the "vert" attribute of the vertex shader
-    //index = gWoodenCrate.shadersShadowMap->attrib("vert");
-    //glEnableVertexAttribArray(index);
-    //glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
-    //
-    //// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-    //index = gWoodenCrate.shadersShadowMap->attrib("vertTexCoord");
-    //glEnableVertexAttribArray(index);
-    //glVertexAttribPointer(index, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-    //gWoodenCrate.shadersShadowMap->stopUsing();
+    // connect the xyz to the "vert" attribute of the vertex shader
+	GLuint indexVertMap = gWoodenCrate.shadersShadowMap->attrib("vert");
+    glEnableVertexAttribArray(indexVertMap);
+    glVertexAttribPointer(indexVertMap, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+    
+    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+	GLuint indexTexCoord = gWoodenCrate.shadersShadowMap->attrib("vertTexCoord");
+    glEnableVertexAttribArray(indexTexCoord);
+    glVertexAttribPointer(indexTexCoord, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+    gWoodenCrate.shadersShadowMap->stopUsing();
     
     // unbind the VAO
 	glBindVertexArray(0);
@@ -505,7 +515,6 @@ void ShadowMapPass()
     for (it = gInstancesShadowMap.begin(); it != gInstancesShadowMap.end(); ++it) {
         RenderInstanceMap(*it);
     }
-//    RenderInstanceMap(gInstancesShadowMap.front());
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
