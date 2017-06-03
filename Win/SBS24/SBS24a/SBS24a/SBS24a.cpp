@@ -444,7 +444,7 @@ static void RenderInstance1(const ModelInstance& inst) {
     shaders->setUniform("model", inst.transform);
     
     //bind VAO and draw
-    glBindVertexArray(asset->vao);
+    glBindVertexArray(asset->vaoShadowMap);
     glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
     
     //unbind everything
@@ -523,13 +523,13 @@ void RenderPass()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    //gShadowMapFBO.BindForReading(GL_TEXTURE0);
-    //RenderInstance1(gInstances.back());
+    gShadowMapFBO.BindForReading(GL_TEXTURE0);
+    RenderInstance1(gInstances.back());
 
-	std::list<ModelInstance>::const_iterator it;
-	for (it = gInstances.begin(); it != gInstances.end(); ++it) {
-		RenderInstance(*it);
-	}
+	//std::list<ModelInstance>::const_iterator it;
+	//for (it = gInstances.begin(); it != gInstances.end(); ++it) {
+	//	RenderInstance(*it);
+	//}
     
 }
 
