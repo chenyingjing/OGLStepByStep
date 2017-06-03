@@ -437,7 +437,7 @@ static void RenderInstance1(const ModelInstance& inst) {
     //bind the shaders
     shaders->use();
     
-    shaders->setUniform("gShadowMap", 0);
+    shaders->setUniform("gShadowMap", 1);
     
     //set the shader uniforms
     shaders->setUniform("camera", gCamera.matrix());
@@ -459,6 +459,8 @@ static void RenderInstance(const ModelInstance& inst) {
 
 	//bind the shaders
 	shaders->use();
+	
+	shaders->setUniform("gShadowMap", 1);
 
 	shaders->setUniform("numLights", (int)gLights.size());
 
@@ -476,6 +478,7 @@ static void RenderInstance(const ModelInstance& inst) {
 	shaders->setUniform("cameraPosition", gCamera.position());
 
 	//set the shader uniforms
+	shaders->setUniform("cameraFromLight", gCameraFromLight.matrix());
 	shaders->setUniform("camera", gCamera.matrix());
 	shaders->setUniform("model", inst.transform);
 	shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
@@ -523,13 +526,13 @@ void RenderPass()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    gShadowMapFBO.BindForReading(GL_TEXTURE0);
-    RenderInstance1(gInstances.back());
+    gShadowMapFBO.BindForReading(GL_TEXTURE1);
+    //RenderInstance1(gInstances.back());
 
-	//std::list<ModelInstance>::const_iterator it;
-	//for (it = gInstances.begin(); it != gInstances.end(); ++it) {
-	//	RenderInstance(*it);
-	//}
+	std::list<ModelInstance>::const_iterator it;
+	for (it = gInstances.begin(); it != gInstances.end(); ++it) {
+		RenderInstance(*it);
+	}
     
 }
 
