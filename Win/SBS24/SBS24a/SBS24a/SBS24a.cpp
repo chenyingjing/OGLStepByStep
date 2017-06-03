@@ -218,23 +218,24 @@ static void LoadWoodenCrateAsset() {
 	glEnableVertexAttribArray(index);
 	glVertexAttribPointer(index, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
 
-	glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertNormal"));
-	glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+	index = gWoodenCrate.shaders->attrib("vertNormal");
+	glEnableVertexAttribArray(index);
+	glVertexAttribPointer(index, 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
     gWoodenCrate.shaders->stopUsing();
 
 
-    gWoodenCrate.shadersShadowMap->use();
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
-    // connect the xyz to the "vert" attribute of the vertex shader
-    index = gWoodenCrate.shadersShadowMap->attrib("vert");
-    glEnableVertexAttribArray(index);
-    glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
-    
-    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-    index = gWoodenCrate.shadersShadowMap->attrib("vertTexCoord");
-    glEnableVertexAttribArray(index);
-    glVertexAttribPointer(index, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-    gWoodenCrate.shadersShadowMap->stopUsing();
+    //gWoodenCrate.shadersShadowMap->use();
+    //glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+    //// connect the xyz to the "vert" attribute of the vertex shader
+    //index = gWoodenCrate.shadersShadowMap->attrib("vert");
+    //glEnableVertexAttribArray(index);
+    //glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+    //
+    //// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+    //index = gWoodenCrate.shadersShadowMap->attrib("vertTexCoord");
+    //glEnableVertexAttribArray(index);
+    //glVertexAttribPointer(index, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+    //gWoodenCrate.shadersShadowMap->stopUsing();
     
     // unbind the VAO
 	glBindVertexArray(0);
@@ -589,7 +590,7 @@ int main(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
-	gCamera.setPosition(glm::vec3(-1, 0, 17));
+	gCamera.setPosition(glm::vec3(-4, 0, 17));
 	gCamera.setViewportAspectRatio(WINDOW_WIDTH / WINDOW_HEIGHT);
 	gCamera.setNearAndFarPlanes(0.5f, 100.0f);
     gCameraFromLight = gCamera;
@@ -598,7 +599,7 @@ int main(void)
 	Light spotlight;
 	spotlight.position = glm::vec4(-4, 0, 10, 1);
 	spotlight.intensities = glm::vec3(2, 2, 2); //strong white light
-	spotlight.attenuation = 0.1f;
+	spotlight.attenuation = 0.01f;
 	spotlight.ambientCoefficient = 0.0f; //no ambient light
 	spotlight.coneAngle = 15.0f;
 	spotlight.coneDirection = glm::vec3(0, 0, -1);
@@ -608,7 +609,7 @@ int main(void)
 
 	Light directionalLight;
 	directionalLight.position = glm::vec4(1, 0.8, 0.6, 0); //w == 0 indications a directional light
-	directionalLight.intensities = glm::vec3(0.4, 0.3, 0.1); //weak yellowish light
+	directionalLight.intensities = glm::vec3(0.01, 0.01, 0.01); //weak light
 	directionalLight.ambientCoefficient = 0.06f;
 
 	gLights.push_back(spotlight);
