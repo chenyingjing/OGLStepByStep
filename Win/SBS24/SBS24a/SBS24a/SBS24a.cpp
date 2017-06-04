@@ -117,9 +117,9 @@ static void LoadGroundAsset() {
     
     glEnableVertexAttribArray(gGround.shaders->attrib("vertNormal"));
     glVertexAttribPointer(gGround.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
-    gGround.shaders->stopUsing();
+    //gGround.shaders->stopUsing();
 
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 
 
 	glGenVertexArrays(1, &gGround.vaoShadowMap);
@@ -136,10 +136,10 @@ static void LoadGroundAsset() {
     index = gGround.shadersShadowMap->attrib("vertTexCoord");
     glEnableVertexAttribArray(index);
     glVertexAttribPointer(index, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-    gGround.shadersShadowMap->stopUsing();
+    //gGround.shadersShadowMap->stopUsing();
     
     // unbind the VAO
-    glBindVertexArray(0);
+    //glBindVertexArray(0);
 }
 
 static void LoadWoodenCrateAsset() {
@@ -225,9 +225,9 @@ static void LoadWoodenCrateAsset() {
 	GLuint indexNormal = gWoodenCrate.shaders->attrib("vertNormal");
 	glEnableVertexAttribArray(indexNormal);
 	glVertexAttribPointer(indexNormal, 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
-    gWoodenCrate.shaders->stopUsing();
+    //gWoodenCrate.shaders->stopUsing();
 
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 
 
 
@@ -245,10 +245,10 @@ static void LoadWoodenCrateAsset() {
 	GLuint indexTexCoord = gWoodenCrate.shadersShadowMap->attrib("vertTexCoord");
     glEnableVertexAttribArray(indexTexCoord);
     glVertexAttribPointer(indexTexCoord, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-    gWoodenCrate.shadersShadowMap->stopUsing();
+    //gWoodenCrate.shadersShadowMap->stopUsing();
     
     // unbind the VAO
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 }
 
 
@@ -425,9 +425,9 @@ static void RenderInstanceMap(const ModelInstance& inst) {
     glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
     
     //unbind everything
-    glBindVertexArray(0);
+    //glBindVertexArray(0);
 
-    shaders->stopUsing();
+    //shaders->stopUsing();
 }
 
 static void RenderInstance1(const ModelInstance& inst) {
@@ -448,9 +448,9 @@ static void RenderInstance1(const ModelInstance& inst) {
     glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
     
     //unbind everything
-    glBindVertexArray(0);
+    //glBindVertexArray(0);
     
-    shaders->stopUsing();
+    //shaders->stopUsing();
 }
 
 static void RenderInstance(const ModelInstance& inst) {
@@ -496,9 +496,9 @@ static void RenderInstance(const ModelInstance& inst) {
 	glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
 
 	//unbind everything
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	shaders->stopUsing();
+	//shaders->stopUsing();
 }
 
 bool Init()
