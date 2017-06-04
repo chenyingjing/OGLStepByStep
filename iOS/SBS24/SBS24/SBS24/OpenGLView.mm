@@ -449,10 +449,10 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
         gCamera.offsetPosition(secondsElapsed * moveSpeed * glm::vec3(0,1,0));
     }
     
-//    if(self.lightPositionButton.highlighted) {
+    if(self.lightPositionButton.highlighted) {
         gLights[0].position = glm::vec4(gCamera.position(), 1.0);
         gLights[0].coneDirection = gCamera.forward();
-//    }
+    }
     
     if(self.lightRedButton.highlighted)
         gLights[0].intensities = glm::vec3(1,0,0); //red
