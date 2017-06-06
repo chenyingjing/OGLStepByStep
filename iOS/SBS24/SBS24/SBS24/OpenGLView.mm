@@ -17,6 +17,7 @@
 #include "tdogl/Camera.h"
 #include <list>
 #include <sstream>
+#include "shadow_map_fbo.h"
 
 struct Light {
     glm::vec4 position;
@@ -54,6 +55,8 @@ struct ModelInstance {
     
     //Light gLight;
     std::vector<Light> gLights;
+    
+    ShadowMapFBO gShadowMapFBO;
 }
 
 - (void)setupLayer;
@@ -168,11 +171,19 @@ struct ModelInstance {
     
     [self setupDepthBuffer];
     
+    [self InitFBO];
+    
     [self LoadWoodenCrateAsset];
     
     [self CreateInstances];
     
     [self Render];
+}
+
+- (void)InitFBO
+{
+    gShadowMapFBO.Init(self.frame.size.width, self.frame.size.height);
+    glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer);
 }
 
 - (void)InitGL
