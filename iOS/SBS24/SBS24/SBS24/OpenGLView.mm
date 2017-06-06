@@ -183,6 +183,7 @@ struct ModelInstance {
 - (void)InitFBO
 {
     gShadowMapFBO.Init(self.frame.size.width, self.frame.size.height);
+    glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer);
 }
 

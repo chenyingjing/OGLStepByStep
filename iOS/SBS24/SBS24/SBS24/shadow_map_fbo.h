@@ -38,6 +38,8 @@ public:
 private:
     GLuint m_fbo;
     GLuint m_shadowMap;
+    GLuint _offscreenColorRenderBuffer;
+    GLuint _depthRenderBuffer;
 };
 
 #endif	/* SHADOWMAPFBO_H */
