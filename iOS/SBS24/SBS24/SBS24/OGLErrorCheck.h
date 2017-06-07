@@ -13,6 +13,6 @@
 #include <OpenGLES/ES2/glext.h>
 #include <stdio.h>
 
-void checkError();
+extern void checkError();
 
 #endif /* OGLErrorCheck_hpp */

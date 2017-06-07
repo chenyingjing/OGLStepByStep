@@ -180,13 +180,6 @@ struct ModelInstance {
 
 }
 
-- (void)checkError
-{
-    GLenum error = glGetError();
-    if (error != GL_NO_ERROR)
-        printf("OpenGL Error: %d\n", error);
-}
-
 - (CGSize)getFrameBufferSize
 {
     int width, height;

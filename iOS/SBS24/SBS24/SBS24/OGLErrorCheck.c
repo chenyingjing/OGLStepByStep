@@ -6,7 +6,7 @@
 //  Copyright © 2017 cyj. All rights reserved.
 //
 
-#include "OGLErrorCheck.hpp"
+#include "OGLErrorCheck.h"
 
 void checkError()
 {
