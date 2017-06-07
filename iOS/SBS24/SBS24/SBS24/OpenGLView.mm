@@ -272,18 +272,16 @@ struct ModelInstance {
                               GL_RENDERBUFFER, _depthRenderBuffer1);
     
 
-//    glGenTextures(1, &_offscreenSurface);
-//    glBindTexture(GL_TEXTURE_2D, _offscreenSurface);
-//    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-//    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glGenTextures(1, &_offscreenSurface);
+    glBindTexture(GL_TEXTURE_2D, _offscreenSurface);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     
-//    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32_OES, size.width, size.height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, size.width, size.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
-
-//    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _offscreenSurface, 0);
-//    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _offscreenSurface, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, size.width, size.height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, NULL);
+    [self checkError];
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _offscreenSurface, 0);
     
     // Check FBO satus
     //
@@ -294,6 +292,13 @@ struct ModelInstance {
     }
 
     
+}
+
+- (void)checkError
+{
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR)
+        printf("OpenGL Error: %d\n", error);
 }
 
 - (CGSize)getFrameBufferSize
