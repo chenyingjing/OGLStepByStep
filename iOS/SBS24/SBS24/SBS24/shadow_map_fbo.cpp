@@ -39,8 +39,11 @@ ShadowMapFBO::~ShadowMapFBO()
 	}
 }
 
-bool ShadowMapFBO::Init(unsigned int WindowWidth, unsigned int WindowHeight)
+bool ShadowMapFBO::Init(unsigned int WindowWidth, unsigned int WindowHeight, GLuint colorRenderBuffer)
 {
+    
+    
+    
     glGenRenderbuffers(1, &_offscreenColorRenderBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, _offscreenColorRenderBuffer);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA8_OES, WindowWidth, WindowHeight);
@@ -52,13 +55,10 @@ bool ShadowMapFBO::Init(unsigned int WindowWidth, unsigned int WindowHeight)
     glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, WindowWidth, WindowHeight);
     
-    
-    
-    
     // Create the FBO
-	glGenFramebuffers(1, &m_fbo);
+    glGenFramebuffers(1, &m_fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
-
+    
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
                               GL_RENDERBUFFER, _offscreenColorRenderBuffer);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
@@ -66,17 +66,22 @@ bool ShadowMapFBO::Init(unsigned int WindowWidth, unsigned int WindowHeight)
     
     
 	// Create the depth buffer
-	glGenTextures(1, &m_shadowMap);
-	glBindTexture(GL_TEXTURE_2D, m_shadowMap);
+//	glGenTextures(1, &m_shadowMap);
+//	glBindTexture(GL_TEXTURE_2D, m_shadowMap);
+    
+    glGenTextures(1, &m_shadowMap1);
+    glBindTexture(GL_TEXTURE_2D, m_shadowMap1);
+    
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, WindowWidth, WindowHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_shadowMap, 0);
-//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WindowWidth, WindowHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-//    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, 0, 0);
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, WindowWidth, WindowHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+//	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_shadowMap, 0);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WindowWidth, WindowHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_shadowMap1, 0);
 
 	// Disable writes to the color buffer
 //	glDrawBuffer(GL_NONE);

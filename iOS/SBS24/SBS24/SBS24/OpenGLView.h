@@ -17,6 +17,7 @@
     GLuint _colorRenderBuffer;
     GLuint _frameBuffer;
     GLuint _depthRenderBuffer;
+    GLuint _depthRenderBuffer1;
     GLuint _programHandle;
     GLuint _positionSlot;
     

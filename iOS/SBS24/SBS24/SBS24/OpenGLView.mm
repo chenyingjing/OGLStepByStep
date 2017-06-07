@@ -57,6 +57,9 @@ struct ModelInstance {
     std::vector<Light> gLights;
     
     ShadowMapFBO gShadowMapFBO;
+    GLuint _offscreenColorRenderBuffer;
+    GLuint _offscreenFrameBuffer;
+    GLuint _offscreenSurface;
 }
 
 - (void)setupLayer;
@@ -165,11 +168,13 @@ struct ModelInstance {
     
     [self destoryRenderAndFrameBuffer];
     
-    [self setupRenderBuffer];
+//    [self setupRenderBuffer];
+//    
+//    [self setupFrameBuffer];
+//    
+//    [self setupDepthBuffer];
     
-    [self setupFrameBuffer];
-    
-    [self setupDepthBuffer];
+    [self setupBuffers];
     
     [self InitFBO];
     
@@ -180,9 +185,128 @@ struct ModelInstance {
     [self Render];
 }
 
+- (void)setupBuffers
+{
+/*
+    glGenRenderbuffers(1, &_colorRenderBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
+    // 为 color renderbuffer 分配存储空间
+    [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:_eaglLayer];
+
+    
+    
+    glGenFramebuffers(1, &_frameBuffer);
+    // 设置为当前 framebuffer
+    glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer);
+    // 将 _colorRenderBuffer 装配到 GL_COLOR_ATTACHMENT0 这个装配点上
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                              GL_RENDERBUFFER, _colorRenderBuffer);
+
+    
+    
+    int width, height;
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &width);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &height);
+    
+    glGenRenderbuffers(1, &_depthRenderBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
+    
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                              GL_RENDERBUFFER, _depthRenderBuffer);
+    
+    glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
+*/
+    
+    
+    // Setup frame buffer
+    //
+    glGenFramebuffers(1, &_frameBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer);
+    
+    // Setup color render buffer
+    //
+    glGenRenderbuffers(1, &_colorRenderBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
+    [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:_eaglLayer];
+    
+    // Attach color render buffer and depth render buffer to frameBuffer
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                              GL_RENDERBUFFER, _colorRenderBuffer);
+    
+    
+    CGSize size = [self getFrameBufferSize];
+    
+    // Setup depth render buffer
+    //
+    
+    // Create a depth buffer that has the same size as the color buffer.
+    glGenRenderbuffers(1, &_depthRenderBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, size.width, size.height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                              GL_RENDERBUFFER, _depthRenderBuffer);
+    
+    GLenum Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    if (Status != GL_FRAMEBUFFER_COMPLETE) {
+        printf("FB error, status: 0x%x\n", Status);
+        //exit(1);
+    }
+    
+    
+    glGenFramebuffers(1, &_offscreenFrameBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, _offscreenFrameBuffer);
+    
+    glGenRenderbuffers(1, &_offscreenColorRenderBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _offscreenColorRenderBuffer);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA8_OES, size.width, size.height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                              GL_RENDERBUFFER, _offscreenColorRenderBuffer);
+    
+    
+    
+    glGenRenderbuffers(1, &_depthRenderBuffer1);
+    glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer1);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, size.width, size.height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                              GL_RENDERBUFFER, _depthRenderBuffer1);
+    
+
+//    glGenTextures(1, &_offscreenSurface);
+//    glBindTexture(GL_TEXTURE_2D, _offscreenSurface);
+//    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+//    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32_OES, size.width, size.height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, size.width, size.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+
+//    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _offscreenSurface, 0);
+//    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _offscreenSurface, 0);
+    
+    // Check FBO satus
+    //
+    GLenum Status1 = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    if (Status1 != GL_FRAMEBUFFER_COMPLETE) {
+        printf("FB error1, status: 0x%x\n", Status1);
+        //exit(1);
+    }
+
+    
+}
+
+- (CGSize)getFrameBufferSize
+{
+    int width, height;
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &width);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &height);
+    return CGSizeMake(width, height);
+}
+
 - (void)InitFBO
 {
-    gShadowMapFBO.Init(self.frame.size.width, self.frame.size.height);
+    //gShadowMapFBO.Init(self.frame.size.width, self.frame.size.height, _colorRenderBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer);
 }
