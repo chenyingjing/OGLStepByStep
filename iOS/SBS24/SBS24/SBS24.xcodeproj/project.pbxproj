@@ -136,6 +136,7 @@
 		230A7ED31EE419F3007BE0FE /* shadow_map.vs in Resources */ = {isa = PBXBuildFile; fileRef = 230A7ED11EE419F3007BE0FE /* shadow_map.vs */; };
 		230A7ED61EE41A2D007BE0FE /* shadow_map_fbo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 230A7ED41EE41A2D007BE0FE /* shadow_map_fbo.cpp */; };
 		230A7ED81EE41A60007BE0FE /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 230A7ED71EE41A60007BE0FE /* test.png */; };
+		25422D4C1EE7FAD900013AB2 /* OGLErrorCheck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25422D4A1EE7FAD900013AB2 /* OGLErrorCheck.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -426,6 +427,8 @@
 		230A7ED41EE41A2D007BE0FE /* shadow_map_fbo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shadow_map_fbo.cpp; sourceTree = "<group>"; };
 		230A7ED51EE41A2D007BE0FE /* shadow_map_fbo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shadow_map_fbo.h; sourceTree = "<group>"; };
 		230A7ED71EE41A60007BE0FE /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
+		25422D4A1EE7FAD900013AB2 /* OGLErrorCheck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OGLErrorCheck.cpp; sourceTree = "<group>"; };
+		25422D4B1EE7FAD900013AB2 /* OGLErrorCheck.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OGLErrorCheck.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -476,6 +479,8 @@
 				230A7D341EE3B1BF007BE0FE /* LaunchScreen.storyboard */,
 				230A7D371EE3B1BF007BE0FE /* Info.plist */,
 				230A7D261EE3B1BF007BE0FE /* Supporting Files */,
+				25422D4A1EE7FAD900013AB2 /* OGLErrorCheck.cpp */,
+				25422D4B1EE7FAD900013AB2 /* OGLErrorCheck.hpp */,
 			);
 			path = SBS24;
 			sourceTree = "<group>";
@@ -1037,6 +1042,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25422D4C1EE7FAD900013AB2 /* OGLErrorCheck.cpp in Sources */,
 				230A7ECB1EE3B285007BE0FE /* Program.cpp in Sources */,
 				230A7EC91EE3B285007BE0FE /* Bitmap.cpp in Sources */,
 				230A7D2E1EE3B1BF007BE0FE /* ViewController.m in Sources */,
