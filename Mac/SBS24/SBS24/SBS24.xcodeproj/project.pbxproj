@@ -135,6 +135,7 @@
 		23323B821EDA8069001A5CFF /* wrap.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23323B011EDA8069001A5CFF /* wrap.inl */; };
 		23323B841EDAA201001A5CFF /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 23323B831EDAA201001A5CFF /* test.png */; };
 		23323B871EDAD523001A5CFF /* shadow_map_fbo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23323B851EDAD523001A5CFF /* shadow_map_fbo.cpp */; };
+		2378485F1EE834A300A1A0E3 /* OGLErrorCheck.c in Sources */ = {isa = PBXBuildFile; fileRef = 2378485D1EE834A300A1A0E3 /* OGLErrorCheck.c */; };
 		23C2BAA81EDBF3F300AE821C /* shadow_map.fs in Resources */ = {isa = PBXBuildFile; fileRef = 23C2BAA61EDBF3F300AE821C /* shadow_map.fs */; };
 		23C2BAA91EDBF3F300AE821C /* shadow_map.vs in Resources */ = {isa = PBXBuildFile; fileRef = 23C2BAA71EDBF3F300AE821C /* shadow_map.vs */; };
 /* End PBXBuildFile section */
@@ -421,6 +422,8 @@
 		23323B831EDAA201001A5CFF /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 		23323B851EDAD523001A5CFF /* shadow_map_fbo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shadow_map_fbo.cpp; sourceTree = "<group>"; };
 		23323B861EDAD523001A5CFF /* shadow_map_fbo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shadow_map_fbo.h; sourceTree = "<group>"; };
+		2378485D1EE834A300A1A0E3 /* OGLErrorCheck.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = OGLErrorCheck.c; sourceTree = "<group>"; };
+		2378485E1EE834A300A1A0E3 /* OGLErrorCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLErrorCheck.h; sourceTree = "<group>"; };
 		23C2BAA61EDBF3F300AE821C /* shadow_map.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadow_map.fs; sourceTree = "<group>"; };
 		23C2BAA71EDBF3F300AE821C /* shadow_map.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadow_map.vs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -461,6 +464,8 @@
 		2332385F1EDA7D64001A5CFF /* SBS24 */ = {
 			isa = PBXGroup;
 			children = (
+				2378485D1EE834A300A1A0E3 /* OGLErrorCheck.c */,
+				2378485E1EE834A300A1A0E3 /* OGLErrorCheck.h */,
 				23C2BAA61EDBF3F300AE821C /* shadow_map.fs */,
 				23C2BAA71EDBF3F300AE821C /* shadow_map.vs */,
 				23323B851EDAD523001A5CFF /* shadow_map_fbo.cpp */,
@@ -979,6 +984,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2378485F1EE834A300A1A0E3 /* OGLErrorCheck.c in Sources */,
 				23323A041EDA7E5A001A5CFF /* Shader.cpp in Sources */,
 				2332398E1EDA7E5A001A5CFF /* glew.c in Sources */,
 				23323B871EDAD523001A5CFF /* shadow_map_fbo.cpp in Sources */,
