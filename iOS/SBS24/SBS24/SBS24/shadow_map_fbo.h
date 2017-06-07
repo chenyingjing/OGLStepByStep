@@ -29,7 +29,7 @@ public:
 
     ~ShadowMapFBO();
 
-    bool Init(unsigned int WindowWidth, unsigned int WindowHeight, GLuint colorRenderBuffer);
+    bool Init(unsigned int WindowWidth, unsigned int WindowHeight);
 
     void BindForWriting();
 
@@ -37,10 +37,9 @@ public:
 
 private:
     GLuint m_fbo;
-    GLuint m_shadowMap;
     GLuint _offscreenColorRenderBuffer;
     GLuint _depthRenderBuffer;
-    GLuint m_shadowMap1;
+    GLuint m_shadowMap;
 };
 
 #endif	/* SHADOWMAPFBO_H */
