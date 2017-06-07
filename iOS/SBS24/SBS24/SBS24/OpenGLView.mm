@@ -30,6 +30,7 @@ struct Light {
 
 struct ModelAsset {
     tdogl::Program* shaders;
+    tdogl::Program* shadersShadowMap;
     tdogl::Texture* texture;
     GLuint vbo;
     GLuint vao;
@@ -47,6 +48,7 @@ struct ModelInstance {
 
 @interface OpenGLView() {
     ModelAsset gWoodenCrate;
+    ModelAsset gGround;
     std::list<ModelInstance> gInstances;
     
     GLfloat gDegreesRotated;
@@ -133,6 +135,7 @@ struct ModelInstance {
     [self InitFBO];
     
     [self LoadWoodenCrateAsset];
+    [self LoadGroundAsset];
     
     [self CreateInstances];
     
@@ -272,6 +275,76 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
     hMid.transform = translate(-6,0,0) * scale(2,1,0.8);
     gInstances.push_back(hMid);
 }
+
+- (void)LoadGroundAsset
+{
+/*
+    gGround.shaders = gWoodenCrate.shaders;
+    gGround.shadersShadowMap = gWoodenCrate.shadersShadowMap;
+    gGround.drawType = GL_TRIANGLES;
+    gGround.drawStart = 0;
+    gGround.drawCount = 2 * 3;
+    gGround.texture = [self LoadTexture:"test" ext:"jpg"];
+    gGround.shininess = 80.0;
+    gGround.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    
+    glGenBuffers(1, &gGround.vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, gGround.vbo);
+    
+    // Make a quad out of 2 triangles
+    GLfloat vertexData[] = {
+        //  X     Y     Z       U     V          Normal
+        1.0f,0.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+        -1.0f,0.0f,-1.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+        -1.0f,0.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+        1.0f,0.0f,1.0f,   1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+        1.0f,0.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+        -1.0f,0.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f
+    };
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+    
+    glGenVertexArrays(1, &gGround.vao);
+    glBindVertexArray(gGround.vao);
+    
+    gGround.shaders->use();
+    
+    // connect the xyz to the "vert" attribute of the vertex shader
+    glEnableVertexAttribArray(gGround.shaders->attrib("vert"));
+    glVertexAttribPointer(gGround.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+    
+    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+    glEnableVertexAttribArray(gGround.shaders->attrib("vertTexCoord"));
+    glVertexAttribPointer(gGround.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+    
+    glEnableVertexAttribArray(gGround.shaders->attrib("vertNormal"));
+    glVertexAttribPointer(gGround.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+    gGround.shaders->stopUsing();
+    
+    glBindVertexArray(0);
+    
+    
+    glGenVertexArrays(1, &gGround.vaoShadowMap);
+    glBindVertexArray(gGround.vaoShadowMap);
+    
+    gGround.shadersShadowMap->use();
+    //glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+    // connect the xyz to the "vert" attribute of the vertex shader
+    GLuint index = gGround.shadersShadowMap->attrib("vert");
+    glEnableVertexAttribArray(index);
+    glVertexAttribPointer(index, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+    
+    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+    index = gGround.shadersShadowMap->attrib("vertTexCoord");
+    glEnableVertexAttribArray(index);
+    glVertexAttribPointer(index, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+    gGround.shadersShadowMap->stopUsing();
+    
+    // unbind the VAO
+    glBindVertexArray(0);
+*/
+    
+}
+
 
 - (void)LoadWoodenCrateAsset
 {
