@@ -272,13 +272,12 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 
 - (void)LoadGroundAsset
 {
-/*
     gGround.shaders = gWoodenCrate.shaders;
     gGround.shadersShadowMap = gWoodenCrate.shadersShadowMap;
     gGround.drawType = GL_TRIANGLES;
     gGround.drawStart = 0;
     gGround.drawCount = 2 * 3;
-    gGround.texture = [self LoadTexture:"test" ext:"jpg"];
+    gGround.texture = [self LoadTexture:"test" ext:"png"];
     gGround.shininess = 80.0;
     gGround.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
@@ -297,8 +296,8 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
     };
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
     
-    glGenVertexArrays(1, &gGround.vao);
-    glBindVertexArray(gGround.vao);
+    glGenVertexArraysOES(1, &gGround.vao);
+    glBindVertexArrayOES(gGround.vao);
     
     gGround.shaders->use();
     
@@ -314,11 +313,11 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
     glVertexAttribPointer(gGround.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
     gGround.shaders->stopUsing();
     
-    glBindVertexArray(0);
+    glBindVertexArrayOES(0);
     
     
-    glGenVertexArrays(1, &gGround.vaoShadowMap);
-    glBindVertexArray(gGround.vaoShadowMap);
+    glGenVertexArraysOES(1, &gGround.vaoShadowMap);
+    glBindVertexArrayOES(gGround.vaoShadowMap);
     
     gGround.shadersShadowMap->use();
     //glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
@@ -334,8 +333,8 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
     gGround.shadersShadowMap->stopUsing();
     
     // unbind the VAO
-    glBindVertexArray(0);
-*/
+    glBindVertexArrayOES(0);
+
     
 }
 
