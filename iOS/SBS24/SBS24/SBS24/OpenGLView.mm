@@ -51,6 +51,7 @@ struct ModelInstance {
     ModelAsset gWoodenCrate;
     ModelAsset gGround;
     std::list<ModelInstance> gInstances;
+    std::list<ModelInstance> gInstancesShadowMap;
     
     GLfloat gDegreesRotated;
     CADisplayLink * _displayLink;
@@ -248,26 +249,37 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
     dot.asset = &gWoodenCrate;
     dot.transform = glm::mat4();
     gInstances.push_back(dot);
+    gInstancesShadowMap.push_back(dot);
     
     ModelInstance i;
     i.asset = &gWoodenCrate;
-    i.transform = translate(0,-4,0) * scale(1,2,1);
+    i.transform = translate(0, -4, 0) * scale(1, 2, 1);
     gInstances.push_back(i);
+    gInstancesShadowMap.push_back(i);
     
     ModelInstance hLeft;
     hLeft.asset = &gWoodenCrate;
-    hLeft.transform = translate(-8,0,0) * scale(1,6,1);
+    hLeft.transform = translate(-8, 0, 0) * scale(1, 6, 1);
     gInstances.push_back(hLeft);
+    gInstancesShadowMap.push_back(hLeft);
     
     ModelInstance hRight;
     hRight.asset = &gWoodenCrate;
-    hRight.transform = translate(-4,0,0) * scale(1,6,1);
+    hRight.transform = translate(-4, 0, 0) * scale(1, 6, 1);
     gInstances.push_back(hRight);
+    gInstancesShadowMap.push_back(hRight);
     
     ModelInstance hMid;
     hMid.asset = &gWoodenCrate;
-    hMid.transform = translate(-6,0,0) * scale(2,1,0.8);
+    hMid.transform = translate(-6, 0, 0) * scale(2, 1, 0.8f);
     gInstances.push_back(hMid);
+    gInstancesShadowMap.push_back(hMid);
+    
+    ModelInstance ground;
+    ground.asset = &gGround;
+    float groundScale = 20.0;
+    ground.transform = translate(-4, -6, 0) * scale(groundScale, groundScale, groundScale);
+    gInstances.push_back(ground);
 }
 
 - (void)LoadGroundAsset
