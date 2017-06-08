@@ -218,6 +218,8 @@ struct ModelInstance {
     
     glClearColor(0, 0, 0, 1); // black
     
+    glViewport(0, 0, self.frame.size.width, self.frame.size.height);
+    
     gCamera.setPosition(glm::vec3(-4, 0, 17));
     gCamera.setViewportAspectRatio(self.frame.size.width / self.frame.size.height);
     gCamera.setNearAndFarPlanes(0.1, 5000);
@@ -545,8 +547,6 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
 {
     // clear everything
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    glViewport(0, 0, self.frame.size.width, self.frame.size.height);
     
     std::list<ModelInstance>::const_iterator it;
     for(it = gInstances.begin(); it != gInstances.end(); ++it){
