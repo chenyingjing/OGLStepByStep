@@ -56,6 +56,7 @@ struct ModelInstance {
     GLfloat gDegreesRotated;
     CADisplayLink * _displayLink;
     tdogl::Camera gCamera;
+    tdogl::Camera gCameraFromLight;
     
     //Light gLight;
     std::vector<Light> gLights;
@@ -215,9 +216,12 @@ struct ModelInstance {
 //    glEnable(GL_BLEND);
 //    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
+    glClearColor(0, 0, 0, 1); // black
+    
     gCamera.setPosition(glm::vec3(-4, 0, 17));
     gCamera.setViewportAspectRatio(self.frame.size.width / self.frame.size.height);
     gCamera.setNearAndFarPlanes(0.1, 5000);
+    gCameraFromLight = gCamera;
     
     Light spotlight;
     spotlight.position = glm::vec4(-4,0,10,1);
@@ -226,6 +230,8 @@ struct ModelInstance {
     spotlight.ambientCoefficient = 0.0f; //no ambient light
     spotlight.coneAngle = 15.0f;
     spotlight.coneDirection = glm::vec3(0,0,-1);
+    gCameraFromLight.setPosition(glm::vec3(spotlight.position));
+    gCameraFromLight.lookAt(glm::vec3(spotlight.position) + spotlight.coneDirection);
     
     Light directionalLight;
     directionalLight.position = glm::vec4(1, 0.8, 0.6, 0); //w == 0 indications a directional light
@@ -538,7 +544,6 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
 - (void)Render
 {
     // clear everything
-    glClearColor(0, 0, 0, 1); // black
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     glViewport(0, 0, self.frame.size.width, self.frame.size.height);
