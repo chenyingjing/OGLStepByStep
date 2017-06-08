@@ -34,6 +34,7 @@ struct ModelAsset {
     tdogl::Texture* texture;
     GLuint vbo;
     GLuint vao;
+    GLuint vaoShadowMap;
     GLenum drawType;
     GLint drawStart;
     GLint drawCount;
@@ -342,6 +343,7 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 - (void)LoadWoodenCrateAsset
 {
     gWoodenCrate.shaders = [self LoadShaders:"VertexShader" fs:"FragmentShader"];
+    gWoodenCrate.shadersShadowMap = [self LoadShaders:"shadow_map_v" fs:"shadow_map_f"];
     gWoodenCrate.drawType = GL_TRIANGLES;
     gWoodenCrate.drawStart = 0;
     gWoodenCrate.drawCount = 6*2*3;
@@ -352,11 +354,7 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
     // make and bind the VBO
     glGenBuffers(1, &gWoodenCrate.vbo);
     glBindBuffer(GL_ARRAY_BUFFER, gWoodenCrate.vbo);
-    
-    // make and bind the VAO
-    glGenVertexArraysOES(1, &gWoodenCrate.vao);
-    glBindVertexArrayOES(gWoodenCrate.vao);
-    
+
     // Put the three triangle verticies into the VBO
     GLfloat vertexData[] = {
         //  X     Y     Z       U     V          Normal
@@ -411,7 +409,10 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
     
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
     
+    glGenVertexArraysOES(1, &gWoodenCrate.vao);
+    glBindVertexArrayOES(gWoodenCrate.vao);
     
+    gWoodenCrate.shaders->use();
     // connect the xyz to the "vert" attribute of the vertex shader
     glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vert"));
     glVertexAttribPointer(gWoodenCrate.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), NULL);
@@ -421,10 +422,33 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
     
     glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertNormal"));
     glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE,  8*sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+    gWoodenCrate.shaders->stopUsing();
     
-    // unbind the VBO and VAO
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArrayOES(0);
+
+    
+    
+    glGenVertexArraysOES(1, &gWoodenCrate.vaoShadowMap);
+    glBindVertexArrayOES(gWoodenCrate.vaoShadowMap);
+    
+    gWoodenCrate.shadersShadowMap->use();
+    //glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+    // connect the xyz to the "vert" attribute of the vertex shader
+    GLuint indexVertMap = gWoodenCrate.shadersShadowMap->attrib("vert");
+    glEnableVertexAttribArray(indexVertMap);
+    glVertexAttribPointer(indexVertMap, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+    
+    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+    GLuint indexTexCoord = gWoodenCrate.shadersShadowMap->attrib("vertTexCoord");
+    glEnableVertexAttribArray(indexTexCoord);
+    glVertexAttribPointer(indexTexCoord, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+    gWoodenCrate.shadersShadowMap->stopUsing();
+    
+    // unbind the VAO
+    glBindVertexArrayOES(0);
+    
+    
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     
 }
 

@@ -132,8 +132,8 @@
 		230A7ECD1EE3B285007BE0FE /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 230A7E541EE3B285007BE0FE /* Texture.cpp */; };
 		230A7ECE1EE3B285007BE0FE /* hazard.png in Resources */ = {isa = PBXBuildFile; fileRef = 230A7E571EE3B285007BE0FE /* hazard.png */; };
 		230A7ECF1EE3B285007BE0FE /* wooden-crate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 230A7E581EE3B285007BE0FE /* wooden-crate.jpg */; };
-		230A7ED21EE419F3007BE0FE /* shadow_map.fs in Resources */ = {isa = PBXBuildFile; fileRef = 230A7ED01EE419F3007BE0FE /* shadow_map.fs */; };
-		230A7ED31EE419F3007BE0FE /* shadow_map.vs in Resources */ = {isa = PBXBuildFile; fileRef = 230A7ED11EE419F3007BE0FE /* shadow_map.vs */; };
+		230A7ED21EE419F3007BE0FE /* shadow_map_f.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 230A7ED01EE419F3007BE0FE /* shadow_map_f.glsl */; };
+		230A7ED31EE419F3007BE0FE /* shadow_map_v.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 230A7ED11EE419F3007BE0FE /* shadow_map_v.glsl */; };
 		230A7ED61EE41A2D007BE0FE /* shadow_map_fbo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 230A7ED41EE41A2D007BE0FE /* shadow_map_fbo.cpp */; };
 		230A7ED81EE41A60007BE0FE /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 230A7ED71EE41A60007BE0FE /* test.png */; };
 		25422D4C1EE7FAD900013AB2 /* OGLErrorCheck.c in Sources */ = {isa = PBXBuildFile; fileRef = 25422D4A1EE7FAD900013AB2 /* OGLErrorCheck.c */; };
@@ -422,8 +422,8 @@
 		230A7E551EE3B285007BE0FE /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
 		230A7E571EE3B285007BE0FE /* hazard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hazard.png; sourceTree = "<group>"; };
 		230A7E581EE3B285007BE0FE /* wooden-crate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "wooden-crate.jpg"; sourceTree = "<group>"; };
-		230A7ED01EE419F3007BE0FE /* shadow_map.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadow_map.fs; sourceTree = "<group>"; };
-		230A7ED11EE419F3007BE0FE /* shadow_map.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadow_map.vs; sourceTree = "<group>"; };
+		230A7ED01EE419F3007BE0FE /* shadow_map_f.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shadow_map_f.glsl; sourceTree = "<group>"; };
+		230A7ED11EE419F3007BE0FE /* shadow_map_v.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shadow_map_v.glsl; sourceTree = "<group>"; };
 		230A7ED41EE41A2D007BE0FE /* shadow_map_fbo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shadow_map_fbo.cpp; sourceTree = "<group>"; };
 		230A7ED51EE41A2D007BE0FE /* shadow_map_fbo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shadow_map_fbo.h; sourceTree = "<group>"; };
 		230A7ED71EE41A60007BE0FE /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
@@ -822,8 +822,8 @@
 		230A7E481EE3B285007BE0FE /* Shader */ = {
 			isa = PBXGroup;
 			children = (
-				230A7ED01EE419F3007BE0FE /* shadow_map.fs */,
-				230A7ED11EE419F3007BE0FE /* shadow_map.vs */,
+				230A7ED01EE419F3007BE0FE /* shadow_map_f.glsl */,
+				230A7ED11EE419F3007BE0FE /* shadow_map_v.glsl */,
 				230A7E491EE3B285007BE0FE /* FragmentShader.glsl */,
 				230A7E4A1EE3B285007BE0FE /* VertexShader.glsl */,
 			);
@@ -964,7 +964,7 @@
 				230A7E591EE3B285007BE0FE /* copying.txt in Resources */,
 				230A7EA21EE3B285007BE0FE /* matrix_interpolation.inl in Resources */,
 				230A7E7D1EE3B285007BE0FE /* type_vec4.inl in Resources */,
-				230A7ED21EE419F3007BE0FE /* shadow_map.fs in Resources */,
+				230A7ED21EE419F3007BE0FE /* shadow_map_f.glsl in Resources */,
 				230A7E6A1EE3B285007BE0FE /* intrinsic_trigonometric.inl in Resources */,
 				230A7E8D1EE3B285007BE0FE /* closest_point.inl in Resources */,
 				230A7E991EE3B285007BE0FE /* gradient_paint.inl in Resources */,
@@ -992,7 +992,7 @@
 				230A7EB31EE3B285007BE0FE /* raw_data.inl in Resources */,
 				230A7E891EE3B285007BE0FE /* type_ptr.inl in Resources */,
 				230A7E841EE3B285007BE0FE /* packing.inl in Resources */,
-				230A7ED31EE419F3007BE0FE /* shadow_map.vs in Resources */,
+				230A7ED31EE419F3007BE0FE /* shadow_map_v.glsl in Resources */,
 				230A7EC71EE3B285007BE0FE /* FragmentShader.glsl in Resources */,
 				230A7EB81EE3B285007BE0FE /* simd_quat.inl in Resources */,
 				230A7E821EE3B285007BE0FE /* matrix_transform.inl in Resources */,
