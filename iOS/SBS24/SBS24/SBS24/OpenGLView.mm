@@ -62,6 +62,8 @@ struct ModelInstance {
     std::vector<Light> gLights;
     
     ShadowMapFBO gShadowMapFBO;
+    
+    float delta;
 }
 
 - (void)setupLayer;
@@ -536,6 +538,8 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     
     shaders->setUniform("materialShininess", asset->shininess);
     shaders->setUniform("materialSpecularColor", asset->specularColor);
+    GLint deltaSlot = glGetUniformLocation(shaders->object(), "delta");
+    glUniform1f(deltaSlot, delta);
     
     
     //bind the texture
@@ -688,6 +692,8 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     if(fieldOfView < 5.0f) fieldOfView = 5.0f;
     if(fieldOfView > 130.0f) fieldOfView = 130.0f;
     gCamera.setFieldOfView(fieldOfView);
+    
+    delta = self.deltaSlider.value;
 
 }
 

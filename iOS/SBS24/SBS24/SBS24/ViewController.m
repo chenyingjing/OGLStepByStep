@@ -27,6 +27,7 @@
     self.openGLView.lightRedButton = self.lightRedButton;
     self.openGLView.lightBlueButton = self.lightBlueButton;
     self.openGLView.lightWhiteButton = self.lightWhiteButton;
+    self.openGLView.deltaSlider = self.deltaSlider;
     
     self.openGLView.scale = 1;
 }

@@ -10,6 +10,7 @@ uniform sampler2D materialTex;
 uniform sampler2D gShadowMap;
 uniform float materialShininess;
 uniform vec3 materialSpecularColor;
+uniform float delta;
 
 // array of lights
 #define MAX_LIGHTS 10
@@ -40,7 +41,7 @@ float CalcShadowFactor(vec4 LightSpacePos)
     float z = 0.5 * ProjCoords.z + 0.5;
     
     float Depth = texture2D(gShadowMap, UVCoords).x;
-    if (Depth < z - 0.0007)
+    if (Depth < z - delta)
         //return 0.01;
         return 0.0;
     else

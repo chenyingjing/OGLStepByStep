@@ -33,6 +33,7 @@
 @property (weak, nonatomic) UIButton *lightRedButton;
 @property (weak, nonatomic) UIButton *lightBlueButton;
 @property (weak, nonatomic) UIButton *lightWhiteButton;
+@property (weak, nonatomic) UISlider *deltaSlider;
 
 @property float moveX;
 @property float moveY;

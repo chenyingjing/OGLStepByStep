@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *lightRedButton;
 @property (weak, nonatomic) IBOutlet UIButton *lightBlueButton;
 @property (weak, nonatomic) IBOutlet UIButton *lightWhiteButton;
+@property (weak, nonatomic) IBOutlet UISlider *deltaSlider;
 
 @end
 

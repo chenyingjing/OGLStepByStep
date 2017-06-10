@@ -91,11 +91,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="⚪️"/>
                             </button>
+                            <slider hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.00050000000000000001" minValue="0.0001" maxValue="0.001" translatesAutoresizingMaskIntoConstraints="NO" id="GTZ-fF-4Xi">
+                                <rect key="frame" x="168" y="653" width="228" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" red="0.68202062669999997" green="0.89400688080000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
                         <outlet property="backwardButton" destination="EI6-lT-ebC" id="C0z-YL-rRE"/>
+                        <outlet property="deltaSlider" destination="GTZ-fF-4Xi" id="vzg-4U-t00"/>
                         <outlet property="downButton" destination="9Td-LG-Rsc" id="Lnb-OJ-VMn"/>
                         <outlet property="forwardButton" destination="Z33-M2-SsJ" id="uVN-fh-4xg"/>
                         <outlet property="leftButton" destination="P82-dB-aeg" id="t7C-72-q4W"/>
