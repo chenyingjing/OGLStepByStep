@@ -1,14 +1,17 @@
-precision mediump float;
+
+precision highp float;
 
 uniform highp mat4 model;
 uniform mat3 normalMatrix;
+
 uniform vec3 cameraPosition;
 
-// material settings
 uniform sampler2D materialTex;
+uniform sampler2D gShadowMap;
 uniform float materialShininess;
 uniform vec3 materialSpecularColor;
 
+// array of lights
 #define MAX_LIGHTS 10
 uniform int numLights;
 uniform struct Light {
@@ -23,28 +26,44 @@ uniform struct Light {
 varying vec2 fragTexCoord;
 varying vec3 fragNormal;
 varying vec3 fragVert;
+varying vec4 lightSpacePos;
 
-vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec3 surfacePos, vec3 surfaceToCamera);
+
+vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec3 surfacePos, vec3 surfaceToCamera, vec4 LightSpacePos);
+
+float CalcShadowFactor(vec4 LightSpacePos)
+{
+    vec3 ProjCoords = LightSpacePos.xyz / LightSpacePos.w;
+    vec2 UVCoords;
+    UVCoords.x = 0.5 * ProjCoords.x + 0.5;
+    UVCoords.y = 0.5 * ProjCoords.y + 0.5;
+    float z = 0.5 * ProjCoords.z + 0.5;
+    
+    float Depth = texture2D(gShadowMap, UVCoords).x;
+    if (Depth < z - 0.0007)
+        //return 0.01;
+        return 0.0;
+    else
+        return 1.0;
+}
 
 void main() {
     vec3 normal = normalize(normalMatrix * fragNormal);
     vec3 surfacePos = vec3(model * vec4(fragVert, 1));
     vec4 surfaceColor = texture2D(materialTex, fragTexCoord);
-    vec3 surfaceToCamera = normalize(cameraPosition - surfacePos);
-
+    vec3 surfaceToCamera = normalize(cameraPosition - surfacePos); //also a unit
+    
     vec3 linearColor = vec3(0);
     for(int i = 0; i < numLights; ++i){
-        linearColor += ApplyLight(allLights[i], surfaceColor.rgb, normal, surfacePos, surfaceToCamera);
+        linearColor += ApplyLight(allLights[i], surfaceColor.rgb, normal, surfacePos, surfaceToCamera, lightSpacePos);
     }
     
-    //final color (after gamma correction)
 //    vec3 gamma = vec3(1.0/2.2);
 //    gl_FragColor = vec4(pow(linearColor, gamma), surfaceColor.a);
-
     gl_FragColor = vec4(linearColor, surfaceColor.a);
 }
 
-vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec3 surfacePos, vec3 surfaceToCamera) {
+vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec3 surfacePos, vec3 surfaceToCamera, vec4 LightSpacePos) {
     vec3 surfaceToLight;
     float attenuation = 1.0;
     if(light.position.w == 0.0) {
@@ -58,9 +77,15 @@ vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec3 surfacePos, ve
         attenuation = 1.0 / (1.0 + light.attenuation * pow(distanceToLight, 2.0));
         
         //cone restrictions (affects attenuation)
-        float lightToSurfaceAngle = degrees(acos(dot(-surfaceToLight, normalize(light.coneDirection))));
+        float spotFactor = dot(-surfaceToLight, normalize(light.coneDirection));
+        float lightToSurfaceAngle = degrees(acos(spotFactor));
         if(lightToSurfaceAngle > light.coneAngle){
             attenuation = 0.0;
+        } else {
+            float cutoff = cos(radians(light.coneAngle));
+            attenuation *= (1.0 - (1.0 - spotFactor) * 1.0/(1.0 - cutoff));
+            float ShadowFactor = CalcShadowFactor(LightSpacePos);
+            attenuation *= ShadowFactor;
         }
     }
     

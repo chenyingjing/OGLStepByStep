@@ -1,4 +1,4 @@
-precision mediump float;
+precision highp float;
 
 varying vec2 fragTexCoord;                                                                
 uniform sampler2D gShadowMap;                                                       

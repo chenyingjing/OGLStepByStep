@@ -128,9 +128,7 @@ struct ModelInstance {
     [self setupLayer];
     
     [self setupContext];
-    
-    [self InitGL];
-    
+
     [self destoryRenderAndFrameBuffer];
     
     [self setupBuffers];
@@ -141,6 +139,8 @@ struct ModelInstance {
     [self LoadGroundAsset];
     
     [self CreateInstances];
+    
+    [self InitGL];
     
     [self Render];
 }
@@ -218,17 +218,20 @@ struct ModelInstance {
     
     glClearColor(0, 0, 0, 1); // black
     
-    glViewport(0, 0, self.frame.size.width, self.frame.size.height);
+    CGFloat width = self.frame.size.width;
+    CGFloat height = self.frame.size.height;
+    
+    glViewport(0, 0, width, height);
     
     gCamera.setPosition(glm::vec3(-4, 0, 17));
-    gCamera.setViewportAspectRatio(self.frame.size.width / self.frame.size.height);
+    gCamera.setViewportAspectRatio(width / height);
     gCamera.setNearAndFarPlanes(0.1, 5000);
     gCameraFromLight = gCamera;
     
     Light spotlight;
     spotlight.position = glm::vec4(-4,0,10,1);
     spotlight.intensities = glm::vec3(2,2,2); //strong white light
-    spotlight.attenuation = 0.1f;
+    spotlight.attenuation = 0.001f;
     spotlight.ambientCoefficient = 0.0f; //no ambient light
     spotlight.coneAngle = 15.0f;
     spotlight.coneDirection = glm::vec3(0,0,-1);
@@ -237,7 +240,7 @@ struct ModelInstance {
     
     Light directionalLight;
     directionalLight.position = glm::vec4(1, 0.8, 0.6, 0); //w == 0 indications a directional light
-    directionalLight.intensities = glm::vec3(0.4,0.3,0.1); //weak yellowish light
+    directionalLight.intensities = glm::vec3(0.2, 0.2, 0.2); //weak light
     directionalLight.ambientCoefficient = 0.06;
     
     gLights.push_back(spotlight);
@@ -503,10 +506,13 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     //bind the shaders
     shaders->use();
     
+    GLint gShadowMapSlot = glGetUniformLocation(shaders->object(), "gShadowMap");
+    glUniform1i(gShadowMapSlot, 1);
+    
     GLint numLightsSlot = glGetUniformLocation(shaders->object(), "numLights");
     glUniform1i(numLightsSlot, (int)gLights.size());
     
-    for(size_t i = 0; i < gLights.size(); ++i){
+    for (size_t i = 0; i < gLights.size(); ++i) {
         SetLightUniform(shaders, "position", i, gLights[i].position);
         SetLightUniform(shaders, "intensities", i, gLights[i].intensities);
         SetLightUniform(shaders, "attenuation", i, gLights[i].attenuation);
@@ -514,20 +520,23 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
         SetLightUniform(shaders, "coneAngle", i, gLights[i].coneAngle);
         SetLightUniform(shaders, "coneDirection", i, gLights[i].coneDirection);
     }
-
+    
+    shaders->setUniform("cameraPosition", gCamera.position());
+    
     //set the shader uniforms
+    shaders->setUniform("cameraFromLight", gCameraFromLight.matrix());
     shaders->setUniform("camera", gCamera.matrix());
     shaders->setUniform("model", inst.transform);
-    
+
     glm::mat3 normalMatrix3 = glm::transpose(glm::inverse(glm::mat3(inst.transform)));
     shaders->setUniform("normalMatrix", normalMatrix3);
     
-    GLint samplerSlot = glGetUniformLocation(shaders->object(), "materialTex");
-    glUniform1i(samplerSlot, 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+    GLint materialTexSlot = glGetUniformLocation(shaders->object(), "materialTex");
+    glUniform1i(materialTexSlot, 0); //set to 0 because the texture will be bound to GL_TEXTURE0
     
     shaders->setUniform("materialShininess", asset->shininess);
     shaders->setUniform("materialSpecularColor", asset->specularColor);
-    shaders->setUniform("cameraPosition", gCamera.position());
+    
     
     //bind the texture
     glActiveTexture(GL_TEXTURE0);
@@ -611,12 +620,12 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     gShadowMapFBO.BindForReading(GL_TEXTURE1);
-    [self RenderInstance1:gInstances.back()];
+    //[self RenderInstance1:gInstances.back()];
     
-//    std::list<ModelInstance>::const_iterator it;
-//    for (it = gInstances.begin(); it != gInstances.end(); ++it) {
-//        [self RenderInstance:*it];
-//    }
+    std::list<ModelInstance>::const_iterator it;
+    for (it = gInstances.begin(); it != gInstances.end(); ++it) {
+        [self RenderInstance:*it];
+    }
 }
 
 
