@@ -543,15 +543,62 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     shaders->stopUsing();
 }
 
-- (void)Render
+- (void) RenderInstanceMap: (const ModelInstance&)inst
 {
-    // clear everything
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    ModelAsset* asset = inst.asset;
+    tdogl::Program* shaders = asset->shadersShadowMap;
+    
+    //bind the shaders
+    shaders->use();
+    
+    //set the shader uniforms
+    shaders->setUniform("camera", gCameraFromLight.matrix());
+    shaders->setUniform("model", inst.transform);
+    
+    //bind VAO and draw
+    glBindVertexArrayOES(asset->vaoShadowMap);
+    glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+    
+    //unbind everything
+    glBindVertexArrayOES(0);
+    
+    shaders->stopUsing();
+}
+
+- (void)ShadowMapPass
+{
+    gShadowMapFBO.BindForWriting();
+    glClear(GL_DEPTH_BUFFER_BIT);
     
     std::list<ModelInstance>::const_iterator it;
-    for(it = gInstances.begin(); it != gInstances.end(); ++it){
+    for (it = gInstancesShadowMap.begin(); it != gInstancesShadowMap.end(); ++it) {
+        [self RenderInstanceMap:*it];
+    }
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer);
+    
+}
+
+- (void)RenderPass
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    gShadowMapFBO.BindForReading(GL_TEXTURE1);
+    //    RenderInstance1(gInstances.back());
+    
+    std::list<ModelInstance>::const_iterator it;
+    for (it = gInstances.begin(); it != gInstances.end(); ++it) {
         [self RenderInstance:*it];
     }
+}
+
+
+- (void)Render
+{
+    [self ShadowMapPass];
+    
+    [self RenderPass];
     
     [_context presentRenderbuffer:GL_RENDERBUFFER];
 }
