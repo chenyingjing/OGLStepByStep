@@ -543,6 +543,32 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     shaders->stopUsing();
 }
 
+- (void) RenderInstance1: (const ModelInstance&)inst
+{
+    ModelAsset* asset = inst.asset;
+    tdogl::Program* shaders = asset->shadersShadowMap;
+    
+    //bind the shaders
+    shaders->use();
+    
+    GLint gShadowMapSlot = glGetUniformLocation(shaders->object(), "gShadowMap");
+    glUniform1i(gShadowMapSlot, 1);
+    
+    
+    //set the shader uniforms
+    shaders->setUniform("camera", gCamera.matrix());
+    shaders->setUniform("model", inst.transform);
+    
+    //bind VAO and draw
+    glBindVertexArrayOES(asset->vaoShadowMap);
+    glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+    
+    //unbind everything
+    glBindVertexArrayOES(0);
+    
+    shaders->stopUsing();
+}
+
 - (void) RenderInstanceMap: (const ModelInstance&)inst
 {
     ModelAsset* asset = inst.asset;
@@ -585,12 +611,12 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     gShadowMapFBO.BindForReading(GL_TEXTURE1);
-    //    RenderInstance1(gInstances.back());
+    [self RenderInstance1:gInstances.back()];
     
-    std::list<ModelInstance>::const_iterator it;
-    for (it = gInstances.begin(); it != gInstances.end(); ++it) {
-        [self RenderInstance:*it];
-    }
+//    std::list<ModelInstance>::const_iterator it;
+//    for (it = gInstances.begin(); it != gInstances.end(); ++it) {
+//        [self RenderInstance:*it];
+//    }
 }
 
 
@@ -611,6 +637,7 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     //don't go over 360 degrees
     while(gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
     gInstances.front().transform = glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0,1,0));
+    gInstancesShadowMap.front().transform = gInstances.front().transform;
 
 
     //move position of camera based on WASD keys
@@ -634,6 +661,7 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     if(self.lightPositionButton.highlighted) {
         gLights[0].position = glm::vec4(gCamera.position(), 1.0);
         gLights[0].coneDirection = gCamera.forward();
+        gCameraFromLight = gCamera;
     }
     
     if(self.lightRedButton.highlighted)
