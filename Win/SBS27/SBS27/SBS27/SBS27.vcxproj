@@ -164,7 +164,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="lighting_technique.h" />
+    <ClInclude Include="billboard_list.h" />
+    <ClInclude Include="billboard_technique.h" />
     <ClInclude Include="mesh.h" />
   </ItemGroup>
   <ItemGroup>
@@ -188,13 +189,15 @@
     <ClCompile Include="..\..\..\Common\pipeline.cpp" />
     <ClCompile Include="..\..\..\Common\random_texture.cpp" />
     <ClCompile Include="..\..\..\Common\technique.cpp" />
-    <ClCompile Include="lighting_technique.cpp" />
+    <ClCompile Include="billboard_list.cpp" />
+    <ClCompile Include="billboard_technique.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="SBS27.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="lighting.fs" />
-    <None Include="lighting.vs" />
+    <None Include="billboard.fs" />
+    <None Include="billboard.gs" />
+    <None Include="billboard.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

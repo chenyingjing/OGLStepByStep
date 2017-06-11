@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Tutorial 26 - Bump Mapping
+Tutorial 27 - Billboarding and the geometry shader
 */
 
 #include <math.h>
@@ -27,27 +27,26 @@ Tutorial 26 - Bump Mapping
 #include "ogldev_util.h"
 #include "ogldev_pipeline.h"
 #include "ogldev_camera.h"
-#include "lighting_technique.h"
+#include "ogldev_basic_lighting.h"
 #include "ogldev_glut_backend.h"
 #include "mesh.h"
+#include "billboard_list.h"
 
 #define WINDOW_WIDTH  1920
 #define WINDOW_HEIGHT 1200
 
 
-class Tutorial26 : public ICallbacks, public OgldevApp
+class Tutorial27 : public ICallbacks, public OgldevApp
 {
 public:
 
-	Tutorial26()
+	Tutorial27()
 	{
 		m_pLightingTechnique = NULL;
 		m_pGameCamera = NULL;
-		m_pSphereMesh = NULL;
-		m_scale = 0.0f;
+		m_pGround = NULL;
 		m_pTexture = NULL;
 		m_pNormalMap = NULL;
-		m_pTrivialNormalMap = NULL;
 
 		m_dirLight.AmbientIntensity = 0.2f;
 		m_dirLight.DiffuseIntensity = 0.8f;
@@ -59,32 +58,28 @@ public:
 		m_persProjInfo.Width = WINDOW_WIDTH;
 		m_persProjInfo.zNear = 1.0f;
 		m_persProjInfo.zFar = 100.0f;
-
-		//m_bumpMapEnabled = true;
-		m_bumpMapEnabled = false;
 	}
 
 
-	~Tutorial26()
+	~Tutorial27()
 	{
 		SAFE_DELETE(m_pLightingTechnique);
 		SAFE_DELETE(m_pGameCamera);
-		SAFE_DELETE(m_pSphereMesh);
+		SAFE_DELETE(m_pGround);
 		SAFE_DELETE(m_pTexture);
 		SAFE_DELETE(m_pNormalMap);
-		SAFE_DELETE(m_pTrivialNormalMap);
 	}
 
 
 	bool Init()
 	{
-		Vector3f Pos(0.5f, 1.025f, 0.25f);
+		Vector3f Pos(0.0f, 1.0f, -1.0f);
 		Vector3f Target(0.0f, -0.5f, 1.0f);
 		Vector3f Up(0.0, 1.0f, 0.0f);
 
 		m_pGameCamera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, Pos, Target, Up);
 
-		m_pLightingTechnique = new LightingTechnique();
+		m_pLightingTechnique = new BasicLightingTechnique();
 
 		if (!m_pLightingTechnique->Init()) {
 			printf("Error initializing the lighting technique\n");
@@ -94,12 +89,17 @@ public:
 		m_pLightingTechnique->Enable();
 		m_pLightingTechnique->SetDirectionalLight(m_dirLight);
 		m_pLightingTechnique->SetColorTextureUnit(0);
-		m_pLightingTechnique->SetNormalMapTextureUnit(2);
+		//   m_pLightingTechnique->SetNormalMapTextureUnit(2);
 
-		m_pSphereMesh = new Mesh();
+		m_pGround = new Mesh();
 
-		if (!m_pSphereMesh->LoadMesh("../../../Content/box.obj")) {
+		if (!m_pGround->LoadMesh("quad.obj")) {
 			return false;
+		}
+
+		if (!m_billboardList.Init("../../../Content/monster_hellknight.png")) {
+			return false;
+
 		}
 
 		m_pTexture = new Texture(GL_TEXTURE_2D, "../../../Content/bricks.jpg");
@@ -116,12 +116,6 @@ public:
 			return false;
 		}
 
-		m_pTrivialNormalMap = new Texture(GL_TEXTURE_2D, "../../../Content/normal_up.jpg");
-
-		if (!m_pTrivialNormalMap->Load()) {
-			return false;
-		}
-
 		return true;
 	}
 
@@ -135,33 +129,25 @@ public:
 	virtual void RenderSceneCB()
 	{
 		m_pGameCamera->OnRender();
-		m_scale += 0.001f;
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		m_pLightingTechnique->Enable();
 
+		m_pTexture->Bind(COLOR_TEXTURE_UNIT);
+		m_pNormalMap->Bind(NORMAL_TEXTURE_UNIT);
+
 		Pipeline p;
-		p.Rotate(0.0f, m_scale, 0.0f);
-		p.WorldPos(0.0f, 0.0f, 3.0f);
+		p.Scale(20.0f, 20.0f, 1.0f);
+		p.Rotate(90.0f, 0.0, 0.0f);
 		p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
 		p.SetPerspectiveProj(m_persProjInfo);
 
-		m_pTexture->Bind(COLOR_TEXTURE_UNIT);
-
-		if (m_bumpMapEnabled)
-		{
-			m_pNormalMap->Bind(NORMAL_TEXTURE_UNIT);
-		}
-		else
-		{
-			m_pTrivialNormalMap->Bind(NORMAL_TEXTURE_UNIT);
-		}
-
 		m_pLightingTechnique->SetWVP(p.GetWVPTrans());
 		m_pLightingTechnique->SetWorldMatrix(p.GetWorldTrans());
-		m_pSphereMesh->Render();
+		m_pGround->Render();
 
+		m_billboardList.Render(p.GetVPTrans(), m_pGameCamera->GetPos());
 		glutSwapBuffers();
 	}
 
@@ -172,9 +158,6 @@ public:
 		case OGLDEV_KEY_ESCAPE:
 		case OGLDEV_KEY_q:
 			GLUTBackendLeaveMainLoop();
-			break;
-		case OGLDEV_KEY_b:
-			m_bumpMapEnabled = !m_bumpMapEnabled;
 			break;
 		default:
 			m_pGameCamera->OnKeyboard(OgldevKey);
@@ -189,16 +172,14 @@ public:
 
 private:
 
-	LightingTechnique* m_pLightingTechnique;
+	BasicLightingTechnique* m_pLightingTechnique;
 	Camera* m_pGameCamera;
-	float m_scale;
 	DirectionalLight m_dirLight;
-	Mesh* m_pSphereMesh;
+	Mesh* m_pGround;
 	Texture* m_pTexture;
 	Texture* m_pNormalMap;
-	Texture* m_pTrivialNormalMap;
 	PersProjInfo m_persProjInfo;
-	bool m_bumpMapEnabled;
+	BillboardList m_billboardList;
 };
 
 
@@ -206,11 +187,11 @@ int main(int argc, char** argv)
 {
 	GLUTBackendInit(argc, argv, true, false);
 
-	if (!GLUTBackendCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false, "Tutorial 26")) {
+	if (!GLUTBackendCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false, "Tutorial 27")) {
 		return 1;
 	}
 
-	Tutorial26* pApp = new Tutorial26();
+	Tutorial27* pApp = new Tutorial27();
 
 	if (!pApp->Init()) {
 		return 1;
