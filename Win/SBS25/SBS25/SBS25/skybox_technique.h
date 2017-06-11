@@ -15,28 +15,28 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SHADOWMAPFBO_H
-#define	SHADOWMAPFBO_H
+#ifndef SKYBOX_TECHNIQUE_H
+#define	SKYBOX_TECHNIQUE_H
 
-#include <GL/glew.h>
+#include "technique.h"
+#include "ogldev_math_3d.h"
 
-class ShadowMapFBO
-{
+
+class SkyboxTechnique : public Technique {
 public:
-    ShadowMapFBO();
 
-    ~ShadowMapFBO();
+    SkyboxTechnique();
 
-    bool Init(unsigned int WindowWidth, unsigned int WindowHeight);
+    virtual bool Init();
 
-    void BindForWriting();
-
-    void BindForReading(GLenum TextureUnit);
+    void SetWVP(const Matrix4f& WVP);
+    void SetTextureUnit(unsigned int TextureUnit);
 
 private:
-    GLuint m_fbo;
-    GLuint m_shadowMap;
+
+    GLuint m_WVPLocation;
+    GLuint m_textureLocation;
 };
 
-#endif	/* SHADOWMAPFBO_H */
 
+#endif	/* SKYBOX_TECHNIQUE_H */

@@ -1,13 +1,12 @@
 #version 330                                                                        
                                                                                     
-in vec2 TexCoordOut;                                                                
-uniform sampler2D gShadowMap;                                                       
+in vec3 TexCoord0;                                                                  
                                                                                     
 out vec4 FragColor;                                                                 
                                                                                     
+uniform samplerCube gCubemapTexture;                                                
+                                                                                    
 void main()                                                                         
 {                                                                                   
-    float Depth = texture(gShadowMap, TexCoordOut).x;                               
-    Depth = 1.0 - (1.0 - Depth) * 25.0;                                             
-    FragColor = vec4(Depth);                                                        
+    FragColor = texture(gCubemapTexture, TexCoord0);                                
 }
