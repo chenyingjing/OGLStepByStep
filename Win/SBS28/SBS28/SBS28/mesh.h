@@ -74,7 +74,7 @@ private:
 
         ~MeshEntry();
 
-        void Init(const std::vector<Vertex>& Vertices,
+        bool Init(const std::vector<Vertex>& Vertices,
                   const std::vector<unsigned int>& Indices);
 
         GLuint VB;

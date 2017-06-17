@@ -164,11 +164,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="billboard_list.h" />
-    <ClInclude Include="billboard_technique.h" />
-    <ClInclude Include="mesh.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\..\Common\camera.cpp" />
     <ClCompile Include="..\..\..\Common\cubemap_texture.cpp" />
     <ClCompile Include="..\..\..\Common\glut_backend.cpp" />
@@ -189,15 +184,27 @@
     <ClCompile Include="..\..\..\Common\pipeline.cpp" />
     <ClCompile Include="..\..\..\Common\random_texture.cpp" />
     <ClCompile Include="..\..\..\Common\technique.cpp" />
-    <ClCompile Include="billboard_list.cpp" />
     <ClCompile Include="billboard_technique.cpp" />
     <ClCompile Include="mesh.cpp" />
+    <ClCompile Include="particle_system.cpp" />
+    <ClCompile Include="ps_update_technique.cpp" />
+    <ClCompile Include="random_texture.cpp" />
     <ClCompile Include="SBS28.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="billboard_technique.h" />
+    <ClInclude Include="mesh.h" />
+    <ClInclude Include="particle_system.h" />
+    <ClInclude Include="ps_update_technique.h" />
+    <ClInclude Include="random_texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="billboard.fs" />
     <None Include="billboard.gs" />
     <None Include="billboard.vs" />
+    <None Include="ps_update.fs" />
+    <None Include="ps_update.gs" />
+    <None Include="ps_update.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

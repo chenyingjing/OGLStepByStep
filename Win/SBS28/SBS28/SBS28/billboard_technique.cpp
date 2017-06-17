@@ -15,8 +15,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "ogldev_util.h"
 #include "billboard_technique.h"
+#include "ogldev_util.h"
+
+
 
 
 BillboardTechnique::BillboardTechnique()
@@ -49,14 +51,16 @@ bool BillboardTechnique::Init()
     m_VPLocation = GetUniformLocation("gVP");
     m_cameraPosLocation = GetUniformLocation("gCameraPos");
     m_colorMapLocation = GetUniformLocation("gColorMap");
+    m_billboardSizeLocation = GetUniformLocation("gBillboardSize");
 
     if (m_VPLocation == INVALID_UNIFORM_LOCATION ||
         m_cameraPosLocation == INVALID_UNIFORM_LOCATION ||
+        m_billboardSizeLocation == INVALID_UNIFORM_LOCATION ||
         m_colorMapLocation == INVALID_UNIFORM_LOCATION) {
         return false;        
     }
     
-    return true;
+    return GLCheckError();
 }
     
     
@@ -75,4 +79,10 @@ void BillboardTechnique::SetCameraPosition(const Vector3f& Pos)
 void BillboardTechnique::SetColorTextureUnit(unsigned int TextureUnit)
 {
     glUniform1i(m_colorMapLocation, TextureUnit);
+}
+
+
+void BillboardTechnique::SetBillboardSize(float BillboardSize)
+{
+    glUniform1f(m_billboardSizeLocation, BillboardSize);
 }
