@@ -39,6 +39,7 @@ namespace tdogl {
          @see tdogl::Shader
          */
         Program(const std::vector<Shader>& shaders);
+        Program(const std::vector<Shader>& shaders, GLsizei count, const GLchar** Varyings, GLenum bufferMode);
         ~Program();
         
         

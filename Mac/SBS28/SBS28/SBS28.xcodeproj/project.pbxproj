@@ -135,6 +135,14 @@
 		235648D31EF62A5500A2C556 /* hellknight.fs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D01EF62A5500A2C556 /* hellknight.fs */; };
 		235648D41EF62A5500A2C556 /* hellknight.gs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D11EF62A5500A2C556 /* hellknight.gs */; };
 		235648D51EF62A5500A2C556 /* hellknight.vs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D21EF62A5500A2C556 /* hellknight.vs */; };
+		235648D91EF6513A00A2C556 /* ps_update.fs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D61EF6513A00A2C556 /* ps_update.fs */; };
+		235648DA1EF6513A00A2C556 /* ps_update.gs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D71EF6513A00A2C556 /* ps_update.gs */; };
+		235648DB1EF6513A00A2C556 /* ps_update.vs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D81EF6513A00A2C556 /* ps_update.vs */; };
+		235648DE1EF66F4000A2C556 /* random_texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235648DC1EF66F4000A2C556 /* random_texture.cpp */; };
+		235648E21EF6741200A2C556 /* billboard.fs in Resources */ = {isa = PBXBuildFile; fileRef = 235648DF1EF6741200A2C556 /* billboard.fs */; };
+		235648E31EF6741200A2C556 /* billboard.gs in Resources */ = {isa = PBXBuildFile; fileRef = 235648E01EF6741200A2C556 /* billboard.gs */; };
+		235648E41EF6741200A2C556 /* billboard.vs in Resources */ = {isa = PBXBuildFile; fileRef = 235648E11EF6741200A2C556 /* billboard.vs */; };
+		235648E61EF6763400A2C556 /* fireworks_red.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 235648E51EF6763400A2C556 /* fireworks_red.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -418,6 +426,15 @@
 		235648D01EF62A5500A2C556 /* hellknight.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = hellknight.fs; sourceTree = "<group>"; };
 		235648D11EF62A5500A2C556 /* hellknight.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = hellknight.gs; sourceTree = "<group>"; };
 		235648D21EF62A5500A2C556 /* hellknight.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = hellknight.vs; sourceTree = "<group>"; };
+		235648D61EF6513A00A2C556 /* ps_update.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ps_update.fs; sourceTree = "<group>"; };
+		235648D71EF6513A00A2C556 /* ps_update.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ps_update.gs; sourceTree = "<group>"; };
+		235648D81EF6513A00A2C556 /* ps_update.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ps_update.vs; sourceTree = "<group>"; };
+		235648DC1EF66F4000A2C556 /* random_texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = random_texture.cpp; sourceTree = "<group>"; };
+		235648DD1EF66F4000A2C556 /* random_texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = random_texture.h; sourceTree = "<group>"; };
+		235648DF1EF6741200A2C556 /* billboard.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboard.fs; sourceTree = "<group>"; };
+		235648E01EF6741200A2C556 /* billboard.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboard.gs; sourceTree = "<group>"; };
+		235648E11EF6741200A2C556 /* billboard.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboard.vs; sourceTree = "<group>"; };
+		235648E51EF6763400A2C556 /* fireworks_red.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fireworks_red.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -456,6 +473,9 @@
 		235647181EF613DB00A2C556 /* SBS28 */ = {
 			isa = PBXGroup;
 			children = (
+				235648E51EF6763400A2C556 /* fireworks_red.jpg */,
+				235648DC1EF66F4000A2C556 /* random_texture.cpp */,
+				235648DD1EF66F4000A2C556 /* random_texture.h */,
 				235648CF1EF62A5500A2C556 /* shader */,
 				2356472D1EF6148D00A2C556 /* filePath.h */,
 				2356472E1EF6148D00A2C556 /* filePath.mm */,
@@ -787,6 +807,12 @@
 		235648CF1EF62A5500A2C556 /* shader */ = {
 			isa = PBXGroup;
 			children = (
+				235648DF1EF6741200A2C556 /* billboard.fs */,
+				235648E01EF6741200A2C556 /* billboard.gs */,
+				235648E11EF6741200A2C556 /* billboard.vs */,
+				235648D61EF6513A00A2C556 /* ps_update.fs */,
+				235648D71EF6513A00A2C556 /* ps_update.gs */,
+				235648D81EF6513A00A2C556 /* ps_update.vs */,
 				235648D01EF62A5500A2C556 /* hellknight.fs */,
 				235648D11EF62A5500A2C556 /* hellknight.gs */,
 				235648D21EF62A5500A2C556 /* hellknight.vs */,
@@ -857,6 +883,7 @@
 				235648681EF6148D00A2C556 /* type_mat4x4.inl in Resources */,
 				235648511EF6148D00A2C556 /* func_matrix.inl in Resources */,
 				235648B71EF6148D00A2C556 /* type_aligned.inl in Resources */,
+				235648E61EF6763400A2C556 /* fireworks_red.jpg in Resources */,
 				2356487F1EF6148D00A2C556 /* type_precision.inl in Resources */,
 				2356485E1EF6148D00A2C556 /* type_half.inl in Resources */,
 				235648771EF6148D00A2C556 /* matrix_inverse.inl in Resources */,
@@ -867,6 +894,7 @@
 				235648C41EF6148D00A2C556 /* wooden-crate.jpg in Resources */,
 				235648571EF6148D00A2C556 /* intrinsic_exponential.inl in Resources */,
 				235648991EF6148D00A2C556 /* matrix_cross_product.inl in Resources */,
+				235648DB1EF6513A00A2C556 /* ps_update.vs in Resources */,
 				235648A51EF6148D00A2C556 /* optimum_pow.inl in Resources */,
 				235648521EF6148D00A2C556 /* func_packing.inl in Resources */,
 				2356484E1EF6148D00A2C556 /* func_exponential.inl in Resources */,
@@ -875,6 +903,7 @@
 				235648581EF6148D00A2C556 /* intrinsic_geometric.inl in Resources */,
 				2356488D1EF6148D00A2C556 /* extend.inl in Resources */,
 				235648721EF6148D00A2C556 /* color_space.inl in Resources */,
+				235648E31EF6741200A2C556 /* billboard.gs in Resources */,
 				235648741EF6148D00A2C556 /* epsilon.inl in Resources */,
 				235648B51EF6148D00A2C556 /* transform.inl in Resources */,
 				235648631EF6148D00A2C556 /* type_mat3x2.inl in Resources */,
@@ -885,6 +914,7 @@
 				2356489C1EF6148D00A2C556 /* matrix_major_storage.inl in Resources */,
 				2356486E1EF6148D00A2C556 /* type_vec4_avx.inl in Resources */,
 				2356484F1EF6148D00A2C556 /* func_geometric.inl in Resources */,
+				235648D91EF6513A00A2C556 /* ps_update.fs in Resources */,
 				2356488C1EF6148D00A2C556 /* euler_angles.inl in Resources */,
 				235648891EF6148D00A2C556 /* compatibility.inl in Resources */,
 				235648BC1EF6148D00A2C556 /* monster_hellknight.png in Resources */,
@@ -901,6 +931,7 @@
 				235648B21EF6148D00A2C556 /* spline.inl in Resources */,
 				2356486A1EF6148D00A2C556 /* type_vec1.inl in Resources */,
 				235648711EF6148D00A2C556 /* bitfield.inl in Resources */,
+				235648DA1EF6513A00A2C556 /* ps_update.gs in Resources */,
 				235648911EF6148D00A2C556 /* fast_trigonometry.inl in Resources */,
 				235648B11EF6148D00A2C556 /* simd_vec4.inl in Resources */,
 				235648791EF6148D00A2C556 /* noise.inl in Resources */,
@@ -910,6 +941,7 @@
 				235648641EF6148D00A2C556 /* type_mat3x3.inl in Resources */,
 				2356486F1EF6148D00A2C556 /* type_vec4_avx2.inl in Resources */,
 				235648D31EF62A5500A2C556 /* hellknight.fs in Resources */,
+				235648E41EF6741200A2C556 /* billboard.vs in Resources */,
 				2356488E1EF6148D00A2C556 /* extented_min_max.inl in Resources */,
 				235648A01EF6148D00A2C556 /* mixed_product.inl in Resources */,
 				2356487B1EF6148D00A2C556 /* quaternion.inl in Resources */,
@@ -929,6 +961,7 @@
 				235648531EF6148D00A2C556 /* func_trigonometric.inl in Resources */,
 				235648821EF6148D00A2C556 /* vec1.inl in Resources */,
 				235648751EF6148D00A2C556 /* integer.inl in Resources */,
+				235648E21EF6741200A2C556 /* billboard.fs in Resources */,
 				235648B81EF6148D00A2C556 /* vector_angle.inl in Resources */,
 				235648A21EF6148D00A2C556 /* normal.inl in Resources */,
 				2356488A1EF6148D00A2C556 /* component_wise.inl in Resources */,
@@ -985,6 +1018,7 @@
 				235648C21EF6148D00A2C556 /* Texture.cpp in Sources */,
 				235648C01EF6148D00A2C556 /* Program.cpp in Sources */,
 				235648471EF6148D00A2C556 /* filePath.mm in Sources */,
+				235648DE1EF66F4000A2C556 /* random_texture.cpp in Sources */,
 				235648BD1EF6148D00A2C556 /* OGLSBS28.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

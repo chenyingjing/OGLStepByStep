@@ -15,17 +15,43 @@
 #include<list>
 #include <sstream>
 #include <string>
+#include "random_texture.h"
 
 #define NUM_ROWS 10
 #define NUM_COLUMNS 10
+
+#define MAX_PARTICLES 1000
+#define PARTICLE_LIFETIME 10.0f
+
+#define PARTICLE_TYPE_LAUNCHER 0.0f
+#define PARTICLE_TYPE_SHELL 1.0f
+#define PARTICLE_TYPE_SECONDARY_SHELL 2.0f
+
+//bool m_isFirst;
+//unsigned int m_currVB;
+//unsigned int m_currTFB;
+GLuint m_particleBuffer[2];
+GLuint m_transformFeedback[2];
+RandomTexture m_randomTexture;
+
+struct Particle
+{
+    float Type;
+    glm::vec3 Pos;
+    glm::vec3 Vel;
+    float LifetimeMillis;
+};
+
 
 float gDegreesRotated = 0.0f;
 tdogl::Camera gCamera;
 double gScrollY = 0.0;
 
 struct ModelAsset {
-	tdogl::Program* shaders;
+	tdogl::Program* psUpdateShaders;
+    tdogl::Program* shaders;
 	tdogl::Texture* texture;
+    GLuint textureObj;
 	GLuint vbo;
 	GLuint vao;
 	GLenum drawType;
@@ -50,6 +76,7 @@ struct Light {
 };
 
 ModelAsset gHellKnight;
+ModelAsset gFirework;
 std::list<ModelInstance> gInstances;
 
 std::vector<Light> gLights;
@@ -67,6 +94,24 @@ static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFi
 	shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile2, GL_GEOMETRY_SHADER));
 	shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile3, GL_FRAGMENT_SHADER));
 	return new tdogl::Program(shaders);
+}
+
+static tdogl::Program* LoadPsUpdateShaders(const char *shaderFile1, const char *shaderFile2, const char *shaderFile3) {
+    std::vector<tdogl::Shader> shaders;
+    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile1, GL_VERTEX_SHADER));
+    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile2, GL_GEOMETRY_SHADER));
+    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile3, GL_FRAGMENT_SHADER));
+    
+    const GLchar* Varyings[4];
+    Varyings[0] = "Type1";
+    Varyings[1] = "Position1";
+    Varyings[2] = "Velocity1";
+    Varyings[3] = "Age1";
+    
+    GLsizei count = 4;
+    GLenum bufferMode = GL_INTERLEAVED_ATTRIBS;
+    
+    return new tdogl::Program(shaders, count, Varyings, bufferMode);
 }
 
 static tdogl::Texture* LoadTexture(const char *textureFile) {
@@ -115,6 +160,57 @@ static void LoadHellKnightAsset() {
 	glBindVertexArray(0);
 }
 
+static void LoadFireworkAsset() {
+    Particle Particles[MAX_PARTICLES] = {0};
+    
+    Particles[0].Type = PARTICLE_TYPE_LAUNCHER;
+    Particles[0].Pos = glm::vec3(0, 0, -2);
+    Particles[0].Vel = glm::vec3(0.0f, 0.0001f, 0.0f);
+    Particles[0].LifetimeMillis = 0.0f;
+    
+    glGenTransformFeedbacks(2, m_transformFeedback);
+    glGenBuffers(2, m_particleBuffer);
+    
+    for (unsigned int i = 0; i < 2 ; i++) {
+        glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, m_transformFeedback[i]);
+        glBindBuffer(GL_ARRAY_BUFFER, m_particleBuffer[i]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(Particles), Particles, GL_DYNAMIC_DRAW);
+        glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, m_particleBuffer[i]);
+    }
+    
+//    if (!m_updateTechnique.Init()) {
+//        return false;
+//    }
+
+    gFirework.psUpdateShaders = LoadPsUpdateShaders("ps_update.vs",
+                                      "ps_update.gs", "ps_update.fs");
+    
+    gFirework.psUpdateShaders->use();
+    gFirework.psUpdateShaders->setUniform("gRandomTexture", 3);//TEXTURE3
+    gFirework.psUpdateShaders->setUniform("gLauncherLifetime", 100.0f);
+    gFirework.psUpdateShaders->setUniform("gShellLifetime", 10000.0f);
+    gFirework.psUpdateShaders->setUniform("gSecondaryShellLifetime", 7000.0f);
+    
+    if (!m_randomTexture.InitRandomTexture(1000)) {
+        assert(false);
+    }
+    gFirework.textureObj = m_randomTexture.m_textureObj;
+    m_randomTexture.Bind(GL_TEXTURE3);
+    
+    gFirework.shaders = LoadShaders("billboard.vs", "billboard.gs", "billboard.fs");
+    gFirework.shaders->use();
+    gFirework.shaders->setUniform("gColorMap", 0);//TEXTURE0
+    gFirework.shaders->setUniform("gBillboardSize", 0.01f);
+    gFirework.texture = LoadTexture("fireworks_red.jpg");
+    
+    gFirework.drawType = GL_POINTS;
+    gFirework.drawStart = 0;
+    gFirework.drawCount = MAX_PARTICLES;
+    gFirework.shininess = 80.0;
+    gFirework.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    
+}
+
 
 // convenience function that returns a translation matrix
 glm::mat4 translate(GLfloat x, GLfloat y, GLfloat z) {
@@ -128,10 +224,10 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 static void CreateInstances() {
-	ModelInstance dot;
-	dot.asset = &gHellKnight;
-	dot.transform = glm::mat4();
-	gInstances.push_back(dot);
+	ModelInstance hellKnightInstance;
+	hellKnightInstance.asset = &gHellKnight;
+	hellKnightInstance.transform = glm::mat4();
+	gInstances.push_back(hellKnightInstance);
 }
 
 // records how far the y axis has been scrolled
@@ -286,6 +382,9 @@ int main(void)
 		glfwTerminate();
 		return -1;
 	}
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR)
+        std::cerr << "OpenGL Error " << error << std::endl;
 
 	// print out some info about the graphics drivers
 	std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
@@ -300,6 +399,7 @@ int main(void)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	LoadHellKnightAsset();
+    LoadFireworkAsset();
 
 	CreateInstances();
 
