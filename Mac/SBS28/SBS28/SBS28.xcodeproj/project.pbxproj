@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		235648471EF6148D00A2C556 /* filePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2356472E1EF6148D00A2C556 /* filePath.mm */; };
-		235648481EF6148D00A2C556 /* fragment-shader.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2356472F1EF6148D00A2C556 /* fragment-shader.txt */; };
-		235648491EF6148D00A2C556 /* geometry-shader.txt in Resources */ = {isa = PBXBuildFile; fileRef = 235647301EF6148D00A2C556 /* geometry-shader.txt */; };
 		2356484A1EF6148D00A2C556 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = 235647311EF6148D00A2C556 /* glew.c */; };
 		2356484B1EF6148D00A2C556 /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 235647351EF6148D00A2C556 /* CMakeLists.txt */; };
 		2356484D1EF6148D00A2C556 /* func_common.inl in Resources */ = {isa = PBXBuildFile; fileRef = 235647401EF6148D00A2C556 /* func_common.inl */; };
@@ -129,20 +127,20 @@
 		235648C01EF6148D00A2C556 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2356483F1EF6148D00A2C556 /* Program.cpp */; };
 		235648C11EF6148D00A2C556 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235648411EF6148D00A2C556 /* Shader.cpp */; };
 		235648C21EF6148D00A2C556 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235648431EF6148D00A2C556 /* Texture.cpp */; };
-		235648C31EF6148D00A2C556 /* vertex-shader.txt in Resources */ = {isa = PBXBuildFile; fileRef = 235648451EF6148D00A2C556 /* vertex-shader.txt */; };
 		235648C41EF6148D00A2C556 /* wooden-crate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 235648461EF6148D00A2C556 /* wooden-crate.jpg */; };
 		235648C71EF614F500A2C556 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235648C61EF614F500A2C556 /* Cocoa.framework */; };
 		235648C91EF6150400A2C556 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235648C81EF6150400A2C556 /* CoreVideo.framework */; };
 		235648CB1EF6151300A2C556 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235648CA1EF6151300A2C556 /* OpenGL.framework */; };
 		235648CD1EF6152500A2C556 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235648CC1EF6152500A2C556 /* IOKit.framework */; };
+		235648D31EF62A5500A2C556 /* hellknight.fs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D01EF62A5500A2C556 /* hellknight.fs */; };
+		235648D41EF62A5500A2C556 /* hellknight.gs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D11EF62A5500A2C556 /* hellknight.gs */; };
+		235648D51EF62A5500A2C556 /* hellknight.vs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D21EF62A5500A2C556 /* hellknight.vs */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		235647161EF613DB00A2C556 /* SBS28.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SBS28.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2356472D1EF6148D00A2C556 /* filePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filePath.h; sourceTree = "<group>"; };
 		2356472E1EF6148D00A2C556 /* filePath.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = filePath.mm; sourceTree = "<group>"; };
-		2356472F1EF6148D00A2C556 /* fragment-shader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "fragment-shader.txt"; sourceTree = "<group>"; };
-		235647301EF6148D00A2C556 /* geometry-shader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "geometry-shader.txt"; sourceTree = "<group>"; };
 		235647311EF6148D00A2C556 /* glew.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glew.c; sourceTree = "<group>"; };
 		235647321EF6148D00A2C556 /* glew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glew.h; sourceTree = "<group>"; };
 		235647331EF6148D00A2C556 /* glfw3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glfw3.h; sourceTree = "<group>"; };
@@ -412,12 +410,14 @@
 		235648421EF6148D00A2C556 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
 		235648431EF6148D00A2C556 /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
 		235648441EF6148D00A2C556 /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
-		235648451EF6148D00A2C556 /* vertex-shader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "vertex-shader.txt"; sourceTree = "<group>"; };
 		235648461EF6148D00A2C556 /* wooden-crate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "wooden-crate.jpg"; sourceTree = "<group>"; };
 		235648C61EF614F500A2C556 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		235648C81EF6150400A2C556 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		235648CA1EF6151300A2C556 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		235648CC1EF6152500A2C556 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		235648D01EF62A5500A2C556 /* hellknight.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = hellknight.fs; sourceTree = "<group>"; };
+		235648D11EF62A5500A2C556 /* hellknight.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = hellknight.gs; sourceTree = "<group>"; };
+		235648D21EF62A5500A2C556 /* hellknight.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = hellknight.vs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -456,10 +456,9 @@
 		235647181EF613DB00A2C556 /* SBS28 */ = {
 			isa = PBXGroup;
 			children = (
+				235648CF1EF62A5500A2C556 /* shader */,
 				2356472D1EF6148D00A2C556 /* filePath.h */,
 				2356472E1EF6148D00A2C556 /* filePath.mm */,
-				2356472F1EF6148D00A2C556 /* fragment-shader.txt */,
-				235647301EF6148D00A2C556 /* geometry-shader.txt */,
 				235647311EF6148D00A2C556 /* glew.c */,
 				235647321EF6148D00A2C556 /* glew.h */,
 				235647331EF6148D00A2C556 /* glfw3.h */,
@@ -469,7 +468,6 @@
 				235648381EF6148D00A2C556 /* OGLSBS28.cpp */,
 				235648391EF6148D00A2C556 /* stb_image.h */,
 				2356483A1EF6148D00A2C556 /* tdogl */,
-				235648451EF6148D00A2C556 /* vertex-shader.txt */,
 				235648461EF6148D00A2C556 /* wooden-crate.jpg */,
 			);
 			path = SBS28;
@@ -786,6 +784,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		235648CF1EF62A5500A2C556 /* shader */ = {
+			isa = PBXGroup;
+			children = (
+				235648D01EF62A5500A2C556 /* hellknight.fs */,
+				235648D11EF62A5500A2C556 /* hellknight.gs */,
+				235648D21EF62A5500A2C556 /* hellknight.vs */,
+			);
+			path = shader;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -852,6 +860,7 @@
 				2356487F1EF6148D00A2C556 /* type_precision.inl in Resources */,
 				2356485E1EF6148D00A2C556 /* type_half.inl in Resources */,
 				235648771EF6148D00A2C556 /* matrix_inverse.inl in Resources */,
+				235648D41EF62A5500A2C556 /* hellknight.gs in Resources */,
 				235648671EF6148D00A2C556 /* type_mat4x3.inl in Resources */,
 				235648601EF6148D00A2C556 /* type_mat2x2.inl in Resources */,
 				235648731EF6148D00A2C556 /* constants.inl in Resources */,
@@ -861,7 +870,7 @@
 				235648A51EF6148D00A2C556 /* optimum_pow.inl in Resources */,
 				235648521EF6148D00A2C556 /* func_packing.inl in Resources */,
 				2356484E1EF6148D00A2C556 /* func_exponential.inl in Resources */,
-				235648C31EF6148D00A2C556 /* vertex-shader.txt in Resources */,
+				235648D51EF62A5500A2C556 /* hellknight.vs in Resources */,
 				235648921EF6148D00A2C556 /* gradient_paint.inl in Resources */,
 				235648581EF6148D00A2C556 /* intrinsic_geometric.inl in Resources */,
 				2356488D1EF6148D00A2C556 /* extend.inl in Resources */,
@@ -900,6 +909,7 @@
 				235648A71EF6148D00A2C556 /* perpendicular.inl in Resources */,
 				235648641EF6148D00A2C556 /* type_mat3x3.inl in Resources */,
 				2356486F1EF6148D00A2C556 /* type_vec4_avx2.inl in Resources */,
+				235648D31EF62A5500A2C556 /* hellknight.fs in Resources */,
 				2356488E1EF6148D00A2C556 /* extented_min_max.inl in Resources */,
 				235648A01EF6148D00A2C556 /* mixed_product.inl in Resources */,
 				2356487B1EF6148D00A2C556 /* quaternion.inl in Resources */,
@@ -919,7 +929,6 @@
 				235648531EF6148D00A2C556 /* func_trigonometric.inl in Resources */,
 				235648821EF6148D00A2C556 /* vec1.inl in Resources */,
 				235648751EF6148D00A2C556 /* integer.inl in Resources */,
-				235648481EF6148D00A2C556 /* fragment-shader.txt in Resources */,
 				235648B81EF6148D00A2C556 /* vector_angle.inl in Resources */,
 				235648A21EF6148D00A2C556 /* normal.inl in Resources */,
 				2356488A1EF6148D00A2C556 /* component_wise.inl in Resources */,
@@ -942,7 +951,6 @@
 				235648901EF6148D00A2C556 /* fast_square_root.inl in Resources */,
 				235648B01EF6148D00A2C556 /* simd_quat.inl in Resources */,
 				235648871EF6148D00A2C556 /* color_space_YCoCg.inl in Resources */,
-				235648491EF6148D00A2C556 /* geometry-shader.txt in Resources */,
 				2356486D1EF6148D00A2C556 /* type_vec4.inl in Resources */,
 				235648541EF6148D00A2C556 /* func_vector_relational.inl in Resources */,
 				2356489A1EF6148D00A2C556 /* matrix_decompose.inl in Resources */,
@@ -1128,6 +1136,7 @@
 				2356472C1EF613DB00A2C556 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

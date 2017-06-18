@@ -49,7 +49,7 @@ struct Light {
 	glm::vec3 coneDirection;
 };
 
-ModelAsset gWoodenCrate;
+ModelAsset gHellKnight;
 std::list<ModelInstance> gInstances;
 
 std::vector<Light> gLights;
@@ -76,21 +76,21 @@ static tdogl::Texture* LoadTexture(const char *textureFile) {
 }
 
 static void LoadHellKnightAsset() {
-	//gWoodenCrate.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
-	gWoodenCrate.shaders = LoadShaders("vertex-shader.txt",
-		"geometry-shader.txt", "fragment-shader.txt");
-	gWoodenCrate.drawType = GL_POINTS;
-	gWoodenCrate.drawStart = 0;
-	gWoodenCrate.drawCount = NUM_ROWS * NUM_COLUMNS;
-	gWoodenCrate.texture = LoadTexture("monster_hellknight.png");
-	gWoodenCrate.shininess = 80.0;
-	gWoodenCrate.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+	//gHellKnight.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
+	gHellKnight.shaders = LoadShaders("hellknight.vs",
+		"hellknight.gs", "hellknight.fs");
+	gHellKnight.drawType = GL_POINTS;
+	gHellKnight.drawStart = 0;
+	gHellKnight.drawCount = NUM_ROWS * NUM_COLUMNS;
+	gHellKnight.texture = LoadTexture("monster_hellknight.png");
+	gHellKnight.shininess = 80.0;
+	gHellKnight.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
 	
-	glGenBuffers(1, &gWoodenCrate.vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, gWoodenCrate.vbo);
+	glGenBuffers(1, &gHellKnight.vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, gHellKnight.vbo);
 
-	glGenVertexArrays(1, &gWoodenCrate.vao);
-	glBindVertexArray(gWoodenCrate.vao);
+	glGenVertexArrays(1, &gHellKnight.vao);
+	glBindVertexArray(gHellKnight.vao);
 
 	glm::vec3 Positions[NUM_ROWS * NUM_COLUMNS];
 
@@ -104,12 +104,12 @@ static void LoadHellKnightAsset() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Positions), &Positions[0], GL_STATIC_DRAW);
 
 	// connect the xyz to the "vert" attribute of the vertex shader
-	glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vert"));
-	glVertexAttribPointer(gWoodenCrate.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(gHellKnight.shaders->attrib("vert"));
+	glVertexAttribPointer(gHellKnight.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-	//glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertTexCoord"));
-	//glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+	//glEnableVertexAttribArray(gHellKnight.shaders->attrib("vertTexCoord"));
+	//glVertexAttribPointer(gHellKnight.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
 
 	// unbind the VAO
 	glBindVertexArray(0);
@@ -129,7 +129,7 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 
 static void CreateInstances() {
 	ModelInstance dot;
-	dot.asset = &gWoodenCrate;
+	dot.asset = &gHellKnight;
 	dot.transform = glm::mat4();
 	gInstances.push_back(dot);
 }
