@@ -93,7 +93,7 @@ bool ParticleSystem::InitParticleSystem(const Vector3f& Pos)
     m_updateTechnique.SetRandomTextureUnit(RANDOM_TEXTURE_UNIT_INDEX);
     m_updateTechnique.SetLauncherLifetime(100.0f);
     m_updateTechnique.SetShellLifetime(10000.0f);
-    m_updateTechnique.SetSecondaryShellLifetime(2500.0f);
+    m_updateTechnique.SetSecondaryShellLifetime(7000.0f);
     
     if (!m_randomTexture.InitRandomTexture(1000)) {
         return false;

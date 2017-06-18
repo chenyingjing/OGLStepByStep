@@ -114,7 +114,7 @@ public:
 			return false;
 		}
 
-		Vector3f ParticleSystemPos = Vector3f(0.0f, 0.0f, 1.0f);
+		Vector3f ParticleSystemPos = Vector3f(0.0f, 0.0f, 2.0f);
 
 		return m_particleSystem.InitParticleSystem(ParticleSystemPos);
 	}
