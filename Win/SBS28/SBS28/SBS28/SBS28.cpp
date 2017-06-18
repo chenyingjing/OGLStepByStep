@@ -83,36 +83,36 @@ public:
 
 		m_pGameCamera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, Pos, Target, Up);
 
-		m_pLightingTechnique = new BasicLightingTechnique();
+		//m_pLightingTechnique = new BasicLightingTechnique();
 
-		if (!m_pLightingTechnique->Init()) {
-			printf("Error initializing the lighting technique\n");
-			return false;
-		}
+		//if (!m_pLightingTechnique->Init()) {
+		//	printf("Error initializing the lighting technique\n");
+		//	return false;
+		//}
 
-		m_pLightingTechnique->Enable();
-		m_pLightingTechnique->SetDirectionalLight(m_dirLight);
-		m_pLightingTechnique->SetColorTextureUnit(COLOR_TEXTURE_UNIT_INDEX);
+		//m_pLightingTechnique->Enable();
+		//m_pLightingTechnique->SetDirectionalLight(m_dirLight);
+		//m_pLightingTechnique->SetColorTextureUnit(COLOR_TEXTURE_UNIT_INDEX);
 
-		m_pGround = new Mesh();
+		//m_pGround = new Mesh();
 
-		if (!m_pGround->LoadMesh("quad.obj")) {
-			return false;
-		}
+		//if (!m_pGround->LoadMesh("quad.obj")) {
+		//	return false;
+		//}
 
-		m_pTexture = new Texture(GL_TEXTURE_2D, "../../../Content/bricks.jpg");
+		//m_pTexture = new Texture(GL_TEXTURE_2D, "../../../Content/bricks.jpg");
 
-		if (!m_pTexture->Load()) {
-			return false;
-		}
+		//if (!m_pTexture->Load()) {
+		//	return false;
+		//}
 
-		m_pTexture->Bind(COLOR_TEXTURE_UNIT);
+		//m_pTexture->Bind(COLOR_TEXTURE_UNIT);
 
-		m_pNormalMap = new Texture(GL_TEXTURE_2D, "../../../Content/normal_map.jpg");
+		//m_pNormalMap = new Texture(GL_TEXTURE_2D, "../../../Content/normal_map.jpg");
 
-		if (!m_pNormalMap->Load()) {
-			return false;
-		}
+		//if (!m_pNormalMap->Load()) {
+		//	return false;
+		//}
 
 		Vector3f ParticleSystemPos = Vector3f(0.0f, 0.0f, 2.0f);
 
@@ -136,10 +136,10 @@ public:
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		m_pLightingTechnique->Enable();
+		//m_pLightingTechnique->Enable();
 
-		m_pTexture->Bind(COLOR_TEXTURE_UNIT);
-		m_pNormalMap->Bind(NORMAL_TEXTURE_UNIT);
+		//m_pTexture->Bind(COLOR_TEXTURE_UNIT);
+		//m_pNormalMap->Bind(NORMAL_TEXTURE_UNIT);
 
 		Pipeline p;
 		p.Scale(20.0f, 20.0f, 1.0f);
@@ -147,10 +147,10 @@ public:
 		p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
 		p.SetPerspectiveProj(m_persProjInfo);
 
-		m_pLightingTechnique->SetWVP(p.GetWVPTrans());
-		m_pLightingTechnique->SetWorldMatrix(p.GetWorldTrans());
+		//m_pLightingTechnique->SetWVP(p.GetWVPTrans());
+		//m_pLightingTechnique->SetWorldMatrix(p.GetWorldTrans());
 
-		m_pGround->Render();
+		//m_pGround->Render();
 
 		m_particleSystem.Render(DeltaTimeMillis, p.GetVPTrans(), m_pGameCamera->GetPos());
 
