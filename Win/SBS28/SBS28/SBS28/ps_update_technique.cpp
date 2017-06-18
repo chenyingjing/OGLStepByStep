@@ -43,9 +43,9 @@ bool PSUpdateTechnique::Init()
 		return false;
 	}
 
-	if (!Finalize()) {
-		return false;
-	}
+	//if (!Finalize()) {
+	//	return false;
+	//}
 
     const GLchar* Varyings[4];    
     Varyings[0] = "Type1";
