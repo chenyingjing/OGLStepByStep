@@ -78,6 +78,7 @@ struct Light {
 ModelAsset gHellKnight;
 ModelAsset gFirework;
 std::list<ModelInstance> gInstances;
+std::list<ModelInstance> gParticleInstances;
 
 std::vector<Light> gLights;
 
@@ -228,6 +229,12 @@ static void CreateInstances() {
 	hellKnightInstance.asset = &gHellKnight;
 	hellKnightInstance.transform = glm::mat4();
 	gInstances.push_back(hellKnightInstance);
+    
+    ModelInstance fireworkInstance;
+    fireworkInstance.asset = &gFirework;
+    fireworkInstance.transform = glm::mat4();
+    gParticleInstances.push_back(fireworkInstance);
+
 }
 
 // records how far the y axis has been scrolled
@@ -303,6 +310,9 @@ const GLchar* ReadShader(const char* filename)
     return source;
 }
 
+static void RenderParticleInstance(const ModelInstance& inst) {
+
+}
 
 static void RenderInstance(const ModelInstance& inst) {
 	ModelAsset* asset = inst.asset;
@@ -337,10 +347,15 @@ void Render(GLFWwindow* window)
 	// clear everything
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	std::list<ModelInstance>::const_iterator it;
-	for (it = gInstances.begin(); it != gInstances.end(); ++it) {
-		RenderInstance(*it);
-	}
+//	std::list<ModelInstance>::const_iterator it;
+//	for (it = gInstances.begin(); it != gInstances.end(); ++it) {
+//		RenderInstance(*it);
+//	}
+    
+    std::list<ModelInstance>::const_iterator it;
+    for (it = gParticleInstances.begin(); it != gParticleInstances.end(); ++it) {
+        RenderParticleInstance(*it);
+    }
 
 	glfwSwapBuffers(window);
 }
