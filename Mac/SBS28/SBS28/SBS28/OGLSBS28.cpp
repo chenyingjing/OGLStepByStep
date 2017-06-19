@@ -33,6 +33,7 @@
 GLuint m_particleBuffer[2];
 GLuint m_transformFeedback[2];
 RandomTexture m_randomTexture;
+float m_time = 0;
 
 struct Particle
 {
@@ -342,7 +343,7 @@ static void RenderInstance(const ModelInstance& inst) {
 	shaders->stopUsing();
 }
 
-void Render(GLFWwindow* window)
+void Render(float secondsElapsed, GLFWwindow* window)
 {
 	// clear everything
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -351,6 +352,8 @@ void Render(GLFWwindow* window)
 //	for (it = gInstances.begin(); it != gInstances.end(); ++it) {
 //		RenderInstance(*it);
 //	}
+    
+    m_time += secondsElapsed;
     
     std::list<ModelInstance>::const_iterator it;
     for (it = gParticleInstances.begin(); it != gParticleInstances.end(); ++it) {
@@ -434,10 +437,12 @@ int main(void)
 		glfwPollEvents();
 
 		double thisTime = glfwGetTime();
-		Update((float)(thisTime - lastTime), window);
-		lastTime = thisTime;
+        float secondsElapsed = (float)(thisTime - lastTime);
+        lastTime = thisTime;
 
-		Render(window);
+        Update(secondsElapsed, window);
+
+		Render(secondsElapsed, window);
 
 		// check for errors
 		GLenum error = glGetError();
