@@ -330,7 +330,7 @@ static void UpdateParticles(const ModelInstance& inst, float secondsElapsed) {
     psUpdateShaders->setUniform("gTime", asset->m_time);
     psUpdateShaders->setUniform("gDeltaTimeMillis", secondsElapsed);
     
-    asset->m_randomTexture.Bind(RANDOM_TEXTURE_UNIT);
+    asset->m_randomTexture.Bind(GL_TEXTURE3);
     
     
 }
