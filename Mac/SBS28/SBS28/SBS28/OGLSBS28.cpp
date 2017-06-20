@@ -27,13 +27,7 @@
 #define PARTICLE_TYPE_SHELL 1.0f
 #define PARTICLE_TYPE_SECONDARY_SHELL 2.0f
 
-//bool m_isFirst;
-//unsigned int m_currVB;
-//unsigned int m_currTFB;
-GLuint m_particleBuffer[2];
-GLuint m_transformFeedback[2];
-RandomTexture m_randomTexture;
-float m_time = 0;
+
 
 struct Particle
 {
@@ -50,9 +44,18 @@ double gScrollY = 0.0;
 
 struct ModelAsset {
 	tdogl::Program* psUpdateShaders;
+    //GLuint textureObj;
+    RandomTexture m_randomTexture;
+    bool m_isFirst;
+    unsigned int m_currVB;
+    unsigned int m_currTFB;
+    float m_time = 0;
+    GLuint m_particleBuffer[2];
+    GLuint m_transformFeedback[2];
+    
+    
     tdogl::Program* shaders;
 	tdogl::Texture* texture;
-    GLuint textureObj;
 	GLuint vbo;
 	GLuint vao;
 	GLenum drawType;
@@ -163,6 +166,15 @@ static void LoadHellKnightAsset() {
 }
 
 static void LoadFireworkAsset() {
+    gFirework.m_currVB = 0;
+    gFirework.m_currTFB = 1;
+    gFirework.m_isFirst = true;
+    gFirework.m_time = 0;
+    
+    
+    
+    
+    
     Particle Particles[MAX_PARTICLES] = {0};
     
     Particles[0].Type = PARTICLE_TYPE_LAUNCHER;
@@ -170,14 +182,14 @@ static void LoadFireworkAsset() {
     Particles[0].Vel = glm::vec3(0.0f, 0.0001f, 0.0f);
     Particles[0].LifetimeMillis = 0.0f;
     
-    glGenTransformFeedbacks(2, m_transformFeedback);
-    glGenBuffers(2, m_particleBuffer);
+    glGenTransformFeedbacks(2, gFirework.m_transformFeedback);
+    glGenBuffers(2, gFirework.m_particleBuffer);
     
     for (unsigned int i = 0; i < 2 ; i++) {
-        glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, m_transformFeedback[i]);
-        glBindBuffer(GL_ARRAY_BUFFER, m_particleBuffer[i]);
+        glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, gFirework.m_transformFeedback[i]);
+        glBindBuffer(GL_ARRAY_BUFFER, gFirework.m_particleBuffer[i]);
         glBufferData(GL_ARRAY_BUFFER, sizeof(Particles), Particles, GL_DYNAMIC_DRAW);
-        glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, m_particleBuffer[i]);
+        glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, gFirework.m_particleBuffer[i]);
     }
     
 //    if (!m_updateTechnique.Init()) {
@@ -193,11 +205,11 @@ static void LoadFireworkAsset() {
     gFirework.psUpdateShaders->setUniform("gShellLifetime", 10000.0f);
     gFirework.psUpdateShaders->setUniform("gSecondaryShellLifetime", 7000.0f);
     
-    if (!m_randomTexture.InitRandomTexture(1000)) {
-        assert(false);
+    if (!gFirework.m_randomTexture.InitRandomTexture(1000)) {
+        throw std::runtime_error("InitRandomTexture fail.");
     }
-    gFirework.textureObj = m_randomTexture.m_textureObj;
-    m_randomTexture.Bind(GL_TEXTURE3);
+    //gFirework.textureObj = m_randomTexture.m_textureObj;
+    gFirework.m_randomTexture.Bind(GL_TEXTURE3);
     
     gFirework.shaders = LoadShaders("billboard.vs", "billboard.gs", "billboard.fs");
     gFirework.shaders->use();
@@ -311,7 +323,12 @@ const GLchar* ReadShader(const char* filename)
     return source;
 }
 
-static void RenderParticleInstance(const ModelInstance& inst) {
+static void RenderParticleInstance(const ModelInstance& inst, float secondsElapsed) {
+    
+    inst.asset->m_time += secondsElapsed;
+    
+//    m_currVB = m_currTFB;
+//    m_currTFB = (m_currTFB + 1) & 0x1;
 
 }
 
@@ -352,12 +369,10 @@ void Render(float secondsElapsed, GLFWwindow* window)
 //	for (it = gInstances.begin(); it != gInstances.end(); ++it) {
 //		RenderInstance(*it);
 //	}
-    
-    m_time += secondsElapsed;
-    
+
     std::list<ModelInstance>::const_iterator it;
     for (it = gParticleInstances.begin(); it != gParticleInstances.end(); ++it) {
-        RenderParticleInstance(*it);
+        RenderParticleInstance(*it, secondsElapsed);
     }
 
 	glfwSwapBuffers(window);
