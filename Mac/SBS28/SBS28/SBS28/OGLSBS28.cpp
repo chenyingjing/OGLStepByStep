@@ -323,13 +323,27 @@ const GLchar* ReadShader(const char* filename)
     return source;
 }
 
-static void RenderParticleInstance(const ModelInstance& inst, float secondsElapsed) {
+static void UpdateParticles(const ModelInstance& inst, float secondsElapsed) {
+    ModelAsset* asset = inst.asset;
+    tdogl::Program* psUpdateShaders = asset->psUpdateShaders;
+    psUpdateShaders->use();
+    psUpdateShaders->setUniform("gTime", asset->m_time);
+    psUpdateShaders->setUniform("gDeltaTimeMillis", secondsElapsed);
     
-    inst.asset->m_time += secondsElapsed;
+    asset->m_randomTexture.Bind(RANDOM_TEXTURE_UNIT);
     
-//    m_currVB = m_currTFB;
-//    m_currTFB = (m_currTFB + 1) & 0x1;
+    
+}
 
+static void RenderParticleInstance(const ModelInstance& inst, float secondsElapsed) {
+    ModelAsset* asset = inst.asset;
+    
+    asset->m_time += secondsElapsed;
+    
+    UpdateParticles(inst, secondsElapsed);
+    
+    asset->m_currVB = asset->m_currTFB;
+    asset->m_currTFB = (asset->m_currTFB + 1) & 0x1;
 }
 
 static void RenderInstance(const ModelInstance& inst) {
