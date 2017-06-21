@@ -57,7 +57,8 @@ struct ModelAsset {
     tdogl::Program* shaders;
 	tdogl::Texture* texture;
 	GLuint vbo;
-	GLuint vao;
+	GLuint psvao;
+    GLuint vao;
 	GLenum drawType;
 	GLint drawStart;
 	GLint drawCount;
@@ -211,10 +212,38 @@ static void LoadFireworkAsset() {
     //gFirework.textureObj = m_randomTexture.m_textureObj;
     gFirework.m_randomTexture.Bind(GL_TEXTURE3);
     
-    gFirework.shaders = LoadShaders("billboard.vs", "billboard.gs", "billboard.fs");
+    
+    
+    glGenVertexArrays(1, &gFirework.psvao);
+    glBindVertexArray(gFirework.psvao);
+    
+    glEnableVertexAttribArray(0);
+    GLenum error1 = glGetError();
+    if (error1 != GL_NO_ERROR)
+        std::cerr << "OpenGL Error1 " << error1 << std::endl;
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(3);
+    
+    glVertexAttribPointer(0, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), 0);                          // type
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)4);         // position
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)16);        // velocity
+    glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)28);          // lifetime
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
+    glDisableVertexAttribArray(3);
+    
+    glBindVertexArray(0);
+    
+    
+    
+    gFirework.shaders = LoadShaders("hellknight.vs", "hellknight.gs", "hellknight.fs");
     gFirework.shaders->use();
-    gFirework.shaders->setUniform("gColorMap", 0);//TEXTURE0
-    gFirework.shaders->setUniform("gBillboardSize", 0.01f);
+    //gFirework.shaders->setUniform("gColorMap", 0);//TEXTURE0
+    gFirework.shaders->setUniform("materialTex", 0);//TEXTURE0
+    gFirework.shaders->setUniform("gBillboardSize", 0.1f);
     gFirework.texture = LoadTexture("fireworks_red.jpg");
     
     gFirework.drawType = GL_POINTS;
@@ -222,6 +251,18 @@ static void LoadFireworkAsset() {
     gFirework.drawCount = MAX_PARTICLES;
     gFirework.shininess = 80.0;
     gFirework.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    
+    
+    glGenVertexArrays(1, &gFirework.vao);
+    glBindVertexArray(gFirework.vao);
+    
+    
+    glEnableVertexAttribArray(gFirework.shaders->attrib("vert"));
+    glVertexAttribPointer(gFirework.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)4);  // position
+    
+    glDisableVertexAttribArray(gFirework.shaders->attrib("vert"));
+    
+    glBindVertexArray(0);
     
 }
 
@@ -238,10 +279,10 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 static void CreateInstances() {
-	ModelInstance hellKnightInstance;
-	hellKnightInstance.asset = &gHellKnight;
-	hellKnightInstance.transform = glm::mat4();
-	gInstances.push_back(hellKnightInstance);
+//	ModelInstance hellKnightInstance;
+//	hellKnightInstance.asset = &gHellKnight;
+//	hellKnightInstance.transform = glm::mat4();
+//	gInstances.push_back(hellKnightInstance);
     
     ModelInstance fireworkInstance;
     fireworkInstance.asset = &gFirework;
@@ -257,10 +298,10 @@ void OnScroll(GLFWwindow* window, double deltaX, double deltaY) {
 
 void Update(float secondsElapsed, GLFWwindow* window) {
 	//const GLfloat degreesPerSecond = 180.0f;
-	const GLfloat degreesPerSecond = 0.0f;
-	gDegreesRotated += secondsElapsed * degreesPerSecond;
-	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
-	gInstances.front().transform = glm::rotate(glm::mat4(), gDegreesRotated, glm::vec3(0, 1, 0));
+//	const GLfloat degreesPerSecond = 0.0f;
+//	gDegreesRotated += secondsElapsed * degreesPerSecond;
+//	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
+//	gInstances.front().transform = glm::rotate(glm::mat4(), gDegreesRotated, glm::vec3(0, 1, 0));
 
 	//move position of camera based on WASD keys
 	const float moveSpeed = 4.0; //units per second
@@ -323,28 +364,103 @@ const GLchar* ReadShader(const char* filename)
     return source;
 }
 
-static void UpdateParticles(const ModelInstance& inst, float secondsElapsed) {
+static void UpdateParticles(const ModelInstance& inst, float millsElapsed) {
     ModelAsset* asset = inst.asset;
     tdogl::Program* psUpdateShaders = asset->psUpdateShaders;
     psUpdateShaders->use();
     psUpdateShaders->setUniform("gTime", asset->m_time);
-    psUpdateShaders->setUniform("gDeltaTimeMillis", secondsElapsed);
+    psUpdateShaders->setUniform("gDeltaTimeMillis", millsElapsed);
     
     asset->m_randomTexture.Bind(GL_TEXTURE3);
+    glEnable(GL_RASTERIZER_DISCARD);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, asset->m_particleBuffer[asset->m_currVB]);
+    glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, asset->m_transformFeedback[asset->m_currTFB]);
+    
+    
+//    GLint TypeIndex = psUpdateShaders->attrib("Type");
+//    
+//    glEnableVertexAttribArray(TypeIndex);
+//    GLenum error1 = glGetError();
+//    if (error1 != GL_NO_ERROR)
+//        std::cerr << "OpenGL Error1 " << error1 << std::endl;
+//    glEnableVertexAttribArray(1);
+//    glEnableVertexAttribArray(2);
+//    glEnableVertexAttribArray(3);
+//    
+//    glVertexAttribPointer(0, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), 0);                          // type
+//    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)4);         // position
+//    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)16);        // velocity
+//    glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)28);          // lifetime
+    
+    glBindVertexArray(asset->psvao);
+    
+    glBeginTransformFeedback(GL_POINTS);
+    
+    if (asset->m_isFirst) {
+        glDrawArrays(GL_POINTS, 0, 1);
+        
+        asset->m_isFirst = false;
+    }
+    else {
+        glDrawTransformFeedback(GL_POINTS, asset->m_transformFeedback[asset->m_currVB]);
+    }
+    
+    glEndTransformFeedback();
+    
+    glBindVertexArray(0);
+    
+//    glDisableVertexAttribArray(0);
+//    glDisableVertexAttribArray(1);
+//    glDisableVertexAttribArray(2);
+//    glDisableVertexAttribArray(3);
+}
+
+static void RenderParticles(const ModelInstance& inst) {
+    ModelAsset* asset = inst.asset;
+    tdogl::Program* shaders = asset->shaders;
+    shaders->use();
+    
+    shaders->setUniform("gCameraPos", gCamera.position());
+    shaders->setUniform("camera", gCamera.matrix());
+    shaders->setUniform("model", inst.transform);
+    shaders->setUniform("materialTex", 0);//GL_TEXTURE0
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, asset->texture->object());
+    
+    glDisable(GL_RASTERIZER_DISCARD);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, asset->m_particleBuffer[asset->m_currTFB]);
+    
+//    glEnableVertexAttribArray(shaders->attrib("vert"));
+//    
+//    glVertexAttribPointer(shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)4);  // position
+    
+    glBindVertexArray(asset->vao);
+    
+    glDrawTransformFeedback(GL_POINTS, asset->m_transformFeedback[asset->m_currTFB]);
+    
+    glBindVertexArray(0);
+    
+//    glDisableVertexAttribArray(shaders->attrib("vert"));
     
     
 }
 
-static void RenderParticleInstance(const ModelInstance& inst, float secondsElapsed) {
+static void RenderParticleInstance(const ModelInstance& inst, float millsElapsed) {
     ModelAsset* asset = inst.asset;
     
-    asset->m_time += secondsElapsed;
+    asset->m_time += millsElapsed;
     
-    UpdateParticles(inst, secondsElapsed);
+    UpdateParticles(inst, millsElapsed);
+    
+    RenderParticles(inst);
     
     asset->m_currVB = asset->m_currTFB;
     asset->m_currTFB = (asset->m_currTFB + 1) & 0x1;
 }
+
 
 static void RenderInstance(const ModelInstance& inst) {
 	ModelAsset* asset = inst.asset;
@@ -358,7 +474,7 @@ static void RenderInstance(const ModelInstance& inst) {
 	//set the shader uniforms
 	shaders->setUniform("camera", gCamera.matrix());
 	shaders->setUniform("model", inst.transform);
-	//shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+	shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
 
 	//bind the texture
 	glActiveTexture(GL_TEXTURE0);
@@ -374,19 +490,14 @@ static void RenderInstance(const ModelInstance& inst) {
 	shaders->stopUsing();
 }
 
-void Render(float secondsElapsed, GLFWwindow* window)
+void Render(float millsElapsed, GLFWwindow* window)
 {
 	// clear everything
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-//	std::list<ModelInstance>::const_iterator it;
-//	for (it = gInstances.begin(); it != gInstances.end(); ++it) {
-//		RenderInstance(*it);
-//	}
-
     std::list<ModelInstance>::const_iterator it;
     for (it = gParticleInstances.begin(); it != gParticleInstances.end(); ++it) {
-        RenderParticleInstance(*it, secondsElapsed);
+        RenderParticleInstance(*it, millsElapsed);
     }
 
 	glfwSwapBuffers(window);
@@ -445,7 +556,7 @@ int main(void)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	LoadHellKnightAsset();
+	//LoadHellKnightAsset();
     LoadFireworkAsset();
 
 	CreateInstances();
@@ -471,7 +582,7 @@ int main(void)
 
         Update(secondsElapsed, window);
 
-		Render(secondsElapsed, window);
+		Render(secondsElapsed * 1000, window);
 
 		// check for errors
 		GLenum error = glGetError();
