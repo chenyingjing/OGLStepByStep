@@ -20,12 +20,12 @@ void main()
     vec3 up = vec3(0.0, 1.0, 0.0);                                                  
     vec3 right = cross(toCamera, up) * gBillboardSize;                                               
                                                                                     
-    Pos -= (right * 0.5);                                                           
+    Pos -= right;
     gl_Position = camera * model * vec4(Pos, 1.0);                                             
     TexCoord = vec2(0.0, 0.0);                                                      
     EmitVertex();                                                                   
                                                                                     
-    Pos.y += gBillboardSize;                                                                   
+    Pos.y += gBillboardSize;
     gl_Position = camera * model * vec4(Pos, 1.0);                                             
     TexCoord = vec2(0.0, 1.0);                                                      
     EmitVertex();                                                                   

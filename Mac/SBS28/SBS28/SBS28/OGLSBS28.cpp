@@ -127,7 +127,6 @@ static tdogl::Texture* LoadTexture(const char *textureFile) {
 }
 
 static void LoadHellKnightAsset() {
-	//gHellKnight.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
 	gHellKnight.shaders = LoadShaders("hellknight.vs",
 		"hellknight.gs", "hellknight.fs");
 	gHellKnight.drawType = GL_POINTS;
@@ -173,14 +172,11 @@ static void LoadFireworkAsset() {
     gFirework.m_time = 0;
     
     
-    
-    
-    
     Particle Particles[MAX_PARTICLES] = {0};
     
     Particles[0].Type = PARTICLE_TYPE_LAUNCHER;
     Particles[0].Pos = glm::vec3(0, 0, -2);
-    Particles[0].Vel = glm::vec3(0.0f, 0.0001f, 0.0f);
+    Particles[0].Vel = glm::vec3(0.0f, 0.001f, 0.0f);
     Particles[0].LifetimeMillis = 0.0f;
     
     glGenTransformFeedbacks(2, gFirework.m_transformFeedback);
@@ -209,7 +205,6 @@ static void LoadFireworkAsset() {
     if (!gFirework.m_randomTexture.InitRandomTexture(1000)) {
         throw std::runtime_error("InitRandomTexture fail.");
     }
-    //gFirework.textureObj = m_randomTexture.m_textureObj;
     gFirework.m_randomTexture.Bind(GL_TEXTURE3);
     
     
@@ -218,9 +213,6 @@ static void LoadFireworkAsset() {
     glBindVertexArray(gFirework.psvao);
     
     glEnableVertexAttribArray(0);
-    GLenum error1 = glGetError();
-    if (error1 != GL_NO_ERROR)
-        std::cerr << "OpenGL Error1 " << error1 << std::endl;
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
     glEnableVertexAttribArray(3);
@@ -241,7 +233,6 @@ static void LoadFireworkAsset() {
     
     gFirework.shaders = LoadShaders("hellknight.vs", "hellknight.gs", "hellknight.fs");
     gFirework.shaders->use();
-    //gFirework.shaders->setUniform("gColorMap", 0);//TEXTURE0
     gFirework.shaders->setUniform("materialTex", 0);//TEXTURE0
     gFirework.shaders->setUniform("gBillboardSize", 0.1f);
     gFirework.texture = LoadTexture("fireworks_red.jpg");
@@ -256,11 +247,11 @@ static void LoadFireworkAsset() {
     glGenVertexArrays(1, &gFirework.vao);
     glBindVertexArray(gFirework.vao);
     
+    GLint vertSlot = gFirework.shaders->attrib("vert");
+    glEnableVertexAttribArray(vertSlot);
+    glVertexAttribPointer(vertSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)4);  // position
     
-    glEnableVertexAttribArray(gFirework.shaders->attrib("vert"));
-    glVertexAttribPointer(gFirework.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)4);  // position
-    
-    glDisableVertexAttribArray(gFirework.shaders->attrib("vert"));
+    glDisableVertexAttribArray(vertSlot);
     
     glBindVertexArray(0);
     
@@ -279,11 +270,6 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 static void CreateInstances() {
-//	ModelInstance hellKnightInstance;
-//	hellKnightInstance.asset = &gHellKnight;
-//	hellKnightInstance.transform = glm::mat4();
-//	gInstances.push_back(hellKnightInstance);
-    
     ModelInstance fireworkInstance;
     fireworkInstance.asset = &gFirework;
     fireworkInstance.transform = glm::mat4();
@@ -459,35 +445,6 @@ static void RenderParticleInstance(const ModelInstance& inst, float millsElapsed
     
     asset->m_currVB = asset->m_currTFB;
     asset->m_currTFB = (asset->m_currTFB + 1) & 0x1;
-}
-
-
-static void RenderInstance(const ModelInstance& inst) {
-	ModelAsset* asset = inst.asset;
-	tdogl::Program* shaders = asset->shaders;
-
-	//bind the shaders
-	shaders->use();
-
-	shaders->setUniform("gCameraPos", gCamera.position());
-
-	//set the shader uniforms
-	shaders->setUniform("camera", gCamera.matrix());
-	shaders->setUniform("model", inst.transform);
-	shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
-
-	//bind the texture
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, asset->texture->object());
-
-	//bind VAO and draw
-	glBindVertexArray(asset->vao);
-	glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
-
-	//unbind everything
-	glBindVertexArray(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	shaders->stopUsing();
 }
 
 void Render(float millsElapsed, GLFWwindow* window)
