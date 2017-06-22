@@ -522,8 +522,9 @@ int main(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
-	gCamera.setPosition(glm::vec3(3.8, 1, 11));
-	gCamera.offsetOrientation(10, 0);
+	//gCamera.setPosition(glm::vec3(3.8, 1, 11));
+    gCamera.setPosition(glm::vec3(0, 0, 11));
+	gCamera.offsetOrientation(0, 0);
 	gCamera.setViewportAspectRatio(800.0f / 600.0f);
 	gCamera.setNearAndFarPlanes(0.5f, 100.0f);
 
