@@ -20,6 +20,7 @@
 #include "ogldev_util.h"
 #include "particle_system.h"
 #include "ogldev_math_3d.h"
+#include <iostream>
 
 #define MAX_PARTICLES 1000
 #define PARTICLE_LIFETIME 10.0f
@@ -161,6 +162,10 @@ void ParticleSystem::UpdateParticles(int DeltaTimeMillis)
 
     if (m_isFirst) {
         glDrawArrays(GL_POINTS, 0, 1);
+		GLenum error1 = glGetError();
+		if (error1 != GL_NO_ERROR)
+			std::cerr << "OpenGL Error1 " << error1 << std::endl;
+
 
         m_isFirst = false;
     }
