@@ -161,7 +161,7 @@
     <ClInclude Include="tdogl\Texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OGLSBS28.cpp" />
+    <ClCompile Include="OGLSBS28a.cpp" />
     <ClCompile Include="random_texture.cpp" />
     <ClCompile Include="tdogl\Bitmap.cpp" />
     <ClCompile Include="tdogl\Camera.cpp" />
@@ -173,9 +173,6 @@
     <None Include="shader\billboard.fs" />
     <None Include="shader\billboard.gs" />
     <None Include="shader\billboard.vs" />
-    <None Include="shader\hellknight.fs" />
-    <None Include="shader\hellknight.gs" />
-    <None Include="shader\hellknight.vs" />
     <None Include="shader\ps_update.fs" />
     <None Include="shader\ps_update.gs" />
     <None Include="shader\ps_update.vs" />
