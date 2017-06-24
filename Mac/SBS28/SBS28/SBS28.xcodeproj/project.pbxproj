@@ -132,9 +132,6 @@
 		235648C91EF6150400A2C556 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235648C81EF6150400A2C556 /* CoreVideo.framework */; };
 		235648CB1EF6151300A2C556 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235648CA1EF6151300A2C556 /* OpenGL.framework */; };
 		235648CD1EF6152500A2C556 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235648CC1EF6152500A2C556 /* IOKit.framework */; };
-		235648D31EF62A5500A2C556 /* hellknight.fs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D01EF62A5500A2C556 /* hellknight.fs */; };
-		235648D41EF62A5500A2C556 /* hellknight.gs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D11EF62A5500A2C556 /* hellknight.gs */; };
-		235648D51EF62A5500A2C556 /* hellknight.vs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D21EF62A5500A2C556 /* hellknight.vs */; };
 		235648D91EF6513A00A2C556 /* ps_update.fs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D61EF6513A00A2C556 /* ps_update.fs */; };
 		235648DA1EF6513A00A2C556 /* ps_update.gs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D71EF6513A00A2C556 /* ps_update.gs */; };
 		235648DB1EF6513A00A2C556 /* ps_update.vs in Resources */ = {isa = PBXBuildFile; fileRef = 235648D81EF6513A00A2C556 /* ps_update.vs */; };
@@ -423,9 +420,6 @@
 		235648C81EF6150400A2C556 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		235648CA1EF6151300A2C556 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		235648CC1EF6152500A2C556 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		235648D01EF62A5500A2C556 /* hellknight.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = hellknight.fs; sourceTree = "<group>"; };
-		235648D11EF62A5500A2C556 /* hellknight.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = hellknight.gs; sourceTree = "<group>"; };
-		235648D21EF62A5500A2C556 /* hellknight.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = hellknight.vs; sourceTree = "<group>"; };
 		235648D61EF6513A00A2C556 /* ps_update.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ps_update.fs; sourceTree = "<group>"; };
 		235648D71EF6513A00A2C556 /* ps_update.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ps_update.gs; sourceTree = "<group>"; };
 		235648D81EF6513A00A2C556 /* ps_update.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ps_update.vs; sourceTree = "<group>"; };
@@ -813,9 +807,6 @@
 				235648D61EF6513A00A2C556 /* ps_update.fs */,
 				235648D71EF6513A00A2C556 /* ps_update.gs */,
 				235648D81EF6513A00A2C556 /* ps_update.vs */,
-				235648D01EF62A5500A2C556 /* hellknight.fs */,
-				235648D11EF62A5500A2C556 /* hellknight.gs */,
-				235648D21EF62A5500A2C556 /* hellknight.vs */,
 			);
 			path = shader;
 			sourceTree = "<group>";
@@ -887,7 +878,6 @@
 				2356487F1EF6148D00A2C556 /* type_precision.inl in Resources */,
 				2356485E1EF6148D00A2C556 /* type_half.inl in Resources */,
 				235648771EF6148D00A2C556 /* matrix_inverse.inl in Resources */,
-				235648D41EF62A5500A2C556 /* hellknight.gs in Resources */,
 				235648671EF6148D00A2C556 /* type_mat4x3.inl in Resources */,
 				235648601EF6148D00A2C556 /* type_mat2x2.inl in Resources */,
 				235648731EF6148D00A2C556 /* constants.inl in Resources */,
@@ -898,7 +888,6 @@
 				235648A51EF6148D00A2C556 /* optimum_pow.inl in Resources */,
 				235648521EF6148D00A2C556 /* func_packing.inl in Resources */,
 				2356484E1EF6148D00A2C556 /* func_exponential.inl in Resources */,
-				235648D51EF62A5500A2C556 /* hellknight.vs in Resources */,
 				235648921EF6148D00A2C556 /* gradient_paint.inl in Resources */,
 				235648581EF6148D00A2C556 /* intrinsic_geometric.inl in Resources */,
 				2356488D1EF6148D00A2C556 /* extend.inl in Resources */,
@@ -940,7 +929,6 @@
 				235648A71EF6148D00A2C556 /* perpendicular.inl in Resources */,
 				235648641EF6148D00A2C556 /* type_mat3x3.inl in Resources */,
 				2356486F1EF6148D00A2C556 /* type_vec4_avx2.inl in Resources */,
-				235648D31EF62A5500A2C556 /* hellknight.fs in Resources */,
 				235648E41EF6741200A2C556 /* billboard.vs in Resources */,
 				2356488E1EF6148D00A2C556 /* extented_min_max.inl in Resources */,
 				235648A01EF6148D00A2C556 /* mixed_product.inl in Resources */,

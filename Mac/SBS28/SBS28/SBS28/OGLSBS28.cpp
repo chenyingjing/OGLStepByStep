@@ -80,7 +80,6 @@ struct Light {
 	glm::vec3 coneDirection;
 };
 
-ModelAsset gHellKnight;
 ModelAsset gFirework;
 std::list<ModelInstance> gInstances;
 std::list<ModelInstance> gParticleInstances;
@@ -126,45 +125,6 @@ static tdogl::Texture* LoadTexture(const char *textureFile) {
 	return new tdogl::Texture(bmp);
 }
 
-static void LoadHellKnightAsset() {
-	gHellKnight.shaders = LoadShaders("hellknight.vs",
-		"hellknight.gs", "hellknight.fs");
-	gHellKnight.drawType = GL_POINTS;
-	gHellKnight.drawStart = 0;
-	gHellKnight.drawCount = NUM_ROWS * NUM_COLUMNS;
-	gHellKnight.texture = LoadTexture("monster_hellknight.png");
-	gHellKnight.shininess = 80.0;
-	gHellKnight.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
-	
-	glGenBuffers(1, &gHellKnight.vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, gHellKnight.vbo);
-
-	glGenVertexArrays(1, &gHellKnight.vao);
-	glBindVertexArray(gHellKnight.vao);
-
-	glm::vec3 Positions[NUM_ROWS * NUM_COLUMNS];
-
-	for (unsigned int j = 0; j < NUM_ROWS; j++) {
-		for (unsigned int i = 0; i < NUM_COLUMNS; i++) {
-			glm::vec3 Pos((float)i, 0.0f, (float)j);
-			Positions[j * NUM_COLUMNS + i] = Pos;
-		}
-	}
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Positions), &Positions[0], GL_STATIC_DRAW);
-
-	// connect the xyz to the "vert" attribute of the vertex shader
-	glEnableVertexAttribArray(gHellKnight.shaders->attrib("vert"));
-	glVertexAttribPointer(gHellKnight.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-	// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-	//glEnableVertexAttribArray(gHellKnight.shaders->attrib("vertTexCoord"));
-	//glVertexAttribPointer(gHellKnight.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-
-	// unbind the VAO
-	glBindVertexArray(0);
-}
-
 static void LoadFireworkAsset() {
     gFirework.m_currVB = 0;
     gFirework.m_currTFB = 1;
@@ -189,10 +149,6 @@ static void LoadFireworkAsset() {
         glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, gFirework.m_particleBuffer[i]);
     }
     
-//    if (!m_updateTechnique.Init()) {
-//        return false;
-//    }
-
     gFirework.psUpdateShaders = LoadPsUpdateShaders("ps_update.vs",
                                       "ps_update.gs", "ps_update.fs");
     
@@ -208,33 +164,10 @@ static void LoadFireworkAsset() {
     gFirework.m_randomTexture.Bind(GL_TEXTURE3);
     
     
-    
-    glGenVertexArrays(1, &gFirework.psvao);
-    glBindVertexArray(gFirework.psvao);
-    
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    glEnableVertexAttribArray(2);
-    glEnableVertexAttribArray(3);
-    
-    glVertexAttribPointer(0, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), 0);                          // type
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)4);         // position
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)16);        // velocity
-    glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)28);          // lifetime
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    glDisableVertexAttribArray(2);
-    glDisableVertexAttribArray(3);
-    
-    glBindVertexArray(0);
-    
-    
-    
-    gFirework.shaders = LoadShaders("hellknight.vs", "hellknight.gs", "hellknight.fs");
+    gFirework.shaders = LoadShaders("billboard.vs", "billboard.gs", "billboard.fs");
     gFirework.shaders->use();
     gFirework.shaders->setUniform("materialTex", 0);//TEXTURE0
-    gFirework.shaders->setUniform("gBillboardSize", 0.1f);
+    gFirework.shaders->setUniform("gBillboardSize", 0.01f);
     gFirework.texture = LoadTexture("fireworks_red.jpg");
     
     gFirework.drawType = GL_POINTS;
@@ -242,18 +175,6 @@ static void LoadFireworkAsset() {
     gFirework.drawCount = MAX_PARTICLES;
     gFirework.shininess = 80.0;
     gFirework.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
-    
-    
-    glGenVertexArrays(1, &gFirework.vao);
-    glBindVertexArray(gFirework.vao);
-    
-    GLint vertSlot = gFirework.shaders->attrib("vert");
-    glEnableVertexAttribArray(vertSlot);
-    glVertexAttribPointer(vertSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)4);  // position
-    
-    glDisableVertexAttribArray(vertSlot);
-    
-    glBindVertexArray(0);
     
 }
 
@@ -363,29 +284,25 @@ static void UpdateParticles(const ModelInstance& inst, float millsElapsed) {
     glBindBuffer(GL_ARRAY_BUFFER, asset->m_particleBuffer[asset->m_currVB]);
     glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, asset->m_transformFeedback[asset->m_currTFB]);
     
+    glEnableVertexAttribArray(0);
+    GLenum error1 = glGetError();
+    if (error1 != GL_NO_ERROR)
+        std::cerr << "OpenGL Error1 " << error1 << std::endl;
     
-//    GLint TypeIndex = psUpdateShaders->attrib("Type");
-//    
-//    glEnableVertexAttribArray(TypeIndex);
-//    GLenum error1 = glGetError();
-//    if (error1 != GL_NO_ERROR)
-//        std::cerr << "OpenGL Error1 " << error1 << std::endl;
-//    glEnableVertexAttribArray(1);
-//    glEnableVertexAttribArray(2);
-//    glEnableVertexAttribArray(3);
-//    
-//    glVertexAttribPointer(0, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), 0);                          // type
-//    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)4);         // position
-//    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)16);        // velocity
-//    glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)28);          // lifetime
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(3);
     
-    glBindVertexArray(asset->psvao);
+    glVertexAttribPointer(0, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), 0);                          // type
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)4);         // position
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)16);        // velocity
+    glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)28);          // lifetime
     
     glBeginTransformFeedback(GL_POINTS);
     
     if (asset->m_isFirst) {
         glDrawArrays(GL_POINTS, 0, 1);
-        
+
         asset->m_isFirst = false;
     }
     else {
@@ -393,13 +310,12 @@ static void UpdateParticles(const ModelInstance& inst, float millsElapsed) {
     }
     
     glEndTransformFeedback();
-    
-    glBindVertexArray(0);
-    
-//    glDisableVertexAttribArray(0);
-//    glDisableVertexAttribArray(1);
-//    glDisableVertexAttribArray(2);
-//    glDisableVertexAttribArray(3);
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
+    glDisableVertexAttribArray(3);
+
 }
 
 static void RenderParticles(const ModelInstance& inst) {
@@ -419,17 +335,13 @@ static void RenderParticles(const ModelInstance& inst) {
     
     glBindBuffer(GL_ARRAY_BUFFER, asset->m_particleBuffer[asset->m_currTFB]);
     
-//    glEnableVertexAttribArray(shaders->attrib("vert"));
-//    
-//    glVertexAttribPointer(shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)4);  // position
+    glEnableVertexAttribArray(shaders->attrib("vert"));
     
-    glBindVertexArray(asset->vao);
-    
+    glVertexAttribPointer(shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)4);  // position
+   
     glDrawTransformFeedback(GL_POINTS, asset->m_transformFeedback[asset->m_currTFB]);
     
-    glBindVertexArray(0);
-    
-//    glDisableVertexAttribArray(shaders->attrib("vert"));
+    glDisableVertexAttribArray(shaders->attrib("vert"));
     
     
 }
@@ -513,7 +425,6 @@ int main(void)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	//LoadHellKnightAsset();
     LoadFireworkAsset();
 
 	CreateInstances();
@@ -522,8 +433,7 @@ int main(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
-	//gCamera.setPosition(glm::vec3(3.8, 1, 11));
-    gCamera.setPosition(glm::vec3(0, 0, 11));
+    gCamera.setPosition(glm::vec3(0, 1, 2));
 	gCamera.offsetOrientation(0, 0);
 	gCamera.setViewportAspectRatio(800.0f / 600.0f);
 	gCamera.setNearAndFarPlanes(0.5f, 100.0f);
