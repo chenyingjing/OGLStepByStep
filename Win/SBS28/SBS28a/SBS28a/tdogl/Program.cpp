@@ -22,6 +22,49 @@
 
 using namespace tdogl;
 
+Program::Program(const std::vector<Shader>& shaders, GLsizei varyingsCount, const GLchar** varyings, GLenum bufferMode) :
+_object(0)
+{
+    if(shaders.size() <= 0)
+        throw std::runtime_error("No shaders were provided to create the program");
+    
+    //create the program object
+    _object = glCreateProgram();
+    if(_object == 0)
+        throw std::runtime_error("glCreateProgram failed");
+    
+    //attach all the shaders
+    for(unsigned i = 0; i < shaders.size(); ++i)
+        glAttachShader(_object, shaders[i].object());
+    
+    
+    glTransformFeedbackVaryings(_object, varyingsCount, varyings, bufferMode);
+    
+    //link the shaders together
+    glLinkProgram(_object);
+    
+    //detach all the shaders
+    for(unsigned i = 0; i < shaders.size(); ++i)
+        glDetachShader(_object, shaders[i].object());
+    
+    //throw exception if linking failed
+    GLint status;
+    glGetProgramiv(_object, GL_LINK_STATUS, &status);
+    if (status == GL_FALSE) {
+        std::string msg("Program linking failure: ");
+        
+        GLint infoLogLength;
+        glGetProgramiv(_object, GL_INFO_LOG_LENGTH, &infoLogLength);
+        char* strInfoLog = new char[infoLogLength + 1];
+        glGetProgramInfoLog(_object, infoLogLength, NULL, strInfoLog);
+        msg += strInfoLog;
+        delete[] strInfoLog;
+        
+        glDeleteProgram(_object); _object = 0;
+        throw std::runtime_error(msg);
+    }
+}
+
 Program::Program(const std::vector<Shader>& shaders) :
     _object(0)
 {

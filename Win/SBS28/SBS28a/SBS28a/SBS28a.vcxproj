@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="glew.h" />
     <ClInclude Include="glfw3.h" />
+    <ClInclude Include="random_texture.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="tdogl\Bitmap.h" />
     <ClInclude Include="tdogl\Camera.h" />
@@ -160,7 +161,8 @@
     <ClInclude Include="tdogl\Texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OGLSBS28a.cpp" />
+    <ClCompile Include="OGLSBS28.cpp" />
+    <ClCompile Include="random_texture.cpp" />
     <ClCompile Include="tdogl\Bitmap.cpp" />
     <ClCompile Include="tdogl\Camera.cpp" />
     <ClCompile Include="tdogl\Program.cpp" />
@@ -168,9 +170,15 @@
     <ClCompile Include="tdogl\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="fragment-shader.txt" />
-    <Text Include="geometry-shader.txt" />
-    <Text Include="vertex-shader.txt" />
+    <None Include="shader\billboard.fs" />
+    <None Include="shader\billboard.gs" />
+    <None Include="shader\billboard.vs" />
+    <None Include="shader\hellknight.fs" />
+    <None Include="shader\hellknight.gs" />
+    <None Include="shader\hellknight.vs" />
+    <None Include="shader\ps_update.fs" />
+    <None Include="shader\ps_update.gs" />
+    <None Include="shader\ps_update.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
