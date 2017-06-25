@@ -419,6 +419,7 @@
 		237794BE1EFF7F1000A9457A /* hazard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hazard.png; sourceTree = "<group>"; };
 		237794BF1EFF7F1000A9457A /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 		237794C01EFF7F1000A9457A /* wooden-crate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "wooden-crate.jpg"; sourceTree = "<group>"; };
+		2377953E1EFF850800A9457A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		23B33D921EFF7D0800344EF6 /* SBS24a.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SBS24a.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23B33D961EFF7D0800344EF6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		23B33D981EFF7D0800344EF6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -806,11 +807,20 @@
 			path = texture;
 			sourceTree = "<group>";
 		};
+		2377953D1EFF850800A9457A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2377953E1EFF850800A9457A /* GLKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		23B33D891EFF7D0700344EF6 = {
 			isa = PBXGroup;
 			children = (
 				23B33D941EFF7D0800344EF6 /* SBS24a */,
 				23B33D931EFF7D0800344EF6 /* Products */,
+				2377953D1EFF850800A9457A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

@@ -92,11 +92,11 @@ struct ModelInstance {
 }
 
 - (void)setupContext {
-    // 指定 OpenGL 渲染 API 的版本，在这里我们使用 OpenGL ES 2.0
-    EAGLRenderingAPI api = kEAGLRenderingAPIOpenGLES2;
+    // 指定 OpenGL 渲染 API 的版本，在这里我们使用 OpenGL ES 3.0
+    EAGLRenderingAPI api = kEAGLRenderingAPIOpenGLES3;
     _context = [[EAGLContext alloc] initWithAPI:api];
     if (!_context) {
-        NSLog(@"Failed to initialize OpenGLES 2.0 context");
+        NSLog(@"Failed to initialize OpenGLES 3.0 context");
         exit(1);
     }
     
@@ -321,8 +321,8 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
     };
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
     
-    glGenVertexArraysOES(1, &gGround.vao);
-    glBindVertexArrayOES(gGround.vao);
+    glGenVertexArrays(1, &gGround.vao);
+    glBindVertexArray(gGround.vao);
     
     gGround.shaders->use();
     
@@ -338,11 +338,11 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
     glVertexAttribPointer(gGround.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
     gGround.shaders->stopUsing();
     
-    glBindVertexArrayOES(0);
+    glBindVertexArray(0);
     
     
-    glGenVertexArraysOES(1, &gGround.vaoShadowMap);
-    glBindVertexArrayOES(gGround.vaoShadowMap);
+    glGenVertexArrays(1, &gGround.vaoShadowMap);
+    glBindVertexArray(gGround.vaoShadowMap);
     
     gGround.shadersShadowMap->use();
     //glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
@@ -358,7 +358,7 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
     gGround.shadersShadowMap->stopUsing();
     
     // unbind the VAO
-    glBindVertexArrayOES(0);
+    glBindVertexArray(0);
 
     
 }
@@ -433,8 +433,8 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
     
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
     
-    glGenVertexArraysOES(1, &gWoodenCrate.vao);
-    glBindVertexArrayOES(gWoodenCrate.vao);
+    glGenVertexArrays(1, &gWoodenCrate.vao);
+    glBindVertexArray(gWoodenCrate.vao);
     
     gWoodenCrate.shaders->use();
     // connect the xyz to the "vert" attribute of the vertex shader
@@ -448,12 +448,12 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
     glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE,  8*sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
     gWoodenCrate.shaders->stopUsing();
     
-    glBindVertexArrayOES(0);
+    glBindVertexArray(0);
 
     
     
-    glGenVertexArraysOES(1, &gWoodenCrate.vaoShadowMap);
-    glBindVertexArrayOES(gWoodenCrate.vaoShadowMap);
+    glGenVertexArrays(1, &gWoodenCrate.vaoShadowMap);
+    glBindVertexArray(gWoodenCrate.vaoShadowMap);
     
     gWoodenCrate.shadersShadowMap->use();
     //glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
@@ -469,7 +469,7 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
     gWoodenCrate.shadersShadowMap->stopUsing();
     
     // unbind the VAO
-    glBindVertexArrayOES(0);
+    glBindVertexArray(0);
     
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -540,6 +540,7 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     shaders->setUniform("materialSpecularColor", asset->specularColor);
     GLint deltaSlot = glGetUniformLocation(shaders->object(), "delta");
     glUniform1f(deltaSlot, delta);
+    //glUniform1f(deltaSlot, 0.0003);
     
     
     //bind the texture
@@ -547,11 +548,11 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     glBindTexture(GL_TEXTURE_2D, asset->texture->object());
     
     //bind VAO and draw
-    glBindVertexArrayOES(asset->vao);
+    glBindVertexArray(asset->vao);
     glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
     
     //unbind everything
-    glBindVertexArrayOES(0);
+    glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
     shaders->stopUsing();
 }
@@ -573,11 +574,11 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     shaders->setUniform("model", inst.transform);
     
     //bind VAO and draw
-    glBindVertexArrayOES(asset->vaoShadowMap);
+    glBindVertexArray(asset->vaoShadowMap);
     glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
     
     //unbind everything
-    glBindVertexArrayOES(0);
+    glBindVertexArray(0);
     
     shaders->stopUsing();
 }
@@ -595,11 +596,11 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     shaders->setUniform("model", inst.transform);
     
     //bind VAO and draw
-    glBindVertexArrayOES(asset->vaoShadowMap);
+    glBindVertexArray(asset->vaoShadowMap);
     glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
     
     //unbind everything
-    glBindVertexArrayOES(0);
+    glBindVertexArray(0);
     
     shaders->stopUsing();
 }
