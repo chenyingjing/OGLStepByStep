@@ -141,6 +141,8 @@ static void LoadFireworkAsset() {
     
     glGenTransformFeedbacks(2, gFirework.m_transformFeedback);
     glGenBuffers(2, gFirework.m_particleBuffer);
+    glGenVertexArrays(1, &gFirework.psvao);
+    glGenVertexArrays(1, &gFirework.vao);
     
     for (unsigned int i = 0; i < 2 ; i++) {
         glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, gFirework.m_transformFeedback[i]);
@@ -281,6 +283,8 @@ static void UpdateParticles(const ModelInstance& inst, float millsElapsed) {
     asset->m_randomTexture.Bind(GL_TEXTURE3);
     glEnable(GL_RASTERIZER_DISCARD);
     
+    glBindVertexArray(gFirework.psvao);
+    
     glBindBuffer(GL_ARRAY_BUFFER, asset->m_particleBuffer[asset->m_currVB]);
     glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, asset->m_transformFeedback[asset->m_currTFB]);
     
@@ -315,6 +319,8 @@ static void UpdateParticles(const ModelInstance& inst, float millsElapsed) {
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
     glDisableVertexAttribArray(3);
+    
+    glBindVertexArray(0);
 
 }
 
@@ -333,6 +339,8 @@ static void RenderParticles(const ModelInstance& inst) {
     
     glDisable(GL_RASTERIZER_DISCARD);
     
+    glBindVertexArray(gFirework.vao);
+    
     glBindBuffer(GL_ARRAY_BUFFER, asset->m_particleBuffer[asset->m_currTFB]);
     
     glEnableVertexAttribArray(shaders->attrib("vert"));
@@ -343,6 +351,7 @@ static void RenderParticles(const ModelInstance& inst) {
     
     glDisableVertexAttribArray(shaders->attrib("vert"));
     
+    glBindVertexArray(0);
     
 }
 
