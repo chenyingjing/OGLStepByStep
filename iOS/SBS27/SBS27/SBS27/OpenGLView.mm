@@ -48,7 +48,8 @@ struct ModelInstance {
 };
 
 @interface OpenGLView() {
-    ModelAsset gWoodenCrate;
+    //ModelAsset gWoodenCrate;
+    ModelAsset gHellKnight;
     ModelAsset gGround;
     std::list<ModelInstance> gInstances;
     std::list<ModelInstance> gInstancesShadowMap;
@@ -135,10 +136,12 @@ struct ModelInstance {
     
     [self setupBuffers];
     
-    [self InitFBO];
+//    [self InitFBO];
+//    
+//    [self LoadWoodenCrateAsset];
+//    [self LoadGroundAsset];
     
-    [self LoadWoodenCrateAsset];
-    [self LoadGroundAsset];
+    [self LoadHellKnightAsset];
     
     [self CreateInstances];
     
@@ -258,43 +261,44 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 - (void) CreateInstances {
-    ModelInstance dot;
-    dot.asset = &gWoodenCrate;
-    dot.transform = glm::mat4();
-    gInstances.push_back(dot);
-    gInstancesShadowMap.push_back(dot);
-    
-    ModelInstance i;
-    i.asset = &gWoodenCrate;
-    i.transform = translate(0, -4, 0) * scale(1, 2, 1);
-    gInstances.push_back(i);
-    gInstancesShadowMap.push_back(i);
-    
-    ModelInstance hLeft;
-    hLeft.asset = &gWoodenCrate;
-    hLeft.transform = translate(-8, 0, 0) * scale(1, 6, 1);
-    gInstances.push_back(hLeft);
-    gInstancesShadowMap.push_back(hLeft);
-    
-    ModelInstance hRight;
-    hRight.asset = &gWoodenCrate;
-    hRight.transform = translate(-4, 0, 0) * scale(1, 6, 1);
-    gInstances.push_back(hRight);
-    gInstancesShadowMap.push_back(hRight);
-    
-    ModelInstance hMid;
-    hMid.asset = &gWoodenCrate;
-    hMid.transform = translate(-6, 0, 0) * scale(2, 1, 0.8f);
-    gInstances.push_back(hMid);
-    gInstancesShadowMap.push_back(hMid);
-    
-    ModelInstance ground;
-    ground.asset = &gGround;
-    float groundScale = 20.0;
-    ground.transform = translate(-4, -6, 0) * scale(groundScale, groundScale, groundScale);
-    gInstances.push_back(ground);
+//    ModelInstance dot;
+//    dot.asset = &gWoodenCrate;
+//    dot.transform = glm::mat4();
+//    gInstances.push_back(dot);
+//    gInstancesShadowMap.push_back(dot);
+//    
+//    ModelInstance i;
+//    i.asset = &gWoodenCrate;
+//    i.transform = translate(0, -4, 0) * scale(1, 2, 1);
+//    gInstances.push_back(i);
+//    gInstancesShadowMap.push_back(i);
+//    
+//    ModelInstance hLeft;
+//    hLeft.asset = &gWoodenCrate;
+//    hLeft.transform = translate(-8, 0, 0) * scale(1, 6, 1);
+//    gInstances.push_back(hLeft);
+//    gInstancesShadowMap.push_back(hLeft);
+//    
+//    ModelInstance hRight;
+//    hRight.asset = &gWoodenCrate;
+//    hRight.transform = translate(-4, 0, 0) * scale(1, 6, 1);
+//    gInstances.push_back(hRight);
+//    gInstancesShadowMap.push_back(hRight);
+//    
+//    ModelInstance hMid;
+//    hMid.asset = &gWoodenCrate;
+//    hMid.transform = translate(-6, 0, 0) * scale(2, 1, 0.8f);
+//    gInstances.push_back(hMid);
+//    gInstancesShadowMap.push_back(hMid);
+//    
+//    ModelInstance ground;
+//    ground.asset = &gGround;
+//    float groundScale = 20.0;
+//    ground.transform = translate(-4, -6, 0) * scale(groundScale, groundScale, groundScale);
+//    gInstances.push_back(ground);
 }
 
+/*
 - (void)LoadGroundAsset
 {
     gGround.shaders = gWoodenCrate.shaders;
@@ -362,119 +366,159 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 
     
 }
+*/
 
-
-- (void)LoadWoodenCrateAsset
+- (void)LoadHellKnightAsset
 {
-    gWoodenCrate.shaders = [self LoadShaders:"VertexShader" fs:"FragmentShader"];
-    gWoodenCrate.shadersShadowMap = [self LoadShaders:"shadow_map_v" fs:"shadow_map_f"];
-    gWoodenCrate.drawType = GL_TRIANGLES;
-    gWoodenCrate.drawStart = 0;
-    gWoodenCrate.drawCount = 6*2*3;
-    gWoodenCrate.texture = [self LoadTexture:"wooden-crate" ext:"jpg"];
-    gWoodenCrate.shininess = 80.0;
-    gWoodenCrate.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    gHellKnight.shaders = [self LoadShaders:"VertexShader" fs:"FragmentShader"];//LoadShaders("vertex-shader.txt",
+                                       //"geometry-shader.txt", "fragment-shader.txt");
+    gHellKnight.drawType = GL_POINTS;
+    gHellKnight.drawStart = 0;
+    gHellKnight.drawCount = NUM_ROWS * NUM_COLUMNS;
+    gHellKnight.texture = LoadTexture("monster_hellknight.png");
+    gHellKnight.shininess = 80.0;
+    gHellKnight.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
-    // make and bind the VBO
-    glGenBuffers(1, &gWoodenCrate.vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, gWoodenCrate.vbo);
-
-    // Put the three triangle verticies into the VBO
-    GLfloat vertexData[] = {
-        //  X     Y     Z       U     V          Normal
-        // bottom
-        -1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-        1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-        -1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
-        1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-        1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   0.0f, -1.0f, 0.0f,
-        -1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
-        
-        // top
-        -1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-        -1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-        1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-        1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-        -1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-        1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-        
-        // front
-        -1.0f,-1.0f, 1.0f,   1.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-        1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
-        1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 0.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
-        
-        // back
-        -1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-        -1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
-        1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-        1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-        -1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
-        1.0f, 1.0f,-1.0f,   1.0f, 1.0f,   0.0f, 0.0f, -1.0f,
-        
-        // left
-        -1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-        -1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
-        -1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
-        -1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-        -1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-        -1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
-        
-        // right
-        1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
-        1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-        1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-        1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
-        1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-        1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   1.0f, 0.0f, 0.0f
-    };
+    glGenBuffers(1, &gHellKnight.vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, gHellKnight.vbo);
     
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+    glGenVertexArrays(1, &gHellKnight.vao);
+    glBindVertexArray(gHellKnight.vao);
     
-    glGenVertexArrays(1, &gWoodenCrate.vao);
-    glBindVertexArray(gWoodenCrate.vao);
+    glm::vec3 Positions[NUM_ROWS * NUM_COLUMNS];
     
-    gWoodenCrate.shaders->use();
+    for (unsigned int j = 0; j < NUM_ROWS; j++) {
+        for (unsigned int i = 0; i < NUM_COLUMNS; i++) {
+            glm::vec3 Pos((float)i, 0.0f, (float)j);
+            Positions[j * NUM_COLUMNS + i] = Pos;
+        }
+    }
+    
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Positions), &Positions[0], GL_STATIC_DRAW);
+    
     // connect the xyz to the "vert" attribute of the vertex shader
-    glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vert"));
-    glVertexAttribPointer(gWoodenCrate.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), NULL);
-    
-    glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertTexCoord"));
-    glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE,  8*sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-    
-    glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertNormal"));
-    glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE,  8*sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
-    gWoodenCrate.shaders->stopUsing();
-    
-    glBindVertexArray(0);
-
-    
-    
-    glGenVertexArrays(1, &gWoodenCrate.vaoShadowMap);
-    glBindVertexArray(gWoodenCrate.vaoShadowMap);
-    
-    gWoodenCrate.shadersShadowMap->use();
-    //glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
-    // connect the xyz to the "vert" attribute of the vertex shader
-    GLuint indexVertMap = gWoodenCrate.shadersShadowMap->attrib("vert");
-    glEnableVertexAttribArray(indexVertMap);
-    glVertexAttribPointer(indexVertMap, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+    glEnableVertexAttribArray(gHellKnight.shaders->attrib("vert"));
+    glVertexAttribPointer(gHellKnight.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 0, 0);
     
     // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-    GLuint indexTexCoord = gWoodenCrate.shadersShadowMap->attrib("vertTexCoord");
-    glEnableVertexAttribArray(indexTexCoord);
-    glVertexAttribPointer(indexTexCoord, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-    gWoodenCrate.shadersShadowMap->stopUsing();
+    //glEnableVertexAttribArray(gHellKnight.shaders->attrib("vertTexCoord"));
+    //glVertexAttribPointer(gHellKnight.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
     
     // unbind the VAO
     glBindVertexArray(0);
-    
-    
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
 }
+
+//- (void)LoadWoodenCrateAsset
+//{
+//    gWoodenCrate.shaders = [self LoadShaders:"VertexShader" fs:"FragmentShader"];
+//    gWoodenCrate.shadersShadowMap = [self LoadShaders:"shadow_map_v" fs:"shadow_map_f"];
+//    gWoodenCrate.drawType = GL_TRIANGLES;
+//    gWoodenCrate.drawStart = 0;
+//    gWoodenCrate.drawCount = 6*2*3;
+//    gWoodenCrate.texture = [self LoadTexture:"wooden-crate" ext:"jpg"];
+//    gWoodenCrate.shininess = 80.0;
+//    gWoodenCrate.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+//    
+//    // make and bind the VBO
+//    glGenBuffers(1, &gWoodenCrate.vbo);
+//    glBindBuffer(GL_ARRAY_BUFFER, gWoodenCrate.vbo);
+//
+//    // Put the three triangle verticies into the VBO
+//    GLfloat vertexData[] = {
+//        //  X     Y     Z       U     V          Normal
+//        // bottom
+//        -1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, -1.0f, 0.0f,
+//        1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
+//        -1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
+//        1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
+//        1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   0.0f, -1.0f, 0.0f,
+//        -1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
+//        
+//        // top
+//        -1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+//        -1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+//        1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+//        1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+//        -1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+//        1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+//        
+//        // front
+//        -1.0f,-1.0f, 1.0f,   1.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+//        1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+//        -1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
+//        1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+//        1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 0.0f, 1.0f,
+//        -1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
+//        
+//        // back
+//        -1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 0.0f, -1.0f,
+//        -1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
+//        1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
+//        1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
+//        -1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
+//        1.0f, 1.0f,-1.0f,   1.0f, 1.0f,   0.0f, 0.0f, -1.0f,
+//        
+//        // left
+//        -1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
+//        -1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
+//        -1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
+//        -1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
+//        -1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
+//        -1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
+//        
+//        // right
+//        1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
+//        1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+//        1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+//        1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
+//        1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+//        1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   1.0f, 0.0f, 0.0f
+//    };
+//    
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+//    
+//    glGenVertexArrays(1, &gWoodenCrate.vao);
+//    glBindVertexArray(gWoodenCrate.vao);
+//    
+//    gWoodenCrate.shaders->use();
+//    // connect the xyz to the "vert" attribute of the vertex shader
+//    glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vert"));
+//    glVertexAttribPointer(gWoodenCrate.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), NULL);
+//    
+//    glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertTexCoord"));
+//    glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE,  8*sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+//    
+//    glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertNormal"));
+//    glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE,  8*sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+//    gWoodenCrate.shaders->stopUsing();
+//    
+//    glBindVertexArray(0);
+//
+//    
+//    
+//    glGenVertexArrays(1, &gWoodenCrate.vaoShadowMap);
+//    glBindVertexArray(gWoodenCrate.vaoShadowMap);
+//    
+//    gWoodenCrate.shadersShadowMap->use();
+//    //glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+//    // connect the xyz to the "vert" attribute of the vertex shader
+//    GLuint indexVertMap = gWoodenCrate.shadersShadowMap->attrib("vert");
+//    glEnableVertexAttribArray(indexVertMap);
+//    glVertexAttribPointer(indexVertMap, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+//    
+//    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+//    GLuint indexTexCoord = gWoodenCrate.shadersShadowMap->attrib("vertTexCoord");
+//    glEnableVertexAttribArray(indexTexCoord);
+//    glVertexAttribPointer(indexTexCoord, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+//    gWoodenCrate.shadersShadowMap->stopUsing();
+//    
+//    // unbind the VAO
+//    glBindVertexArray(0);
+//    
+//    
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//    
+//}
 
 - (tdogl::Texture *)LoadTexture: (const char *)filename ext: (const char *)ext
 {
@@ -487,6 +531,15 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 {
     std::vector<tdogl::Shader> shaders;
     shaders.push_back(tdogl::Shader::shaderFromFile(ResourcePath(vShader, "glsl"), GL_VERTEX_SHADER));
+    shaders.push_back(tdogl::Shader::shaderFromFile(ResourcePath(fShader, "glsl"), GL_FRAGMENT_SHADER));
+    return new tdogl::Program(shaders);
+}
+
+- (tdogl::Program *)LoadShaders: (const char *)vShader gs:(const char *)gShader fs:(const char *)fShader
+{
+    std::vector<tdogl::Shader> shaders;
+    shaders.push_back(tdogl::Shader::shaderFromFile(ResourcePath(vShader, "glsl"), GL_VERTEX_SHADER));
+    shaders.push_back(tdogl::Shader::shaderFromFile(ResourcePath(gShader, "glsl"), GL_GEOMETRY_SHADER));
     shaders.push_back(tdogl::Shader::shaderFromFile(ResourcePath(fShader, "glsl"), GL_FRAGMENT_SHADER));
     return new tdogl::Program(shaders);
 }
@@ -605,40 +658,40 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     shaders->stopUsing();
 }
 
-- (void)ShadowMapPass
-{
-    gShadowMapFBO.BindForWriting();
-    glClear(GL_DEPTH_BUFFER_BIT);
-    
-    std::list<ModelInstance>::const_iterator it;
-    for (it = gInstancesShadowMap.begin(); it != gInstancesShadowMap.end(); ++it) {
-        [self RenderInstanceMap:*it];
-    }
-    
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer);
-    
-}
+//- (void)ShadowMapPass
+//{
+//    gShadowMapFBO.BindForWriting();
+//    glClear(GL_DEPTH_BUFFER_BIT);
+//    
+//    std::list<ModelInstance>::const_iterator it;
+//    for (it = gInstancesShadowMap.begin(); it != gInstancesShadowMap.end(); ++it) {
+//        [self RenderInstanceMap:*it];
+//    }
+//    
+//    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+//    glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer);
+//    
+//}
 
-- (void)RenderPass
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    gShadowMapFBO.BindForReading(GL_TEXTURE1);
-    //[self RenderInstance1:gInstances.back()];
-    
-    std::list<ModelInstance>::const_iterator it;
-    for (it = gInstances.begin(); it != gInstances.end(); ++it) {
-        [self RenderInstance:*it];
-    }
-}
+//- (void)RenderPass
+//{
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    
+//    gShadowMapFBO.BindForReading(GL_TEXTURE1);
+//    //[self RenderInstance1:gInstances.back()];
+//    
+//    std::list<ModelInstance>::const_iterator it;
+//    for (it = gInstances.begin(); it != gInstances.end(); ++it) {
+//        [self RenderInstance:*it];
+//    }
+//}
 
 
 - (void)Render
 {
-    [self ShadowMapPass];
-    
-    [self RenderPass];
+//    [self ShadowMapPass];
+//    
+//    [self RenderPass];
     
     [_context presentRenderbuffer:GL_RENDERBUFFER];
 }
