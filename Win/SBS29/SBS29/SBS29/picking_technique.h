@@ -1,6 +1,5 @@
 /*
-
-	Copyright 2011 Etay Meiri
+        Copyright 2011 Etay Meiri
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,27 +15,34 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef RANDOM_TEXTURE_H
-#define	RANDOM_TEXTURE_H
+#ifndef PICKING_TECHNIQUE_H
+#define	PICKING_TECHNIQUE_H
 
-#include <GL/glew.h>
+#include "technique.h"
+#include "ogldev_math_3d.h"
+#include "render_callbacks.h"
+#include "ogldev_types.h"
 
-class RandomTexture
+class PickingTechnique : public Technique, public IRenderCallbacks
 {
 public:
-    RandomTexture();
 
-    ~RandomTexture();
+    PickingTechnique();
+
+    virtual bool Init();
+
+    void SetWVP(const Matrix4f& WVP);
+
+    void SetObjectIndex(uint ObjectIndex);
     
-    bool InitRandomTexture(unsigned int Size);
-
-    void Bind(GLenum TextureUnit);
-
+    void DrawStartCB(uint DrawIndex);
+    
 private:
-    GLuint m_textureObj;
+    
+    GLuint m_WVPLocation;
+    GLuint m_drawIndexLocation;
+    GLuint m_objectIndexLocation;
 };
 
-
-
-#endif	/* RANDOM_TEXTURE_H */
+#endif	/* PICKING_TECHNIQUE_H */
 
