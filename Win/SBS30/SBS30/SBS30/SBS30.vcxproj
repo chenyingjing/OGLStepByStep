@@ -96,7 +96,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Include\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <AdditionalDependencies>glew32.lib;CORE_DB_Magick++_.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -133,7 +133,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Include\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -164,13 +164,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="mesh.h" />
-    <ClInclude Include="picking_technique.h" />
-    <ClInclude Include="picking_texture.h" />
-    <ClInclude Include="render_callbacks.h" />
-    <ClInclude Include="simple_color_technique.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\..\Common\camera.cpp" />
     <ClCompile Include="..\..\..\Common\cubemap_texture.cpp" />
     <ClCompile Include="..\..\..\Common\glut_backend.cpp" />
@@ -191,17 +184,22 @@
     <ClCompile Include="..\..\..\Common\pipeline.cpp" />
     <ClCompile Include="..\..\..\Common\random_texture.cpp" />
     <ClCompile Include="..\..\..\Common\technique.cpp" />
+    <ClCompile Include="lighting_technique.cpp" />
     <ClCompile Include="mesh.cpp" />
-    <ClCompile Include="picking_technique.cpp" />
-    <ClCompile Include="picking_texture.cpp" />
     <ClCompile Include="SBS30.cpp" />
-    <ClCompile Include="simple_color_technique.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="picking.fs" />
-    <None Include="picking.vs" />
-    <None Include="simple_color.fs" />
-    <None Include="simple_color.vs" />
+    <None Include="lighting.cs">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="lighting.es" />
+    <None Include="lighting.fs" />
+    <None Include="lighting.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lighting_technique.h" />
+    <ClInclude Include="mesh.h" />
+    <ClInclude Include="render_callbacks.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

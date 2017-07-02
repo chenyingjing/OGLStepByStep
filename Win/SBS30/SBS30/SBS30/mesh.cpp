@@ -18,6 +18,7 @@
 
 
 
+#include "ogldev_engine_common.h"
 #include "mesh.h"
 
 
@@ -203,7 +204,7 @@ void Mesh::Render(IRenderCallbacks* pRenderCallbacks)
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
-GLExitIfError;    
+    
     for (unsigned int i = 0 ; i < m_Entries.size() ; i++) {
         glBindBuffer(GL_ARRAY_BUFFER, m_Entries[i].VB);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
@@ -211,18 +212,18 @@ GLExitIfError;
         glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)20);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Entries[i].IB);
-GLExitIfError;
+
         const unsigned int MaterialIndex = m_Entries[i].MaterialIndex;
-GLExitIfError;
+
         if (MaterialIndex < m_Textures.size() && m_Textures[MaterialIndex]) {
-            m_Textures[MaterialIndex]->Bind(GL_TEXTURE0);
+            m_Textures[MaterialIndex]->Bind(COLOR_TEXTURE_UNIT);
         }
-GLExitIfError;
+
         if (pRenderCallbacks) {
             pRenderCallbacks->DrawStartCB(i);
         }
-GLExitIfError;        
-        glDrawElements(GL_TRIANGLES, m_Entries[i].NumIndices, GL_UNSIGNED_INT, 0);
+        
+        glDrawElements(GL_PATCHES, m_Entries[i].NumIndices, GL_UNSIGNED_INT, 0);
     }
 
     glDisableVertexAttribArray(0);
@@ -231,7 +232,7 @@ GLExitIfError;
 }
 
 
-void Mesh::Render(unsigned int DrawIndex, unsigned int PrimID)
+/*void Mesh::Render(unsigned int DrawIndex, unsigned int PrimID)
 {
     assert(DrawIndex < m_Entries.size());
     
@@ -252,4 +253,4 @@ void Mesh::Render(unsigned int DrawIndex, unsigned int PrimID)
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);    
-}
+}*/
