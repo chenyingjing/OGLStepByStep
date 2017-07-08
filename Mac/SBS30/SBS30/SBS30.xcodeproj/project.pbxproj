@@ -10,8 +10,13 @@
 		2330787F1F107B5500BF68B5 /* ground.fs in Resources */ = {isa = PBXBuildFile; fileRef = 2330787D1F107B5500BF68B5 /* ground.fs */; };
 		233078801F107B5500BF68B5 /* ground.vs in Resources */ = {isa = PBXBuildFile; fileRef = 2330787E1F107B5500BF68B5 /* ground.vs */; };
 		233078821F107BDC00BF68B5 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 233078811F107BDC00BF68B5 /* test.png */; };
+		2330788E1F10AA0500BF68B5 /* diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = 2330788D1F10AA0500BF68B5 /* diffuse.png */; };
+		233078901F10AB7700BF68B5 /* heightmap.png in Resources */ = {isa = PBXBuildFile; fileRef = 2330788F1F10AB7700BF68B5 /* heightmap.png */; };
+		233078951F10AD3800BF68B5 /* lighting.cs in Resources */ = {isa = PBXBuildFile; fileRef = 233078911F10AD3800BF68B5 /* lighting.cs */; };
+		233078961F10AD3800BF68B5 /* lighting.es in Resources */ = {isa = PBXBuildFile; fileRef = 233078921F10AD3800BF68B5 /* lighting.es */; };
+		233078971F10AD3800BF68B5 /* lighting.fs in Resources */ = {isa = PBXBuildFile; fileRef = 233078931F10AD3800BF68B5 /* lighting.fs */; };
+		233078981F10AD3800BF68B5 /* lighting.vs in Resources */ = {isa = PBXBuildFile; fileRef = 233078941F10AD3800BF68B5 /* lighting.vs */; };
 		25C0F7371F0F77B300AD2E0E /* filePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25C0F6141F0F77B200AD2E0E /* filePath.mm */; };
-		25C0F7381F0F77B300AD2E0E /* fireworks_red.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F6151F0F77B200AD2E0E /* fireworks_red.jpg */; };
 		25C0F7391F0F77B300AD2E0E /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = 25C0F6161F0F77B200AD2E0E /* glew.c */; };
 		25C0F73A1F0F77B300AD2E0E /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F61A1F0F77B200AD2E0E /* CMakeLists.txt */; };
 		25C0F73C1F0F77B300AD2E0E /* func_common.inl in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F6251F0F77B200AD2E0E /* func_common.inl */; };
@@ -126,12 +131,6 @@
 		25C0F7AA1F0F77B300AD2E0E /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C0F71B1F0F77B300AD2E0E /* libglfw3.a */; };
 		25C0F7AC1F0F77B300AD2E0E /* OGLSBS30.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C0F71D1F0F77B300AD2E0E /* OGLSBS30.cpp */; };
 		25C0F7AD1F0F77B300AD2E0E /* random_texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C0F71E1F0F77B300AD2E0E /* random_texture.cpp */; };
-		25C0F7AE1F0F77B300AD2E0E /* billboard.fs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7211F0F77B300AD2E0E /* billboard.fs */; };
-		25C0F7AF1F0F77B300AD2E0E /* billboard.gs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7221F0F77B300AD2E0E /* billboard.gs */; };
-		25C0F7B01F0F77B300AD2E0E /* billboard.vs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7231F0F77B300AD2E0E /* billboard.vs */; };
-		25C0F7B41F0F77B300AD2E0E /* ps_update.fs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7271F0F77B300AD2E0E /* ps_update.fs */; };
-		25C0F7B51F0F77B300AD2E0E /* ps_update.gs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7281F0F77B300AD2E0E /* ps_update.gs */; };
-		25C0F7B61F0F77B300AD2E0E /* ps_update.vs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7291F0F77B300AD2E0E /* ps_update.vs */; };
 		25C0F7B71F0F77B300AD2E0E /* Bitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C0F72C1F0F77B300AD2E0E /* Bitmap.cpp */; };
 		25C0F7B81F0F77B300AD2E0E /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C0F72E1F0F77B300AD2E0E /* Camera.cpp */; };
 		25C0F7B91F0F77B300AD2E0E /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C0F7301F0F77B300AD2E0E /* Program.cpp */; };
@@ -147,10 +146,15 @@
 		2330787D1F107B5500BF68B5 /* ground.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ground.fs; sourceTree = "<group>"; };
 		2330787E1F107B5500BF68B5 /* ground.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ground.vs; sourceTree = "<group>"; };
 		233078811F107BDC00BF68B5 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
+		2330788D1F10AA0500BF68B5 /* diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diffuse.png; sourceTree = "<group>"; };
+		2330788F1F10AB7700BF68B5 /* heightmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heightmap.png; sourceTree = "<group>"; };
+		233078911F10AD3800BF68B5 /* lighting.cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lighting.cs; sourceTree = "<group>"; };
+		233078921F10AD3800BF68B5 /* lighting.es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lighting.es; sourceTree = "<group>"; };
+		233078931F10AD3800BF68B5 /* lighting.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.fs; sourceTree = "<group>"; };
+		233078941F10AD3800BF68B5 /* lighting.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.vs; sourceTree = "<group>"; };
 		25C0F5FA1F0F771100AD2E0E /* SBS30.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SBS30.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C0F6131F0F77B200AD2E0E /* filePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filePath.h; sourceTree = "<group>"; };
 		25C0F6141F0F77B200AD2E0E /* filePath.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = filePath.mm; sourceTree = "<group>"; };
-		25C0F6151F0F77B200AD2E0E /* fireworks_red.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fireworks_red.jpg; sourceTree = "<group>"; };
 		25C0F6161F0F77B200AD2E0E /* glew.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glew.c; sourceTree = "<group>"; };
 		25C0F6171F0F77B200AD2E0E /* glew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glew.h; sourceTree = "<group>"; };
 		25C0F6181F0F77B200AD2E0E /* glfw3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glfw3.h; sourceTree = "<group>"; };
@@ -410,12 +414,6 @@
 		25C0F71D1F0F77B300AD2E0E /* OGLSBS30.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OGLSBS30.cpp; sourceTree = "<group>"; };
 		25C0F71E1F0F77B300AD2E0E /* random_texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = random_texture.cpp; sourceTree = "<group>"; };
 		25C0F71F1F0F77B300AD2E0E /* random_texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = random_texture.h; sourceTree = "<group>"; };
-		25C0F7211F0F77B300AD2E0E /* billboard.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboard.fs; sourceTree = "<group>"; };
-		25C0F7221F0F77B300AD2E0E /* billboard.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboard.gs; sourceTree = "<group>"; };
-		25C0F7231F0F77B300AD2E0E /* billboard.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboard.vs; sourceTree = "<group>"; };
-		25C0F7271F0F77B300AD2E0E /* ps_update.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ps_update.fs; sourceTree = "<group>"; };
-		25C0F7281F0F77B300AD2E0E /* ps_update.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ps_update.gs; sourceTree = "<group>"; };
-		25C0F7291F0F77B300AD2E0E /* ps_update.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ps_update.vs; sourceTree = "<group>"; };
 		25C0F72A1F0F77B300AD2E0E /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		25C0F72C1F0F77B300AD2E0E /* Bitmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bitmap.cpp; sourceTree = "<group>"; };
 		25C0F72D1F0F77B300AD2E0E /* Bitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bitmap.h; sourceTree = "<group>"; };
@@ -469,10 +467,11 @@
 		25C0F5FC1F0F771100AD2E0E /* SBS30 */ = {
 			isa = PBXGroup;
 			children = (
+				2330788F1F10AB7700BF68B5 /* heightmap.png */,
+				2330788D1F10AA0500BF68B5 /* diffuse.png */,
 				233078811F107BDC00BF68B5 /* test.png */,
 				25C0F6131F0F77B200AD2E0E /* filePath.h */,
 				25C0F6141F0F77B200AD2E0E /* filePath.mm */,
-				25C0F6151F0F77B200AD2E0E /* fireworks_red.jpg */,
 				25C0F6161F0F77B200AD2E0E /* glew.c */,
 				25C0F6171F0F77B200AD2E0E /* glew.h */,
 				25C0F6181F0F77B200AD2E0E /* glfw3.h */,
@@ -774,14 +773,12 @@
 		25C0F7201F0F77B300AD2E0E /* shader */ = {
 			isa = PBXGroup;
 			children = (
+				233078911F10AD3800BF68B5 /* lighting.cs */,
+				233078921F10AD3800BF68B5 /* lighting.es */,
+				233078931F10AD3800BF68B5 /* lighting.fs */,
+				233078941F10AD3800BF68B5 /* lighting.vs */,
 				2330787D1F107B5500BF68B5 /* ground.fs */,
 				2330787E1F107B5500BF68B5 /* ground.vs */,
-				25C0F7211F0F77B300AD2E0E /* billboard.fs */,
-				25C0F7221F0F77B300AD2E0E /* billboard.gs */,
-				25C0F7231F0F77B300AD2E0E /* billboard.vs */,
-				25C0F7271F0F77B300AD2E0E /* ps_update.fs */,
-				25C0F7281F0F77B300AD2E0E /* ps_update.gs */,
-				25C0F7291F0F77B300AD2E0E /* ps_update.vs */,
 			);
 			path = shader;
 			sourceTree = "<group>";
@@ -880,10 +877,10 @@
 				25C0F7861F0F77B300AD2E0E /* io.inl in Resources */,
 				25C0F7681F0F77B300AD2E0E /* noise.inl in Resources */,
 				25C0F7731F0F77B300AD2E0E /* bit.inl in Resources */,
+				233078901F10AB7700BF68B5 /* heightmap.png in Resources */,
 				25C0F7A31F0F77B300AD2E0E /* string_cast.inl in Resources */,
 				25C0F77B1F0F77B300AD2E0E /* euler_angles.inl in Resources */,
 				25C0F7701F0F77B300AD2E0E /* ulp.inl in Resources */,
-				25C0F7AE1F0F77B300AD2E0E /* billboard.fs in Resources */,
 				25C0F7411F0F77B300AD2E0E /* func_packing.inl in Resources */,
 				25C0F7881F0F77B300AD2E0E /* matrix_cross_product.inl in Resources */,
 				25C0F7531F0F77B300AD2E0E /* type_mat3x3.inl in Resources */,
@@ -895,15 +892,14 @@
 				25C0F78F1F0F77B300AD2E0E /* mixed_product.inl in Resources */,
 				25C0F73F1F0F77B300AD2E0E /* func_integer.inl in Resources */,
 				25C0F7671F0F77B300AD2E0E /* matrix_transform.inl in Resources */,
-				25C0F7AF1F0F77B300AD2E0E /* billboard.gs in Resources */,
 				25C0F74E1F0F77B300AD2E0E /* type_mat.inl in Resources */,
 				25C0F7571F0F77B300AD2E0E /* type_mat4x4.inl in Resources */,
 				25C0F77A1F0F77B300AD2E0E /* dual_quaternion.inl in Resources */,
-				25C0F7B41F0F77B300AD2E0E /* ps_update.fs in Resources */,
 				25C0F7941F0F77B300AD2E0E /* optimum_pow.inl in Resources */,
 				25C0F78A1F0F77B300AD2E0E /* matrix_interpolation.inl in Resources */,
 				25C0F7A71F0F77B300AD2E0E /* vector_angle.inl in Resources */,
 				25C0F77F1F0F77B300AD2E0E /* fast_square_root.inl in Resources */,
+				233078951F10AD3800BF68B5 /* lighting.cs in Resources */,
 				25C0F7A91F0F77B300AD2E0E /* wrap.inl in Resources */,
 				2330787F1F107B5500BF68B5 /* ground.fs in Resources */,
 				25C0F74A1F0F77B300AD2E0E /* intrinsic_trigonometric.inl in Resources */,
@@ -914,6 +910,7 @@
 				25C0F7521F0F77B300AD2E0E /* type_mat3x2.inl in Resources */,
 				25C0F7631F0F77B300AD2E0E /* epsilon.inl in Resources */,
 				25C0F74D1F0F77B300AD2E0E /* type_half.inl in Resources */,
+				233078981F10AD3800BF68B5 /* lighting.vs in Resources */,
 				25C0F75D1F0F77B300AD2E0E /* type_vec4_avx.inl in Resources */,
 				25C0F74C1F0F77B300AD2E0E /* type_gentype.inl in Resources */,
 				25C0F76C1F0F77B300AD2E0E /* reciprocal.inl in Resources */,
@@ -927,13 +924,10 @@
 				25C0F75A1F0F77B300AD2E0E /* type_vec2.inl in Resources */,
 				25C0F7791F0F77B300AD2E0E /* component_wise.inl in Resources */,
 				25C0F7751F0F77B300AD2E0E /* color_space.inl in Resources */,
-				25C0F7B01F0F77B300AD2E0E /* billboard.vs in Resources */,
 				25C0F74B1F0F77B300AD2E0E /* intrinsic_vector_relational.inl in Resources */,
 				25C0F7611F0F77B300AD2E0E /* color_space.inl in Resources */,
 				25C0F75B1F0F77B300AD2E0E /* type_vec3.inl in Resources */,
-				25C0F7381F0F77B300AD2E0E /* fireworks_red.jpg in Resources */,
 				25C0F75C1F0F77B300AD2E0E /* type_vec4.inl in Resources */,
-				25C0F7B61F0F77B300AD2E0E /* ps_update.vs in Resources */,
 				25C0F7541F0F77B300AD2E0E /* type_mat3x4.inl in Resources */,
 				25C0F79E1F0F77B300AD2E0E /* simd_mat4.inl in Resources */,
 				25C0F7951F0F77B300AD2E0E /* orthonormalize.inl in Resources */,
@@ -958,11 +952,13 @@
 				25C0F79B1F0F77B300AD2E0E /* rotate_normalized_axis.inl in Resources */,
 				25C0F7691F0F77B300AD2E0E /* packing.inl in Resources */,
 				25C0F79A1F0F77B300AD2E0E /* raw_data.inl in Resources */,
+				2330788E1F10AA0500BF68B5 /* diffuse.png in Resources */,
 				25C0F73E1F0F77B300AD2E0E /* func_geometric.inl in Resources */,
 				25C0F7501F0F77B300AD2E0E /* type_mat2x3.inl in Resources */,
 				25C0F7511F0F77B300AD2E0E /* type_mat2x4.inl in Resources */,
 				25C0F7831F0F77B300AD2E0E /* hash.inl in Resources */,
 				25C0F77D1F0F77B300AD2E0E /* extented_min_max.inl in Resources */,
+				233078961F10AD3800BF68B5 /* lighting.es in Resources */,
 				25C0F78E1F0F77B300AD2E0E /* matrix_transform_2d.inl in Resources */,
 				25C0F7471F0F77B300AD2E0E /* intrinsic_geometric.inl in Resources */,
 				25C0F7921F0F77B300AD2E0E /* normalize_dot.inl in Resources */,
@@ -970,7 +966,6 @@
 				25C0F7901F0F77B300AD2E0E /* norm.inl in Resources */,
 				25C0F7811F0F77B300AD2E0E /* gradient_paint.inl in Resources */,
 				25C0F7461F0F77B300AD2E0E /* intrinsic_exponential.inl in Resources */,
-				25C0F7B51F0F77B300AD2E0E /* ps_update.gs in Resources */,
 				25C0F7561F0F77B300AD2E0E /* type_mat4x3.inl in Resources */,
 				25C0F7821F0F77B300AD2E0E /* handed_coordinate_space.inl in Resources */,
 				25C0F7931F0F77B300AD2E0E /* number_precision.inl in Resources */,
@@ -990,6 +985,7 @@
 				25C0F7491F0F77B300AD2E0E /* intrinsic_matrix.inl in Resources */,
 				25C0F7A01F0F77B300AD2E0E /* simd_vec4.inl in Resources */,
 				25C0F7591F0F77B300AD2E0E /* type_vec1.inl in Resources */,
+				233078971F10AD3800BF68B5 /* lighting.fs in Resources */,
 				25C0F7A21F0F77B300AD2E0E /* std_based_type.inl in Resources */,
 				25C0F7641F0F77B300AD2E0E /* integer.inl in Resources */,
 				25C0F7431F0F77B300AD2E0E /* func_vector_relational.inl in Resources */,

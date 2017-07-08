@@ -56,6 +56,7 @@ struct ModelAsset {
     
     tdogl::Program* shaders;
 	tdogl::Texture* texture;
+    tdogl::Texture* displacementTexture;
 	GLuint vbo;
 	GLuint psvao;
     GLuint vao;
@@ -103,6 +104,15 @@ static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFi
 	return new tdogl::Program(shaders);
 }
 
+static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFile2, const char *shaderFile3, const char *shaderFile4) {
+    std::vector<tdogl::Shader> shaders;
+    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile1, GL_VERTEX_SHADER));
+    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile2, GL_TESS_CONTROL_SHADER));
+    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile3, GL_TESS_EVALUATION_SHADER));
+    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile4, GL_FRAGMENT_SHADER));
+    return new tdogl::Program(shaders);
+}
+
 //static tdogl::Program* LoadPsUpdateShaders(const char *shaderFile1, const char *shaderFile2, const char *shaderFile3) {
 //    std::vector<tdogl::Shader> shaders;
 //    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile1, GL_VERTEX_SHADER));
@@ -123,7 +133,7 @@ static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFi
 
 static tdogl::Texture* LoadTexture(const char *textureFile) {
 	tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(textureFile);
-	//bmp.flipVertically();
+	bmp.flipVertically();
 	return new tdogl::Texture(bmp);
 }
 
@@ -183,12 +193,15 @@ static tdogl::Texture* LoadTexture(const char *textureFile) {
 //}
 
 static void LoadGroundAsset() {
-    gGround.shaders = LoadShaders("ground.vs", "ground.fs");
+    //gGround.shaders = LoadShaders("ground.vs", "ground.fs");
+    gGround.shaders = LoadShaders("lighting.vs", "lighting.cs", "lighting.es", "lighting.fs");
     //gGround.shadersShadowMap = gWoodenCrate.shadersShadowMap;
-    gGround.drawType = GL_TRIANGLES;
+    //gGround.drawType = GL_TRIANGLES;
+    gGround.drawType = GL_PATCHES;
     gGround.drawStart = 0;
     gGround.drawCount = 2 * 3;
-    gGround.texture = LoadTexture("test.png");
+    gGround.texture = LoadTexture("diffuse.png");
+    gGround.displacementTexture = LoadTexture("heightmap.png");
     gGround.shininess = 80.0;
     gGround.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
@@ -355,7 +368,7 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
 //    GLenum error1 = glGetError();
 //    if (error1 != GL_NO_ERROR)
 //        std::cerr << "OpenGL Error1 " << error1 << std::endl;
-//    
+//
 //    glEnableVertexAttribArray(1);
 //    glEnableVertexAttribArray(2);
 //    glEnableVertexAttribArray(3);
@@ -447,22 +460,35 @@ static void RenderInstance(const ModelInstance& inst) {
     shaders->setUniform("camera", gCamera.matrix());
     shaders->setUniform("model", inst.transform);
     shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+    shaders->setUniform("gDisplacementMap", 4); //set to 4 because the texture will be bound to GL_TEXTURE4
     
     shaders->setUniform("materialShininess", asset->shininess);
     shaders->setUniform("materialSpecularColor", asset->specularColor);
+    
+    float gDispFactor = 1.0;
+    shaders->setUniform("gDispFactor", gDispFactor);
     
     
     //bind the texture
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, asset->texture->object());
     
+    glActiveTexture(GL_TEXTURE4);
+    glBindTexture(GL_TEXTURE_2D, asset->displacementTexture->object());
+
     //bind VAO and draw
     glBindVertexArray(asset->vao);
     glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
     
     //unbind everything
     glBindVertexArray(0);
+    
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, 0);
+    
+    glActiveTexture(GL_TEXTURE4);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    
     shaders->stopUsing();
 }
 
@@ -488,7 +514,9 @@ void Render(float millsElapsed, GLFWwindow* window)
 //    for (it = gParticleInstances.begin(); it != gParticleInstances.end(); ++it) {
 //        RenderParticleInstance(*it, millsElapsed);
 //    }
-    
+    GLenum error2 = glGetError();
+    if (error2 != GL_NO_ERROR)
+        std::cerr << "OpenGL Error2 " << error2 << std::endl;
     for (it = gInstances.begin(); it != gInstances.end(); ++it) {
         RenderInstance(*it);
     }
@@ -565,7 +593,7 @@ int main(void)
     
     Light directionalLight;
     directionalLight.position = glm::vec4(1, 0.8, 0.6, 0); //w == 0 indications a directional light
-    directionalLight.intensities = glm::vec3(0.01, 0.01, 0.01); //weak light
+    directionalLight.intensities = glm::vec3(0.5, 0.5, 0.5); //weak light
     directionalLight.ambientCoefficient = 0.06f;
 
     gLights.push_back(directionalLight);
