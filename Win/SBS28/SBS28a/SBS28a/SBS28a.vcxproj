@@ -173,9 +173,14 @@
     <None Include="shader\billboard.fs" />
     <None Include="shader\billboard.gs" />
     <None Include="shader\billboard.vs" />
+    <None Include="shader\ground.fs" />
+    <None Include="shader\ground.vs" />
     <None Include="shader\ps_update.fs" />
     <None Include="shader\ps_update.gs" />
     <None Include="shader\ps_update.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="test.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
