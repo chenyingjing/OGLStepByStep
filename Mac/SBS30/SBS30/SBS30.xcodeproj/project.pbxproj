@@ -124,15 +124,11 @@
 		25C0F7A81F0F77B300AD2E0E /* vector_query.inl in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7071F0F77B300AD2E0E /* vector_query.inl */; };
 		25C0F7A91F0F77B300AD2E0E /* wrap.inl in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7091F0F77B300AD2E0E /* wrap.inl */; };
 		25C0F7AA1F0F77B300AD2E0E /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C0F71B1F0F77B300AD2E0E /* libglfw3.a */; };
-		25C0F7AB1F0F77B300AD2E0E /* monster_hellknight.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F71C1F0F77B300AD2E0E /* monster_hellknight.png */; };
 		25C0F7AC1F0F77B300AD2E0E /* OGLSBS30.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C0F71D1F0F77B300AD2E0E /* OGLSBS30.cpp */; };
 		25C0F7AD1F0F77B300AD2E0E /* random_texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C0F71E1F0F77B300AD2E0E /* random_texture.cpp */; };
 		25C0F7AE1F0F77B300AD2E0E /* billboard.fs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7211F0F77B300AD2E0E /* billboard.fs */; };
 		25C0F7AF1F0F77B300AD2E0E /* billboard.gs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7221F0F77B300AD2E0E /* billboard.gs */; };
 		25C0F7B01F0F77B300AD2E0E /* billboard.vs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7231F0F77B300AD2E0E /* billboard.vs */; };
-		25C0F7B11F0F77B300AD2E0E /* hellknight.fs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7241F0F77B300AD2E0E /* hellknight.fs */; };
-		25C0F7B21F0F77B300AD2E0E /* hellknight.gs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7251F0F77B300AD2E0E /* hellknight.gs */; };
-		25C0F7B31F0F77B300AD2E0E /* hellknight.vs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7261F0F77B300AD2E0E /* hellknight.vs */; };
 		25C0F7B41F0F77B300AD2E0E /* ps_update.fs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7271F0F77B300AD2E0E /* ps_update.fs */; };
 		25C0F7B51F0F77B300AD2E0E /* ps_update.gs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7281F0F77B300AD2E0E /* ps_update.gs */; };
 		25C0F7B61F0F77B300AD2E0E /* ps_update.vs in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7291F0F77B300AD2E0E /* ps_update.vs */; };
@@ -411,16 +407,12 @@
 		25C0F7191F0F77B300AD2E0E /* vec4.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vec4.hpp; sourceTree = "<group>"; };
 		25C0F71A1F0F77B300AD2E0E /* vector_relational.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vector_relational.hpp; sourceTree = "<group>"; };
 		25C0F71B1F0F77B300AD2E0E /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libglfw3.a; sourceTree = "<group>"; };
-		25C0F71C1F0F77B300AD2E0E /* monster_hellknight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = monster_hellknight.png; sourceTree = "<group>"; };
 		25C0F71D1F0F77B300AD2E0E /* OGLSBS30.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OGLSBS30.cpp; sourceTree = "<group>"; };
 		25C0F71E1F0F77B300AD2E0E /* random_texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = random_texture.cpp; sourceTree = "<group>"; };
 		25C0F71F1F0F77B300AD2E0E /* random_texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = random_texture.h; sourceTree = "<group>"; };
 		25C0F7211F0F77B300AD2E0E /* billboard.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboard.fs; sourceTree = "<group>"; };
 		25C0F7221F0F77B300AD2E0E /* billboard.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboard.gs; sourceTree = "<group>"; };
 		25C0F7231F0F77B300AD2E0E /* billboard.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboard.vs; sourceTree = "<group>"; };
-		25C0F7241F0F77B300AD2E0E /* hellknight.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = hellknight.fs; sourceTree = "<group>"; };
-		25C0F7251F0F77B300AD2E0E /* hellknight.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = hellknight.gs; sourceTree = "<group>"; };
-		25C0F7261F0F77B300AD2E0E /* hellknight.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = hellknight.vs; sourceTree = "<group>"; };
 		25C0F7271F0F77B300AD2E0E /* ps_update.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ps_update.fs; sourceTree = "<group>"; };
 		25C0F7281F0F77B300AD2E0E /* ps_update.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ps_update.gs; sourceTree = "<group>"; };
 		25C0F7291F0F77B300AD2E0E /* ps_update.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ps_update.vs; sourceTree = "<group>"; };
@@ -486,7 +478,6 @@
 				25C0F6181F0F77B200AD2E0E /* glfw3.h */,
 				25C0F6191F0F77B200AD2E0E /* glm */,
 				25C0F71B1F0F77B300AD2E0E /* libglfw3.a */,
-				25C0F71C1F0F77B300AD2E0E /* monster_hellknight.png */,
 				25C0F71D1F0F77B300AD2E0E /* OGLSBS30.cpp */,
 				25C0F71E1F0F77B300AD2E0E /* random_texture.cpp */,
 				25C0F71F1F0F77B300AD2E0E /* random_texture.h */,
@@ -788,9 +779,6 @@
 				25C0F7211F0F77B300AD2E0E /* billboard.fs */,
 				25C0F7221F0F77B300AD2E0E /* billboard.gs */,
 				25C0F7231F0F77B300AD2E0E /* billboard.vs */,
-				25C0F7241F0F77B300AD2E0E /* hellknight.fs */,
-				25C0F7251F0F77B300AD2E0E /* hellknight.gs */,
-				25C0F7261F0F77B300AD2E0E /* hellknight.vs */,
 				25C0F7271F0F77B300AD2E0E /* ps_update.fs */,
 				25C0F7281F0F77B300AD2E0E /* ps_update.gs */,
 				25C0F7291F0F77B300AD2E0E /* ps_update.vs */,
@@ -896,7 +884,6 @@
 				25C0F77B1F0F77B300AD2E0E /* euler_angles.inl in Resources */,
 				25C0F7701F0F77B300AD2E0E /* ulp.inl in Resources */,
 				25C0F7AE1F0F77B300AD2E0E /* billboard.fs in Resources */,
-				25C0F7AB1F0F77B300AD2E0E /* monster_hellknight.png in Resources */,
 				25C0F7411F0F77B300AD2E0E /* func_packing.inl in Resources */,
 				25C0F7881F0F77B300AD2E0E /* matrix_cross_product.inl in Resources */,
 				25C0F7531F0F77B300AD2E0E /* type_mat3x3.inl in Resources */,
@@ -933,10 +920,8 @@
 				25C0F78C1F0F77B300AD2E0E /* matrix_operation.inl in Resources */,
 				25C0F7721F0F77B300AD2E0E /* associated_min_max.inl in Resources */,
 				25C0F7981F0F77B300AD2E0E /* projection.inl in Resources */,
-				25C0F7B11F0F77B300AD2E0E /* hellknight.fs in Resources */,
 				25C0F76A1F0F77B300AD2E0E /* quaternion.inl in Resources */,
 				25C0F7781F0F77B300AD2E0E /* compatibility.inl in Resources */,
-				25C0F7B21F0F77B300AD2E0E /* hellknight.gs in Resources */,
 				25C0F7581F0F77B300AD2E0E /* type_vec.inl in Resources */,
 				25C0F75F1F0F77B300AD2E0E /* type_vec4_sse2.inl in Resources */,
 				25C0F75A1F0F77B300AD2E0E /* type_vec2.inl in Resources */,
@@ -970,7 +955,6 @@
 				25C0F7911F0F77B300AD2E0E /* normal.inl in Resources */,
 				25C0F7A61F0F77B300AD2E0E /* type_aligned.inl in Resources */,
 				25C0F7A11F0F77B300AD2E0E /* spline.inl in Resources */,
-				25C0F7B31F0F77B300AD2E0E /* hellknight.vs in Resources */,
 				25C0F79B1F0F77B300AD2E0E /* rotate_normalized_axis.inl in Resources */,
 				25C0F7691F0F77B300AD2E0E /* packing.inl in Resources */,
 				25C0F79A1F0F77B300AD2E0E /* raw_data.inl in Resources */,
