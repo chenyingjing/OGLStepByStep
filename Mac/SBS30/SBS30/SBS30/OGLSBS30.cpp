@@ -81,6 +81,8 @@ struct Light {
 };
 
 ModelAsset gFirework;
+ModelAsset gGround;
+
 std::list<ModelInstance> gInstances;
 std::list<ModelInstance> gParticleInstances;
 
@@ -180,6 +182,53 @@ static void LoadFireworkAsset() {
     
 }
 
+static void LoadGroundAsset() {
+    gGround.shaders = LoadShaders("ground.vs", "ground.fs");
+    //gGround.shadersShadowMap = gWoodenCrate.shadersShadowMap;
+    gGround.drawType = GL_TRIANGLES;
+    gGround.drawStart = 0;
+    gGround.drawCount = 2 * 3;
+    gGround.texture = LoadTexture("test.png");
+    gGround.shininess = 80.0;
+    gGround.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    
+    glGenBuffers(1, &gGround.vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, gGround.vbo);
+    
+    // Make a quad out of 2 triangles
+    GLfloat vertexData[] = {
+        //  X     Y     Z       U     V          Normal
+        1.0f,0.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+        -1.0f,0.0f,-1.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+        -1.0f,0.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+        1.0f,0.0f,1.0f,   1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+        1.0f,0.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+        -1.0f,0.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f
+    };
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+    
+    glGenVertexArrays(1, &gGround.vao);
+    glBindVertexArray(gGround.vao);
+    
+    gGround.shaders->use();
+    
+    // connect the xyz to the "vert" attribute of the vertex shader
+    glEnableVertexAttribArray(gGround.shaders->attrib("vert"));
+    glVertexAttribPointer(gGround.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+    
+    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+    glEnableVertexAttribArray(gGround.shaders->attrib("vertTexCoord"));
+    glVertexAttribPointer(gGround.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+    
+    glEnableVertexAttribArray(gGround.shaders->attrib("vertNormal"));
+    glVertexAttribPointer(gGround.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+    gGround.shaders->stopUsing();
+    
+    glBindVertexArray(0);
+
+}
+
+
 
 // convenience function that returns a translation matrix
 glm::mat4 translate(GLfloat x, GLfloat y, GLfloat z) {
@@ -198,6 +247,11 @@ static void CreateInstances() {
     fireworkInstance.transform = glm::mat4();
     gParticleInstances.push_back(fireworkInstance);
 
+    ModelInstance ground;
+    ground.asset = &gGround;
+    float groundScale = 10.0;
+    ground.transform = translate(-4, 0, 0) * scale(groundScale, groundScale, groundScale);
+    gInstances.push_back(ground);
 }
 
 // records how far the y axis has been scrolled
@@ -271,6 +325,15 @@ const GLchar* ReadShader(const char* filename)
     fclose(infile);
     
     return source;
+}
+
+template <typename T>
+void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t lightIndex, const T& value) {
+    std::ostringstream ss;
+    ss << "allLights[" << lightIndex << "]." << propertyName;
+    std::string uniformName = ss.str();
+    
+    shaders->setUniform(uniformName.c_str(), value);
 }
 
 static void UpdateParticles(const ModelInstance& inst, float millsElapsed) {
@@ -355,6 +418,54 @@ static void RenderParticles(const ModelInstance& inst) {
     
 }
 
+static void RenderInstance(const ModelInstance& inst) {
+    ModelAsset* asset = inst.asset;
+    tdogl::Program* shaders = asset->shaders;
+    
+    //bind the shaders
+    shaders->use();
+    
+//    shaders->setUniform("gShadowMap", 1);
+//    
+    shaders->setUniform("numLights", (int)gLights.size());
+    
+    for (size_t i = 0; i < gLights.size(); ++i) {
+        SetLightUniform(shaders, "position", i, gLights[i].position);
+        SetLightUniform(shaders, "intensities", i, gLights[i].intensities);
+        SetLightUniform(shaders, "attenuation", i, gLights[i].attenuation);
+        SetLightUniform(shaders, "ambientCoefficient", i, gLights[i].ambientCoefficient);
+        SetLightUniform(shaders, "coneAngle", i, gLights[i].coneAngle);
+        SetLightUniform(shaders, "coneDirection", i, gLights[i].coneDirection);
+    }
+    
+    
+    
+    shaders->setUniform("cameraPosition", gCamera.position());
+    
+    //set the shader uniforms
+//    shaders->setUniform("cameraFromLight", gCameraFromLight.matrix());
+    shaders->setUniform("camera", gCamera.matrix());
+    shaders->setUniform("model", inst.transform);
+    shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+    
+    shaders->setUniform("materialShininess", asset->shininess);
+    shaders->setUniform("materialSpecularColor", asset->specularColor);
+    
+    
+    //bind the texture
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, asset->texture->object());
+    
+    //bind VAO and draw
+    glBindVertexArray(asset->vao);
+    glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+    
+    //unbind everything
+    glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    shaders->stopUsing();
+}
+
 static void RenderParticleInstance(const ModelInstance& inst, float millsElapsed) {
     ModelAsset* asset = inst.asset;
     
@@ -376,6 +487,10 @@ void Render(float millsElapsed, GLFWwindow* window)
     std::list<ModelInstance>::const_iterator it;
     for (it = gParticleInstances.begin(); it != gParticleInstances.end(); ++it) {
         RenderParticleInstance(*it, millsElapsed);
+    }
+    
+    for (it = gInstances.begin(); it != gInstances.end(); ++it) {
+        RenderInstance(*it);
     }
 
 	glfwSwapBuffers(window);
@@ -435,6 +550,7 @@ int main(void)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     LoadFireworkAsset();
+    LoadGroundAsset();
 
 	CreateInstances();
 
@@ -446,6 +562,13 @@ int main(void)
 	gCamera.offsetOrientation(0, 0);
 	gCamera.setViewportAspectRatio(800.0f / 600.0f);
 	gCamera.setNearAndFarPlanes(0.5f, 100.0f);
+    
+    Light directionalLight;
+    directionalLight.position = glm::vec4(1, 0.8, 0.6, 0); //w == 0 indications a directional light
+    directionalLight.intensities = glm::vec3(0.01, 0.01, 0.01); //weak light
+    directionalLight.ambientCoefficient = 0.06f;
+
+    gLights.push_back(directionalLight);
 
 	double lastTime = glfwGetTime();
 	while (!glfwWindowShouldClose(window))

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2330787F1F107B5500BF68B5 /* ground.fs in Resources */ = {isa = PBXBuildFile; fileRef = 2330787D1F107B5500BF68B5 /* ground.fs */; };
+		233078801F107B5500BF68B5 /* ground.vs in Resources */ = {isa = PBXBuildFile; fileRef = 2330787E1F107B5500BF68B5 /* ground.vs */; };
+		233078821F107BDC00BF68B5 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 233078811F107BDC00BF68B5 /* test.png */; };
 		25C0F7371F0F77B300AD2E0E /* filePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25C0F6141F0F77B200AD2E0E /* filePath.mm */; };
 		25C0F7381F0F77B300AD2E0E /* fireworks_red.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F6151F0F77B200AD2E0E /* fireworks_red.jpg */; };
 		25C0F7391F0F77B300AD2E0E /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = 25C0F6161F0F77B200AD2E0E /* glew.c */; };
@@ -138,7 +141,6 @@
 		25C0F7B91F0F77B300AD2E0E /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C0F7301F0F77B300AD2E0E /* Program.cpp */; };
 		25C0F7BA1F0F77B300AD2E0E /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C0F7321F0F77B300AD2E0E /* Shader.cpp */; };
 		25C0F7BB1F0F77B300AD2E0E /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C0F7341F0F77B300AD2E0E /* Texture.cpp */; };
-		25C0F7BC1F0F77B300AD2E0E /* wooden-crate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 25C0F7361F0F77B300AD2E0E /* wooden-crate.jpg */; };
 		25C0F7BF1F0F79AA00AD2E0E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C0F7BE1F0F79AA00AD2E0E /* Cocoa.framework */; };
 		25C0F7C11F0F79BE00AD2E0E /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C0F7C01F0F79BE00AD2E0E /* CoreVideo.framework */; };
 		25C0F7C31F0F79D500AD2E0E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C0F7C21F0F79D500AD2E0E /* OpenGL.framework */; };
@@ -146,6 +148,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2330787D1F107B5500BF68B5 /* ground.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ground.fs; sourceTree = "<group>"; };
+		2330787E1F107B5500BF68B5 /* ground.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ground.vs; sourceTree = "<group>"; };
+		233078811F107BDC00BF68B5 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 		25C0F5FA1F0F771100AD2E0E /* SBS30.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SBS30.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C0F6131F0F77B200AD2E0E /* filePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filePath.h; sourceTree = "<group>"; };
 		25C0F6141F0F77B200AD2E0E /* filePath.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = filePath.mm; sourceTree = "<group>"; };
@@ -430,7 +435,6 @@
 		25C0F7331F0F77B300AD2E0E /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
 		25C0F7341F0F77B300AD2E0E /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
 		25C0F7351F0F77B300AD2E0E /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
-		25C0F7361F0F77B300AD2E0E /* wooden-crate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "wooden-crate.jpg"; sourceTree = "<group>"; };
 		25C0F7BE1F0F79AA00AD2E0E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		25C0F7C01F0F79BE00AD2E0E /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		25C0F7C21F0F79D500AD2E0E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -473,6 +477,7 @@
 		25C0F5FC1F0F771100AD2E0E /* SBS30 */ = {
 			isa = PBXGroup;
 			children = (
+				233078811F107BDC00BF68B5 /* test.png */,
 				25C0F6131F0F77B200AD2E0E /* filePath.h */,
 				25C0F6141F0F77B200AD2E0E /* filePath.mm */,
 				25C0F6151F0F77B200AD2E0E /* fireworks_red.jpg */,
@@ -488,7 +493,6 @@
 				25C0F7201F0F77B300AD2E0E /* shader */,
 				25C0F72A1F0F77B300AD2E0E /* stb_image.h */,
 				25C0F72B1F0F77B300AD2E0E /* tdogl */,
-				25C0F7361F0F77B300AD2E0E /* wooden-crate.jpg */,
 			);
 			path = SBS30;
 			sourceTree = "<group>";
@@ -779,6 +783,8 @@
 		25C0F7201F0F77B300AD2E0E /* shader */ = {
 			isa = PBXGroup;
 			children = (
+				2330787D1F107B5500BF68B5 /* ground.fs */,
+				2330787E1F107B5500BF68B5 /* ground.vs */,
 				25C0F7211F0F77B300AD2E0E /* billboard.fs */,
 				25C0F7221F0F77B300AD2E0E /* billboard.gs */,
 				25C0F7231F0F77B300AD2E0E /* billboard.vs */,
@@ -912,6 +918,7 @@
 				25C0F7A71F0F77B300AD2E0E /* vector_angle.inl in Resources */,
 				25C0F77F1F0F77B300AD2E0E /* fast_square_root.inl in Resources */,
 				25C0F7A91F0F77B300AD2E0E /* wrap.inl in Resources */,
+				2330787F1F107B5500BF68B5 /* ground.fs in Resources */,
 				25C0F74A1F0F77B300AD2E0E /* intrinsic_trigonometric.inl in Resources */,
 				25C0F7771F0F77B300AD2E0E /* common.inl in Resources */,
 				25C0F7621F0F77B300AD2E0E /* constants.inl in Resources */,
@@ -953,10 +960,12 @@
 				25C0F76E1F0F77B300AD2E0E /* type_precision.inl in Resources */,
 				25C0F7421F0F77B300AD2E0E /* func_trigonometric.inl in Resources */,
 				25C0F76B1F0F77B300AD2E0E /* random.inl in Resources */,
+				233078821F107BDC00BF68B5 /* test.png in Resources */,
 				25C0F77E1F0F77B300AD2E0E /* fast_exponential.inl in Resources */,
 				25C0F7871F0F77B300AD2E0E /* log_base.inl in Resources */,
 				25C0F7971F0F77B300AD2E0E /* polar_coordinates.inl in Resources */,
 				25C0F7A41F0F77B300AD2E0E /* transform.inl in Resources */,
+				233078801F107B5500BF68B5 /* ground.vs in Resources */,
 				25C0F76F1F0F77B300AD2E0E /* type_ptr.inl in Resources */,
 				25C0F7911F0F77B300AD2E0E /* normal.inl in Resources */,
 				25C0F7A61F0F77B300AD2E0E /* type_aligned.inl in Resources */,
@@ -978,7 +987,6 @@
 				25C0F7811F0F77B300AD2E0E /* gradient_paint.inl in Resources */,
 				25C0F7461F0F77B300AD2E0E /* intrinsic_exponential.inl in Resources */,
 				25C0F7B51F0F77B300AD2E0E /* ps_update.gs in Resources */,
-				25C0F7BC1F0F77B300AD2E0E /* wooden-crate.jpg in Resources */,
 				25C0F7561F0F77B300AD2E0E /* type_mat4x3.inl in Resources */,
 				25C0F7821F0F77B300AD2E0E /* handed_coordinate_space.inl in Resources */,
 				25C0F7931F0F77B300AD2E0E /* number_precision.inl in Resources */,
