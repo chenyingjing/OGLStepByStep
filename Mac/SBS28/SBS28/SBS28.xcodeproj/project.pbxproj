@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		233078851F1084F400BF68B5 /* ground.fs in Resources */ = {isa = PBXBuildFile; fileRef = 233078831F1084F400BF68B5 /* ground.fs */; };
+		233078861F1084F400BF68B5 /* ground.vs in Resources */ = {isa = PBXBuildFile; fileRef = 233078841F1084F400BF68B5 /* ground.vs */; };
+		233078881F10853F00BF68B5 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 233078871F10853F00BF68B5 /* test.png */; };
 		235648471EF6148D00A2C556 /* filePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2356472E1EF6148D00A2C556 /* filePath.mm */; };
 		2356484A1EF6148D00A2C556 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = 235647311EF6148D00A2C556 /* glew.c */; };
 		2356484B1EF6148D00A2C556 /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 235647351EF6148D00A2C556 /* CMakeLists.txt */; };
@@ -127,7 +130,6 @@
 		235648C01EF6148D00A2C556 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2356483F1EF6148D00A2C556 /* Program.cpp */; };
 		235648C11EF6148D00A2C556 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235648411EF6148D00A2C556 /* Shader.cpp */; };
 		235648C21EF6148D00A2C556 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 235648431EF6148D00A2C556 /* Texture.cpp */; };
-		235648C41EF6148D00A2C556 /* wooden-crate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 235648461EF6148D00A2C556 /* wooden-crate.jpg */; };
 		235648C71EF614F500A2C556 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235648C61EF614F500A2C556 /* Cocoa.framework */; };
 		235648C91EF6150400A2C556 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235648C81EF6150400A2C556 /* CoreVideo.framework */; };
 		235648CB1EF6151300A2C556 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235648CA1EF6151300A2C556 /* OpenGL.framework */; };
@@ -143,6 +145,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		233078831F1084F400BF68B5 /* ground.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ground.fs; sourceTree = "<group>"; };
+		233078841F1084F400BF68B5 /* ground.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ground.vs; sourceTree = "<group>"; };
+		233078871F10853F00BF68B5 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 		235647161EF613DB00A2C556 /* SBS28.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SBS28.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2356472D1EF6148D00A2C556 /* filePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filePath.h; sourceTree = "<group>"; };
 		2356472E1EF6148D00A2C556 /* filePath.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = filePath.mm; sourceTree = "<group>"; };
@@ -415,7 +420,6 @@
 		235648421EF6148D00A2C556 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
 		235648431EF6148D00A2C556 /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
 		235648441EF6148D00A2C556 /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
-		235648461EF6148D00A2C556 /* wooden-crate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "wooden-crate.jpg"; sourceTree = "<group>"; };
 		235648C61EF614F500A2C556 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		235648C81EF6150400A2C556 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		235648CA1EF6151300A2C556 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -467,6 +471,7 @@
 		235647181EF613DB00A2C556 /* SBS28 */ = {
 			isa = PBXGroup;
 			children = (
+				233078871F10853F00BF68B5 /* test.png */,
 				235648E51EF6763400A2C556 /* fireworks_red.jpg */,
 				235648DC1EF66F4000A2C556 /* random_texture.cpp */,
 				235648DD1EF66F4000A2C556 /* random_texture.h */,
@@ -482,7 +487,6 @@
 				235648381EF6148D00A2C556 /* OGLSBS28.cpp */,
 				235648391EF6148D00A2C556 /* stb_image.h */,
 				2356483A1EF6148D00A2C556 /* tdogl */,
-				235648461EF6148D00A2C556 /* wooden-crate.jpg */,
 			);
 			path = SBS28;
 			sourceTree = "<group>";
@@ -801,6 +805,8 @@
 		235648CF1EF62A5500A2C556 /* shader */ = {
 			isa = PBXGroup;
 			children = (
+				233078831F1084F400BF68B5 /* ground.fs */,
+				233078841F1084F400BF68B5 /* ground.vs */,
 				235648DF1EF6741200A2C556 /* billboard.fs */,
 				235648E01EF6741200A2C556 /* billboard.gs */,
 				235648E11EF6741200A2C556 /* billboard.vs */,
@@ -881,11 +887,11 @@
 				235648671EF6148D00A2C556 /* type_mat4x3.inl in Resources */,
 				235648601EF6148D00A2C556 /* type_mat2x2.inl in Resources */,
 				235648731EF6148D00A2C556 /* constants.inl in Resources */,
-				235648C41EF6148D00A2C556 /* wooden-crate.jpg in Resources */,
 				235648571EF6148D00A2C556 /* intrinsic_exponential.inl in Resources */,
 				235648991EF6148D00A2C556 /* matrix_cross_product.inl in Resources */,
 				235648DB1EF6513A00A2C556 /* ps_update.vs in Resources */,
 				235648A51EF6148D00A2C556 /* optimum_pow.inl in Resources */,
+				233078861F1084F400BF68B5 /* ground.vs in Resources */,
 				235648521EF6148D00A2C556 /* func_packing.inl in Resources */,
 				2356484E1EF6148D00A2C556 /* func_exponential.inl in Resources */,
 				235648921EF6148D00A2C556 /* gradient_paint.inl in Resources */,
@@ -902,6 +908,7 @@
 				235648AE1EF6148D00A2C556 /* scalar_relational.inl in Resources */,
 				2356489C1EF6148D00A2C556 /* matrix_major_storage.inl in Resources */,
 				2356486E1EF6148D00A2C556 /* type_vec4_avx.inl in Resources */,
+				233078881F10853F00BF68B5 /* test.png in Resources */,
 				2356484F1EF6148D00A2C556 /* func_geometric.inl in Resources */,
 				235648D91EF6513A00A2C556 /* ps_update.fs in Resources */,
 				2356488C1EF6148D00A2C556 /* euler_angles.inl in Resources */,
@@ -945,6 +952,7 @@
 				2356487E1EF6148D00A2C556 /* round.inl in Resources */,
 				235648651EF6148D00A2C556 /* type_mat3x4.inl in Resources */,
 				2356487C1EF6148D00A2C556 /* random.inl in Resources */,
+				233078851F1084F400BF68B5 /* ground.fs in Resources */,
 				2356489B1EF6148D00A2C556 /* matrix_interpolation.inl in Resources */,
 				235648531EF6148D00A2C556 /* func_trigonometric.inl in Resources */,
 				235648821EF6148D00A2C556 /* vec1.inl in Resources */,
