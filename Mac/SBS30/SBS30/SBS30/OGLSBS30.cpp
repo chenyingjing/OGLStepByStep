@@ -41,7 +41,8 @@ struct Particle
 float gDegreesRotated = 0.0f;
 tdogl::Camera gCamera;
 double gScrollY = 0.0;
-bool isWireframe;
+bool isWireframe = false;
+float gDispFactor = 0.25;
 
 struct ModelAsset {
 	tdogl::Program* psUpdateShaders;
@@ -223,6 +224,14 @@ void Update(float secondsElapsed, GLFWwindow* window) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         }
     }
+    
+    if (glfwGetKey(window, 'I')) {
+        gDispFactor += 0.01f;
+    } else if (glfwGetKey(window, 'K')) {
+        if (gDispFactor >= 0.01f) {
+            gDispFactor -= 0.01f;
+        }
+    }
 
 	//rotate camera based on mouse movement
 	const float mouseSensitivity = 0.1f;
@@ -305,7 +314,6 @@ static void RenderInstance(const ModelInstance& inst) {
     shaders->setUniform("materialShininess", asset->shininess);
     shaders->setUniform("materialSpecularColor", asset->specularColor);
     
-    float gDispFactor = .25;
     shaders->setUniform("gDispFactor", gDispFactor);
     
     
@@ -401,8 +409,6 @@ int main(void)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    isWireframe = false;
-
     //LoadFireworkAsset();
     LoadGroundAsset();
 
