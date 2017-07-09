@@ -41,6 +41,7 @@ struct Particle
 float gDegreesRotated = 0.0f;
 tdogl::Camera gCamera;
 double gScrollY = 0.0;
+bool isWireframe;
 
 struct ModelAsset {
 	tdogl::Program* psUpdateShaders;
@@ -211,6 +212,17 @@ void Update(float secondsElapsed, GLFWwindow* window) {
 	else if (glfwGetKey(window, 'X')) {
 		gCamera.offsetPosition(secondsElapsed * moveSpeed * glm::vec3(0, 1, 0));
 	}
+    
+    if (glfwGetKey(window, 'C')) {
+        isWireframe = !isWireframe;
+        
+        if (isWireframe) {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
+        else {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        }
+    }
 
 	//rotate camera based on mouse movement
 	const float mouseSensitivity = 0.1f;
@@ -389,7 +401,7 @@ int main(void)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    isWireframe = false;
 
     //LoadFireworkAsset();
     LoadGroundAsset();
