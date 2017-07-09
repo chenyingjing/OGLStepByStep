@@ -15,7 +15,6 @@
 #include<list>
 #include <sstream>
 #include <string>
-#include "random_texture.h"
 
 #define NUM_ROWS 10
 #define NUM_COLUMNS 10
@@ -41,11 +40,12 @@ struct Particle
 float gDegreesRotated = 0.0f;
 tdogl::Camera gCamera;
 double gScrollY = 0.0;
+bool isWireframe = false;
+float gDispFactor = 0.25;
 
 struct ModelAsset {
 	tdogl::Program* psUpdateShaders;
     //GLuint textureObj;
-    RandomTexture m_randomTexture;
     bool m_isFirst;
     unsigned int m_currVB;
     unsigned int m_currTFB;
@@ -56,6 +56,7 @@ struct ModelAsset {
     
     tdogl::Program* shaders;
 	tdogl::Texture* texture;
+    tdogl::Texture* displacementTexture;
 	GLuint vbo;
 	GLuint psvao;
     GLuint vao;
@@ -80,11 +81,9 @@ struct Light {
 	glm::vec3 coneDirection;
 };
 
-ModelAsset gFirework;
 ModelAsset gGround;
 
 std::list<ModelInstance> gInstances;
-std::list<ModelInstance> gParticleInstances;
 
 std::vector<Light> gLights;
 
@@ -103,89 +102,28 @@ static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFi
 	return new tdogl::Program(shaders);
 }
 
-static tdogl::Program* LoadPsUpdateShaders(const char *shaderFile1, const char *shaderFile2, const char *shaderFile3) {
+static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFile2, const char *shaderFile3, const char *shaderFile4) {
     std::vector<tdogl::Shader> shaders;
     shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile1, GL_VERTEX_SHADER));
-    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile2, GL_GEOMETRY_SHADER));
-    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile3, GL_FRAGMENT_SHADER));
-    
-    const GLchar* Varyings[4];
-    Varyings[0] = "Type1";
-    Varyings[1] = "Position1";
-    Varyings[2] = "Velocity1";
-    Varyings[3] = "Age1";
-    
-    GLsizei count = 4;
-    GLenum bufferMode = GL_INTERLEAVED_ATTRIBS;
-    
-    return new tdogl::Program(shaders, count, Varyings, bufferMode);
+    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile2, GL_TESS_CONTROL_SHADER));
+    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile3, GL_TESS_EVALUATION_SHADER));
+    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile4, GL_FRAGMENT_SHADER));
+    return new tdogl::Program(shaders);
 }
 
 static tdogl::Texture* LoadTexture(const char *textureFile) {
 	tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(textureFile);
-	//bmp.flipVertically();
+	bmp.flipVertically();
 	return new tdogl::Texture(bmp);
 }
 
-static void LoadFireworkAsset() {
-    gFirework.m_currVB = 0;
-    gFirework.m_currTFB = 1;
-    gFirework.m_isFirst = true;
-    gFirework.m_time = 0;
-    
-    
-    Particle Particles[MAX_PARTICLES] = {0};
-    
-    Particles[0].Type = PARTICLE_TYPE_LAUNCHER;
-    Particles[0].Pos = glm::vec3(0, 0, -2);
-    Particles[0].Vel = glm::vec3(0.0f, 0.001f, 0.0f);
-    Particles[0].LifetimeMillis = 0.0f;
-    
-    glGenTransformFeedbacks(2, gFirework.m_transformFeedback);
-    glGenBuffers(2, gFirework.m_particleBuffer);
-    
-    for (unsigned int i = 0; i < 2 ; i++) {
-        glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, gFirework.m_transformFeedback[i]);
-        glBindBuffer(GL_ARRAY_BUFFER, gFirework.m_particleBuffer[i]);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(Particles), Particles, GL_DYNAMIC_DRAW);
-        glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, gFirework.m_particleBuffer[i]);
-    }
-    
-    gFirework.psUpdateShaders = LoadPsUpdateShaders("shader/ps_update.vs",
-                                      "shader/ps_update.gs", "shader/ps_update.fs");
-    
-    gFirework.psUpdateShaders->use();
-    gFirework.psUpdateShaders->setUniform("gRandomTexture", 3);//TEXTURE3
-    gFirework.psUpdateShaders->setUniform("gLauncherLifetime", 100.0f);
-    gFirework.psUpdateShaders->setUniform("gShellLifetime", 10000.0f);
-    gFirework.psUpdateShaders->setUniform("gSecondaryShellLifetime", 7000.0f);
-    
-    if (!gFirework.m_randomTexture.InitRandomTexture(1000)) {
-        throw std::runtime_error("InitRandomTexture fail.");
-    }
-    gFirework.m_randomTexture.Bind(GL_TEXTURE3);
-    
-    
-    gFirework.shaders = LoadShaders("shader/billboard.vs", "shader/billboard.gs", "shader/billboard.fs");
-    gFirework.shaders->use();
-    gFirework.shaders->setUniform("materialTex", 0);//TEXTURE0
-    gFirework.shaders->setUniform("gBillboardSize", 0.01f);
-    gFirework.texture = LoadTexture("fireworks_red.jpg");
-    
-    gFirework.drawType = GL_POINTS;
-    gFirework.drawStart = 0;
-    gFirework.drawCount = MAX_PARTICLES;
-    gFirework.shininess = 80.0;
-    gFirework.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
-    
-}
 static void LoadGroundAsset() {
-    gGround.shaders = LoadShaders("shader/ground.vs", "shader/ground.fs");
-    //gGround.shadersShadowMap = gWoodenCrate.shadersShadowMap;
-    gGround.drawType = GL_TRIANGLES;
+    gGround.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.cs", "shader/lighting.es", "shader/lighting.fs");
+    gGround.drawType = GL_PATCHES;
     gGround.drawStart = 0;
     gGround.drawCount = 2 * 3;
-    gGround.texture = LoadTexture("test.png");
+    gGround.texture = LoadTexture("diffuse.png");
+    gGround.displacementTexture = LoadTexture("heightmap.png");
     gGround.shininess = 80.0;
     gGround.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
@@ -222,7 +160,7 @@ static void LoadGroundAsset() {
     gGround.shaders->stopUsing();
     
     glBindVertexArray(0);
-    
+
 }
 
 
@@ -239,15 +177,10 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 static void CreateInstances() {
-    ModelInstance fireworkInstance;
-    fireworkInstance.asset = &gFirework;
-    fireworkInstance.transform = glm::mat4();
-    gParticleInstances.push_back(fireworkInstance);
-    
     ModelInstance ground;
     ground.asset = &gGround;
-    float groundScale = 5.0;
-    ground.transform = translate(-1, 0, 0) * scale(groundScale, groundScale, groundScale);
+    float groundScale = 1.0;
+    ground.transform = translate(0, 0, 0) * scale(groundScale, groundScale, groundScale);
     gInstances.push_back(ground);
 }
 
@@ -257,12 +190,6 @@ void OnScroll(GLFWwindow* window, double deltaX, double deltaY) {
 }
 
 void Update(float secondsElapsed, GLFWwindow* window) {
-	//const GLfloat degreesPerSecond = 180.0f;
-//	const GLfloat degreesPerSecond = 0.0f;
-//	gDegreesRotated += secondsElapsed * degreesPerSecond;
-//	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
-//	gInstances.front().transform = glm::rotate(glm::mat4(), gDegreesRotated, glm::vec3(0, 1, 0));
-
 	//move position of camera based on WASD keys
 	const float moveSpeed = 4.0; //units per second
 	if (glfwGetKey(window, 'S')) {
@@ -284,6 +211,25 @@ void Update(float secondsElapsed, GLFWwindow* window) {
 	else if (glfwGetKey(window, 'X')) {
 		gCamera.offsetPosition(secondsElapsed * moveSpeed * glm::vec3(0, 1, 0));
 	}
+    
+    if (glfwGetKey(window, 'C')) {
+        isWireframe = !isWireframe;
+        
+        if (isWireframe) {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
+        else {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        }
+    }
+    
+    if (glfwGetKey(window, 'I')) {
+        gDispFactor += 0.01f;
+    } else if (glfwGetKey(window, 'K')) {
+        if (gDispFactor >= 0.01f) {
+            gDispFactor -= 0.01f;
+        }
+    }
 
 	//rotate camera based on mouse movement
 	const float mouseSensitivity = 0.1f;
@@ -338,81 +284,6 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     shaders->setUniform(uniformName.c_str(), value);
 }
 
-static void UpdateParticles(const ModelInstance& inst, float millsElapsed) {
-    ModelAsset* asset = inst.asset;
-    tdogl::Program* psUpdateShaders = asset->psUpdateShaders;
-    psUpdateShaders->use();
-    psUpdateShaders->setUniform("gTime", asset->m_time);
-    psUpdateShaders->setUniform("gDeltaTimeMillis", millsElapsed);
-    
-    asset->m_randomTexture.Bind(GL_TEXTURE3);
-    glEnable(GL_RASTERIZER_DISCARD);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, asset->m_particleBuffer[asset->m_currVB]);
-    glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, asset->m_transformFeedback[asset->m_currTFB]);
-    
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    glEnableVertexAttribArray(2);
-    glEnableVertexAttribArray(3);
-    
-    glVertexAttribPointer(0, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), 0);                          // type
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)4);         // position
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)16);        // velocity
-    glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)28);          // lifetime
-    
-    glBeginTransformFeedback(GL_POINTS);
-    
-    if (asset->m_isFirst) {
-        glDrawArrays(GL_POINTS, 0, 1);
-
-		//GLenum error1 = glGetError();
-		//if (error1 != GL_NO_ERROR)
-		//	std::cerr << "OpenGL Error1 " << error1 << std::endl;
-
-        asset->m_isFirst = false;
-    }
-    else {
-        glDrawTransformFeedback(GL_POINTS, asset->m_transformFeedback[asset->m_currVB]);
-    }
-    
-    glEndTransformFeedback();
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    glDisableVertexAttribArray(2);
-    glDisableVertexAttribArray(3);
-
-}
-
-static void RenderParticles(const ModelInstance& inst) {
-    ModelAsset* asset = inst.asset;
-    tdogl::Program* shaders = asset->shaders;
-    shaders->use();
-    
-    shaders->setUniform("gCameraPos", gCamera.position());
-    shaders->setUniform("camera", gCamera.matrix());
-    shaders->setUniform("model", inst.transform);
-    shaders->setUniform("materialTex", 0);//GL_TEXTURE0
-    
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, asset->texture->object());
-    
-    glDisable(GL_RASTERIZER_DISCARD);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, asset->m_particleBuffer[asset->m_currTFB]);
-    
-    glEnableVertexAttribArray(shaders->attrib("vert"));
-    
-    glVertexAttribPointer(shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)4);  // position
-   
-    glDrawTransformFeedback(GL_POINTS, asset->m_transformFeedback[asset->m_currTFB]);
-    
-    glDisableVertexAttribArray(shaders->attrib("vert"));
-    
-    
-}
-
 static void RenderInstance(const ModelInstance& inst) {
     ModelAsset* asset = inst.asset;
     tdogl::Program* shaders = asset->shaders;
@@ -420,8 +291,8 @@ static void RenderInstance(const ModelInstance& inst) {
     //bind the shaders
     shaders->use();
     
-    //    shaders->setUniform("gShadowMap", 1);
-    //
+//    shaders->setUniform("gShadowMap", 1);
+//    
     shaders->setUniform("numLights", (int)gLights.size());
     
     for (size_t i = 0; i < gLights.size(); ++i) {
@@ -438,40 +309,38 @@ static void RenderInstance(const ModelInstance& inst) {
     shaders->setUniform("cameraPosition", gCamera.position());
     
     //set the shader uniforms
-    //    shaders->setUniform("cameraFromLight", gCameraFromLight.matrix());
     shaders->setUniform("camera", gCamera.matrix());
     shaders->setUniform("model", inst.transform);
     shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+    shaders->setUniform("gDisplacementMap", 4); //set to 4 because the texture will be bound to GL_TEXTURE4
     
     shaders->setUniform("materialShininess", asset->shininess);
     shaders->setUniform("materialSpecularColor", asset->specularColor);
+    
+    shaders->setUniform("gDispFactor", gDispFactor);
     
     
     //bind the texture
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, asset->texture->object());
     
+    glActiveTexture(GL_TEXTURE4);
+    glBindTexture(GL_TEXTURE_2D, asset->displacementTexture->object());
+
     //bind VAO and draw
     glBindVertexArray(asset->vao);
     glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
     
     //unbind everything
     glBindVertexArray(0);
+    
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, 0);
+    
+    glActiveTexture(GL_TEXTURE4);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    
     shaders->stopUsing();
-}
-
-static void RenderParticleInstance(const ModelInstance& inst, float millsElapsed) {
-    ModelAsset* asset = inst.asset;
-    
-    asset->m_time += millsElapsed;
-    
-    UpdateParticles(inst, millsElapsed);
-    
-    RenderParticles(inst);
-    
-    asset->m_currVB = asset->m_currTFB;
-    asset->m_currTFB = (asset->m_currTFB + 1) & 0x1;
 }
 
 void Render(float millsElapsed, GLFWwindow* window)
@@ -480,15 +349,14 @@ void Render(float millsElapsed, GLFWwindow* window)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     std::list<ModelInstance>::const_iterator it;
-    for (it = gParticleInstances.begin(); it != gParticleInstances.end(); ++it) {
-        RenderParticleInstance(*it, millsElapsed);
-    }
-    
+    GLenum error2 = glGetError();
+    if (error2 != GL_NO_ERROR)
+        std::cerr << "OpenGL Error2 " << error2 << std::endl;
     for (it = gInstances.begin(); it != gInstances.end(); ++it) {
         RenderInstance(*it);
     }
-    
-    glfwSwapBuffers(window);
+
+	glfwSwapBuffers(window);
 }
 
 int main(void)
@@ -543,8 +411,8 @@ int main(void)
 	glDepthFunc(GL_LESS);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    LoadFireworkAsset();
+    
+    //LoadFireworkAsset();
     LoadGroundAsset();
 
 	CreateInstances();
@@ -553,17 +421,18 @@ int main(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
-    gCamera.setPosition(glm::vec3(0, 1, 2));
-	gCamera.offsetOrientation(0, 0);
+    gCamera.setPosition(glm::vec3(0, 1, 3));
+	gCamera.offsetOrientation(10, 0);
 	gCamera.setViewportAspectRatio(800.0f / 600.0f);
 	gCamera.setNearAndFarPlanes(0.5f, 100.0f);
-
+    
     Light directionalLight;
     directionalLight.position = glm::vec4(1, 0.8, 0.6, 0); //w == 0 indications a directional light
-    directionalLight.intensities = glm::vec3(0.01, 0.01, 0.01); //weak light
+    directionalLight.intensities = glm::vec3(0.5, 0.5, 0.5); //weak light
     directionalLight.ambientCoefficient = 0.06f;
-    
+
     gLights.push_back(directionalLight);
+
 	double lastTime = glfwGetTime();
 	while (!glfwWindowShouldClose(window))
 	{

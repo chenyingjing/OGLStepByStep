@@ -152,7 +152,6 @@
   <ItemGroup>
     <ClInclude Include="glew.h" />
     <ClInclude Include="glfw3.h" />
-    <ClInclude Include="random_texture.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="tdogl\Bitmap.h" />
     <ClInclude Include="tdogl\Camera.h" />
@@ -162,7 +161,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OGLSBS30a.cpp" />
-    <ClCompile Include="random_texture.cpp" />
     <ClCompile Include="tdogl\Bitmap.cpp" />
     <ClCompile Include="tdogl\Camera.cpp" />
     <ClCompile Include="tdogl\Program.cpp" />
@@ -170,17 +168,10 @@
     <ClCompile Include="tdogl\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader\billboard.fs" />
-    <None Include="shader\billboard.gs" />
-    <None Include="shader\billboard.vs" />
-    <None Include="shader\ground.fs" />
-    <None Include="shader\ground.vs" />
-    <None Include="shader\ps_update.fs" />
-    <None Include="shader\ps_update.gs" />
-    <None Include="shader\ps_update.vs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="test.png" />
+    <None Include="shader\lighting.cs" />
+    <None Include="shader\lighting.es" />
+    <None Include="shader\lighting.fs" />
+    <None Include="shader\lighting.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
