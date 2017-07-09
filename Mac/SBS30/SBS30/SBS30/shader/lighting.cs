@@ -26,7 +26,7 @@ float GetTessLevel(float Distance0, float Distance1)
         return 7.0;                                                                             
     }                                                                                           
     else {                                                                                      
-        return 3.0;                                                                             
+        return 3.0;
     }                                                                                           
 }                                                                                               
                                                                                                 
@@ -44,7 +44,8 @@ void main()
                                                                                                 
     // Calculate the tessellation levels                                                        
     gl_TessLevelOuter[0] = GetTessLevel(EyeToVertexDistance1, EyeToVertexDistance2);            
-    gl_TessLevelOuter[1] = GetTessLevel(EyeToVertexDistance2, EyeToVertexDistance0);            
-    gl_TessLevelOuter[2] = GetTessLevel(EyeToVertexDistance0, EyeToVertexDistance1);            
-    gl_TessLevelInner[0] = gl_TessLevelOuter[2];                                                
+    gl_TessLevelOuter[1] = GetTessLevel(EyeToVertexDistance2, EyeToVertexDistance0);
+    float out2AndInner0 = GetTessLevel(EyeToVertexDistance0, EyeToVertexDistance1);
+    gl_TessLevelOuter[2] = out2AndInner0;
+    gl_TessLevelInner[0] = 30 * out2AndInner0;
 }                                                                                               

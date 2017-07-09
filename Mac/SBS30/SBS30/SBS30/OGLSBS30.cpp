@@ -465,7 +465,7 @@ static void RenderInstance(const ModelInstance& inst) {
     shaders->setUniform("materialShininess", asset->shininess);
     shaders->setUniform("materialSpecularColor", asset->specularColor);
     
-    float gDispFactor = 1.0;
+    float gDispFactor = .25;
     shaders->setUniform("gDispFactor", gDispFactor);
     
     
@@ -576,6 +576,8 @@ int main(void)
 	glDepthFunc(GL_LESS);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     //LoadFireworkAsset();
     LoadGroundAsset();
