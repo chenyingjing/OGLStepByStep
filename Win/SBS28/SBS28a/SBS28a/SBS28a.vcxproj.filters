@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="tdogl">
+      <UniqueIdentifier>{e05d1536-97da-43f0-a9ac-a4072041bb11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shader">
+      <UniqueIdentifier>{3fb98707-4a1b-46c7-8447-273a6f1fd253}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="glew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glfw3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tdogl\Bitmap.h">
+      <Filter>tdogl</Filter>
+    </ClInclude>
+    <ClInclude Include="tdogl\Camera.h">
+      <Filter>tdogl</Filter>
+    </ClInclude>
+    <ClInclude Include="tdogl\Program.h">
+      <Filter>tdogl</Filter>
+    </ClInclude>
+    <ClInclude Include="tdogl\Shader.h">
+      <Filter>tdogl</Filter>
+    </ClInclude>
+    <ClInclude Include="tdogl\Texture.h">
+      <Filter>tdogl</Filter>
+    </ClInclude>
+    <ClInclude Include="random_texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="tdogl\Bitmap.cpp">
+      <Filter>tdogl</Filter>
+    </ClCompile>
+    <ClCompile Include="tdogl\Camera.cpp">
+      <Filter>tdogl</Filter>
+    </ClCompile>
+    <ClCompile Include="tdogl\Program.cpp">
+      <Filter>tdogl</Filter>
+    </ClCompile>
+    <ClCompile Include="tdogl\Shader.cpp">
+      <Filter>tdogl</Filter>
+    </ClCompile>
+    <ClCompile Include="tdogl\Texture.cpp">
+      <Filter>tdogl</Filter>
+    </ClCompile>
+    <ClCompile Include="random_texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OGLSBS28a.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shader\ps_update.fs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\ps_update.gs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\ps_update.vs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\billboard.vs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\billboard.gs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\billboard.fs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\ground.fs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\ground.vs">
+      <Filter>shader</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="test.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
