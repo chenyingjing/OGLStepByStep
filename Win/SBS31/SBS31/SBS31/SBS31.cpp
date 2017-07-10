@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Tutorial 30 - Basic Tessellation
+Tutorial 31 - PN Triangles Tessellation
 */
 
 #include <math.h>
@@ -34,17 +34,17 @@ Tutorial 30 - Basic Tessellation
 #define WINDOW_WIDTH  1680
 #define WINDOW_HEIGHT 1050
 
-class Tutorial30 : public ICallbacks, public OgldevApp
+class Tutorial31 : public ICallbacks, public OgldevApp
 {
 public:
 
-	Tutorial30()
+	Tutorial31()
 	{
 		m_pGameCamera = NULL;
 		m_directionalLight.Color = Vector3f(1.0f, 1.0f, 1.0f);
-		m_directionalLight.AmbientIntensity = 1.0f;
-		m_directionalLight.DiffuseIntensity = 0.01f;
-		m_directionalLight.Direction = Vector3f(1.0f, -1.0, 0.0);
+		m_directionalLight.AmbientIntensity = 0.1f;
+		m_directionalLight.DiffuseIntensity = 0.9f;
+		m_directionalLight.Direction = Vector3f(0.0f, 0.0, 1.0);
 
 		m_persProjInfo.FOV = 60.0f;
 		m_persProjInfo.Height = WINDOW_HEIGHT;
@@ -52,21 +52,19 @@ public:
 		m_persProjInfo.zNear = 1.0f;
 		m_persProjInfo.zFar = 100.0f;
 
-		m_pDisplacementMap = NULL;
-		m_dispFactor = 0.25f;
+		m_tessellationLevel = 5.0f;
 		m_isWireframe = false;
 	}
 
-	virtual ~Tutorial30()
+	virtual ~Tutorial31()
 	{
 		SAFE_DELETE(m_pGameCamera);
 		SAFE_DELETE(m_pMesh);
-		SAFE_DELETE(m_pDisplacementMap);
 	}
 
 	bool Init()
 	{
-		Vector3f Pos(0.0f, 1.0f, -5.0f);
+		Vector3f Pos(0.0f, 1.5f, -6.5f);
 		Vector3f Target(0.0f, -0.2f, 1.0f);
 		Vector3f Up(0.0, 1.0f, 0.0f);
 
@@ -80,35 +78,14 @@ public:
 		GLint MaxPatchVertices = 0;
 		glGetIntegerv(GL_MAX_PATCH_VERTICES, &MaxPatchVertices);
 		printf("Max supported patch vertices %d\n", MaxPatchVertices);
-		//glPatchParameteri(GL_PATCH_VERTICES, 3);
-
-		glActiveTexture(GL_TEXTURE4);
-		m_pDisplacementMap = new Texture(GL_TEXTURE_2D, "../../../Content/heightmap.jpg");
-
-		if (!m_pDisplacementMap->Load()) {
-			return false;
-		}
-
-		m_pDisplacementMap->Bind(DISPLACEMENT_TEXTURE_UNIT);
-
-		glActiveTexture(GL_TEXTURE0);
-		m_pColorMap = new Texture(GL_TEXTURE_2D, "../../../Content/diffuse.jpg");
-
-		if (!m_pColorMap->Load()) {
-			return false;
-		}
-
-		m_pColorMap->Bind(COLOR_TEXTURE_UNIT);
+		glPatchParameteri(GL_PATCH_VERTICES, 3);
 
 		m_lightingEffect.Enable();
-
 		m_lightingEffect.SetColorTextureUnit(COLOR_TEXTURE_UNIT_INDEX);
-		m_lightingEffect.SetDisplacementMapTextureUnit(DISPLACEMENT_TEXTURE_UNIT_INDEX);
 		m_lightingEffect.SetDirectionalLight(m_directionalLight);
-		m_lightingEffect.SetDispFactor(m_dispFactor);
 		m_pMesh = new Mesh();
 
-		return m_pMesh->LoadMesh("../../../Content/quad2.obj");
+		return m_pMesh->LoadMesh("../../../Content/monkey.obj");
 	}
 
 	void Run()
@@ -123,22 +100,27 @@ public:
 		m_pGameCamera->OnRender();
 
 		Pipeline p;
+		p.WorldPos(-3.0f, 0.0f, 0.0f);
 		p.Scale(2.0f, 2.0f, 2.0f);
+		p.Rotate(-90.0f, 15.0f, 0.0f);
 		p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
 		p.SetPerspectiveProj(m_persProjInfo);
-
-		// render the objects as usual
-		m_lightingEffect.Enable();
-
 		m_lightingEffect.SetEyeWorldPos(m_pGameCamera->GetPos());
+
 		m_lightingEffect.SetVP(p.GetVPTrans());
 		m_lightingEffect.SetWorldMatrix(p.GetWorldTrans());
-		m_lightingEffect.SetDispFactor(m_dispFactor);
-
+		m_lightingEffect.SetTessellationLevel(m_tessellationLevel);
 		m_pMesh->Render(NULL);
 
+		p.WorldPos(3.0f, 0.0f, 0.0f);
+		p.Rotate(-90.0f, -15.0f, 0.0f);
+		m_lightingEffect.SetVP(p.GetVPTrans());
+		m_lightingEffect.SetWorldMatrix(p.GetWorldTrans());
+		m_lightingEffect.SetTessellationLevel(1.0f);
+		m_pMesh->Render(NULL);
 		glutSwapBuffers();
 	}
+
 
 
 	virtual void KeyboardCB(OGLDEV_KEY OgldevKey, OGLDEV_KEY_STATE State)
@@ -151,17 +133,17 @@ public:
 
 		case OGLDEV_KEY_u:
 		case OGLDEV_KEY_PLUS:
-			m_dispFactor += 0.01f;
+			m_tessellationLevel += 1.0f;
 			break;
 
 		case OGLDEV_KEY_d:
 		case OGLDEV_KEY_MINUS:
-			if (m_dispFactor >= 0.01f) {
-				m_dispFactor -= 0.01f;
+			if (m_tessellationLevel >= 2.0f) {
+				m_tessellationLevel -= 1.0f;
 			}
 			break;
 
-		case 'z':
+		case OGLDEV_KEY_z:
 			m_isWireframe = !m_isWireframe;
 
 			if (m_isWireframe) {
@@ -190,22 +172,21 @@ private:
 	DirectionalLight m_directionalLight;
 	Mesh* m_pMesh;
 	PersProjInfo m_persProjInfo;
-	Texture* m_pDisplacementMap;
-	Texture* m_pColorMap;
-	float m_dispFactor;
+	float m_tessellationLevel;
 	bool m_isWireframe;
 };
 
 
 int main(int argc, char** argv)
 {
+	//    Magick::InitializeMagick(*argv);
 	GLUTBackendInit(argc, argv, true, false);
 
-	if (!GLUTBackendCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false, "Tutorial 30")) {
+	if (!GLUTBackendCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false, "Tutorial 31")) {
 		return 1;
 	}
 
-	Tutorial30* pApp = new Tutorial30();
+	Tutorial31* pApp = new Tutorial31();
 
 	if (!pApp->Init()) {
 		return 1;

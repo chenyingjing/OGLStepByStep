@@ -1,3 +1,4 @@
+
 #version 410 core                                                                           
                                                                                             
 const int MAX_POINT_LIGHTS = 2;                                                             
@@ -66,7 +67,7 @@ vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, vec3 Normal)
                                                                                             
         vec3 VertexToEye = normalize(gEyeWorldPos - WorldPos_FS_in);                        
         vec3 LightReflect = normalize(reflect(LightDirection, Normal));                     
-        float SpecularFactor = dot(VertexToEye, LightReflect);                              
+        float SpecularFactor = dot(VertexToEye, LightReflect);                                      
         if (SpecularFactor > 0) {                                                           
             SpecularFactor = pow(SpecularFactor, gSpecularPower);                               
             SpecularColor = vec4(Light.Color * gMatSpecularIntensity * SpecularFactor, 1.0f);

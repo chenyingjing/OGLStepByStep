@@ -57,7 +57,6 @@ bool LightingTechnique::Init()
     m_VPLocation = GetUniformLocation("gVP");
     m_WorldMatrixLocation = GetUniformLocation("gWorld");
     m_colorTextureLocation = GetUniformLocation("gColorMap");
-    m_displacementMapLocation = GetUniformLocation("gDisplacementMap");
     m_eyeWorldPosLocation = GetUniformLocation("gEyeWorldPos");
     m_dirLightLocation.Color = GetUniformLocation("gDirectionalLight.Base.Color");
     m_dirLightLocation.AmbientIntensity = GetUniformLocation("gDirectionalLight.Base.AmbientIntensity");
@@ -67,13 +66,12 @@ bool LightingTechnique::Init()
     m_matSpecularPowerLocation = GetUniformLocation("gSpecularPower");
     m_numPointLightsLocation = GetUniformLocation("gNumPointLights");
     m_numSpotLightsLocation = GetUniformLocation("gNumSpotLights");
-    m_dispFactorLocation = GetUniformLocation("gDispFactor");
+    m_TLLocation = GetUniformLocation("gTessellationLevel");
 
     if (m_dirLightLocation.AmbientIntensity == INVALID_UNIFORM_LOCATION ||
         m_VPLocation == INVALID_UNIFORM_LOCATION ||
         m_WorldMatrixLocation == INVALID_UNIFORM_LOCATION ||
         m_colorTextureLocation == INVALID_UNIFORM_LOCATION ||
-        m_displacementMapLocation == INVALID_UNIFORM_LOCATION ||
         m_eyeWorldPosLocation == INVALID_UNIFORM_LOCATION ||
         m_dirLightLocation.Color == INVALID_UNIFORM_LOCATION ||
         m_dirLightLocation.DiffuseIntensity == INVALID_UNIFORM_LOCATION ||
@@ -82,7 +80,7 @@ bool LightingTechnique::Init()
         m_matSpecularPowerLocation == INVALID_UNIFORM_LOCATION ||
         m_numPointLightsLocation == INVALID_UNIFORM_LOCATION ||
         m_numSpotLightsLocation == INVALID_UNIFORM_LOCATION ||
-        m_dispFactorLocation == INVALID_UNIFORM_LOCATION) {
+        m_TLLocation == INVALID_UNIFORM_LOCATION) {
         return false;
     }
 
@@ -186,12 +184,6 @@ void LightingTechnique::SetColorTextureUnit(unsigned int TextureUnit)
 }
 
 
-void LightingTechnique::SetDisplacementMapTextureUnit(unsigned int TextureUnit)
-{
-    glUniform1i(m_displacementMapLocation, TextureUnit);
-}
-
-
 void LightingTechnique::SetDirectionalLight(const DirectionalLight& Light)
 {
     glUniform3f(m_dirLightLocation.Color, Light.Color.x, Light.Color.y, Light.Color.z);
@@ -202,20 +194,24 @@ void LightingTechnique::SetDirectionalLight(const DirectionalLight& Light)
     glUniform1f(m_dirLightLocation.DiffuseIntensity, Light.DiffuseIntensity);
 }
 
+
 void LightingTechnique::SetEyeWorldPos(const Vector3f& EyeWorldPos)
 {
     glUniform3f(m_eyeWorldPosLocation, EyeWorldPos.x, EyeWorldPos.y, EyeWorldPos.z);
 }
+
 
 void LightingTechnique::SetMatSpecularIntensity(float Intensity)
 {
     glUniform1f(m_matSpecularIntensityLocation, Intensity);
 }
 
+
 void LightingTechnique::SetMatSpecularPower(float Power)
 {
     glUniform1f(m_matSpecularPowerLocation, Power);
 }
+
 
 void LightingTechnique::SetPointLights(unsigned int NumLights, const PointLight* pLights)
 {
@@ -231,6 +227,7 @@ void LightingTechnique::SetPointLights(unsigned int NumLights, const PointLight*
         glUniform1f(m_pointLightsLocation[i].Atten.Exp, pLights[i].Attenuation.Exp);
     }
 }
+
 
 void LightingTechnique::SetSpotLights(unsigned int NumLights, const SpotLight* pLights)
 {
@@ -252,7 +249,7 @@ void LightingTechnique::SetSpotLights(unsigned int NumLights, const SpotLight* p
 }
 
 
-void LightingTechnique::SetDispFactor(float Factor)
+void LightingTechnique::SetTessellationLevel(float TL)
 {
-    glUniform1f(m_dispFactorLocation, Factor);
+    glUniform1f(m_TLLocation, TL);
 }
