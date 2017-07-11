@@ -224,10 +224,10 @@ void Update(float secondsElapsed, GLFWwindow* window) {
     }
     
     if (glfwGetKey(window, 'I')) {
-        gDispFactor += 0.01f;
+        gDispFactor += 0.001f;
     } else if (glfwGetKey(window, 'K')) {
         if (gDispFactor >= 0.01f) {
-            gDispFactor -= 0.01f;
+            gDispFactor -= 0.001f;
         }
     }
 
