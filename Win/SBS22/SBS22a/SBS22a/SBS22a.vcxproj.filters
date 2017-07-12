@@ -19,6 +19,9 @@
     <Filter Include="tdogl">
       <UniqueIdentifier>{a0176120-011d-4f2d-bb9b-f2261786dd19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{364095e1-07c9-4e1b-a85d-84c06ff9d21f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glew.h">
@@ -70,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="mesh.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Common\ogldev_texture.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

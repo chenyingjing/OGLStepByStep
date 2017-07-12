@@ -94,7 +94,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Include\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;CORE_DB_Magick++_.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
@@ -128,7 +128,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Include\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -167,6 +167,7 @@
     <ClInclude Include="tdogl\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Common\ogldev_texture.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="SBS22a.cpp" />
     <ClCompile Include="tdogl\Bitmap.cpp" />

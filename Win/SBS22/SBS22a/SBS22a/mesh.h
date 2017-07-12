@@ -67,7 +67,7 @@ private:
     bool InitMaterials(const aiScene* pScene, const std::string& Filename);
     void Clear();
 
-	static void Clear(std::vector<tdogl::Texture*>& textures);
+	static void Clear(std::vector<Texture*>& textures);
 
 #define INVALID_MATERIAL 0xFFFFFFFF
 
@@ -91,11 +91,11 @@ private:
     //std::vector<Texture*> m_Textures;
 
 public:
-	static bool LoadMesh(const std::string& Filename, std::vector<MeshEntry> &entries, std::vector<tdogl::Texture*> &textures);
+	static bool LoadMesh(const std::string& Filename, std::vector<MeshEntry> &entries, std::vector<Texture*> &textures);
 private:
-	static bool InitFromScene(const aiScene * pScene, const std::string & Filename, std::vector<MeshEntry>& entries, std::vector<tdogl::Texture*>& textures);
+	static bool InitFromScene(const aiScene * pScene, const std::string & Filename, std::vector<MeshEntry>& entries, std::vector<Texture*>& textures);
 	static void InitMesh(unsigned int Index, const aiMesh* paiMesh, std::vector<MeshEntry> &entries);
-	static bool InitMaterials(const aiScene* pScene, const std::string& Filename, std::vector<tdogl::Texture*>& textures);
+	static bool InitMaterials(const aiScene* pScene, const std::string& Filename, std::vector<Texture*>& textures);
 };
 
 
