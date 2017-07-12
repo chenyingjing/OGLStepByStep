@@ -15,6 +15,7 @@
 #include<list>
 #include <sstream>
 #include <string>
+#include "mesh.h"
 
 float gDegreesRotated = 45.0f;
 tdogl::Camera gCamera;
@@ -30,6 +31,7 @@ struct ModelAsset {
 	GLint drawCount;
 	GLfloat shininess;
 	glm::vec3 specularColor;
+	std::vector<Mesh::MeshEntry> m_Entries;
 };
 
 struct ModelInstance {
@@ -72,65 +74,68 @@ static void LoadWoodenCrateAsset() {
 	gWoodenCrate.texture = LoadTexture("wooden-crate.jpg");
 	gWoodenCrate.shininess = 80.0;
 	gWoodenCrate.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+
 	
-	glGenBuffers(1, &gWoodenCrate.vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, gWoodenCrate.vbo);
+	//glGenBuffers(1, &gWoodenCrate.vbo);
+	//glBindBuffer(GL_ARRAY_BUFFER, gWoodenCrate.vbo);
 
 	glGenVertexArrays(1, &gWoodenCrate.vao);
 	glBindVertexArray(gWoodenCrate.vao);
 
+	Mesh::LoadMesh("../../../Content/phoenix_ugv.md2", gWoodenCrate.m_Entries);
+
 	// Make a cube out of triangles (two triangles per side)
-	GLfloat vertexData[] = {
-		//  X     Y     Z       U     V          Normal
-		// bottom
-		-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
-		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-		1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   0.0f, -1.0f, 0.0f,
-		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
+	//GLfloat vertexData[] = {
+	//	//  X     Y     Z       U     V          Normal
+	//	// bottom
+	//	-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, -1.0f, 0.0f,
+	//	1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
+	//	-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
+	//	1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
+	//	1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   0.0f, -1.0f, 0.0f,
+	//	-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
 
-		// top
-		-1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-		-1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-		1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-		1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-		-1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-		1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+	//	// top
+	//	-1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+	//	-1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+	//	1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+	//	1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+	//	-1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+	//	1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
 
-		// front
-		-1.0f,-1.0f, 1.0f,   1.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-		1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
-		1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 0.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
+	//	// front
+	//	-1.0f,-1.0f, 1.0f,   1.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+	//	1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+	//	-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
+	//	1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+	//	1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 0.0f, 1.0f,
+	//	-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
 
-		// back
-		-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-		-1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
-		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-		-1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
-		1.0f, 1.0f,-1.0f,   1.0f, 1.0f,   0.0f, 0.0f, -1.0f,
+	//	// back
+	//	-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 0.0f, -1.0f,
+	//	-1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
+	//	1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
+	//	1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
+	//	-1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
+	//	1.0f, 1.0f,-1.0f,   1.0f, 1.0f,   0.0f, 0.0f, -1.0f,
 
-		// left
-		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-		-1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
-		-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
-		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-		-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-		-1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
+	//	// left
+	//	-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
+	//	-1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
+	//	-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
+	//	-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
+	//	-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
+	//	-1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
 
-		// right
-		1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
-		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-		1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   1.0f, 0.0f, 0.0f
-	};
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+	//	// right
+	//	1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
+	//	1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+	//	1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+	//	1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
+	//	1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+	//	1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   1.0f, 0.0f, 0.0f
+	//};
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
 	// connect the xyz to the "vert" attribute of the vertex shader
 	glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vert"));
@@ -165,25 +170,25 @@ static void CreateInstances() {
 	dot.transform = glm::mat4();
 	gInstances.push_back(dot);
 
-	ModelInstance i;
-	i.asset = &gWoodenCrate;
-	i.transform = translate(0, -4, 0) * scale(1, 2, 1);
-	gInstances.push_back(i);
+	//ModelInstance i;
+	//i.asset = &gWoodenCrate;
+	//i.transform = translate(0, -4, 0) * scale(1, 2, 1);
+	//gInstances.push_back(i);
 
-	ModelInstance hLeft;
-	hLeft.asset = &gWoodenCrate;
-	hLeft.transform = translate(-8, 0, 0) * scale(1, 6, 1);
-	gInstances.push_back(hLeft);
+	//ModelInstance hLeft;
+	//hLeft.asset = &gWoodenCrate;
+	//hLeft.transform = translate(-8, 0, 0) * scale(1, 6, 1);
+	//gInstances.push_back(hLeft);
 
-	ModelInstance hRight;
-	hRight.asset = &gWoodenCrate;
-	hRight.transform = translate(-4, 0, 0) * scale(1, 6, 1);
-	gInstances.push_back(hRight);
+	//ModelInstance hRight;
+	//hRight.asset = &gWoodenCrate;
+	//hRight.transform = translate(-4, 0, 0) * scale(1, 6, 1);
+	//gInstances.push_back(hRight);
 
-	ModelInstance hMid;
-	hMid.asset = &gWoodenCrate;
-	hMid.transform = translate(-6, 0, 0) * scale(2, 1, 0.8f);
-	gInstances.push_back(hMid);
+	//ModelInstance hMid;
+	//hMid.asset = &gWoodenCrate;
+	//hMid.transform = translate(-6, 0, 0) * scale(2, 1, 0.8f);
+	//gInstances.push_back(hMid);
 }
 
 // records how far the y axis has been scrolled
@@ -192,7 +197,7 @@ void OnScroll(GLFWwindow* window, double deltaX, double deltaY) {
 }
 
 void Update(float secondsElapsed, GLFWwindow* window) {
-	const GLfloat degreesPerSecond = 180.0f;
+	const GLfloat degreesPerSecond = 1.0f;
 	//const GLfloat degreesPerSecond = 0.0f;
 	gDegreesRotated += secondsElapsed * degreesPerSecond;
 	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
@@ -328,7 +333,24 @@ static void RenderInstance(const ModelInstance& inst) {
 
 	//bind VAO and draw
 	glBindVertexArray(asset->vao);
-	glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+	//glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+
+	for (unsigned int i = 0; i < asset->m_Entries.size(); i++) {
+		glBindBuffer(GL_ARRAY_BUFFER, asset->m_Entries[i].VB);
+		//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+		//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)12);
+		//glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)20);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, asset->m_Entries[i].IB);
+
+		//const unsigned int MaterialIndex = asset->m_Entries[i].MaterialIndex;
+
+		//if (MaterialIndex < m_Textures.size() && m_Textures[MaterialIndex]) {
+		//	m_Textures[MaterialIndex]->Bind(GL_TEXTURE0);
+		//}
+
+		glDrawElements(GL_TRIANGLES, asset->m_Entries[i].NumIndices, GL_UNSIGNED_INT, 0);
+	}
 
 	//unbind everything
 	glBindVertexArray(0);

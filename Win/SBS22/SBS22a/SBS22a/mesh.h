@@ -67,7 +67,8 @@ private:
 
 #define INVALID_MATERIAL 0xFFFFFFFF
 
-    struct MeshEntry {
+public:
+	struct MeshEntry {
         MeshEntry();
 
         ~MeshEntry();
@@ -81,8 +82,15 @@ private:
         unsigned int MaterialIndex;
     };
 
-    std::vector<MeshEntry> m_Entries;
+private:
+	std::vector<MeshEntry> m_Entries;
     //std::vector<Texture*> m_Textures;
+
+public:
+	static bool LoadMesh(const std::string& Filename, std::vector<MeshEntry> &entries);
+private:
+	static bool InitFromScene(const aiScene* pScene, const std::string& Filename, std::vector<MeshEntry> &entries);
+	static void InitMesh(unsigned int Index, const aiMesh* paiMesh, std::vector<MeshEntry> &entries);
 };
 
 
