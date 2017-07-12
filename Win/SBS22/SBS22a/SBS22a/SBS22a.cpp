@@ -32,6 +32,7 @@ struct ModelAsset {
 	GLfloat shininess;
 	glm::vec3 specularColor;
 	std::vector<Mesh::MeshEntry> m_Entries;
+	std::vector<tdogl::Texture*> m_Textures;
 };
 
 struct ModelInstance {
@@ -60,9 +61,9 @@ static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFi
 	return new tdogl::Program(shaders);
 }
 
-static tdogl::Texture* LoadTexture(const char *textureFile) {
+tdogl::Texture* LoadTexture(const char *textureFile) {
 	tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(textureFile);
-	bmp.flipVertically();
+	//bmp.flipVertically();
 	return new tdogl::Texture(bmp);
 }
 
@@ -82,7 +83,8 @@ static void LoadWoodenCrateAsset() {
 	glGenVertexArrays(1, &gWoodenCrate.vao);
 	glBindVertexArray(gWoodenCrate.vao);
 
-	Mesh::LoadMesh("../../../Content/phoenix_ugv.md2", gWoodenCrate.m_Entries);
+	//Mesh::LoadMesh("../../../Content/phoenix_ugv.md2", gWoodenCrate.m_Entries, gWoodenCrate.m_Textures);
+	Mesh::LoadMesh("../../../Content/momo/model.obj", gWoodenCrate.m_Entries, gWoodenCrate.m_Textures);
 
 	// Make a cube out of triangles (two triangles per side)
 	//GLfloat vertexData[] = {
@@ -167,7 +169,7 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 static void CreateInstances() {
 	ModelInstance dot;
 	dot.asset = &gWoodenCrate;
-	dot.transform = glm::mat4();
+	dot.transform = glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0));//glm::mat4();
 	gInstances.push_back(dot);
 
 	//ModelInstance i;
@@ -197,11 +199,11 @@ void OnScroll(GLFWwindow* window, double deltaX, double deltaY) {
 }
 
 void Update(float secondsElapsed, GLFWwindow* window) {
-	const GLfloat degreesPerSecond = 1.0f;
+	const GLfloat degreesPerSecond = 10.0f;
 	//const GLfloat degreesPerSecond = 0.0f;
 	gDegreesRotated += secondsElapsed * degreesPerSecond;
 	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
-	gInstances.front().transform = glm::rotate(glm::mat4(), gDegreesRotated, glm::vec3(0, 1, 0));
+	gInstances.front().transform = glm::rotate(glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0)), glm::radians(gDegreesRotated), glm::vec3(0, 0, 1));
 
 	//move position of camera based on WASD keys
 	const float moveSpeed = 4.0; //units per second
@@ -328,8 +330,8 @@ static void RenderInstance(const ModelInstance& inst) {
 
 
 								   //bind the texture
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, asset->texture->object());
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, asset->texture->object());
 
 	//bind VAO and draw
 	glBindVertexArray(asset->vao);
@@ -343,11 +345,13 @@ static void RenderInstance(const ModelInstance& inst) {
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, asset->m_Entries[i].IB);
 
-		//const unsigned int MaterialIndex = asset->m_Entries[i].MaterialIndex;
+		const unsigned int MaterialIndex = asset->m_Entries[i].MaterialIndex;
 
-		//if (MaterialIndex < m_Textures.size() && m_Textures[MaterialIndex]) {
-		//	m_Textures[MaterialIndex]->Bind(GL_TEXTURE0);
-		//}
+		if (MaterialIndex < asset->m_Textures.size() && asset->m_Textures[MaterialIndex]) {
+			//asset->m_Textures[MaterialIndex]->Bind(GL_TEXTURE0);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, asset->m_Textures[MaterialIndex]->object());
+		}
 
 		glDrawElements(GL_TRIANGLES, asset->m_Entries[i].NumIndices, GL_UNSIGNED_INT, 0);
 	}
@@ -422,9 +426,9 @@ int main(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
-	gCamera.setPosition(glm::vec3(-4, 0, 17));
+	gCamera.setPosition(glm::vec3(0, 0, 5));
 	gCamera.setViewportAspectRatio(800.0f / 600.0f);
-	gCamera.setNearAndFarPlanes(0.5f, 100.0f);
+	gCamera.setNearAndFarPlanes(0.01f, 1000.0f);
 
 	// setup lights
 	Light spotlight;

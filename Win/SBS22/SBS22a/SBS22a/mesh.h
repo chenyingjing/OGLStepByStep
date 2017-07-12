@@ -30,6 +30,8 @@
 #include "ogldev_util.h"
 #include "ogldev_math_3d.h"
 #include "ogldev_texture.h"
+#include "tdogl/Texture.h"
+
 
 struct Vertex
 {
@@ -65,6 +67,8 @@ private:
     bool InitMaterials(const aiScene* pScene, const std::string& Filename);
     void Clear();
 
+	static void Clear(std::vector<tdogl::Texture*>& textures);
+
 #define INVALID_MATERIAL 0xFFFFFFFF
 
 public:
@@ -87,10 +91,11 @@ private:
     //std::vector<Texture*> m_Textures;
 
 public:
-	static bool LoadMesh(const std::string& Filename, std::vector<MeshEntry> &entries);
+	static bool LoadMesh(const std::string& Filename, std::vector<MeshEntry> &entries, std::vector<tdogl::Texture*> &textures);
 private:
-	static bool InitFromScene(const aiScene* pScene, const std::string& Filename, std::vector<MeshEntry> &entries);
+	static bool InitFromScene(const aiScene * pScene, const std::string & Filename, std::vector<MeshEntry>& entries, std::vector<tdogl::Texture*>& textures);
 	static void InitMesh(unsigned int Index, const aiMesh* paiMesh, std::vector<MeshEntry> &entries);
+	static bool InitMaterials(const aiScene* pScene, const std::string& Filename, std::vector<tdogl::Texture*>& textures);
 };
 
 

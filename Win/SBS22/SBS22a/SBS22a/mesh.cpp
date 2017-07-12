@@ -20,6 +20,8 @@
 
 #include "mesh.h"
 
+extern tdogl::Texture* LoadTexture(const char *textureFile);
+
 Mesh::MeshEntry::MeshEntry()
 {
     VB = INVALID_OGL_VALUE;
@@ -73,30 +75,35 @@ void Mesh::Clear()
     //}
 }
 
-bool Mesh::LoadMesh(const std::string & Filename, std::vector<MeshEntry> &entries)
+void Mesh::Clear(std::vector<tdogl::Texture*> &textures)
 {
-	//Clear();
+	for (unsigned int i = 0 ; i < textures.size() ; i++) {
+	    SAFE_DELETE(textures[i]);
+	}
+}
+
+bool Mesh::LoadMesh(const std::string & Filename, std::vector<MeshEntry> &entries, std::vector<tdogl::Texture*> &textures)
+{
+	Clear(textures);
 	bool Ret = false;
 	Assimp::Importer Importer;
 
 	const aiScene* pScene = Importer.ReadFile(Filename.c_str(), ASSIMP_LOAD_FLAGS);
 
 	if (pScene) {
-		Ret = InitFromScene(pScene, Filename, entries);
+		Ret = InitFromScene(pScene, Filename, entries, textures);
 	}
 	else {
 		printf("Error parsing '%s': '%s'\n", Filename.c_str(), Importer.GetErrorString());
 	}
 
 	return Ret;
-
-	return false;
 }
 
-bool Mesh::InitFromScene(const aiScene * pScene, const std::string & Filename, std::vector<MeshEntry>& entries)
+bool Mesh::InitFromScene(const aiScene * pScene, const std::string & Filename, std::vector<MeshEntry>& entries, std::vector<tdogl::Texture*> &textures)
 {
 	entries.resize(pScene->mNumMeshes);
-	//m_Textures.resize(pScene->mNumMaterials);
+	textures.resize(pScene->mNumMaterials);
 
 	// Initialize the meshes in the scene one by one
 	for (unsigned int i = 0; i < entries.size(); i++) {
@@ -104,8 +111,7 @@ bool Mesh::InitFromScene(const aiScene * pScene, const std::string & Filename, s
 		InitMesh(i, paiMesh, entries);
 	}
 
-	//return InitMaterials(pScene, Filename);
-	return true;
+	return InitMaterials(pScene, Filename, textures);
 }
 
 void Mesh::InitMesh(unsigned int Index, const aiMesh * paiMesh, std::vector<MeshEntry>& entries)
@@ -138,6 +144,60 @@ void Mesh::InitMesh(unsigned int Index, const aiMesh * paiMesh, std::vector<Mesh
 	}
 
 	entries[Index].Init(Vertices, Indices);
+}
+
+bool Mesh::InitMaterials(const aiScene * pScene, const std::string & Filename, std::vector<tdogl::Texture*>& textures)
+{
+	// Extract the directory part from the file name
+	std::string::size_type SlashIndex = Filename.find_last_of("/");
+	std::string Dir;
+
+	if (SlashIndex == std::string::npos) {
+		Dir = ".";
+	}
+	else if (SlashIndex == 0) {
+		Dir = "/";
+	}
+	else {
+		Dir = Filename.substr(0, SlashIndex);
+	}
+
+	bool Ret = true;
+
+	// Initialize the materials
+	for (unsigned int i = 0; i < pScene->mNumMaterials; i++) {
+		const aiMaterial* pMaterial = pScene->mMaterials[i];
+
+		textures[i] = NULL;
+
+		if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+			aiString Path;
+
+			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
+				std::string FullPath = Dir + "/" + Path.data;
+				textures[i] = LoadTexture(FullPath.c_str());// new Texture(GL_TEXTURE_2D, FullPath.c_str());
+
+				//if (!m_Textures[i]->Load()) {
+				//    printf("Error loading texture '%s'\n", FullPath.c_str());
+				//    delete m_Textures[i];
+				//    m_Textures[i] = NULL;
+				//    Ret = false;
+				//}
+				//else {
+				//    printf("Loaded texture '%s'\n", FullPath.c_str());
+				//}
+			}
+		}
+
+		// Load a white texture in case the model does not include its own texture
+		if (!textures[i]) {
+		    textures[i] = LoadTexture("../../../Content/white.png"); //new Texture(GL_TEXTURE_2D, "../Content/white.png");
+
+			Ret = (bool)textures[i];//m_Textures[i]->Load();
+		}
+	}
+
+	return Ret;
 }
 
 
