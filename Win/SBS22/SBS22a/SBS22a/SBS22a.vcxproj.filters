@@ -45,6 +45,9 @@
     <ClInclude Include="tdogl\Texture.h">
       <Filter>tdogl</Filter>
     </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SBS22a.cpp">
@@ -64,6 +67,9 @@
     </ClCompile>
     <ClCompile Include="tdogl\Texture.cpp">
       <Filter>tdogl</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
