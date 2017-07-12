@@ -76,68 +76,11 @@ static void LoadWoodenCrateAsset() {
 	gWoodenCrate.shininess = 80.0;
 	gWoodenCrate.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
-	
-	//glGenBuffers(1, &gWoodenCrate.vbo);
-	//glBindBuffer(GL_ARRAY_BUFFER, gWoodenCrate.vbo);
-
 	glGenVertexArrays(1, &gWoodenCrate.vao);
 	glBindVertexArray(gWoodenCrate.vao);
 
 	//Mesh::LoadMesh("../../../Content/phoenix_ugv.md2", gWoodenCrate.m_Entries, gWoodenCrate.m_Textures);
 	Mesh::LoadMesh("../../../Content/momo/model.obj", gWoodenCrate.m_Entries, gWoodenCrate.m_Textures);
-
-	// Make a cube out of triangles (two triangles per side)
-	//GLfloat vertexData[] = {
-	//	//  X     Y     Z       U     V          Normal
-	//	// bottom
-	//	-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-	//	1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-	//	-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
-	//	1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-	//	1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   0.0f, -1.0f, 0.0f,
-	//	-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
-
-	//	// top
-	//	-1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-	//	-1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-	//	1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-	//	1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-	//	-1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-	//	1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-
-	//	// front
-	//	-1.0f,-1.0f, 1.0f,   1.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-	//	1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-	//	-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
-	//	1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-	//	1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 0.0f, 1.0f,
-	//	-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
-
-	//	// back
-	//	-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-	//	-1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
-	//	1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-	//	1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-	//	-1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
-	//	1.0f, 1.0f,-1.0f,   1.0f, 1.0f,   0.0f, 0.0f, -1.0f,
-
-	//	// left
-	//	-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-	//	-1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
-	//	-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
-	//	-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-	//	-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-	//	-1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
-
-	//	// right
-	//	1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
-	//	1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-	//	1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-	//	1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
-	//	1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-	//	1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   1.0f, 0.0f, 0.0f
-	//};
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
 	// connect the xyz to the "vert" attribute of the vertex shader
 	glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vert"));
@@ -171,26 +114,6 @@ static void CreateInstances() {
 	dot.asset = &gWoodenCrate;
 	dot.transform = glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0));//glm::mat4();
 	gInstances.push_back(dot);
-
-	//ModelInstance i;
-	//i.asset = &gWoodenCrate;
-	//i.transform = translate(0, -4, 0) * scale(1, 2, 1);
-	//gInstances.push_back(i);
-
-	//ModelInstance hLeft;
-	//hLeft.asset = &gWoodenCrate;
-	//hLeft.transform = translate(-8, 0, 0) * scale(1, 6, 1);
-	//gInstances.push_back(hLeft);
-
-	//ModelInstance hRight;
-	//hRight.asset = &gWoodenCrate;
-	//hRight.transform = translate(-4, 0, 0) * scale(1, 6, 1);
-	//gInstances.push_back(hRight);
-
-	//ModelInstance hMid;
-	//hMid.asset = &gWoodenCrate;
-	//hMid.transform = translate(-6, 0, 0) * scale(2, 1, 0.8f);
-	//gInstances.push_back(hMid);
 }
 
 // records how far the y axis has been scrolled
@@ -328,27 +251,18 @@ static void RenderInstance(const ModelInstance& inst) {
 	shaders->setUniform("materialShininess", asset->shininess);
 	shaders->setUniform("materialSpecularColor", asset->specularColor);
 
-
-								   //bind the texture
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, asset->texture->object());
-
 	//bind VAO and draw
 	glBindVertexArray(asset->vao);
-	//glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
 
 	for (unsigned int i = 0; i < asset->m_Entries.size(); i++) {
 		glBindBuffer(GL_ARRAY_BUFFER, asset->m_Entries[i].VB);
-		//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-		//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)12);
-		//glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)20);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, asset->m_Entries[i].IB);
 
 		const unsigned int MaterialIndex = asset->m_Entries[i].MaterialIndex;
 
 		if (MaterialIndex < asset->m_Textures.size() && asset->m_Textures[MaterialIndex]) {
-			//asset->m_Textures[MaterialIndex]->Bind(GL_TEXTURE0);
+			//bind the texture
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, asset->m_Textures[MaterialIndex]->object());
 		}
