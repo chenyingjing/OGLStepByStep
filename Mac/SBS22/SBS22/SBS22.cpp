@@ -58,7 +58,7 @@ static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFi
 	return new tdogl::Program(shaders);
 }
 
-static tdogl::Texture* LoadTexture(const char *textureFile) {
+tdogl::Texture* LoadTexture(const char *textureFile) {
 	tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(textureFile);
 	bmp.flipVertically();
 	return new tdogl::Texture(bmp);
