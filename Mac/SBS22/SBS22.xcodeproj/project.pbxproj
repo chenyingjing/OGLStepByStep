@@ -142,9 +142,12 @@
 		23EAE0981F17AD05002DED71 /* quaternion.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23EAE0861F17AD05002DED71 /* quaternion.inl */; };
 		23EAE0991F17AD05002DED71 /* vector2.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23EAE08B1F17AD05002DED71 /* vector2.inl */; };
 		23EAE09A1F17AD05002DED71 /* vector3.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23EAE08D1F17AD05002DED71 /* vector3.inl */; };
-		23EAE09B1F17AD05002DED71 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EAE0901F17AD05002DED71 /* libassimp.3.3.1.dylib */; };
-		23EAE09C1F17AD05002DED71 /* libassimp.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EAE0911F17AD05002DED71 /* libassimp.3.dylib */; };
-		23EAE09D1F17AD05002DED71 /* libassimp.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EAE0921F17AD05002DED71 /* libassimp.dylib */; };
+		25159F431F18BCD700CDBDAC /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25159F401F18BCD700CDBDAC /* libassimp.3.3.1.dylib */; };
+		25159F441F18BCD700CDBDAC /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25159F411F18BCD700CDBDAC /* libassimp.3.3.1.dylib */; };
+		25159F451F18BCD700CDBDAC /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25159F421F18BCD700CDBDAC /* libassimp.3.3.1.dylib */; };
+		25159F4A1F18BF9E00CDBDAC /* model.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 25159F471F18BF9E00CDBDAC /* model.mtl */; };
+		25159F4B1F18BF9E00CDBDAC /* model.obj in Resources */ = {isa = PBXBuildFile; fileRef = 25159F481F18BF9E00CDBDAC /* model.obj */; };
+		25159F4C1F18BF9E00CDBDAC /* momo.png in Resources */ = {isa = PBXBuildFile; fileRef = 25159F491F18BF9E00CDBDAC /* momo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -473,12 +476,17 @@
 		23EAE08C1F17AD05002DED71 /* vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector3.h; sourceTree = "<group>"; };
 		23EAE08D1F17AD05002DED71 /* vector3.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vector3.inl; sourceTree = "<group>"; };
 		23EAE08E1F17AD05002DED71 /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
-		23EAE0901F17AD05002DED71 /* libassimp.3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libassimp.3.3.1.dylib; sourceTree = "<group>"; };
-		23EAE0911F17AD05002DED71 /* libassimp.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libassimp.3.dylib; sourceTree = "<group>"; };
-		23EAE0921F17AD05002DED71 /* libassimp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libassimp.dylib; sourceTree = "<group>"; };
 		23EAE09F1F17ADFC002DED71 /* ogldev_math_3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_math_3d.h; sourceTree = "<group>"; };
 		23EAE0A01F17ADFC002DED71 /* ogldev_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_util.h; sourceTree = "<group>"; };
 		23EAE0A11F17AE58002DED71 /* ogldev_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_types.h; sourceTree = "<group>"; };
+		25159F3C1F18A72400CDBDAC /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libassimp.a; path = SBS22/assimp/lib/libassimp.a; sourceTree = "<group>"; };
+		25159F3E1F18BC4D00CDBDAC /* libassimp.3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.3.1.dylib; path = "../../../../../../thirdpartylib/assimp-3.3.1/lib/libassimp.3.3.1.dylib"; sourceTree = "<group>"; };
+		25159F401F18BCD700CDBDAC /* libassimp.3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.3.1.dylib; path = SBS22/assimp/lib/libassimp.3.3.1.dylib; sourceTree = "<group>"; };
+		25159F411F18BCD700CDBDAC /* libassimp.3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.3.1.dylib; path = SBS22/assimp/lib/libassimp.3.3.1.dylib; sourceTree = "<group>"; };
+		25159F421F18BCD700CDBDAC /* libassimp.3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.3.1.dylib; path = SBS22/assimp/lib/libassimp.3.3.1.dylib; sourceTree = "<group>"; };
+		25159F471F18BF9E00CDBDAC /* model.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model.mtl; sourceTree = "<group>"; };
+		25159F481F18BF9E00CDBDAC /* model.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model.obj; sourceTree = "<group>"; };
+		25159F491F18BF9E00CDBDAC /* momo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = momo.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -486,13 +494,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23EAE09B1F17AD05002DED71 /* libassimp.3.3.1.dylib in Frameworks */,
+				25159F431F18BCD700CDBDAC /* libassimp.3.3.1.dylib in Frameworks */,
+				25159F441F18BCD700CDBDAC /* libassimp.3.3.1.dylib in Frameworks */,
+				25159F451F18BCD700CDBDAC /* libassimp.3.3.1.dylib in Frameworks */,
 				23EAE0591F17A615002DED71 /* IOKit.framework in Frameworks */,
 				23EAE0571F17A609002DED71 /* OpenGL.framework in Frameworks */,
 				23EAE0551F17A5FC002DED71 /* CoreVideo.framework in Frameworks */,
 				23EAE0531F17A5ED002DED71 /* Cocoa.framework in Frameworks */,
-				23EAE09D1F17AD05002DED71 /* libassimp.dylib in Frameworks */,
-				23EAE09C1F17AD05002DED71 /* libassimp.3.dylib in Frameworks */,
 				23EAE0481F17A539002DED71 /* libglfw3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -520,6 +528,7 @@
 		23EADEA61F17A4BC002DED71 /* SBS22 */ = {
 			isa = PBXGroup;
 			children = (
+				25159F461F18BF9E00CDBDAC /* momo */,
 				23EAE09E1F17ADFC002DED71 /* ogldev */,
 				23EAE05D1F17AD05002DED71 /* assimp */,
 				23EAE05A1F17A97C002DED71 /* mesh.cpp */,
@@ -844,6 +853,11 @@
 		23EAE0511F17A5ED002DED71 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				25159F401F18BCD700CDBDAC /* libassimp.3.3.1.dylib */,
+				25159F411F18BCD700CDBDAC /* libassimp.3.3.1.dylib */,
+				25159F421F18BCD700CDBDAC /* libassimp.3.3.1.dylib */,
+				25159F3E1F18BC4D00CDBDAC /* libassimp.3.3.1.dylib */,
+				25159F3C1F18A72400CDBDAC /* libassimp.a */,
 				23EAE0581F17A615002DED71 /* IOKit.framework */,
 				23EAE0561F17A609002DED71 /* OpenGL.framework */,
 				23EAE0541F17A5FC002DED71 /* CoreVideo.framework */,
@@ -940,9 +954,6 @@
 		23EAE08F1F17AD05002DED71 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				23EAE0901F17AD05002DED71 /* libassimp.3.3.1.dylib */,
-				23EAE0911F17AD05002DED71 /* libassimp.3.dylib */,
-				23EAE0921F17AD05002DED71 /* libassimp.dylib */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -955,6 +966,16 @@
 				23EAE0A01F17ADFC002DED71 /* ogldev_util.h */,
 			);
 			path = ogldev;
+			sourceTree = "<group>";
+		};
+		25159F461F18BF9E00CDBDAC /* momo */ = {
+			isa = PBXGroup;
+			children = (
+				25159F471F18BF9E00CDBDAC /* model.mtl */,
+				25159F481F18BF9E00CDBDAC /* model.obj */,
+				25159F491F18BF9E00CDBDAC /* momo.png */,
+			);
+			path = momo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1099,9 +1120,11 @@
 				23EAE03F1F17A539002DED71 /* spline.inl in Resources */,
 				23EAE0391F17A539002DED71 /* rotate_normalized_axis.inl in Resources */,
 				23EAE0071F17A539002DED71 /* packing.inl in Resources */,
+				25159F4C1F18BF9E00CDBDAC /* momo.png in Resources */,
 				23EAE0381F17A539002DED71 /* raw_data.inl in Resources */,
 				23EADFDC1F17A539002DED71 /* func_geometric.inl in Resources */,
 				23EADFEE1F17A539002DED71 /* type_mat2x3.inl in Resources */,
+				25159F4B1F18BF9E00CDBDAC /* model.obj in Resources */,
 				23EADFEF1F17A539002DED71 /* type_mat2x4.inl in Resources */,
 				23EAE0211F17A539002DED71 /* hash.inl in Resources */,
 				23EAE01B1F17A539002DED71 /* extented_min_max.inl in Resources */,
@@ -1127,6 +1150,7 @@
 				23EADFFE1F17A539002DED71 /* bitfield.inl in Resources */,
 				23EAE0141F17A539002DED71 /* color_space_YCoCg.inl in Resources */,
 				23EAE0461F17A539002DED71 /* vector_query.inl in Resources */,
+				25159F4A1F18BF9E00CDBDAC /* model.mtl in Resources */,
 				23EADFE31F17A539002DED71 /* intrinsic_common.inl in Resources */,
 				23EAE00B1F17A539002DED71 /* round.inl in Resources */,
 				23EADFDB1F17A539002DED71 /* func_exponential.inl in Resources */,

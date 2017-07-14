@@ -15,6 +15,7 @@
 #include<list>
 #include <sstream>
 #include <string>
+#include "mesh.h"
 
 float gDegreesRotated = 45.0f;
 tdogl::Camera gCamera;
@@ -30,6 +31,8 @@ struct ModelAsset {
 	GLint drawCount;
 	GLfloat shininess;
 	glm::vec3 specularColor;
+    std::vector<Mesh::MeshEntry> m_Entries;
+    std::vector<Texture*> m_Textures;
 };
 
 struct ModelInstance {
@@ -60,7 +63,7 @@ static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFi
 
 tdogl::Texture* LoadTexture(const char *textureFile) {
 	tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(textureFile);
-	bmp.flipVertically();
+	//bmp.flipVertically();
 	return new tdogl::Texture(bmp);
 }
 
@@ -78,59 +81,61 @@ static void LoadWoodenCrateAsset() {
 
 	glGenVertexArrays(1, &gWoodenCrate.vao);
 	glBindVertexArray(gWoodenCrate.vao);
+    
+    Mesh::LoadMesh("model.obj", gWoodenCrate.m_Entries, gWoodenCrate.m_Textures);
 
 	// Make a cube out of triangles (two triangles per side)
-	GLfloat vertexData[] = {
-		//  X     Y     Z       U     V          Normal
-		// bottom
-		-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
-		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-		1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   0.0f, -1.0f, 0.0f,
-		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
-
-		// top
-		-1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-		-1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-		1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-		1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-		-1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-		1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-
-		// front
-		-1.0f,-1.0f, 1.0f,   1.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-		1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
-		1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 0.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
-
-		// back
-		-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-		-1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
-		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-		-1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
-		1.0f, 1.0f,-1.0f,   1.0f, 1.0f,   0.0f, 0.0f, -1.0f,
-
-		// left
-		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-		-1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
-		-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
-		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-		-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-		-1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
-
-		// right
-		1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
-		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-		1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   1.0f, 0.0f, 0.0f
-	};
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+//	GLfloat vertexData[] = {
+//		//  X     Y     Z       U     V          Normal
+//		// bottom
+//		-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, -1.0f, 0.0f,
+//		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
+//		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
+//		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
+//		1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   0.0f, -1.0f, 0.0f,
+//		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
+//
+//		// top
+//		-1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+//		-1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+//		1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+//		1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+//		-1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+//		1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+//
+//		// front
+//		-1.0f,-1.0f, 1.0f,   1.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+//		1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+//		-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
+//		1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+//		1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 0.0f, 1.0f,
+//		-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
+//
+//		// back
+//		-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 0.0f, -1.0f,
+//		-1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
+//		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
+//		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
+//		-1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
+//		1.0f, 1.0f,-1.0f,   1.0f, 1.0f,   0.0f, 0.0f, -1.0f,
+//
+//		// left
+//		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
+//		-1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
+//		-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
+//		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
+//		-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
+//		-1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
+//
+//		// right
+//		1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
+//		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+//		1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+//		1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
+//		1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+//		1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   1.0f, 0.0f, 0.0f
+//	};
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
 	// connect the xyz to the "vert" attribute of the vertex shader
 	glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vert"));
@@ -162,28 +167,28 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 static void CreateInstances() {
 	ModelInstance dot;
 	dot.asset = &gWoodenCrate;
-	dot.transform = glm::mat4();
+	dot.transform = glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0));//glm::mat4();
 	gInstances.push_back(dot);
 
-	ModelInstance i;
-	i.asset = &gWoodenCrate;
-	i.transform = translate(0, -4, 0) * scale(1, 2, 1);
-	gInstances.push_back(i);
-
-	ModelInstance hLeft;
-	hLeft.asset = &gWoodenCrate;
-	hLeft.transform = translate(-8, 0, 0) * scale(1, 6, 1);
-	gInstances.push_back(hLeft);
-
-	ModelInstance hRight;
-	hRight.asset = &gWoodenCrate;
-	hRight.transform = translate(-4, 0, 0) * scale(1, 6, 1);
-	gInstances.push_back(hRight);
-
-	ModelInstance hMid;
-	hMid.asset = &gWoodenCrate;
-	hMid.transform = translate(-6, 0, 0) * scale(2, 1, 0.8f);
-	gInstances.push_back(hMid);
+//	ModelInstance i;
+//	i.asset = &gWoodenCrate;
+//	i.transform = translate(0, -4, 0) * scale(1, 2, 1);
+//	gInstances.push_back(i);
+//
+//	ModelInstance hLeft;
+//	hLeft.asset = &gWoodenCrate;
+//	hLeft.transform = translate(-8, 0, 0) * scale(1, 6, 1);
+//	gInstances.push_back(hLeft);
+//
+//	ModelInstance hRight;
+//	hRight.asset = &gWoodenCrate;
+//	hRight.transform = translate(-4, 0, 0) * scale(1, 6, 1);
+//	gInstances.push_back(hRight);
+//
+//	ModelInstance hMid;
+//	hMid.asset = &gWoodenCrate;
+//	hMid.transform = translate(-6, 0, 0) * scale(2, 1, 0.8f);
+//	gInstances.push_back(hMid);
 }
 
 // records how far the y axis has been scrolled
@@ -196,7 +201,7 @@ void Update(float secondsElapsed, GLFWwindow* window) {
 	//const GLfloat degreesPerSecond = 0.0f;
 	gDegreesRotated += secondsElapsed * degreesPerSecond;
 	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
-	gInstances.front().transform = glm::rotate(glm::mat4(), gDegreesRotated, glm::vec3(0, 1, 0));
+	gInstances.front().transform = glm::rotate(glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0)), glm::radians(gDegreesRotated), glm::vec3(0, 0, 1));
 
 	//move position of camera based on WASD keys
 	const float moveSpeed = 4.0; //units per second
@@ -323,7 +328,24 @@ static void RenderInstance(const ModelInstance& inst) {
 
 	//bind VAO and draw
 	glBindVertexArray(asset->vao);
-	glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+	//glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+    
+    for (unsigned int i = 0; i < asset->m_Entries.size(); i++) {
+        glBindBuffer(GL_ARRAY_BUFFER, asset->m_Entries[i].VB);
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, asset->m_Entries[i].IB);
+        
+        const unsigned int MaterialIndex = asset->m_Entries[i].MaterialIndex;
+        
+        if (MaterialIndex < asset->m_Textures.size() && asset->m_Textures[MaterialIndex]) {
+            //bind the texture
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, asset->m_Textures[MaterialIndex]->object());
+            //asset->m_Textures[MaterialIndex]->Bind(GL_TEXTURE0);
+        }
+        
+        glDrawElements(GL_TRIANGLES, asset->m_Entries[i].NumIndices, GL_UNSIGNED_INT, 0);
+    }
 
 	//unbind everything
 	glBindVertexArray(0);
@@ -402,9 +424,9 @@ int main(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
-	gCamera.setPosition(glm::vec3(-4, 0, 17));
-	gCamera.setViewportAspectRatio(800.0f / 600.0f);
-	gCamera.setNearAndFarPlanes(0.5f, 100.0f);
+    gCamera.setPosition(glm::vec3(0, 0, 5));
+    gCamera.setViewportAspectRatio(800.0f / 600.0f);
+    gCamera.setNearAndFarPlanes(0.01f, 1000.0f);
 
 	// setup lights
 	Light spotlight;
