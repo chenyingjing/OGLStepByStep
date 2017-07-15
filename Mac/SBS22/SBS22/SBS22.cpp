@@ -323,8 +323,8 @@ static void RenderInstance(const ModelInstance& inst) {
 
 
 								   //bind the texture
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, asset->texture->object());
+//	glActiveTexture(GL_TEXTURE0);
+//	glBindTexture(GL_TEXTURE_2D, asset->texture->object());
 
 	//bind VAO and draw
 	glBindVertexArray(asset->vao);
@@ -341,7 +341,7 @@ static void RenderInstance(const ModelInstance& inst) {
             //bind the texture
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, asset->m_Textures[MaterialIndex]->object());
-            //asset->m_Textures[MaterialIndex]->Bind(GL_TEXTURE0);
+//            asset->m_Textures[MaterialIndex]->Bind(GL_TEXTURE0);
         }
         
         glDrawElements(GL_TRIANGLES, asset->m_Entries[i].NumIndices, GL_UNSIGNED_INT, 0);

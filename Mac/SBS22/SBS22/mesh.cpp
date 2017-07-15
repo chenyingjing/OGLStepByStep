@@ -153,7 +153,7 @@ bool Mesh::InitMaterials(const aiScene * pScene, const std::string & Filename, s
 	std::string Dir;
 
 	if (SlashIndex == std::string::npos) {
-		Dir = ".";
+		Dir = "/Users/aa64mac/Library/Developer/Xcode/DerivedData/SBS22-cwyfdfqdxlyripejijuckinevqzb/Build/Products/Debug/SBS22.app/Contents/Resources";
 	}
 	else if (SlashIndex == 0) {
 		Dir = "/";
@@ -176,7 +176,7 @@ bool Mesh::InitMaterials(const aiScene * pScene, const std::string & Filename, s
 			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
 				std::string FullPath = Dir + "/" + Path.data;
                 textures[i] = LoadTexture(FullPath.c_str());//new Texture(GL_TEXTURE_2D, FullPath.c_str());
-
+//                textures[i] = new Texture(GL_TEXTURE_2D, FullPath.c_str());
 //				if (!textures[i]->Load()) {
 //				    printf("Error loading texture '%s'\n", FullPath.c_str());
 //				    delete textures[i];
