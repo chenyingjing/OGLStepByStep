@@ -79,8 +79,8 @@ static void LoadWoodenCrateAsset() {
 	glGenVertexArrays(1, &gWoodenCrate.vao);
 	glBindVertexArray(gWoodenCrate.vao);
 
-	Mesh::LoadMesh("../../../Content/phoenix_ugv.md2", gWoodenCrate.m_Entries, gWoodenCrate.m_Textures);
-	//Mesh::LoadMesh("../../../Content/momo/model.obj", gWoodenCrate.m_Entries, gWoodenCrate.m_Textures);
+	//Mesh::LoadMesh("../../../Content/phoenix_ugv.md2", gWoodenCrate.m_Entries, gWoodenCrate.m_Textures);
+	Mesh::LoadMesh("../../../Content/momo/model.obj", gWoodenCrate.m_Entries, gWoodenCrate.m_Textures);
 
 	// connect the xyz to the "vert" attribute of the vertex shader
 	glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vert"));
@@ -129,7 +129,7 @@ void Update(float secondsElapsed, GLFWwindow* window) {
 	gInstances.front().transform = glm::rotate(glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0)), glm::radians(gDegreesRotated), glm::vec3(0, 0, 1));
 
 	//move position of camera based on WASD keys
-	const float moveSpeed = 40.0; //units per second
+	const float moveSpeed = 4.0; //units per second
 	if (glfwGetKey(window, 'S')) {
 		gCamera.offsetPosition(secondsElapsed * moveSpeed * -gCamera.forward());
 	}
@@ -356,7 +356,7 @@ int main(void)
 
 	Light directionalLight;
 	directionalLight.position = glm::vec4(1, 0.8, 0.6, 0); //w == 0 indications a directional light
-	directionalLight.intensities = glm::vec3(0.7, 0.7, 0.7);
+	directionalLight.intensities = glm::vec3(0.1, 0.1, 0.1);
 	directionalLight.ambientCoefficient = 0.06f;
 
 	gLights.push_back(spotlight);
