@@ -16,6 +16,7 @@
 #include <sstream>
 #include <string>
 #include "random_texture.h"
+#include "mesh.h"
 
 #define NUM_ROWS 10
 #define NUM_COLUMNS 10
@@ -67,6 +68,7 @@ struct ModelAsset {
 	GLint drawCount;
 	GLfloat shininess;
 	glm::vec3 specularColor;
+    Mesh mesh;
 };
 
 struct ModelInstance {
@@ -113,7 +115,7 @@ static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFi
     return new tdogl::Program(shaders);
 }
 
-static tdogl::Texture* LoadTexture(const char *textureFile) {
+tdogl::Texture* LoadTexture(const char *textureFile) {
 	tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(textureFile);
 	bmp.flipVertically();
 	return new tdogl::Texture(bmp);
@@ -129,23 +131,25 @@ static void LoadGroundAsset() {
     gGround.shininess = 80.0;
     gGround.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
-    glGenBuffers(1, &gGround.vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, gGround.vbo);
-    
-    // Make a quad out of 2 triangles
-    GLfloat vertexData[] = {
-        //  X     Y     Z       U     V          Normal
-        1.0f,0.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-        -1.0f,0.0f,-1.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-        -1.0f,0.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-        1.0f,0.0f,1.0f,   1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-        1.0f,0.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-        -1.0f,0.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f
-    };
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+//    glGenBuffers(1, &gGround.vbo);
+//    glBindBuffer(GL_ARRAY_BUFFER, gGround.vbo);
+//    
+//    // Make a quad out of 2 triangles
+//    GLfloat vertexData[] = {
+//        //  X     Y     Z       U     V          Normal
+//        1.0f,0.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+//        -1.0f,0.0f,-1.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+//        -1.0f,0.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+//        1.0f,0.0f,1.0f,   1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
+//        1.0f,0.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+//        -1.0f,0.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f
+//    };
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
     
     glGenVertexArrays(1, &gGround.vao);
     glBindVertexArray(gGround.vao);
+    
+    gGround.mesh.LoadMesh("quad2.obj");
     
     gGround.shaders->use();
     
@@ -326,7 +330,8 @@ static void RenderInstance(const ModelInstance& inst) {
 
     //bind VAO and draw
     glBindVertexArray(asset->vao);
-    glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+    //glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+    asset->mesh.Render();
     
     //unbind everything
     glBindVertexArray(0);
