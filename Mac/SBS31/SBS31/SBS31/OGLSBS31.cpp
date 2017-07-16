@@ -44,6 +44,8 @@ tdogl::Camera gCamera;
 double gScrollY = 0.0;
 bool isWireframe = false;
 float gDispFactor = 0.25;
+float gTLToSet = 1.0f;
+float gTL = 1.0f;
 
 struct ModelAsset {
 	tdogl::Program* psUpdateShaders;
@@ -239,10 +241,14 @@ void Update(float secondsElapsed, GLFWwindow* window) {
     }
     
     if (glfwGetKey(window, 'I')) {
-        gDispFactor += 0.01f;
+        //gDispFactor += 0.01f;
+        gTL += 1.0f;
     } else if (glfwGetKey(window, 'K')) {
-        if (gDispFactor >= 0.01f) {
-            gDispFactor -= 0.01f;
+//        if (gDispFactor >= 0.01f) {
+//            gDispFactor -= 0.01f;
+//        }
+        if (gTL >= 2.0f) {
+            gTL -= 1.0f;
         }
     }
 
@@ -322,12 +328,13 @@ static void RenderInstance(const ModelInstance& inst) {
     shaders->setUniform("camera", gCamera.matrix());
     shaders->setUniform("model", inst.transform);
     shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
-    shaders->setUniform("gDisplacementMap", 4); //set to 4 because the texture will be bound to GL_TEXTURE4
+    //shaders->setUniform("gDisplacementMap", 4); //set to 4 because the texture will be bound to GL_TEXTURE4
     
     shaders->setUniform("materialShininess", asset->shininess);
     shaders->setUniform("materialSpecularColor", asset->specularColor);
     
-    shaders->setUniform("gDispFactor", gDispFactor);
+    //shaders->setUniform("gDispFactor", gDispFactor);
+    shaders->setUniform("gTessellationLevel", gTLToSet);
     
     
     //bind the texture
@@ -364,6 +371,11 @@ void Render(float millsElapsed, GLFWwindow* window)
     if (error2 != GL_NO_ERROR)
         std::cerr << "OpenGL Error2 " << error2 << std::endl;
     for (it = gInstances.begin(); it != gInstances.end(); ++it) {
+        if (it == gInstances.begin()) {
+            gTLToSet = gTL;
+        } else {
+            gTLToSet = 1.0;
+        }
         RenderInstance(*it);
     }
 
