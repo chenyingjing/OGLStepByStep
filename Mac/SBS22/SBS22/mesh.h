@@ -90,14 +90,8 @@ public:
 
 private:
 	std::vector<MeshEntry> m_Entries;
-    //std::vector<Texture*> m_Textures;
+    std::vector<Texture*> m_Textures;
 
-public:
-	static bool LoadMesh(const std::string& Filename, std::vector<MeshEntry> &entries, std::vector<Texture*> &textures);
-private:
-	static bool InitFromScene(const aiScene * pScene, const std::string & Filename, std::vector<MeshEntry>& entries, std::vector<Texture*>& textures);
-	static void InitMesh(unsigned int Index, const aiMesh* paiMesh, std::vector<MeshEntry> &entries);
-	static bool InitMaterials(const aiScene* pScene, const std::string& Filename, std::vector<Texture*>& textures);
 };
 
 
