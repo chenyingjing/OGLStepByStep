@@ -138,8 +138,6 @@
 		2329CADB1F1B21050047CDB4 /* quad2.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 2329CA421F1B21040047CDB4 /* quad2.mtl */; };
 		2329CADC1F1B21050047CDB4 /* quad2.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2329CA431F1B21040047CDB4 /* quad2.obj */; };
 		2329CADD1F1B21050047CDB4 /* random_texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2329CA441F1B21040047CDB4 /* random_texture.cpp */; };
-		2329CADE1F1B21050047CDB4 /* ground.fs in Resources */ = {isa = PBXBuildFile; fileRef = 2329CA471F1B21040047CDB4 /* ground.fs */; };
-		2329CADF1F1B21050047CDB4 /* ground.vs in Resources */ = {isa = PBXBuildFile; fileRef = 2329CA481F1B21040047CDB4 /* ground.vs */; };
 		2329CAE01F1B21050047CDB4 /* lighting.cs in Resources */ = {isa = PBXBuildFile; fileRef = 2329CA491F1B21040047CDB4 /* lighting.cs */; };
 		2329CAE11F1B21050047CDB4 /* lighting.es in Resources */ = {isa = PBXBuildFile; fileRef = 2329CA4A1F1B21040047CDB4 /* lighting.es */; };
 		2329CAE21F1B21050047CDB4 /* lighting.fs in Resources */ = {isa = PBXBuildFile; fileRef = 2329CA4B1F1B21040047CDB4 /* lighting.fs */; };
@@ -154,6 +152,9 @@
 		2329CAEE1F1B220E0047CDB4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2329CAED1F1B220E0047CDB4 /* CoreVideo.framework */; };
 		2329CAF01F1B221E0047CDB4 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2329CAEF1F1B221E0047CDB4 /* OpenGL.framework */; };
 		2329CAF21F1B222B0047CDB4 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2329CAF11F1B222B0047CDB4 /* IOKit.framework */; };
+		2329CAF51F1B27A60047CDB4 /* monkey.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 2329CAF31F1B27A60047CDB4 /* monkey.mtl */; };
+		2329CAF61F1B27A60047CDB4 /* monkey.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2329CAF41F1B27A60047CDB4 /* monkey.obj */; };
+		2329CAF81F1B287C0047CDB4 /* white.png in Resources */ = {isa = PBXBuildFile; fileRef = 2329CAF71F1B287C0047CDB4 /* white.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -476,8 +477,6 @@
 		2329CA431F1B21040047CDB4 /* quad2.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = quad2.obj; sourceTree = "<group>"; };
 		2329CA441F1B21040047CDB4 /* random_texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = random_texture.cpp; sourceTree = "<group>"; };
 		2329CA451F1B21040047CDB4 /* random_texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = random_texture.h; sourceTree = "<group>"; };
-		2329CA471F1B21040047CDB4 /* ground.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ground.fs; sourceTree = "<group>"; };
-		2329CA481F1B21040047CDB4 /* ground.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ground.vs; sourceTree = "<group>"; };
 		2329CA491F1B21040047CDB4 /* lighting.cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lighting.cs; sourceTree = "<group>"; };
 		2329CA4A1F1B21040047CDB4 /* lighting.es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lighting.es; sourceTree = "<group>"; };
 		2329CA4B1F1B21040047CDB4 /* lighting.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.fs; sourceTree = "<group>"; };
@@ -498,6 +497,9 @@
 		2329CAED1F1B220E0047CDB4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		2329CAEF1F1B221E0047CDB4 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		2329CAF11F1B222B0047CDB4 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		2329CAF31F1B27A60047CDB4 /* monkey.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = monkey.mtl; sourceTree = "<group>"; };
+		2329CAF41F1B27A60047CDB4 /* monkey.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = monkey.obj; sourceTree = "<group>"; };
+		2329CAF71F1B287C0047CDB4 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -539,6 +541,9 @@
 		2329C8E61F1B209C0047CDB4 /* SBS31 */ = {
 			isa = PBXGroup;
 			children = (
+				2329CAF71F1B287C0047CDB4 /* white.png */,
+				2329CAF31F1B27A60047CDB4 /* monkey.mtl */,
+				2329CAF41F1B27A60047CDB4 /* monkey.obj */,
 				2329C8FB1F1B21040047CDB4 /* assimp */,
 				2329C9311F1B21040047CDB4 /* diffuse.png */,
 				2329C9321F1B21040047CDB4 /* filePath.h */,
@@ -956,8 +961,6 @@
 		2329CA461F1B21040047CDB4 /* shader */ = {
 			isa = PBXGroup;
 			children = (
-				2329CA471F1B21040047CDB4 /* ground.fs */,
-				2329CA481F1B21040047CDB4 /* ground.vs */,
 				2329CA491F1B21040047CDB4 /* lighting.cs */,
 				2329CA4A1F1B21040047CDB4 /* lighting.es */,
 				2329CA4B1F1B21040047CDB4 /* lighting.fs */,
@@ -1065,6 +1068,7 @@
 				2329CAB71F1B21050047CDB4 /* matrix_major_storage.inl in Resources */,
 				2329CA871F1B21040047CDB4 /* type_vec3.inl in Resources */,
 				2329CAC31F1B21050047CDB4 /* polar_coordinates.inl in Resources */,
+				2329CAF61F1B27A60047CDB4 /* monkey.obj in Resources */,
 				2329CAAF1F1B21050047CDB4 /* hash.inl in Resources */,
 				2329CAB01F1B21050047CDB4 /* integer.inl in Resources */,
 				2329CA981F1B21040047CDB4 /* reciprocal.inl in Resources */,
@@ -1081,13 +1085,13 @@
 				2329CA991F1B21040047CDB4 /* round.inl in Resources */,
 				2329CABD1F1B21050047CDB4 /* normal.inl in Resources */,
 				2329CA5B1F1B21040047CDB4 /* color4.inl in Resources */,
+				2329CAF81F1B287C0047CDB4 /* white.png in Resources */,
 				2329CACA1F1B21050047CDB4 /* simd_mat4.inl in Resources */,
 				2329CAC61F1B21050047CDB4 /* raw_data.inl in Resources */,
 				2329CA8E1F1B21040047CDB4 /* constants.inl in Resources */,
 				2329CA701F1B21040047CDB4 /* func_vector_relational.inl in Resources */,
 				2329CAA91F1B21050047CDB4 /* extented_min_max.inl in Resources */,
 				2329CA7B1F1B21040047CDB4 /* type_mat2x2.inl in Resources */,
-				2329CADE1F1B21050047CDB4 /* ground.fs in Resources */,
 				2329CA821F1B21040047CDB4 /* type_mat4x3.inl in Resources */,
 				2329CAC21F1B21050047CDB4 /* perpendicular.inl in Resources */,
 				2329CAC81F1B21050047CDB4 /* rotate_vector.inl in Resources */,
@@ -1115,6 +1119,7 @@
 				2329CAE01F1B21050047CDB4 /* lighting.cs in Resources */,
 				2329CACF1F1B21050047CDB4 /* string_cast.inl in Resources */,
 				2329CA761F1B21040047CDB4 /* intrinsic_trigonometric.inl in Resources */,
+				2329CAF51F1B27A60047CDB4 /* monkey.mtl in Resources */,
 				2329CAB21F1B21050047CDB4 /* io.inl in Resources */,
 				2329CA881F1B21040047CDB4 /* type_vec4.inl in Resources */,
 				2329CAA11F1B21040047CDB4 /* color_space.inl in Resources */,
@@ -1134,7 +1139,6 @@
 				2329CAB11F1B21050047CDB4 /* intersect.inl in Resources */,
 				2329CA841F1B21040047CDB4 /* type_vec.inl in Resources */,
 				2329CAC01F1B21050047CDB4 /* optimum_pow.inl in Resources */,
-				2329CADF1F1B21050047CDB4 /* ground.vs in Resources */,
 				2329CA601F1B21040047CDB4 /* vector2.inl in Resources */,
 				2329CA6F1F1B21040047CDB4 /* func_trigonometric.inl in Resources */,
 				2329CA7A1F1B21040047CDB4 /* type_mat.inl in Resources */,
@@ -1354,6 +1358,7 @@
 				2329C8FA1F1B209D0047CDB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
