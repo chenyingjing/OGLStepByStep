@@ -44,6 +44,8 @@ tdogl::Camera gCamera;
 double gScrollY = 0.0;
 bool isWireframe = false;
 float gDispFactor = 0.25;
+float gTLToSet = 1.0f;
+float gTL = 1.0f;
 
 struct ModelAsset {
 	tdogl::Program* psUpdateShaders;
@@ -84,7 +86,7 @@ struct Light {
 	glm::vec3 coneDirection;
 };
 
-ModelAsset gGround;
+ModelAsset gMonkey;
 
 std::list<ModelInstance> gInstances;
 
@@ -120,34 +122,34 @@ static tdogl::Texture* LoadTexture(const char *textureFile) {
 	return new tdogl::Texture(bmp);
 }
 
-static void LoadGroundAsset() {
-    gGround.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.cs", "shader/lighting.es", "shader/lighting.fs");
-    gGround.drawType = GL_PATCHES;
-    gGround.drawStart = 0;
-    gGround.drawCount = 2 * 3;
-    gGround.texture = LoadTexture("diffuse.png");
-    gGround.displacementTexture = LoadTexture("heightmap.png");
-    gGround.shininess = 80.0;
-    gGround.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+static void LoadMainAsset() {
+    gMonkey.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.cs", "shader/lighting.es", "shader/lighting.fs");
+    gMonkey.drawType = GL_PATCHES;
+    gMonkey.drawStart = 0;
+    gMonkey.drawCount = 2 * 3;
+    gMonkey.texture = LoadTexture("diffuse.png");
+    gMonkey.displacementTexture = LoadTexture("heightmap.png");
+    gMonkey.shininess = 80.0;
+    gMonkey.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
-    glGenVertexArrays(1, &gGround.vao);
-    glBindVertexArray(gGround.vao);
+    glGenVertexArrays(1, &gMonkey.vao);
+    glBindVertexArray(gMonkey.vao);
 
-	gGround.mesh.LoadMesh("../../../Content/quad2.obj");
+	gMonkey.mesh.LoadMesh("../../../Content/monkey.obj");
     
-    gGround.shaders->use();
+    gMonkey.shaders->use();
     
     // connect the xyz to the "vert" attribute of the vertex shader
-    glEnableVertexAttribArray(gGround.shaders->attrib("vert"));
-    glVertexAttribPointer(gGround.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+    glEnableVertexAttribArray(gMonkey.shaders->attrib("vert"));
+    glVertexAttribPointer(gMonkey.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
     
     // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-    glEnableVertexAttribArray(gGround.shaders->attrib("vertTexCoord"));
-    glVertexAttribPointer(gGround.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(gMonkey.shaders->attrib("vertTexCoord"));
+    glVertexAttribPointer(gMonkey.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
     
-    glEnableVertexAttribArray(gGround.shaders->attrib("vertNormal"));
-    glVertexAttribPointer(gGround.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
-    gGround.shaders->stopUsing();
+    glEnableVertexAttribArray(gMonkey.shaders->attrib("vertNormal"));
+    glVertexAttribPointer(gMonkey.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+    gMonkey.shaders->stopUsing();
     
     glBindVertexArray(0);
 
@@ -167,11 +169,20 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 static void CreateInstances() {
-    ModelInstance ground;
-    ground.asset = &gGround;
+    ModelInstance monkey;
+    monkey.asset = &gMonkey;
     float groundScale = 1.0;
-    ground.transform = translate(0, 0, 0) * scale(groundScale, groundScale, groundScale);
-    gInstances.push_back(ground);
+    glm::mat4 rotateMat = glm::rotate(glm::mat4(), glm::radians(180.0f), glm::vec3(0, 0, 1));
+    rotateMat = glm::rotate(rotateMat, glm::radians(90.0f), glm::vec3(1, 0, 0));
+    glm::mat4 rotateMat1 = translate(-1.5, 0, 0) * glm::rotate(rotateMat, glm::radians(15.0f), glm::vec3(0, 0, 1));
+    monkey.transform = rotateMat1;
+    gInstances.push_back(monkey);
+    
+    ModelInstance monkey1;
+    monkey1.asset = &gMonkey;
+    glm::mat4 rotateMat2 = translate(1.5, 0, 0) * glm::rotate(rotateMat, glm::radians(-15.0f), glm::vec3(0, 0, 1));
+    monkey1.transform = rotateMat2;
+    gInstances.push_back(monkey1);
 }
 
 // records how far the y axis has been scrolled
@@ -214,10 +225,14 @@ void Update(float secondsElapsed, GLFWwindow* window) {
     }
     
     if (glfwGetKey(window, 'I')) {
-        gDispFactor += 0.001f;
+        //gDispFactor += 0.01f;
+        gTL += 1.0f;
     } else if (glfwGetKey(window, 'K')) {
-        if (gDispFactor >= 0.01f) {
-            gDispFactor -= 0.001f;
+//        if (gDispFactor >= 0.01f) {
+//            gDispFactor -= 0.01f;
+//        }
+        if (gTL >= 2.0f) {
+            gTL -= 1.0f;
         }
     }
 
@@ -344,6 +359,11 @@ void Render(float millsElapsed, GLFWwindow* window)
     if (error2 != GL_NO_ERROR)
         std::cerr << "OpenGL Error2 " << error2 << std::endl;
     for (it = gInstances.begin(); it != gInstances.end(); ++it) {
+        if (it == gInstances.begin()) {
+            gTLToSet = gTL;
+        } else {
+            gTLToSet = 1.0;
+        }
         RenderInstance(*it);
     }
 
@@ -403,8 +423,7 @@ int main(void)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    //LoadFireworkAsset();
-    LoadGroundAsset();
+	LoadMainAsset();
 
 	CreateInstances();
 
@@ -412,7 +431,7 @@ int main(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
-    gCamera.setPosition(glm::vec3(0, 1, 3));
+    gCamera.setPosition(glm::vec3(0, 1, 6));
 	gCamera.offsetOrientation(10, 0);
 	gCamera.setViewportAspectRatio(800.0f / 600.0f);
 	gCamera.setNearAndFarPlanes(0.5f, 100.0f);
