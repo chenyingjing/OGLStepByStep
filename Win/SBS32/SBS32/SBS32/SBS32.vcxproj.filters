@@ -13,31 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="shader">
-      <UniqueIdentifier>{c9ede86a-ca99-45cc-8aa5-522bc2382210}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common">
       <UniqueIdentifier>{948f45d3-f858-4605-a65d-470f2d978573}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lighting_technique.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="render_callbacks.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="lighting_technique.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SBS32.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -101,19 +81,5 @@
     <ClCompile Include="..\..\..\Common\technique.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="lighting.cs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="lighting.es">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="lighting.fs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="lighting.vs">
-      <Filter>shader</Filter>
-    </None>
   </ItemGroup>
 </Project>

@@ -164,11 +164,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="lighting_technique.h" />
-    <ClInclude Include="mesh.h" />
-    <ClInclude Include="render_callbacks.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\..\Common\camera.cpp" />
     <ClCompile Include="..\..\..\Common\cubemap_texture.cpp" />
     <ClCompile Include="..\..\..\Common\glut_backend.cpp" />
@@ -189,17 +184,7 @@
     <ClCompile Include="..\..\..\Common\pipeline.cpp" />
     <ClCompile Include="..\..\..\Common\random_texture.cpp" />
     <ClCompile Include="..\..\..\Common\technique.cpp" />
-    <ClCompile Include="lighting_technique.cpp" />
-    <ClCompile Include="mesh.cpp" />
     <ClCompile Include="SBS32.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="lighting.cs">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="lighting.es" />
-    <None Include="lighting.fs" />
-    <None Include="lighting.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
