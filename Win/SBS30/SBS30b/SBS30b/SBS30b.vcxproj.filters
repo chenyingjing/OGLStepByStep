@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="shader">
+      <UniqueIdentifier>{78ec52de-082c-46ef-b19a-c086b14e78e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tdogl">
+      <UniqueIdentifier>{f1e7a49b-fc29-4d27-b9fe-033cf3f6d0f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{0d04d71d-c720-4bad-8e40-c89daa4534b2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="glew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glfw3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tdogl\Bitmap.h">
+      <Filter>tdogl</Filter>
+    </ClInclude>
+    <ClInclude Include="tdogl\Camera.h">
+      <Filter>tdogl</Filter>
+    </ClInclude>
+    <ClInclude Include="tdogl\Program.h">
+      <Filter>tdogl</Filter>
+    </ClInclude>
+    <ClInclude Include="tdogl\Shader.h">
+      <Filter>tdogl</Filter>
+    </ClInclude>
+    <ClInclude Include="tdogl\Texture.h">
+      <Filter>tdogl</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="OGLSBS30b.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tdogl\Bitmap.cpp">
+      <Filter>tdogl</Filter>
+    </ClCompile>
+    <ClCompile Include="tdogl\Camera.cpp">
+      <Filter>tdogl</Filter>
+    </ClCompile>
+    <ClCompile Include="tdogl\Program.cpp">
+      <Filter>tdogl</Filter>
+    </ClCompile>
+    <ClCompile Include="tdogl\Shader.cpp">
+      <Filter>tdogl</Filter>
+    </ClCompile>
+    <ClCompile Include="tdogl\Texture.cpp">
+      <Filter>tdogl</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Common\ogldev_texture.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shader\lighting.cs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\lighting.es">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\lighting.fs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\lighting.vs">
+      <Filter>shader</Filter>
+    </None>
+  </ItemGroup>
+</Project>

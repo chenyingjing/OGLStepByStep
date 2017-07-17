@@ -7,6 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2395DC461F18F7C7006F4EE0 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25159F421F18BCD700CDBDAC /* libassimp.3.3.1.dylib */; };
+		2395DC471F18F7C7006F4EE0 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25159F421F18BCD700CDBDAC /* libassimp.3.3.1.dylib */; };
+		2395DC481F18F7C7006F4EE0 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25159F421F18BCD700CDBDAC /* libassimp.3.3.1.dylib */; };
+		2395DCA91F18FF9E006F4EE0 /* configure.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2395DC881F18FF9E006F4EE0 /* configure.xml */; };
+		2395DCAB1F18FF9E006F4EE0 /* libfreetype.la in Resources */ = {isa = PBXBuildFile; fileRef = 2395DC8A1F18FF9E006F4EE0 /* libfreetype.la */; };
+		2395DCAD1F18FF9E006F4EE0 /* libjpeg.la in Resources */ = {isa = PBXBuildFile; fileRef = 2395DC8C1F18FF9E006F4EE0 /* libjpeg.la */; };
+		2395DCAF1F18FF9E006F4EE0 /* liblcms2.la in Resources */ = {isa = PBXBuildFile; fileRef = 2395DC8E1F18FF9E006F4EE0 /* liblcms2.la */; };
+		2395DCB21F18FF9E006F4EE0 /* libMagick++-7.Q16HDRI.la in Resources */ = {isa = PBXBuildFile; fileRef = 2395DC911F18FF9E006F4EE0 /* libMagick++-7.Q16HDRI.la */; };
+		2395DCB51F18FF9E006F4EE0 /* libMagickCore-7.Q16HDRI.la in Resources */ = {isa = PBXBuildFile; fileRef = 2395DC941F18FF9E006F4EE0 /* libMagickCore-7.Q16HDRI.la */; };
+		2395DCB81F18FF9E006F4EE0 /* libMagickWand-7.Q16HDRI.la in Resources */ = {isa = PBXBuildFile; fileRef = 2395DC971F18FF9E006F4EE0 /* libMagickWand-7.Q16HDRI.la */; };
+		2395DCBA1F18FF9E006F4EE0 /* libpng.la in Resources */ = {isa = PBXBuildFile; fileRef = 2395DC991F18FF9E006F4EE0 /* libpng.la */; };
+		2395DCBC1F18FF9E006F4EE0 /* libpng16.la in Resources */ = {isa = PBXBuildFile; fileRef = 2395DC9B1F18FF9E006F4EE0 /* libpng16.la */; };
+		2395DCBE1F18FF9E006F4EE0 /* libtiff.la in Resources */ = {isa = PBXBuildFile; fileRef = 2395DC9D1F18FF9E006F4EE0 /* libtiff.la */; };
+		2395DCC01F18FF9E006F4EE0 /* libtiffxx.la in Resources */ = {isa = PBXBuildFile; fileRef = 2395DC9F1F18FF9E006F4EE0 /* libtiffxx.la */; };
+		2395DCC11F18FF9E006F4EE0 /* ImageMagick-7.Q16HDRI.pc in Resources */ = {isa = PBXBuildFile; fileRef = 2395DCA11F18FF9E006F4EE0 /* ImageMagick-7.Q16HDRI.pc */; };
+		2395DCC21F18FF9E006F4EE0 /* ImageMagick.pc in Resources */ = {isa = PBXBuildFile; fileRef = 2395DCA21F18FF9E006F4EE0 /* ImageMagick.pc */; };
+		2395DCC31F18FF9E006F4EE0 /* Magick++-7.Q16HDRI.pc in Resources */ = {isa = PBXBuildFile; fileRef = 2395DCA31F18FF9E006F4EE0 /* Magick++-7.Q16HDRI.pc */; };
+		2395DCC41F18FF9E006F4EE0 /* Magick++.pc in Resources */ = {isa = PBXBuildFile; fileRef = 2395DCA41F18FF9E006F4EE0 /* Magick++.pc */; };
+		2395DCC51F18FF9E006F4EE0 /* MagickCore-7.Q16HDRI.pc in Resources */ = {isa = PBXBuildFile; fileRef = 2395DCA51F18FF9E006F4EE0 /* MagickCore-7.Q16HDRI.pc */; };
+		2395DCC61F18FF9E006F4EE0 /* MagickCore.pc in Resources */ = {isa = PBXBuildFile; fileRef = 2395DCA61F18FF9E006F4EE0 /* MagickCore.pc */; };
+		2395DCC71F18FF9E006F4EE0 /* MagickWand-7.Q16HDRI.pc in Resources */ = {isa = PBXBuildFile; fileRef = 2395DCA71F18FF9E006F4EE0 /* MagickWand-7.Q16HDRI.pc */; };
+		2395DCC81F18FF9E006F4EE0 /* MagickWand.pc in Resources */ = {isa = PBXBuildFile; fileRef = 2395DCA81F18FF9E006F4EE0 /* MagickWand.pc */; };
+		2395DCE21F1900C4006F4EE0 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EADFC51F17A539002DED71 /* libglfw3.a */; };
 		23EADFD51F17A539002DED71 /* filePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 23EADEBE1F17A538002DED71 /* filePath.mm */; };
 		23EADFD61F17A539002DED71 /* fragment-shader.txt in Resources */ = {isa = PBXBuildFile; fileRef = 23EADEBF1F17A538002DED71 /* fragment-shader.txt */; };
 		23EADFD71F17A539002DED71 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = 23EADEC01F17A538002DED71 /* glew.c */; };
@@ -120,7 +143,6 @@
 		23EAE0451F17A539002DED71 /* vector_angle.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23EADFAF1F17A539002DED71 /* vector_angle.inl */; };
 		23EAE0461F17A539002DED71 /* vector_query.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23EADFB11F17A539002DED71 /* vector_query.inl */; };
 		23EAE0471F17A539002DED71 /* wrap.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23EADFB31F17A539002DED71 /* wrap.inl */; };
-		23EAE0481F17A539002DED71 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EADFC51F17A539002DED71 /* libglfw3.a */; };
 		23EAE0491F17A539002DED71 /* SBS22.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23EADFC61F17A539002DED71 /* SBS22.cpp */; };
 		23EAE04A1F17A539002DED71 /* Bitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23EADFC91F17A539002DED71 /* Bitmap.cpp */; };
 		23EAE04B1F17A539002DED71 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23EADFCB1F17A539002DED71 /* Camera.cpp */; };
@@ -142,15 +164,103 @@
 		23EAE0981F17AD05002DED71 /* quaternion.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23EAE0861F17AD05002DED71 /* quaternion.inl */; };
 		23EAE0991F17AD05002DED71 /* vector2.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23EAE08B1F17AD05002DED71 /* vector2.inl */; };
 		23EAE09A1F17AD05002DED71 /* vector3.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23EAE08D1F17AD05002DED71 /* vector3.inl */; };
-		25159F431F18BCD700CDBDAC /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25159F401F18BCD700CDBDAC /* libassimp.3.3.1.dylib */; };
-		25159F441F18BCD700CDBDAC /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25159F411F18BCD700CDBDAC /* libassimp.3.3.1.dylib */; };
-		25159F451F18BCD700CDBDAC /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25159F421F18BCD700CDBDAC /* libassimp.3.3.1.dylib */; };
 		25159F4A1F18BF9E00CDBDAC /* model.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 25159F471F18BF9E00CDBDAC /* model.mtl */; };
 		25159F4B1F18BF9E00CDBDAC /* model.obj in Resources */ = {isa = PBXBuildFile; fileRef = 25159F481F18BF9E00CDBDAC /* model.obj */; };
 		25159F4C1F18BF9E00CDBDAC /* momo.png in Resources */ = {isa = PBXBuildFile; fileRef = 25159F491F18BF9E00CDBDAC /* momo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		233A26481F19E4A600EF5DA8 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = "../../../../../../../../ImageMagick-7.0.5/lib/libfreetype.a"; sourceTree = "<group>"; };
+		233A26491F19E4A600EF5DA8 /* libfreetype.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libfreetype.la; path = "../../../../../../../../ImageMagick-7.0.5/lib/libfreetype.la"; sourceTree = "<group>"; };
+		233A264A1F19E4A600EF5DA8 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = "../../../../../../../../ImageMagick-7.0.5/lib/libjpeg.a"; sourceTree = "<group>"; };
+		233A264B1F19E4A600EF5DA8 /* libjpeg.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libjpeg.la; path = "../../../../../../../../ImageMagick-7.0.5/lib/libjpeg.la"; sourceTree = "<group>"; };
+		233A264C1F19E4A600EF5DA8 /* liblcms2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblcms2.a; path = "../../../../../../../../ImageMagick-7.0.5/lib/liblcms2.a"; sourceTree = "<group>"; };
+		233A264D1F19E4A600EF5DA8 /* liblcms2.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = liblcms2.la; path = "../../../../../../../../ImageMagick-7.0.5/lib/liblcms2.la"; sourceTree = "<group>"; };
+		233A264E1F19E4A600EF5DA8 /* libMagick++-7.Q16HDRI.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libMagick++-7.Q16HDRI.2.dylib"; path = "../../../../../../../../ImageMagick-7.0.5/lib/libMagick++-7.Q16HDRI.2.dylib"; sourceTree = "<group>"; };
+		233A264F1F19E4A600EF5DA8 /* libMagick++-7.Q16HDRI.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libMagick++-7.Q16HDRI.2.dylib"; path = "../../../../../../../../ImageMagick-7.0.5/lib/libMagick++-7.Q16HDRI.2.dylib"; sourceTree = "<group>"; };
+		233A26501F19E4A600EF5DA8 /* libMagick++-7.Q16HDRI.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = "libMagick++-7.Q16HDRI.la"; path = "../../../../../../../../ImageMagick-7.0.5/lib/libMagick++-7.Q16HDRI.la"; sourceTree = "<group>"; };
+		233A26511F19E4A600EF5DA8 /* libMagickCore-7.Q16HDRI.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libMagickCore-7.Q16HDRI.2.dylib"; path = "../../../../../../../../ImageMagick-7.0.5/lib/libMagickCore-7.Q16HDRI.2.dylib"; sourceTree = "<group>"; };
+		233A26521F19E4A600EF5DA8 /* libMagickCore-7.Q16HDRI.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libMagickCore-7.Q16HDRI.2.dylib"; path = "../../../../../../../../ImageMagick-7.0.5/lib/libMagickCore-7.Q16HDRI.2.dylib"; sourceTree = "<group>"; };
+		233A26531F19E4A600EF5DA8 /* libMagickCore-7.Q16HDRI.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = "libMagickCore-7.Q16HDRI.la"; path = "../../../../../../../../ImageMagick-7.0.5/lib/libMagickCore-7.Q16HDRI.la"; sourceTree = "<group>"; };
+		233A26541F19E4A600EF5DA8 /* libMagickWand-7.Q16HDRI.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libMagickWand-7.Q16HDRI.0.dylib"; path = "../../../../../../../../ImageMagick-7.0.5/lib/libMagickWand-7.Q16HDRI.0.dylib"; sourceTree = "<group>"; };
+		233A26551F19E4A600EF5DA8 /* libMagickWand-7.Q16HDRI.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libMagickWand-7.Q16HDRI.0.dylib"; path = "../../../../../../../../ImageMagick-7.0.5/lib/libMagickWand-7.Q16HDRI.0.dylib"; sourceTree = "<group>"; };
+		233A26561F19E4A600EF5DA8 /* libMagickWand-7.Q16HDRI.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = "libMagickWand-7.Q16HDRI.la"; path = "../../../../../../../../ImageMagick-7.0.5/lib/libMagickWand-7.Q16HDRI.la"; sourceTree = "<group>"; };
+		233A26571F19E4A600EF5DA8 /* libpng16.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng16.a; path = "../../../../../../../../ImageMagick-7.0.5/lib/libpng16.a"; sourceTree = "<group>"; };
+		233A26581F19E4A600EF5DA8 /* libpng16.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libpng16.la; path = "../../../../../../../../ImageMagick-7.0.5/lib/libpng16.la"; sourceTree = "<group>"; };
+		233A26591F19E4A600EF5DA8 /* libpng16.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng16.a; path = "../../../../../../../../ImageMagick-7.0.5/lib/libpng16.a"; sourceTree = "<group>"; };
+		233A265A1F19E4A600EF5DA8 /* libpng16.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libpng16.la; path = "../../../../../../../../ImageMagick-7.0.5/lib/libpng16.la"; sourceTree = "<group>"; };
+		233A265B1F19E4A600EF5DA8 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = "../../../../../../../../ImageMagick-7.0.5/lib/libtiff.a"; sourceTree = "<group>"; };
+		233A265C1F19E4A600EF5DA8 /* libtiff.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libtiff.la; path = "../../../../../../../../ImageMagick-7.0.5/lib/libtiff.la"; sourceTree = "<group>"; };
+		233A265D1F19E4A600EF5DA8 /* libtiffxx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiffxx.a; path = "../../../../../../../../ImageMagick-7.0.5/lib/libtiffxx.a"; sourceTree = "<group>"; };
+		233A265E1F19E4A600EF5DA8 /* libtiffxx.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libtiffxx.la; path = "../../../../../../../../ImageMagick-7.0.5/lib/libtiffxx.la"; sourceTree = "<group>"; };
+		2395DC401F18F74C006F4EE0 /* libassimp.3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.3.1.dylib; path = "../../../../../thirdpartylib/assimp-3.3.1/lib/libassimp.3.3.1.dylib"; sourceTree = "<group>"; };
+		2395DC411F18F74C006F4EE0 /* libassimp.3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.3.1.dylib; path = "../../../../../thirdpartylib/assimp-3.3.1/lib/libassimp.3.3.1.dylib"; sourceTree = "<group>"; };
+		2395DC421F18F74C006F4EE0 /* libassimp.3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.3.1.dylib; path = "../../../../../thirdpartylib/assimp-3.3.1/lib/libassimp.3.3.1.dylib"; sourceTree = "<group>"; };
+		2395DC491F18F94E006F4EE0 /* ogldev_texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_texture.h; sourceTree = "<group>"; };
+		2395DC4C1F18FEC9006F4EE0 /* configure.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = configure.xml; sourceTree = "<group>"; };
+		2395DC4D1F18FEC9006F4EE0 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libfreetype.a"; sourceTree = "<group>"; };
+		2395DC4E1F18FEC9006F4EE0 /* libfreetype.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libfreetype.la; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libfreetype.la"; sourceTree = "<group>"; };
+		2395DC4F1F18FEC9006F4EE0 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libjpeg.a"; sourceTree = "<group>"; };
+		2395DC501F18FEC9006F4EE0 /* libjpeg.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libjpeg.la; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libjpeg.la"; sourceTree = "<group>"; };
+		2395DC511F18FEC9006F4EE0 /* liblcms2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblcms2.a; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/liblcms2.a"; sourceTree = "<group>"; };
+		2395DC521F18FEC9006F4EE0 /* liblcms2.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = liblcms2.la; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/liblcms2.la"; sourceTree = "<group>"; };
+		2395DC531F18FEC9006F4EE0 /* libMagick++-7.Q16HDRI.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libMagick++-7.Q16HDRI.2.dylib"; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libMagick++-7.Q16HDRI.2.dylib"; sourceTree = "<group>"; };
+		2395DC541F18FEC9006F4EE0 /* libMagick++-7.Q16HDRI.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libMagick++-7.Q16HDRI.2.dylib"; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libMagick++-7.Q16HDRI.2.dylib"; sourceTree = "<group>"; };
+		2395DC551F18FEC9006F4EE0 /* libMagick++-7.Q16HDRI.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = "libMagick++-7.Q16HDRI.la"; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libMagick++-7.Q16HDRI.la"; sourceTree = "<group>"; };
+		2395DC561F18FEC9006F4EE0 /* libMagickCore-7.Q16HDRI.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libMagickCore-7.Q16HDRI.2.dylib"; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libMagickCore-7.Q16HDRI.2.dylib"; sourceTree = "<group>"; };
+		2395DC571F18FEC9006F4EE0 /* libMagickCore-7.Q16HDRI.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libMagickCore-7.Q16HDRI.2.dylib"; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libMagickCore-7.Q16HDRI.2.dylib"; sourceTree = "<group>"; };
+		2395DC581F18FEC9006F4EE0 /* libMagickCore-7.Q16HDRI.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = "libMagickCore-7.Q16HDRI.la"; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libMagickCore-7.Q16HDRI.la"; sourceTree = "<group>"; };
+		2395DC591F18FEC9006F4EE0 /* libMagickWand-7.Q16HDRI.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libMagickWand-7.Q16HDRI.0.dylib"; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libMagickWand-7.Q16HDRI.0.dylib"; sourceTree = "<group>"; };
+		2395DC5A1F18FEC9006F4EE0 /* libMagickWand-7.Q16HDRI.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libMagickWand-7.Q16HDRI.0.dylib"; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libMagickWand-7.Q16HDRI.0.dylib"; sourceTree = "<group>"; };
+		2395DC5B1F18FEC9006F4EE0 /* libMagickWand-7.Q16HDRI.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = "libMagickWand-7.Q16HDRI.la"; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libMagickWand-7.Q16HDRI.la"; sourceTree = "<group>"; };
+		2395DC5C1F18FEC9006F4EE0 /* libpng16.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng16.a; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libpng16.a"; sourceTree = "<group>"; };
+		2395DC5D1F18FEC9006F4EE0 /* libpng16.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libpng16.la; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libpng16.la"; sourceTree = "<group>"; };
+		2395DC5E1F18FEC9006F4EE0 /* libpng16.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng16.a; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libpng16.a"; sourceTree = "<group>"; };
+		2395DC5F1F18FEC9006F4EE0 /* libpng16.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libpng16.la; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libpng16.la"; sourceTree = "<group>"; };
+		2395DC601F18FEC9006F4EE0 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libtiff.a"; sourceTree = "<group>"; };
+		2395DC611F18FEC9006F4EE0 /* libtiff.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libtiff.la; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libtiff.la"; sourceTree = "<group>"; };
+		2395DC621F18FEC9006F4EE0 /* libtiffxx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiffxx.a; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libtiffxx.a"; sourceTree = "<group>"; };
+		2395DC631F18FEC9006F4EE0 /* libtiffxx.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libtiffxx.la; path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/libtiffxx.la"; sourceTree = "<group>"; };
+		2395DC651F18FEC9006F4EE0 /* ImageMagick-7.Q16HDRI.pc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ImageMagick-7.Q16HDRI.pc"; sourceTree = "<group>"; };
+		2395DC661F18FEC9006F4EE0 /* ImageMagick.pc */ = {isa = PBXFileReference; lastKnownFileType = text; path = ImageMagick.pc; sourceTree = "<group>"; };
+		2395DC671F18FEC9006F4EE0 /* Magick++-7.Q16HDRI.pc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Magick++-7.Q16HDRI.pc"; sourceTree = "<group>"; };
+		2395DC681F18FEC9006F4EE0 /* Magick++.pc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Magick++.pc"; sourceTree = "<group>"; };
+		2395DC691F18FEC9006F4EE0 /* MagickCore-7.Q16HDRI.pc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "MagickCore-7.Q16HDRI.pc"; sourceTree = "<group>"; };
+		2395DC6A1F18FEC9006F4EE0 /* MagickCore.pc */ = {isa = PBXFileReference; lastKnownFileType = text; path = MagickCore.pc; sourceTree = "<group>"; };
+		2395DC6B1F18FEC9006F4EE0 /* MagickWand-7.Q16HDRI.pc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "MagickWand-7.Q16HDRI.pc"; sourceTree = "<group>"; };
+		2395DC6C1F18FEC9006F4EE0 /* MagickWand.pc */ = {isa = PBXFileReference; lastKnownFileType = text; path = MagickWand.pc; sourceTree = "<group>"; };
+		2395DC881F18FF9E006F4EE0 /* configure.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = configure.xml; sourceTree = "<group>"; };
+		2395DC891F18FF9E006F4EE0 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreetype.a; sourceTree = "<group>"; };
+		2395DC8A1F18FF9E006F4EE0 /* libfreetype.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libfreetype.la; sourceTree = "<group>"; };
+		2395DC8B1F18FF9E006F4EE0 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjpeg.a; sourceTree = "<group>"; };
+		2395DC8C1F18FF9E006F4EE0 /* libjpeg.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libjpeg.la; sourceTree = "<group>"; };
+		2395DC8D1F18FF9E006F4EE0 /* liblcms2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblcms2.a; sourceTree = "<group>"; };
+		2395DC8E1F18FF9E006F4EE0 /* liblcms2.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = liblcms2.la; sourceTree = "<group>"; };
+		2395DC8F1F18FF9E006F4EE0 /* libMagick++-7.Q16HDRI.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libMagick++-7.Q16HDRI.2.dylib"; sourceTree = "<group>"; };
+		2395DC901F18FF9E006F4EE0 /* libMagick++-7.Q16HDRI.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libMagick++-7.Q16HDRI.dylib"; sourceTree = "<group>"; };
+		2395DC911F18FF9E006F4EE0 /* libMagick++-7.Q16HDRI.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "libMagick++-7.Q16HDRI.la"; sourceTree = "<group>"; };
+		2395DC921F18FF9E006F4EE0 /* libMagickCore-7.Q16HDRI.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libMagickCore-7.Q16HDRI.2.dylib"; sourceTree = "<group>"; };
+		2395DC931F18FF9E006F4EE0 /* libMagickCore-7.Q16HDRI.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libMagickCore-7.Q16HDRI.dylib"; sourceTree = "<group>"; };
+		2395DC941F18FF9E006F4EE0 /* libMagickCore-7.Q16HDRI.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "libMagickCore-7.Q16HDRI.la"; sourceTree = "<group>"; };
+		2395DC951F18FF9E006F4EE0 /* libMagickWand-7.Q16HDRI.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libMagickWand-7.Q16HDRI.0.dylib"; sourceTree = "<group>"; };
+		2395DC961F18FF9E006F4EE0 /* libMagickWand-7.Q16HDRI.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libMagickWand-7.Q16HDRI.dylib"; sourceTree = "<group>"; };
+		2395DC971F18FF9E006F4EE0 /* libMagickWand-7.Q16HDRI.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "libMagickWand-7.Q16HDRI.la"; sourceTree = "<group>"; };
+		2395DC981F18FF9E006F4EE0 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpng.a; sourceTree = "<group>"; };
+		2395DC991F18FF9E006F4EE0 /* libpng.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libpng.la; sourceTree = "<group>"; };
+		2395DC9A1F18FF9E006F4EE0 /* libpng16.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpng16.a; sourceTree = "<group>"; };
+		2395DC9B1F18FF9E006F4EE0 /* libpng16.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libpng16.la; sourceTree = "<group>"; };
+		2395DC9C1F18FF9E006F4EE0 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtiff.a; sourceTree = "<group>"; };
+		2395DC9D1F18FF9E006F4EE0 /* libtiff.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libtiff.la; sourceTree = "<group>"; };
+		2395DC9E1F18FF9E006F4EE0 /* libtiffxx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtiffxx.a; sourceTree = "<group>"; };
+		2395DC9F1F18FF9E006F4EE0 /* libtiffxx.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libtiffxx.la; sourceTree = "<group>"; };
+		2395DCA11F18FF9E006F4EE0 /* ImageMagick-7.Q16HDRI.pc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ImageMagick-7.Q16HDRI.pc"; sourceTree = "<group>"; };
+		2395DCA21F18FF9E006F4EE0 /* ImageMagick.pc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImageMagick.pc; sourceTree = "<group>"; };
+		2395DCA31F18FF9E006F4EE0 /* Magick++-7.Q16HDRI.pc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Magick++-7.Q16HDRI.pc"; sourceTree = "<group>"; };
+		2395DCA41F18FF9E006F4EE0 /* Magick++.pc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Magick++.pc"; sourceTree = "<group>"; };
+		2395DCA51F18FF9E006F4EE0 /* MagickCore-7.Q16HDRI.pc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MagickCore-7.Q16HDRI.pc"; sourceTree = "<group>"; };
+		2395DCA61F18FF9E006F4EE0 /* MagickCore.pc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MagickCore.pc; sourceTree = "<group>"; };
+		2395DCA71F18FF9E006F4EE0 /* MagickWand-7.Q16HDRI.pc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MagickWand-7.Q16HDRI.pc"; sourceTree = "<group>"; };
+		2395DCA81F18FF9E006F4EE0 /* MagickWand.pc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MagickWand.pc; sourceTree = "<group>"; };
 		23EADEA41F17A4BC002DED71 /* SBS22.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SBS22.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23EADEBD1F17A538002DED71 /* filePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filePath.h; sourceTree = "<group>"; };
 		23EADEBE1F17A538002DED71 /* filePath.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = filePath.mm; sourceTree = "<group>"; };
@@ -494,20 +604,124 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25159F431F18BCD700CDBDAC /* libassimp.3.3.1.dylib in Frameworks */,
-				25159F441F18BCD700CDBDAC /* libassimp.3.3.1.dylib in Frameworks */,
-				25159F451F18BCD700CDBDAC /* libassimp.3.3.1.dylib in Frameworks */,
+				2395DCE21F1900C4006F4EE0 /* libglfw3.a in Frameworks */,
+				2395DC461F18F7C7006F4EE0 /* libassimp.3.3.1.dylib in Frameworks */,
+				2395DC471F18F7C7006F4EE0 /* libassimp.3.3.1.dylib in Frameworks */,
+				2395DC481F18F7C7006F4EE0 /* libassimp.3.3.1.dylib in Frameworks */,
 				23EAE0591F17A615002DED71 /* IOKit.framework in Frameworks */,
 				23EAE0571F17A609002DED71 /* OpenGL.framework in Frameworks */,
 				23EAE0551F17A5FC002DED71 /* CoreVideo.framework in Frameworks */,
 				23EAE0531F17A5ED002DED71 /* Cocoa.framework in Frameworks */,
-				23EAE0481F17A539002DED71 /* libglfw3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2395DC4A1F18FEC9006F4EE0 /* ImageMagick-7.0.5 */ = {
+			isa = PBXGroup;
+			children = (
+				2395DC4B1F18FEC9006F4EE0 /* config-Q16HDRI */,
+			);
+			name = "ImageMagick-7.0.5";
+			path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/ImageMagick-7.0.5";
+			sourceTree = "<group>";
+		};
+		2395DC4B1F18FEC9006F4EE0 /* config-Q16HDRI */ = {
+			isa = PBXGroup;
+			children = (
+				2395DC4C1F18FEC9006F4EE0 /* configure.xml */,
+			);
+			path = "config-Q16HDRI";
+			sourceTree = "<group>";
+		};
+		2395DC641F18FEC9006F4EE0 /* pkgconfig */ = {
+			isa = PBXGroup;
+			children = (
+				2395DC651F18FEC9006F4EE0 /* ImageMagick-7.Q16HDRI.pc */,
+				2395DC661F18FEC9006F4EE0 /* ImageMagick.pc */,
+				2395DC671F18FEC9006F4EE0 /* Magick++-7.Q16HDRI.pc */,
+				2395DC681F18FEC9006F4EE0 /* Magick++.pc */,
+				2395DC691F18FEC9006F4EE0 /* MagickCore-7.Q16HDRI.pc */,
+				2395DC6A1F18FEC9006F4EE0 /* MagickCore.pc */,
+				2395DC6B1F18FEC9006F4EE0 /* MagickWand-7.Q16HDRI.pc */,
+				2395DC6C1F18FEC9006F4EE0 /* MagickWand.pc */,
+			);
+			name = pkgconfig;
+			path = "../../../../../thirdpartylib/ImageMagick-7.0.5/lib/pkgconfig";
+			sourceTree = "<group>";
+		};
+		2395DC841F18FF9E006F4EE0 /* ImageMagic */ = {
+			isa = PBXGroup;
+			children = (
+				2395DC851F18FF9E006F4EE0 /* lib */,
+			);
+			path = ImageMagic;
+			sourceTree = "<group>";
+		};
+		2395DC851F18FF9E006F4EE0 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				2395DC861F18FF9E006F4EE0 /* ImageMagick-7.0.5 */,
+				2395DC891F18FF9E006F4EE0 /* libfreetype.a */,
+				2395DC8A1F18FF9E006F4EE0 /* libfreetype.la */,
+				2395DC8B1F18FF9E006F4EE0 /* libjpeg.a */,
+				2395DC8C1F18FF9E006F4EE0 /* libjpeg.la */,
+				2395DC8D1F18FF9E006F4EE0 /* liblcms2.a */,
+				2395DC8E1F18FF9E006F4EE0 /* liblcms2.la */,
+				2395DC8F1F18FF9E006F4EE0 /* libMagick++-7.Q16HDRI.2.dylib */,
+				2395DC901F18FF9E006F4EE0 /* libMagick++-7.Q16HDRI.dylib */,
+				2395DC911F18FF9E006F4EE0 /* libMagick++-7.Q16HDRI.la */,
+				2395DC921F18FF9E006F4EE0 /* libMagickCore-7.Q16HDRI.2.dylib */,
+				2395DC931F18FF9E006F4EE0 /* libMagickCore-7.Q16HDRI.dylib */,
+				2395DC941F18FF9E006F4EE0 /* libMagickCore-7.Q16HDRI.la */,
+				2395DC951F18FF9E006F4EE0 /* libMagickWand-7.Q16HDRI.0.dylib */,
+				2395DC961F18FF9E006F4EE0 /* libMagickWand-7.Q16HDRI.dylib */,
+				2395DC971F18FF9E006F4EE0 /* libMagickWand-7.Q16HDRI.la */,
+				2395DC981F18FF9E006F4EE0 /* libpng.a */,
+				2395DC991F18FF9E006F4EE0 /* libpng.la */,
+				2395DC9A1F18FF9E006F4EE0 /* libpng16.a */,
+				2395DC9B1F18FF9E006F4EE0 /* libpng16.la */,
+				2395DC9C1F18FF9E006F4EE0 /* libtiff.a */,
+				2395DC9D1F18FF9E006F4EE0 /* libtiff.la */,
+				2395DC9E1F18FF9E006F4EE0 /* libtiffxx.a */,
+				2395DC9F1F18FF9E006F4EE0 /* libtiffxx.la */,
+				2395DCA01F18FF9E006F4EE0 /* pkgconfig */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		2395DC861F18FF9E006F4EE0 /* ImageMagick-7.0.5 */ = {
+			isa = PBXGroup;
+			children = (
+				2395DC871F18FF9E006F4EE0 /* config-Q16HDRI */,
+			);
+			path = "ImageMagick-7.0.5";
+			sourceTree = "<group>";
+		};
+		2395DC871F18FF9E006F4EE0 /* config-Q16HDRI */ = {
+			isa = PBXGroup;
+			children = (
+				2395DC881F18FF9E006F4EE0 /* configure.xml */,
+			);
+			path = "config-Q16HDRI";
+			sourceTree = "<group>";
+		};
+		2395DCA01F18FF9E006F4EE0 /* pkgconfig */ = {
+			isa = PBXGroup;
+			children = (
+				2395DCA11F18FF9E006F4EE0 /* ImageMagick-7.Q16HDRI.pc */,
+				2395DCA21F18FF9E006F4EE0 /* ImageMagick.pc */,
+				2395DCA31F18FF9E006F4EE0 /* Magick++-7.Q16HDRI.pc */,
+				2395DCA41F18FF9E006F4EE0 /* Magick++.pc */,
+				2395DCA51F18FF9E006F4EE0 /* MagickCore-7.Q16HDRI.pc */,
+				2395DCA61F18FF9E006F4EE0 /* MagickCore.pc */,
+				2395DCA71F18FF9E006F4EE0 /* MagickWand-7.Q16HDRI.pc */,
+				2395DCA81F18FF9E006F4EE0 /* MagickWand.pc */,
+			);
+			path = pkgconfig;
+			sourceTree = "<group>";
+		};
 		23EADE9B1F17A4BC002DED71 = {
 			isa = PBXGroup;
 			children = (
@@ -528,6 +742,7 @@
 		23EADEA61F17A4BC002DED71 /* SBS22 */ = {
 			isa = PBXGroup;
 			children = (
+				2395DC841F18FF9E006F4EE0 /* ImageMagic */,
 				25159F461F18BF9E00CDBDAC /* momo */,
 				23EAE09E1F17ADFC002DED71 /* ogldev */,
 				23EAE05D1F17AD05002DED71 /* assimp */,
@@ -853,6 +1068,57 @@
 		23EAE0511F17A5ED002DED71 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				233A26481F19E4A600EF5DA8 /* libfreetype.a */,
+				233A26491F19E4A600EF5DA8 /* libfreetype.la */,
+				233A264A1F19E4A600EF5DA8 /* libjpeg.a */,
+				233A264B1F19E4A600EF5DA8 /* libjpeg.la */,
+				233A264C1F19E4A600EF5DA8 /* liblcms2.a */,
+				233A264D1F19E4A600EF5DA8 /* liblcms2.la */,
+				233A264E1F19E4A600EF5DA8 /* libMagick++-7.Q16HDRI.2.dylib */,
+				233A264F1F19E4A600EF5DA8 /* libMagick++-7.Q16HDRI.2.dylib */,
+				233A26501F19E4A600EF5DA8 /* libMagick++-7.Q16HDRI.la */,
+				233A26511F19E4A600EF5DA8 /* libMagickCore-7.Q16HDRI.2.dylib */,
+				233A26521F19E4A600EF5DA8 /* libMagickCore-7.Q16HDRI.2.dylib */,
+				233A26531F19E4A600EF5DA8 /* libMagickCore-7.Q16HDRI.la */,
+				233A26541F19E4A600EF5DA8 /* libMagickWand-7.Q16HDRI.0.dylib */,
+				233A26551F19E4A600EF5DA8 /* libMagickWand-7.Q16HDRI.0.dylib */,
+				233A26561F19E4A600EF5DA8 /* libMagickWand-7.Q16HDRI.la */,
+				233A26571F19E4A600EF5DA8 /* libpng16.a */,
+				233A26581F19E4A600EF5DA8 /* libpng16.la */,
+				233A26591F19E4A600EF5DA8 /* libpng16.a */,
+				233A265A1F19E4A600EF5DA8 /* libpng16.la */,
+				233A265B1F19E4A600EF5DA8 /* libtiff.a */,
+				233A265C1F19E4A600EF5DA8 /* libtiff.la */,
+				233A265D1F19E4A600EF5DA8 /* libtiffxx.a */,
+				233A265E1F19E4A600EF5DA8 /* libtiffxx.la */,
+				2395DC4A1F18FEC9006F4EE0 /* ImageMagick-7.0.5 */,
+				2395DC4D1F18FEC9006F4EE0 /* libfreetype.a */,
+				2395DC4E1F18FEC9006F4EE0 /* libfreetype.la */,
+				2395DC4F1F18FEC9006F4EE0 /* libjpeg.a */,
+				2395DC501F18FEC9006F4EE0 /* libjpeg.la */,
+				2395DC511F18FEC9006F4EE0 /* liblcms2.a */,
+				2395DC521F18FEC9006F4EE0 /* liblcms2.la */,
+				2395DC531F18FEC9006F4EE0 /* libMagick++-7.Q16HDRI.2.dylib */,
+				2395DC541F18FEC9006F4EE0 /* libMagick++-7.Q16HDRI.2.dylib */,
+				2395DC551F18FEC9006F4EE0 /* libMagick++-7.Q16HDRI.la */,
+				2395DC561F18FEC9006F4EE0 /* libMagickCore-7.Q16HDRI.2.dylib */,
+				2395DC571F18FEC9006F4EE0 /* libMagickCore-7.Q16HDRI.2.dylib */,
+				2395DC581F18FEC9006F4EE0 /* libMagickCore-7.Q16HDRI.la */,
+				2395DC591F18FEC9006F4EE0 /* libMagickWand-7.Q16HDRI.0.dylib */,
+				2395DC5A1F18FEC9006F4EE0 /* libMagickWand-7.Q16HDRI.0.dylib */,
+				2395DC5B1F18FEC9006F4EE0 /* libMagickWand-7.Q16HDRI.la */,
+				2395DC5C1F18FEC9006F4EE0 /* libpng16.a */,
+				2395DC5D1F18FEC9006F4EE0 /* libpng16.la */,
+				2395DC5E1F18FEC9006F4EE0 /* libpng16.a */,
+				2395DC5F1F18FEC9006F4EE0 /* libpng16.la */,
+				2395DC601F18FEC9006F4EE0 /* libtiff.a */,
+				2395DC611F18FEC9006F4EE0 /* libtiff.la */,
+				2395DC621F18FEC9006F4EE0 /* libtiffxx.a */,
+				2395DC631F18FEC9006F4EE0 /* libtiffxx.la */,
+				2395DC641F18FEC9006F4EE0 /* pkgconfig */,
+				2395DC401F18F74C006F4EE0 /* libassimp.3.3.1.dylib */,
+				2395DC411F18F74C006F4EE0 /* libassimp.3.3.1.dylib */,
+				2395DC421F18F74C006F4EE0 /* libassimp.3.3.1.dylib */,
 				25159F401F18BCD700CDBDAC /* libassimp.3.3.1.dylib */,
 				25159F411F18BCD700CDBDAC /* libassimp.3.3.1.dylib */,
 				25159F421F18BCD700CDBDAC /* libassimp.3.3.1.dylib */,
@@ -961,6 +1227,7 @@
 		23EAE09E1F17ADFC002DED71 /* ogldev */ = {
 			isa = PBXGroup;
 			children = (
+				2395DC491F18F94E006F4EE0 /* ogldev_texture.h */,
 				23EAE0A11F17AE58002DED71 /* ogldev_types.h */,
 				23EAE09F1F17ADFC002DED71 /* ogldev_math_3d.h */,
 				23EAE0A01F17ADFC002DED71 /* ogldev_util.h */,
@@ -1038,6 +1305,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				23EAE0951F17AD05002DED71 /* material.inl in Resources */,
+				2395DCC71F18FF9E006F4EE0 /* MagickWand-7.Q16HDRI.pc in Resources */,
+				2395DCC11F18FF9E006F4EE0 /* ImageMagick-7.Q16HDRI.pc in Resources */,
 				23EAE03D1F17A539002DED71 /* simd_quat.inl in Resources */,
 				23EADFDE1F17A539002DED71 /* func_matrix.inl in Resources */,
 				23EAE0231F17A539002DED71 /* intersect.inl in Resources */,
@@ -1047,6 +1316,7 @@
 				23EAE0111F17A539002DED71 /* bit.inl in Resources */,
 				23EAE0411F17A539002DED71 /* string_cast.inl in Resources */,
 				23EAE0191F17A539002DED71 /* euler_angles.inl in Resources */,
+				2395DCAB1F18FF9E006F4EE0 /* libfreetype.la in Resources */,
 				23EAE00E1F17A539002DED71 /* ulp.inl in Resources */,
 				23EADFDF1F17A539002DED71 /* func_packing.inl in Resources */,
 				23EAE0261F17A539002DED71 /* matrix_cross_product.inl in Resources */,
@@ -1058,7 +1328,10 @@
 				23EAE01E1F17A539002DED71 /* fast_trigonometry.inl in Resources */,
 				23EADFFC1F17A539002DED71 /* type_vec4_avx2.inl in Resources */,
 				23EAE0031F17A539002DED71 /* matrix_access.inl in Resources */,
+				2395DCC61F18FF9E006F4EE0 /* MagickCore.pc in Resources */,
+				2395DCB51F18FF9E006F4EE0 /* libMagickCore-7.Q16HDRI.la in Resources */,
 				23EAE02D1F17A539002DED71 /* mixed_product.inl in Resources */,
+				2395DCC01F18FF9E006F4EE0 /* libtiffxx.la in Resources */,
 				23EADFDD1F17A539002DED71 /* func_integer.inl in Resources */,
 				23EAE0051F17A539002DED71 /* matrix_transform.inl in Resources */,
 				23EADFEC1F17A539002DED71 /* type_mat.inl in Resources */,
@@ -1066,7 +1339,11 @@
 				23EADFF51F17A539002DED71 /* type_mat4x4.inl in Resources */,
 				23EAE0181F17A539002DED71 /* dual_quaternion.inl in Resources */,
 				23EAE0321F17A539002DED71 /* optimum_pow.inl in Resources */,
+				2395DCBE1F18FF9E006F4EE0 /* libtiff.la in Resources */,
+				2395DCC21F18FF9E006F4EE0 /* ImageMagick.pc in Resources */,
+				2395DCAF1F18FF9E006F4EE0 /* liblcms2.la in Resources */,
 				23EAE0281F17A539002DED71 /* matrix_interpolation.inl in Resources */,
+				2395DCBC1F18FF9E006F4EE0 /* libpng16.la in Resources */,
 				23EAE0451F17A539002DED71 /* vector_angle.inl in Resources */,
 				23EAE01D1F17A539002DED71 /* fast_square_root.inl in Resources */,
 				23EAE0471F17A539002DED71 /* wrap.inl in Resources */,
@@ -1075,8 +1352,11 @@
 				23EAE0001F17A539002DED71 /* constants.inl in Resources */,
 				23EAE0961F17AD05002DED71 /* matrix3x3.inl in Resources */,
 				23EADFD81F17A539002DED71 /* CMakeLists.txt in Resources */,
+				2395DCC51F18FF9E006F4EE0 /* MagickCore-7.Q16HDRI.pc in Resources */,
 				23EAE04F1F17A539002DED71 /* vertex-shader.txt in Resources */,
 				23EAE0121F17A539002DED71 /* closest_point.inl in Resources */,
+				2395DCA91F18FF9E006F4EE0 /* configure.xml in Resources */,
+				2395DCBA1F18FF9E006F4EE0 /* libpng.la in Resources */,
 				23EADFF01F17A539002DED71 /* type_mat3x2.inl in Resources */,
 				23EAE0971F17AD05002DED71 /* matrix4x4.inl in Resources */,
 				23EAE0011F17A539002DED71 /* epsilon.inl in Resources */,
@@ -1104,12 +1384,16 @@
 				23EAE0331F17A539002DED71 /* orthonormalize.inl in Resources */,
 				23EAE0431F17A539002DED71 /* transform2.inl in Resources */,
 				23EAE0371F17A539002DED71 /* quaternion.inl in Resources */,
+				2395DCAD1F18FF9E006F4EE0 /* libjpeg.la in Resources */,
 				23EAE0341F17A539002DED71 /* perpendicular.inl in Resources */,
 				23EAE03B1F17A539002DED71 /* scalar_relational.inl in Resources */,
+				2395DCC81F18FF9E006F4EE0 /* MagickWand.pc in Resources */,
 				23EAE03A1F17A539002DED71 /* rotate_vector.inl in Resources */,
 				23EAE00C1F17A539002DED71 /* type_precision.inl in Resources */,
 				23EADFE01F17A539002DED71 /* func_trigonometric.inl in Resources */,
+				2395DCB81F18FF9E006F4EE0 /* libMagickWand-7.Q16HDRI.la in Resources */,
 				23EAE0091F17A539002DED71 /* random.inl in Resources */,
+				2395DCB21F18FF9E006F4EE0 /* libMagick++-7.Q16HDRI.la in Resources */,
 				23EAE01C1F17A539002DED71 /* fast_exponential.inl in Resources */,
 				23EAE0251F17A539002DED71 /* log_base.inl in Resources */,
 				23EAE0351F17A539002DED71 /* polar_coordinates.inl in Resources */,
@@ -1130,9 +1414,11 @@
 				23EAE01B1F17A539002DED71 /* extented_min_max.inl in Resources */,
 				23EAE02C1F17A539002DED71 /* matrix_transform_2d.inl in Resources */,
 				23EADFE51F17A539002DED71 /* intrinsic_geometric.inl in Resources */,
+				2395DCC41F18FF9E006F4EE0 /* Magick++.pc in Resources */,
 				23EAE0301F17A539002DED71 /* normalize_dot.inl in Resources */,
 				23EAE0291F17A539002DED71 /* matrix_major_storage.inl in Resources */,
 				23EAE02E1F17A539002DED71 /* norm.inl in Resources */,
+				2395DCC31F18FF9E006F4EE0 /* Magick++-7.Q16HDRI.pc in Resources */,
 				23EAE01F1F17A539002DED71 /* gradient_paint.inl in Resources */,
 				23EADFE41F17A539002DED71 /* intrinsic_exponential.inl in Resources */,
 				23EADFF41F17A539002DED71 /* type_mat4x3.inl in Resources */,
@@ -1288,9 +1574,11 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/SBS22",
 					"$(PROJECT_DIR)/SBS22/assimp/lib",
+					"$(PROJECT_DIR)/SBS22/ImageMagic/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyj.SBS22;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = "/Users/aa64mac/Documents/thirdpartylib/ImageMagick-7.0.5/include/**";
 			};
 			name = Debug;
 		};
@@ -1307,9 +1595,11 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/SBS22",
 					"$(PROJECT_DIR)/SBS22/assimp/lib",
+					"$(PROJECT_DIR)/SBS22/ImageMagic/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyj.SBS22;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = "/Users/aa64mac/Documents/thirdpartylib/ImageMagick-7.0.5/include/**";
 			};
 			name = Release;
 		};

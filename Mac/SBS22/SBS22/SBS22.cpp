@@ -31,8 +31,7 @@ struct ModelAsset {
 	GLint drawCount;
 	GLfloat shininess;
 	glm::vec3 specularColor;
-    std::vector<Mesh::MeshEntry> m_Entries;
-    std::vector<Texture*> m_Textures;
+    Mesh mesh;
 };
 
 struct ModelInstance {
@@ -82,7 +81,7 @@ static void LoadWoodenCrateAsset() {
 	glGenVertexArrays(1, &gWoodenCrate.vao);
 	glBindVertexArray(gWoodenCrate.vao);
     
-    Mesh::LoadMesh("model.obj", gWoodenCrate.m_Entries, gWoodenCrate.m_Textures);
+    gWoodenCrate.mesh.LoadMesh("model.obj");
 
 	// Make a cube out of triangles (two triangles per side)
 //	GLfloat vertexData[] = {
@@ -323,30 +322,15 @@ static void RenderInstance(const ModelInstance& inst) {
 
 
 								   //bind the texture
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, asset->texture->object());
+//	glActiveTexture(GL_TEXTURE0);
+//	glBindTexture(GL_TEXTURE_2D, asset->texture->object());
 
 	//bind VAO and draw
 	glBindVertexArray(asset->vao);
 	//glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
     
-    for (unsigned int i = 0; i < asset->m_Entries.size(); i++) {
-        glBindBuffer(GL_ARRAY_BUFFER, asset->m_Entries[i].VB);
-        
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, asset->m_Entries[i].IB);
-        
-        const unsigned int MaterialIndex = asset->m_Entries[i].MaterialIndex;
-        
-        if (MaterialIndex < asset->m_Textures.size() && asset->m_Textures[MaterialIndex]) {
-            //bind the texture
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, asset->m_Textures[MaterialIndex]->object());
-            //asset->m_Textures[MaterialIndex]->Bind(GL_TEXTURE0);
-        }
-        
-        glDrawElements(GL_TRIANGLES, asset->m_Entries[i].NumIndices, GL_UNSIGNED_INT, 0);
-    }
-
+    asset->mesh.Render();
+    
 	//unbind everything
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);

@@ -31,8 +31,7 @@ struct ModelAsset {
 	GLint drawCount;
 	GLfloat shininess;
 	glm::vec3 specularColor;
-	std::vector<Mesh::MeshEntry> m_Entries;
-	std::vector<Texture*> m_Textures;
+	Mesh mesh;
 };
 
 struct ModelInstance {
@@ -79,8 +78,8 @@ static void LoadWoodenCrateAsset() {
 	glGenVertexArrays(1, &gWoodenCrate.vao);
 	glBindVertexArray(gWoodenCrate.vao);
 
-	Mesh::LoadMesh("../../../Content/phoenix_ugv.md2", gWoodenCrate.m_Entries, gWoodenCrate.m_Textures);
-	//Mesh::LoadMesh("../../../Content/momo/model.obj", gWoodenCrate.m_Entries, gWoodenCrate.m_Textures);
+	//gWoodenCrate.mesh.LoadMesh("../../../Content/phoenix_ugv.md2");
+	gWoodenCrate.mesh.LoadMesh("../../../Content/momo/model.obj");
 
 	// connect the xyz to the "vert" attribute of the vertex shader
 	glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vert"));
@@ -129,7 +128,7 @@ void Update(float secondsElapsed, GLFWwindow* window) {
 	gInstances.front().transform = glm::rotate(glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0)), glm::radians(gDegreesRotated), glm::vec3(0, 0, 1));
 
 	//move position of camera based on WASD keys
-	const float moveSpeed = 40.0; //units per second
+	const float moveSpeed = 4.0; //units per second
 	if (glfwGetKey(window, 'S')) {
 		gCamera.offsetPosition(secondsElapsed * moveSpeed * -gCamera.forward());
 	}
@@ -254,22 +253,7 @@ static void RenderInstance(const ModelInstance& inst) {
 	//bind VAO and draw
 	glBindVertexArray(asset->vao);
 
-	for (unsigned int i = 0; i < asset->m_Entries.size(); i++) {
-		glBindBuffer(GL_ARRAY_BUFFER, asset->m_Entries[i].VB);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, asset->m_Entries[i].IB);
-
-		const unsigned int MaterialIndex = asset->m_Entries[i].MaterialIndex;
-
-		if (MaterialIndex < asset->m_Textures.size() && asset->m_Textures[MaterialIndex]) {
-			//bind the texture
-			//glActiveTexture(GL_TEXTURE0);
-			//glBindTexture(GL_TEXTURE_2D, asset->m_Textures[MaterialIndex]->object());
-			asset->m_Textures[MaterialIndex]->Bind(GL_TEXTURE0);
-		}
-
-		glDrawElements(GL_TRIANGLES, asset->m_Entries[i].NumIndices, GL_UNSIGNED_INT, 0);
-	}
+	asset->mesh.Render();
 
 	//unbind everything
 	glBindVertexArray(0);
@@ -356,7 +340,7 @@ int main(void)
 
 	Light directionalLight;
 	directionalLight.position = glm::vec4(1, 0.8, 0.6, 0); //w == 0 indications a directional light
-	directionalLight.intensities = glm::vec3(0.7, 0.7, 0.7);
+	directionalLight.intensities = glm::vec3(0.1, 0.1, 0.1);
 	directionalLight.ambientCoefficient = 0.06f;
 
 	gLights.push_back(spotlight);
