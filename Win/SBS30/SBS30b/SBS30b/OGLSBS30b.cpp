@@ -16,6 +16,8 @@
 #include <sstream>
 #include <string>
 
+#include "mesh.h"
+
 #define NUM_ROWS 10
 #define NUM_COLUMNS 10
 
@@ -65,6 +67,7 @@ struct ModelAsset {
 	GLint drawCount;
 	GLfloat shininess;
 	glm::vec3 specularColor;
+	Mesh mesh;
 };
 
 struct ModelInstance {

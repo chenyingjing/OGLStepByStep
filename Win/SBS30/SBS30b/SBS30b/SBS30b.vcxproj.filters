@@ -19,6 +19,9 @@
     <Filter Include="tdogl">
       <UniqueIdentifier>{f1e7a49b-fc29-4d27-b9fe-033cf3f6d0f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{0d04d71d-c720-4bad-8e40-c89daa4534b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glew.h">
@@ -45,6 +48,9 @@
     <ClInclude Include="tdogl\Texture.h">
       <Filter>tdogl</Filter>
     </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OGLSBS30b.cpp">
@@ -64,6 +70,12 @@
     </ClCompile>
     <ClCompile Include="tdogl\Texture.cpp">
       <Filter>tdogl</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Common\ogldev_texture.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
