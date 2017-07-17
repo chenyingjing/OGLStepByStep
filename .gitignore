@@ -286,3 +286,5 @@ xcuserdata/
 
 *.VC.db
 *.opendb
+
+.vscode/
