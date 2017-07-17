@@ -130,23 +130,10 @@ static void LoadGroundAsset() {
     gGround.shininess = 80.0;
     gGround.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
-    glGenBuffers(1, &gGround.vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, gGround.vbo);
-    
-    // Make a quad out of 2 triangles
-    GLfloat vertexData[] = {
-        //  X     Y     Z       U     V          Normal
-        1.0f,0.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-        -1.0f,0.0f,-1.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-        -1.0f,0.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-        1.0f,0.0f,1.0f,   1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-        1.0f,0.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-        -1.0f,0.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f
-    };
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
-    
     glGenVertexArrays(1, &gGround.vao);
     glBindVertexArray(gGround.vao);
+
+	gGround.mesh.LoadMesh("../../../Content/quad2.obj");
     
     gGround.shaders->use();
     
@@ -332,7 +319,8 @@ static void RenderInstance(const ModelInstance& inst) {
 
     //bind VAO and draw
     glBindVertexArray(asset->vao);
-    glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+    //glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+	asset->mesh.Render();
     
     //unbind everything
     glBindVertexArray(0);

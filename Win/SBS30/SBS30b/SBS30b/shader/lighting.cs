@@ -20,13 +20,13 @@ float GetTessLevel(float Distance0, float Distance1)
     float AvgDistance = (Distance0 + Distance1) / 2.0;                                          
                                                                                                 
     if (AvgDistance <= 2.0) {                                                                   
-        return 10.0;                                                                            
+        return 4.0;                                                                            
     }                                                                                           
-    else if (AvgDistance <= 5.0) {                                                              
-        return 7.0;                                                                             
+    else if (AvgDistance <= 4.0) {                                                              
+        return 1.5;                                                                             
     }                                                                                           
     else {                                                                                      
-        return 3.0;
+        return 1.0;
     }                                                                                           
 }                                                                                               
                                                                                                 
@@ -47,5 +47,5 @@ void main()
     gl_TessLevelOuter[1] = GetTessLevel(EyeToVertexDistance2, EyeToVertexDistance0);
     float out2AndInner0 = GetTessLevel(EyeToVertexDistance0, EyeToVertexDistance1);
     gl_TessLevelOuter[2] = out2AndInner0;
-    gl_TessLevelInner[0] = 30 * out2AndInner0;
+    gl_TessLevelInner[0] = out2AndInner0;
 }                                                                                               
