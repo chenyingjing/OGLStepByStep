@@ -185,8 +185,6 @@
     <ClCompile Include="tdogl\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader\lighting.cs" />
-    <None Include="shader\lighting.es" />
     <None Include="shader\lighting.fs" />
     <None Include="shader\lighting.vs" />
   </ItemGroup>

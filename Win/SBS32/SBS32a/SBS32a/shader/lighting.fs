@@ -32,10 +32,10 @@ out vec4 finalColor;
 vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec3 surfacePos, vec3 surfaceToCamera);
 
 void main() {
-    //vec3 normal = normalize(transpose(inverse(mat3(model))) * fragNormal);
-    vec3 normal = normalize(Normal_FS_in);
-    //vec3 surfacePos = vec3(model * vec4(fragVert, 1));
-    vec3 surfacePos = WorldPos_FS_in;
+    vec3 normal = normalize(transpose(inverse(mat3(model))) * Normal_FS_in);
+    //vec3 normal = normalize(Normal_FS_in);
+    vec3 surfacePos = vec3(model * vec4(WorldPos_FS_in, 1));
+    //vec3 surfacePos = WorldPos_FS_in;
     //vec4 surfaceColor = texture(materialTex, fragTexCoord);
     vec4 surfaceColor = texture(materialTex, TexCoord_FS_in);
     vec3 surfaceToCamera = normalize(cameraPosition - surfacePos); //also a unit

@@ -44,8 +44,8 @@ tdogl::Camera gCamera;
 double gScrollY = 0.0;
 bool isWireframe = false;
 float gDispFactor = 0.25;
-float gTLToSet = 1.0f;
-float gTL = 1.0f;
+//float gTLToSet = 1.0f;
+//float gTL = 1.0f;
 
 struct ModelAsset {
 	tdogl::Program* psUpdateShaders;
@@ -123,8 +123,9 @@ static tdogl::Texture* LoadTexture(const char *textureFile) {
 }
 
 static void LoadMainAsset() {
-    gMonkey.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.cs", "shader/lighting.es", "shader/lighting.fs");
-    gMonkey.drawType = GL_PATCHES;
+	//gMonkey.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.cs", "shader/lighting.es", "shader/lighting.fs");
+	gMonkey.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.fs");
+    gMonkey.drawType = GL_TRIANGLES;
     gMonkey.drawStart = 0;
     gMonkey.drawCount = 2 * 3;
     //gMonkey.texture = LoadTexture("diffuse.png");
@@ -226,14 +227,14 @@ void Update(float secondsElapsed, GLFWwindow* window) {
     
     if (glfwGetKey(window, 'I')) {
         //gDispFactor += 0.01f;
-        gTL += 0.01f;
+        //gTL += 0.01f;
     } else if (glfwGetKey(window, 'K')) {
 //        if (gDispFactor >= 0.01f) {
 //            gDispFactor -= 0.01f;
 //        }
-        if (gTL >= 1.0f) {
-            gTL -= 0.01f;
-        }
+        //if (gTL >= 1.0f) {
+        //    gTL -= 0.01f;
+        //}
     }
 
 	//rotate camera based on mouse movement
@@ -323,7 +324,7 @@ static void RenderInstance(const ModelInstance& inst) {
     shaders->setUniform("materialSpecularColor", asset->specularColor);
     
     //shaders->setUniform("gDispFactor", gDispFactor);
-    shaders->setUniform("gTessellationLevel", gTLToSet);
+    //shaders->setUniform("gTessellationLevel", gTLToSet);
     
     
     //bind the texture
@@ -360,11 +361,11 @@ void Render(float millsElapsed, GLFWwindow* window)
     if (error2 != GL_NO_ERROR)
         std::cerr << "OpenGL Error2 " << error2 << std::endl;
     for (it = gInstances.begin(); it != gInstances.end(); ++it) {
-        if (it == gInstances.begin()) {
-            gTLToSet = gTL;
-        } else {
-            gTLToSet = 1.0;
-        }
+        //if (it == gInstances.begin()) {
+        //    gTLToSet = gTL;
+        //} else {
+        //    gTLToSet = 1.0;
+        //}
         RenderInstance(*it);
     }
 

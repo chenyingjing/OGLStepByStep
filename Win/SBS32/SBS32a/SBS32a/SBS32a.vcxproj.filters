@@ -79,12 +79,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader\lighting.cs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="shader\lighting.es">
-      <Filter>shader</Filter>
-    </None>
     <None Include="shader\lighting.fs">
       <Filter>shader</Filter>
     </None>
