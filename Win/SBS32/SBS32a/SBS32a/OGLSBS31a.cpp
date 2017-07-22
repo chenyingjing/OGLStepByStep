@@ -137,26 +137,11 @@ static void LoadMainAsset() {
     gTank.shininess = 80.0;
     gTank.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
-    glGenVertexArrays(1, &gTank.vao);
-    glBindVertexArray(gTank.vao);
+    //glGenVertexArrays(1, &gTank.vao);
+    //glBindVertexArray(gTank.vao);
 
 	gTank.mesh.LoadMesh("../../../Content/phoenix_ugv.md2");
-    
-    gTank.shaders->use();
-    
-    // connect the xyz to the "vert" attribute of the vertex shader
-    glEnableVertexAttribArray(gTank.shaders->attrib("vert"));
-    glVertexAttribPointer(gTank.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
-    
-    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-    glEnableVertexAttribArray(gTank.shaders->attrib("vertTexCoord"));
-    glVertexAttribPointer(gTank.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-    
-    glEnableVertexAttribArray(gTank.shaders->attrib("vertNormal"));
-    glVertexAttribPointer(gTank.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
-    gTank.shaders->stopUsing();
-    
-    glBindVertexArray(0);
+
 
 }
 
@@ -168,25 +153,6 @@ static void LoadSecondAsset() {
 
 	gHheli.mesh.LoadMesh("../../../Content/hheli.obj");
 
-	glGenVertexArrays(1, &gHheli.vao);
-	glBindVertexArray(gHheli.vao);
-
-
-	gHheli.shaders->use();
-
-	// connect the xyz to the "vert" attribute of the vertex shader
-	glEnableVertexAttribArray(gHheli.shaders->attrib("vert"));
-	glVertexAttribPointer(gHheli.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
-
-	// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-	glEnableVertexAttribArray(gHheli.shaders->attrib("vertTexCoord"));
-	glVertexAttribPointer(gHheli.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-
-	glEnableVertexAttribArray(gHheli.shaders->attrib("vertNormal"));
-	glVertexAttribPointer(gHheli.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
-	gHheli.shaders->stopUsing();
-
-	glBindVertexArray(0);
 }
 
 static void LoadThirdAsset() {
@@ -197,25 +163,6 @@ static void LoadThirdAsset() {
 
 	gJeep.mesh.LoadMesh("../../../Content/jeep.obj");
 
-	glGenVertexArrays(1, &gJeep.vao);
-	glBindVertexArray(gJeep.vao);
-
-
-	gHheli.shaders->use();
-
-	// connect the xyz to the "vert" attribute of the vertex shader
-	glEnableVertexAttribArray(gJeep.shaders->attrib("vert"));
-	glVertexAttribPointer(gJeep.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
-
-	// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-	glEnableVertexAttribArray(gJeep.shaders->attrib("vertTexCoord"));
-	glVertexAttribPointer(gJeep.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-
-	glEnableVertexAttribArray(gJeep.shaders->attrib("vertNormal"));
-	glVertexAttribPointer(gJeep.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
-	gJeep.shaders->stopUsing();
-
-	glBindVertexArray(0);
 }
 
 
@@ -266,7 +213,7 @@ void OnScroll(GLFWwindow* window, double deltaX, double deltaY) {
 }
 
 void Update(float secondsElapsed, GLFWwindow* window) {
-	const GLfloat degreesPerSecond = 90.0f;
+	const GLfloat degreesPerSecond = 40.0f;
 	//const GLfloat degreesPerSecond = 0.0f;
 	gDegreesRotated += secondsElapsed * degreesPerSecond;
 	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
@@ -394,7 +341,6 @@ static void RenderInstance(const ModelInstance& inst) {
     }
     
     
-    
     shaders->setUniform("cameraPosition", gCamera.position());
     
     //set the shader uniforms
@@ -406,30 +352,7 @@ static void RenderInstance(const ModelInstance& inst) {
     shaders->setUniform("materialShininess", asset->shininess);
     shaders->setUniform("materialSpecularColor", asset->specularColor);
     
-    //shaders->setUniform("gDispFactor", gDispFactor);
-    //shaders->setUniform("gTessellationLevel", gTLToSet);
-    
-    
-    //bind the texture
-    //glActiveTexture(GL_TEXTURE0);
-    //glBindTexture(GL_TEXTURE_2D, asset->texture->object());
-    //
-    //glActiveTexture(GL_TEXTURE4);
-    //glBindTexture(GL_TEXTURE_2D, asset->displacementTexture->object());
-
-    //bind VAO and draw
-    glBindVertexArray(asset->vao);
-    //glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
 	asset->mesh.Render();
-    
-    //unbind everything
-    glBindVertexArray(0);
-    
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, 0);
-    
-    glActiveTexture(GL_TEXTURE4);
-    glBindTexture(GL_TEXTURE_2D, 0);
     
     shaders->stopUsing();
 }
