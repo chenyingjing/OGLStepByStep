@@ -28,8 +28,8 @@
 #define PARTICLE_TYPE_SHELL 1.0f
 #define PARTICLE_TYPE_SECONDARY_SHELL 2.0f
 
-#define WINDOW_WIDTH  1920
-#define WINDOW_HEIGHT 1200
+#define WINDOW_WIDTH  1200
+#define WINDOW_HEIGHT 900
 
 struct Particle
 {
@@ -76,6 +76,7 @@ struct ModelAsset {
 struct ModelInstance {
 	ModelAsset* asset;
 	glm::mat4 transform;
+	glm::mat4 originalTransform;
 };
 
 struct Light {
@@ -88,6 +89,8 @@ struct Light {
 };
 
 ModelAsset gTank;
+ModelAsset gHheli;
+ModelAsset gJeep;
 
 std::list<ModelInstance> gInstances;
 
@@ -126,9 +129,9 @@ static tdogl::Texture* LoadTexture(const char *textureFile) {
 static void LoadMainAsset() {
 	//gTank.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.cs", "shader/lighting.es", "shader/lighting.fs");
 	gTank.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.fs");
-    gTank.drawType = GL_TRIANGLES;
-    gTank.drawStart = 0;
-    gTank.drawCount = 2 * 3;
+    //gTank.drawType = GL_TRIANGLES;
+    //gTank.drawStart = 0;
+    //gTank.drawCount = 2 * 3;
     //gTank.texture = LoadTexture("diffuse.png");
     //gTank.displacementTexture = LoadTexture("heightmap.png");
     gTank.shininess = 80.0;
@@ -157,6 +160,63 @@ static void LoadMainAsset() {
 
 }
 
+static void LoadSecondAsset() {
+
+	gHheli.shaders = gTank.shaders;// LoadShaders("shader/lighting.vs", "shader/lighting.fs");
+	gHheli.shininess = 80.0;
+	gHheli.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+
+	gHheli.mesh.LoadMesh("../../../Content/hheli.obj");
+
+	glGenVertexArrays(1, &gHheli.vao);
+	glBindVertexArray(gHheli.vao);
+
+
+	gHheli.shaders->use();
+
+	// connect the xyz to the "vert" attribute of the vertex shader
+	glEnableVertexAttribArray(gHheli.shaders->attrib("vert"));
+	glVertexAttribPointer(gHheli.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+
+	// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+	glEnableVertexAttribArray(gHheli.shaders->attrib("vertTexCoord"));
+	glVertexAttribPointer(gHheli.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+
+	glEnableVertexAttribArray(gHheli.shaders->attrib("vertNormal"));
+	glVertexAttribPointer(gHheli.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+	gHheli.shaders->stopUsing();
+
+	glBindVertexArray(0);
+}
+
+static void LoadThirdAsset() {
+
+	gJeep.shaders = gTank.shaders;// LoadShaders("shader/lighting.vs", "shader/lighting.fs");
+	gJeep.shininess = 80.0;
+	gJeep.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+
+	gJeep.mesh.LoadMesh("../../../Content/jeep.obj");
+
+	glGenVertexArrays(1, &gJeep.vao);
+	glBindVertexArray(gJeep.vao);
+
+
+	gHheli.shaders->use();
+
+	// connect the xyz to the "vert" attribute of the vertex shader
+	glEnableVertexAttribArray(gJeep.shaders->attrib("vert"));
+	glVertexAttribPointer(gJeep.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+
+	// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+	glEnableVertexAttribArray(gJeep.shaders->attrib("vertTexCoord"));
+	glVertexAttribPointer(gJeep.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+
+	glEnableVertexAttribArray(gJeep.shaders->attrib("vertNormal"));
+	glVertexAttribPointer(gJeep.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+	gJeep.shaders->stopUsing();
+
+	glBindVertexArray(0);
+}
 
 
 // convenience function that returns a translation matrix
@@ -177,7 +237,7 @@ static void CreateInstances() {
     //glm::mat4 rotateMat = glm::rotate(glm::mat4(), glm::radians(180.0f), glm::vec3(0, 0, 1));
     //rotateMat = glm::rotate(rotateMat, glm::radians(90.0f), glm::vec3(1, 0, 0));
     //glm::mat4 rotateMat1 = translate(-1.5, 0, 0) * glm::rotate(rotateMat, glm::radians(15.0f), glm::vec3(0, 0, 1));
-    tank.transform = translate(-6, -2, -10) * scale(groundScale, groundScale, groundScale);
+    tank.transform = tank.originalTransform = translate(-6, -2, -10) * scale(groundScale, groundScale, groundScale);
     gInstances.push_back(tank);
     
     //ModelInstance monkey1;
@@ -185,6 +245,19 @@ static void CreateInstances() {
     //glm::mat4 rotateMat2 = translate(1.5, 0, 0) * glm::rotate(rotateMat, glm::radians(-15.0f), glm::vec3(0, 0, 1));
     //monkey1.transform = rotateMat2;
     //gInstances.push_back(monkey1);
+
+	ModelInstance hheli;
+	hheli.asset = &gHheli;
+	groundScale = 0.04f;
+	hheli.transform = hheli.originalTransform = translate(6, -2, -10) *scale(groundScale, groundScale, groundScale);
+	gInstances.push_back(hheli);
+
+	ModelInstance jeep;
+	jeep.asset = &gJeep;
+	groundScale = 0.01f;
+	jeep.transform = jeep.originalTransform = translate(0, 6, -10) *scale(groundScale, groundScale, groundScale);
+	gInstances.push_back(jeep);
+
 }
 
 // records how far the y axis has been scrolled
@@ -193,6 +266,15 @@ void OnScroll(GLFWwindow* window, double deltaX, double deltaY) {
 }
 
 void Update(float secondsElapsed, GLFWwindow* window) {
+	const GLfloat degreesPerSecond = 90.0f;
+	//const GLfloat degreesPerSecond = 0.0f;
+	gDegreesRotated += secondsElapsed * degreesPerSecond;
+	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
+	//gInstances.front().transform = translate(-6, -2, -10) * scale(0.1, 0.1, 0.1) * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));
+	for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
+		it->transform = it->originalTransform * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));;
+	}
+
 	//move position of camera based on WASD keys
 	const float moveSpeed = 4.0; //units per second
 	if (glfwGetKey(window, 'S')) {
@@ -427,6 +509,8 @@ int main(void)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
 	LoadMainAsset();
+	LoadSecondAsset();
+	LoadThirdAsset();
 
 	CreateInstances();
 
@@ -434,7 +518,7 @@ int main(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
-    gCamera.setPosition(glm::vec3(3, 7, 10));
+    gCamera.setPosition(glm::vec3(3, 7, 20));
 	gCamera.offsetOrientation(10, 0);
 	gCamera.setViewportAspectRatio((float)WINDOW_WIDTH / (float)WINDOW_HEIGHT);
 	gCamera.setNearAndFarPlanes(0.5f, 100.0f);

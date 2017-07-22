@@ -1,8 +1,8 @@
 #version 410 core                                                                               
 
-in vec3 vert;
-in vec2 vertTexCoord;
-in vec3 vertNormal;
+layout (location = 0) in vec3 vert;
+layout (location = 1) in vec2 vertTexCoord;
+layout (location = 2) in vec3 vertNormal;
 
 uniform mat4 model;
 uniform mat4 camera;
