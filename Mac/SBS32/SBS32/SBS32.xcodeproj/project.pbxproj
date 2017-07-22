@@ -181,6 +181,13 @@
 		23FB52151F234A7D00A5A083 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB52141F234A7D00A5A083 /* CoreVideo.framework */; };
 		23FB52171F234A8C00A5A083 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB52161F234A8C00A5A083 /* OpenGL.framework */; };
 		23FB52191F234A9E00A5A083 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB52181F234A9E00A5A083 /* IOKit.framework */; };
+		23FB52221F2350A200A5A083 /* hheli.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 23FB521B1F2350A200A5A083 /* hheli.bmp */; };
+		23FB52231F2350A200A5A083 /* hheli.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23FB521C1F2350A200A5A083 /* hheli.mtl */; };
+		23FB52241F2350A200A5A083 /* hheli.obj in Resources */ = {isa = PBXBuildFile; fileRef = 23FB521D1F2350A200A5A083 /* hheli.obj */; };
+		23FB52251F2350A200A5A083 /* jeep.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23FB521E1F2350A200A5A083 /* jeep.mtl */; };
+		23FB52261F2350A200A5A083 /* jeep.obj in Resources */ = {isa = PBXBuildFile; fileRef = 23FB521F1F2350A200A5A083 /* jeep.obj */; };
+		23FB52271F2350A200A5A083 /* jeep_army.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 23FB52201F2350A200A5A083 /* jeep_army.jpg */; };
+		23FB52281F2350A200A5A083 /* jeep_rood.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 23FB52211F2350A200A5A083 /* jeep_rood.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -552,6 +559,13 @@
 		23FB52141F234A7D00A5A083 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		23FB52161F234A8C00A5A083 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		23FB52181F234A9E00A5A083 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		23FB521B1F2350A200A5A083 /* hheli.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = hheli.bmp; sourceTree = "<group>"; };
+		23FB521C1F2350A200A5A083 /* hheli.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hheli.mtl; sourceTree = "<group>"; };
+		23FB521D1F2350A200A5A083 /* hheli.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hheli.obj; sourceTree = "<group>"; };
+		23FB521E1F2350A200A5A083 /* jeep.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jeep.mtl; sourceTree = "<group>"; };
+		23FB521F1F2350A200A5A083 /* jeep.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jeep.obj; sourceTree = "<group>"; };
+		23FB52201F2350A200A5A083 /* jeep_army.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jeep_army.jpg; sourceTree = "<group>"; };
+		23FB52211F2350A200A5A083 /* jeep_rood.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jeep_rood.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -606,6 +620,7 @@
 		23FB4FD11F23485800A5A083 /* SBS32 */ = {
 			isa = PBXGroup;
 			children = (
+				23FB521A1F2350A200A5A083 /* asset */,
 				23FB4FE61F2349C300A5A083 /* assimp */,
 				23FB501C1F2349C300A5A083 /* filePath.h */,
 				23FB501D1F2349C300A5A083 /* filePath.mm */,
@@ -1128,6 +1143,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		23FB521A1F2350A200A5A083 /* asset */ = {
+			isa = PBXGroup;
+			children = (
+				23FB521B1F2350A200A5A083 /* hheli.bmp */,
+				23FB521C1F2350A200A5A083 /* hheli.mtl */,
+				23FB521D1F2350A200A5A083 /* hheli.obj */,
+				23FB521E1F2350A200A5A083 /* jeep.mtl */,
+				23FB521F1F2350A200A5A083 /* jeep.obj */,
+				23FB52201F2350A200A5A083 /* jeep_army.jpg */,
+				23FB52211F2350A200A5A083 /* jeep_rood.jpg */,
+			);
+			path = asset;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1201,6 +1230,7 @@
 				23FB51BD1F2349C300A5A083 /* integer.inl in Resources */,
 				23FB51A51F2349C300A5A083 /* reciprocal.inl in Resources */,
 				23FB51DB1F2349C400A5A083 /* std_based_type.inl in Resources */,
+				23FB52231F2350A200A5A083 /* hheli.mtl in Resources */,
 				23FB51DF1F2349C400A5A083 /* type_aligned.inl in Resources */,
 				23FB518D1F2349C300A5A083 /* type_mat3x4.inl in Resources */,
 				23FB51E51F2349C400A5A083 /* libfreetype.la in Resources */,
@@ -1251,9 +1281,11 @@
 				23FB51A81F2349C300A5A083 /* type_ptr.inl in Resources */,
 				23FB51681F2349C300A5A083 /* matrix3x3.inl in Resources */,
 				23FB51FA1F2349C400A5A083 /* libtiffxx.la in Resources */,
+				23FB52221F2350A200A5A083 /* hheli.bmp in Resources */,
 				23FB518E1F2349C300A5A083 /* type_mat4x2.inl in Resources */,
 				23FB51C21F2349C300A5A083 /* matrix_decompose.inl in Resources */,
 				23FB51DC1F2349C400A5A083 /* string_cast.inl in Resources */,
+				23FB52261F2350A200A5A083 /* jeep.obj in Resources */,
 				23FB51831F2349C300A5A083 /* intrinsic_trigonometric.inl in Resources */,
 				23FB51BF1F2349C300A5A083 /* io.inl in Resources */,
 				23FB51951F2349C300A5A083 /* type_vec4.inl in Resources */,
@@ -1263,11 +1295,13 @@
 				23FB51E71F2349C400A5A083 /* libjpeg.la in Resources */,
 				23FB51991F2349C300A5A083 /* bitfield.inl in Resources */,
 				23FB516A1F2349C300A5A083 /* quaternion.inl in Resources */,
+				23FB52251F2350A200A5A083 /* jeep.mtl in Resources */,
 				23FB51F21F2349C400A5A083 /* libMagickWand-7.Q16HDRI.la in Resources */,
 				23FB51B71F2349C300A5A083 /* fast_exponential.inl in Resources */,
 				23FB51E91F2349C400A5A083 /* liblcms2.la in Resources */,
 				23FB51D11F2349C300A5A083 /* projection.inl in Resources */,
 				23FB51B11F2349C300A5A083 /* compatibility.inl in Resources */,
+				23FB52281F2350A200A5A083 /* jeep_rood.jpg in Resources */,
 				23FB51E01F2349C400A5A083 /* vector_angle.inl in Resources */,
 				23FB51821F2349C300A5A083 /* intrinsic_matrix.inl in Resources */,
 				23FB51BA1F2349C300A5A083 /* gradient_paint.inl in Resources */,
@@ -1279,6 +1313,7 @@
 				23FB51CD1F2349C300A5A083 /* optimum_pow.inl in Resources */,
 				23FB51651F2349C300A5A083 /* .editorconfig in Resources */,
 				23FB517B1F2349C300A5A083 /* func_trigonometric.inl in Resources */,
+				23FB52241F2350A200A5A083 /* hheli.obj in Resources */,
 				23FB52051F2349C400A5A083 /* model.mtl in Resources */,
 				23FB51871F2349C300A5A083 /* type_mat.inl in Resources */,
 				23FB516B1F2349C300A5A083 /* vector2.inl in Resources */,
@@ -1286,6 +1321,7 @@
 				23FB51CE1F2349C300A5A083 /* orthonormalize.inl in Resources */,
 				23FB51A41F2349C300A5A083 /* random.inl in Resources */,
 				23FB51B41F2349C300A5A083 /* euler_angles.inl in Resources */,
+				23FB52271F2350A200A5A083 /* jeep_army.jpg in Resources */,
 				23FB51671F2349C300A5A083 /* material.inl in Resources */,
 				23FB51DD1F2349C400A5A083 /* transform.inl in Resources */,
 				23FB51C11F2349C300A5A083 /* matrix_cross_product.inl in Resources */,

@@ -17,6 +17,10 @@
 #include <string>
 #include "mesh.h"
 
+#define WINDOW_WIDTH  1200
+#define WINDOW_HEIGHT 900
+
+
 float gDegreesRotated = 45.0f;
 tdogl::Camera gCamera;
 double gScrollY = 0.0;
@@ -37,6 +41,7 @@ struct ModelAsset {
 struct ModelInstance {
 	ModelAsset* asset;
 	glm::mat4 transform;
+    glm::mat4 originalTransform;
 };
 
 struct Light {
@@ -48,7 +53,10 @@ struct Light {
 	glm::vec3 coneDirection;
 };
 
-ModelAsset gWoodenCrate;
+ModelAsset gJeep;
+ModelAsset gMonkey;
+ModelAsset gHheli;
+
 std::list<ModelInstance> gInstances;
 
 std::vector<Light> gLights;
@@ -66,91 +74,107 @@ tdogl::Texture* LoadTexture(const char *textureFile) {
 	return new tdogl::Texture(bmp);
 }
 
-static void LoadWoodenCrateAsset() {
-	gWoodenCrate.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
-	gWoodenCrate.drawType = GL_TRIANGLES;
-	gWoodenCrate.drawStart = 0;
-	gWoodenCrate.drawCount = 6 * 2 * 3;
-	gWoodenCrate.texture = LoadTexture("wooden-crate.jpg");
-	gWoodenCrate.shininess = 80.0;
-	gWoodenCrate.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+static void LoadMainAsset() {
+	gJeep.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
+	gJeep.drawType = GL_TRIANGLES;
+	gJeep.drawStart = 0;
+	gJeep.drawCount = 6 * 2 * 3;
+	gJeep.texture = LoadTexture("wooden-crate.jpg");
+	gJeep.shininess = 80.0;
+	gJeep.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
 	
-	glGenBuffers(1, &gWoodenCrate.vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, gWoodenCrate.vbo);
+	glGenBuffers(1, &gJeep.vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, gJeep.vbo);
 
-	glGenVertexArrays(1, &gWoodenCrate.vao);
-	glBindVertexArray(gWoodenCrate.vao);
+	glGenVertexArrays(1, &gJeep.vao);
+	glBindVertexArray(gJeep.vao);
     
-    gWoodenCrate.mesh.LoadMesh("model.obj");
+    gJeep.mesh.LoadMesh("jeep.obj");
 
-	// Make a cube out of triangles (two triangles per side)
-//	GLfloat vertexData[] = {
-//		//  X     Y     Z       U     V          Normal
-//		// bottom
-//		-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-//		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-//		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
-//		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, -1.0f, 0.0f,
-//		1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   0.0f, -1.0f, 0.0f,
-//		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   0.0f, -1.0f, 0.0f,
-//
-//		// top
-//		-1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-//		-1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-//		1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-//		1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-//		-1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-//		1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-//
-//		// front
-//		-1.0f,-1.0f, 1.0f,   1.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-//		1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-//		-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
-//		1.0f,-1.0f, 1.0f,   0.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-//		1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   0.0f, 0.0f, 1.0f,
-//		-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   0.0f, 0.0f, 1.0f,
-//
-//		// back
-//		-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-//		-1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
-//		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-//		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   0.0f, 0.0f, -1.0f,
-//		-1.0f, 1.0f,-1.0f,   0.0f, 1.0f,   0.0f, 0.0f, -1.0f,
-//		1.0f, 1.0f,-1.0f,   1.0f, 1.0f,   0.0f, 0.0f, -1.0f,
-//
-//		// left
-//		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-//		-1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
-//		-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
-//		-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-//		-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   -1.0f, 0.0f, 0.0f,
-//		-1.0f, 1.0f,-1.0f,   1.0f, 0.0f,   -1.0f, 0.0f, 0.0f,
-//
-//		// right
-//		1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
-//		1.0f,-1.0f,-1.0f,   1.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-//		1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-//		1.0f,-1.0f, 1.0f,   1.0f, 1.0f,   1.0f, 0.0f, 0.0f,
-//		1.0f, 1.0f,-1.0f,   0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-//		1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   1.0f, 0.0f, 0.0f
-//	};
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
-
+    gJeep.shaders->use();
 	// connect the xyz to the "vert" attribute of the vertex shader
-	glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vert"));
-	glVertexAttribPointer(gWoodenCrate.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+	glEnableVertexAttribArray(gJeep.shaders->attrib("vert"));
+	glVertexAttribPointer(gJeep.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
 
 	// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-	glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertTexCoord"));
-	glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(gJeep.shaders->attrib("vertTexCoord"));
+	glVertexAttribPointer(gJeep.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
 
-	glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertNormal"));
-	glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(gJeep.shaders->attrib("vertNormal"));
+	glVertexAttribPointer(gJeep.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+    gJeep.shaders->stopUsing();
 
 	// unbind the VAO
 	glBindVertexArray(0);
 }
 
+static void LoadSecondAsset() {
+    gMonkey.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
+    gMonkey.drawType = GL_TRIANGLES;
+    gMonkey.drawStart = 0;
+    gMonkey.drawCount = 6 * 2 * 3;
+    gMonkey.texture = LoadTexture("wooden-crate.jpg");
+    gMonkey.shininess = 80.0;
+    gMonkey.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    
+    glGenBuffers(1, &gMonkey.vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, gMonkey.vbo);
+    
+    glGenVertexArrays(1, &gMonkey.vao);
+    glBindVertexArray(gMonkey.vao);
+    
+    gMonkey.mesh.LoadMesh("model.obj");
+    
+    gMonkey.shaders->use();
+    // connect the xyz to the "vert" attribute of the vertex shader
+    glEnableVertexAttribArray(gMonkey.shaders->attrib("vert"));
+    glVertexAttribPointer(gMonkey.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+    
+    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+    glEnableVertexAttribArray(gMonkey.shaders->attrib("vertTexCoord"));
+    glVertexAttribPointer(gMonkey.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+    
+    glEnableVertexAttribArray(gMonkey.shaders->attrib("vertNormal"));
+    glVertexAttribPointer(gMonkey.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+    gMonkey.shaders->stopUsing();
+    
+    // unbind the VAO
+    glBindVertexArray(0);
+}
+
+static void LoadThirdAsset() {
+    gHheli.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
+    gHheli.drawType = GL_TRIANGLES;
+    gHheli.drawStart = 0;
+    gHheli.drawCount = 6 * 2 * 3;
+    gHheli.texture = LoadTexture("wooden-crate.jpg");
+    gHheli.shininess = 80.0;
+    gHheli.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    
+    glGenBuffers(1, &gHheli.vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, gHheli.vbo);
+    
+    glGenVertexArrays(1, &gHheli.vao);
+    glBindVertexArray(gHheli.vao);
+    
+    gHheli.mesh.LoadMesh("hheli.obj");
+    
+    gHheli.shaders->use();
+    // connect the xyz to the "vert" attribute of the vertex shader
+    glEnableVertexAttribArray(gHheli.shaders->attrib("vert"));
+    glVertexAttribPointer(gHheli.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
+    
+    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+    glEnableVertexAttribArray(gHheli.shaders->attrib("vertTexCoord"));
+    glVertexAttribPointer(gHheli.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+    
+    glEnableVertexAttribArray(gHheli.shaders->attrib("vertNormal"));
+    glVertexAttribPointer(gHheli.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
+    gHheli.shaders->stopUsing();
+    
+    // unbind the VAO
+    glBindVertexArray(0);
+}
 
 // convenience function that returns a translation matrix
 glm::mat4 translate(GLfloat x, GLfloat y, GLfloat z) {
@@ -164,30 +188,23 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 static void CreateInstances() {
-	ModelInstance dot;
-	dot.asset = &gWoodenCrate;
-	dot.transform = glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0));//glm::mat4();
-	gInstances.push_back(dot);
+	ModelInstance jeep;
+	jeep.asset = &gJeep;
+    GLfloat mscale = 0.01f;
+	jeep.transform = jeep.originalTransform = translate(0, 6, -10) * scale(mscale, mscale, mscale);
+	gInstances.push_back(jeep);
 
-//	ModelInstance i;
-//	i.asset = &gWoodenCrate;
-//	i.transform = translate(0, -4, 0) * scale(1, 2, 1);
-//	gInstances.push_back(i);
-//
-//	ModelInstance hLeft;
-//	hLeft.asset = &gWoodenCrate;
-//	hLeft.transform = translate(-8, 0, 0) * scale(1, 6, 1);
-//	gInstances.push_back(hLeft);
-//
-//	ModelInstance hRight;
-//	hRight.asset = &gWoodenCrate;
-//	hRight.transform = translate(-4, 0, 0) * scale(1, 6, 1);
-//	gInstances.push_back(hRight);
-//
-//	ModelInstance hMid;
-//	hMid.asset = &gWoodenCrate;
-//	hMid.transform = translate(-6, 0, 0) * scale(2, 1, 0.8f);
-//	gInstances.push_back(hMid);
+    ModelInstance monkey;
+    monkey.asset = &gMonkey;
+    mscale = 1.0f;
+    monkey.transform = monkey.originalTransform = translate(-6, -2, -10);
+    gInstances.push_back(monkey);
+
+    ModelInstance hheli;
+    hheli.asset = &gHheli;
+    mscale = 0.04f;
+    hheli.transform = hheli.originalTransform = translate(6, -2, -10) * scale(mscale, mscale, mscale);
+    gInstances.push_back(hheli);
 }
 
 // records how far the y axis has been scrolled
@@ -196,11 +213,13 @@ void OnScroll(GLFWwindow* window, double deltaX, double deltaY) {
 }
 
 void Update(float secondsElapsed, GLFWwindow* window) {
-	const GLfloat degreesPerSecond = 180.0f;
+	const GLfloat degreesPerSecond = 40.0f;
 	//const GLfloat degreesPerSecond = 0.0f;
 	gDegreesRotated += secondsElapsed * degreesPerSecond;
 	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
-	gInstances.front().transform = glm::rotate(glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0)), glm::radians(gDegreesRotated), glm::vec3(0, 0, 1));
+    for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
+        it->transform = it->originalTransform * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));
+    }
 
 	//move position of camera based on WASD keys
 	const float moveSpeed = 4.0; //units per second
@@ -365,7 +384,7 @@ int main(void)
     //glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
     /* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(800, 600, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -400,7 +419,9 @@ int main(void)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	LoadWoodenCrateAsset();
+	LoadMainAsset();
+    LoadSecondAsset();
+    LoadThirdAsset();
 
 	CreateInstances();
 
@@ -408,8 +429,9 @@ int main(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
-    gCamera.setPosition(glm::vec3(0, 0, 5));
-    gCamera.setViewportAspectRatio(800.0f / 600.0f);
+    gCamera.setPosition(glm::vec3(3, 7, 20));
+    gCamera.offsetOrientation(10, 0);
+    gCamera.setViewportAspectRatio((float)WINDOW_WIDTH / (float)WINDOW_HEIGHT);
     gCamera.setNearAndFarPlanes(0.01f, 1000.0f);
 
 	// setup lights
@@ -423,7 +445,7 @@ int main(void)
 
 	Light directionalLight;
 	directionalLight.position = glm::vec4(1, 0.8, 0.6, 0); //w == 0 indications a directional light
-	directionalLight.intensities = glm::vec3(0.4, 0.3, 0.1); //weak yellowish light
+	directionalLight.intensities = glm::vec3(0.4, 0.4, 0.4);
 	directionalLight.ambientCoefficient = 0.06f;
 
 	gLights.push_back(spotlight);
