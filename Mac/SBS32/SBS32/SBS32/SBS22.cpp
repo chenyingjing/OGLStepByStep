@@ -76,104 +76,27 @@ tdogl::Texture* LoadTexture(const char *textureFile) {
 
 static void LoadMainAsset() {
 	gJeep.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
-	gJeep.drawType = GL_TRIANGLES;
-	gJeep.drawStart = 0;
-	gJeep.drawCount = 6 * 2 * 3;
-	gJeep.texture = LoadTexture("wooden-crate.jpg");
 	gJeep.shininess = 80.0;
 	gJeep.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
-	
-	glGenBuffers(1, &gJeep.vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, gJeep.vbo);
-
-	glGenVertexArrays(1, &gJeep.vao);
-	glBindVertexArray(gJeep.vao);
     
     gJeep.mesh.LoadMesh("jeep.obj");
 
-    gJeep.shaders->use();
-	// connect the xyz to the "vert" attribute of the vertex shader
-	glEnableVertexAttribArray(gJeep.shaders->attrib("vert"));
-	glVertexAttribPointer(gJeep.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
-
-	// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-	glEnableVertexAttribArray(gJeep.shaders->attrib("vertTexCoord"));
-	glVertexAttribPointer(gJeep.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-
-	glEnableVertexAttribArray(gJeep.shaders->attrib("vertNormal"));
-	glVertexAttribPointer(gJeep.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
-    gJeep.shaders->stopUsing();
-
-	// unbind the VAO
-	glBindVertexArray(0);
 }
 
 static void LoadSecondAsset() {
     gMonkey.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
-    gMonkey.drawType = GL_TRIANGLES;
-    gMonkey.drawStart = 0;
-    gMonkey.drawCount = 6 * 2 * 3;
-    gMonkey.texture = LoadTexture("wooden-crate.jpg");
     gMonkey.shininess = 80.0;
     gMonkey.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
-    
-    glGenBuffers(1, &gMonkey.vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, gMonkey.vbo);
-    
-    glGenVertexArrays(1, &gMonkey.vao);
-    glBindVertexArray(gMonkey.vao);
-    
+
     gMonkey.mesh.LoadMesh("model.obj");
-    
-    gMonkey.shaders->use();
-    // connect the xyz to the "vert" attribute of the vertex shader
-    glEnableVertexAttribArray(gMonkey.shaders->attrib("vert"));
-    glVertexAttribPointer(gMonkey.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
-    
-    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-    glEnableVertexAttribArray(gMonkey.shaders->attrib("vertTexCoord"));
-    glVertexAttribPointer(gMonkey.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-    
-    glEnableVertexAttribArray(gMonkey.shaders->attrib("vertNormal"));
-    glVertexAttribPointer(gMonkey.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
-    gMonkey.shaders->stopUsing();
-    
-    // unbind the VAO
-    glBindVertexArray(0);
 }
 
 static void LoadThirdAsset() {
     gHheli.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
-    gHheli.drawType = GL_TRIANGLES;
-    gHheli.drawStart = 0;
-    gHheli.drawCount = 6 * 2 * 3;
-    gHheli.texture = LoadTexture("wooden-crate.jpg");
     gHheli.shininess = 80.0;
     gHheli.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
-    glGenBuffers(1, &gHheli.vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, gHheli.vbo);
-    
-    glGenVertexArrays(1, &gHheli.vao);
-    glBindVertexArray(gHheli.vao);
-    
     gHheli.mesh.LoadMesh("hheli.obj");
-    
-    gHheli.shaders->use();
-    // connect the xyz to the "vert" attribute of the vertex shader
-    glEnableVertexAttribArray(gHheli.shaders->attrib("vert"));
-    glVertexAttribPointer(gHheli.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), NULL);
-    
-    // connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-    glEnableVertexAttribArray(gHheli.shaders->attrib("vertTexCoord"));
-    glVertexAttribPointer(gHheli.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-    
-    glEnableVertexAttribArray(gHheli.shaders->attrib("vertNormal"));
-    glVertexAttribPointer(gHheli.shaders->attrib("vertNormal"), 3, GL_FLOAT, GL_TRUE, 8 * sizeof(GLfloat), (const GLvoid*)(5 * sizeof(GLfloat)));
-    gHheli.shaders->stopUsing();
-    
-    // unbind the VAO
-    glBindVertexArray(0);
 }
 
 // convenience function that returns a translation matrix
