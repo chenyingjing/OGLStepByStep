@@ -177,7 +177,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\Common\ogldev_texture.cpp" />
     <ClCompile Include="mesh.cpp" />
-    <ClCompile Include="OGLSBS31a.cpp" />
+    <ClCompile Include="OGLSBS32a.cpp" />
     <ClCompile Include="tdogl\Bitmap.cpp" />
     <ClCompile Include="tdogl\Camera.cpp" />
     <ClCompile Include="tdogl\Program.cpp" />

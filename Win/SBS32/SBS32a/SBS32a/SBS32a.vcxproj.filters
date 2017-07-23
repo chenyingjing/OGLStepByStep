@@ -56,9 +56,6 @@
     <ClCompile Include="mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OGLSBS31a.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="tdogl\Bitmap.cpp">
       <Filter>tdogl</Filter>
     </ClCompile>
@@ -76,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Common\ogldev_texture.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="OGLSBS32a.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
