@@ -16,6 +16,9 @@
     <Filter Include="Common">
       <UniqueIdentifier>{ceeb676b-aee9-46f6-9513-f15c5a02fba5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="shader">
+      <UniqueIdentifier>{74b9d8f3-9ca9-4ec2-b038-82d1d391f88d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SBS33.cpp">
@@ -81,5 +84,27 @@
     <ClCompile Include="..\..\..\Common\technique.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="lighting_technique.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lighting_technique.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lighting.fs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="lighting.vs">
+      <Filter>shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

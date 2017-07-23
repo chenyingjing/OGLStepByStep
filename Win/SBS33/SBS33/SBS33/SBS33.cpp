@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Tutorial 32 - Vertex Array Objects
+Tutorial 33 - Instanced Rendering
 */
 
 #include <math.h>
@@ -27,24 +27,29 @@ Tutorial 32 - Vertex Array Objects
 #include "ogldev_util.h"
 #include "ogldev_pipeline.h"
 #include "ogldev_camera.h"
-#include "ogldev_basic_lighting.h"
+#include "lighting_technique.h"
 #include "ogldev_glut_backend.h"
-#include "ogldev_basic_mesh.h"
+#include "mesh.h"
 
-#define WINDOW_WIDTH  1920
-#define WINDOW_HEIGHT 1200
+#define WINDOW_WIDTH  800  
+#define WINDOW_HEIGHT 600
 
-class Tutorial32 : public ICallbacks, public OgldevApp
+#define NUM_ROWS 50
+#define NUM_COLS 20
+#define NUM_INSTANCES NUM_ROWS * NUM_COLS
+
+
+class Tutorial33 : public ICallbacks, public OgldevApp
 {
 public:
 
-	Tutorial32()
+	Tutorial33()
 	{
 		m_pGameCamera = NULL;
 		m_pEffect = NULL;
 		m_scale = 0.0f;
 		m_directionalLight.Color = Vector3f(1.0f, 1.0f, 1.0f);
-		m_directionalLight.AmbientIntensity = 0.25f;
+		m_directionalLight.AmbientIntensity = 0.55f;
 		m_directionalLight.DiffuseIntensity = 0.9f;
 		m_directionalLight.Direction = Vector3f(1.0f, 0.0, 0.0);
 
@@ -54,29 +59,25 @@ public:
 		m_persProjInfo.zNear = 1.0f;
 		m_persProjInfo.zFar = 100.0f;
 
-		m_pMesh1 = NULL;
-		m_pMesh2 = NULL;
-		m_pMesh3 = NULL;
+		m_pMesh = NULL;
 	}
 
-	~Tutorial32()
+	~Tutorial33()
 	{
 		SAFE_DELETE(m_pEffect);
 		SAFE_DELETE(m_pGameCamera);
-		SAFE_DELETE(m_pMesh1);
-		SAFE_DELETE(m_pMesh2);
-		SAFE_DELETE(m_pMesh3);
+		SAFE_DELETE(m_pMesh);
 	}
 
 	bool Init()
 	{
-		Vector3f Pos(3.0f, 7.0f, -10.0f);
+		Vector3f Pos(7.0f, 3.0f, 0.0f);
 		Vector3f Target(0.0f, -0.2f, 1.0f);
 		Vector3f Up(0.0, 1.0f, 0.0f);
 
 		m_pGameCamera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT, Pos, Target, Up);
 
-		m_pEffect = new BasicLightingTechnique();
+		m_pEffect = new LightingTechnique();
 
 		if (!m_pEffect->Init()) {
 			printf("Error initializing the lighting technique\n");
@@ -89,24 +90,24 @@ public:
 		m_pEffect->SetDirectionalLight(m_directionalLight);
 		m_pEffect->SetMatSpecularIntensity(0.0f);
 		m_pEffect->SetMatSpecularPower(0);
+		m_pEffect->SetColor(0, Vector4f(1.0f, 0.5f, 0.5f, 0.0f));
+		m_pEffect->SetColor(1, Vector4f(0.5f, 1.0f, 1.0f, 0.0f));
+		m_pEffect->SetColor(2, Vector4f(1.0f, 0.5f, 1.0f, 0.0f));
+		m_pEffect->SetColor(3, Vector4f(1.0f, 1.0f, 1.0f, 0.0f));
 
-		m_pMesh1 = new BasicMesh();
+		m_pMesh = new Mesh();
 
-		if (!m_pMesh1->LoadMesh("../../../Content/phoenix_ugv.md2")) {
+		if (!m_pMesh->LoadMesh("../../../Content/spider.obj")) {
 			return false;
 		}
 
-		m_pMesh2 = new BasicMesh();
-
-		if (!m_pMesh2->LoadMesh("../../../Content/jeep.obj")) {
+#ifndef WIN32
+		if (!m_fontRenderer.InitFontRenderer()) {
 			return false;
 		}
+#endif
 
-		m_pMesh3 = new BasicMesh();
-
-		if (!m_pMesh3->LoadMesh("../../../Content/hheli.obj")) {
-			return false;
-		}
+		CalcPositions();
 
 		return true;
 	}
@@ -116,41 +117,44 @@ public:
 		GLUTBackendRun(this);
 	}
 
+
 	virtual void RenderSceneCB()
 	{
-		m_scale += 0.01f;
+		CalcFPS();
+
+		m_scale += 0.005f;
 
 		m_pGameCamera->OnRender();
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		m_pEffect->Enable();
 		m_pEffect->SetEyeWorldPos(m_pGameCamera->GetPos());
 
 		Pipeline p;
 		p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
-		p.Rotate(0.0f, m_scale, 0.0f);
 		p.SetPerspectiveProj(m_persProjInfo);
+		p.Rotate(0.0f, 90.0f, 0.0f);
+		p.Scale(0.005f, 0.005f, 0.005f);
 
-		p.Scale(0.1f, 0.1f, 0.1f);
-		p.WorldPos(-6.0f, -2.0f, 10.0f);
-		m_pEffect->SetWVP(p.GetWVPTrans());
-		m_pEffect->SetWorldMatrix(p.GetWorldTrans());
-		m_pMesh1->Render();
+		Matrix4f WVPMatrics[NUM_INSTANCES];
+		Matrix4f WorldMatrices[NUM_INSTANCES];
 
-		p.Scale(0.01f, 0.01f, 0.01f);
-		p.WorldPos(6.0f, -2.0f, 10.0f);
-		m_pEffect->SetWVP(p.GetWVPTrans());
-		m_pEffect->SetWorldMatrix(p.GetWorldTrans());
-		m_pMesh2->Render();
+		for (unsigned int i = 0; i < NUM_INSTANCES; i++) {
+			Vector3f Pos(m_positions[i]);
+			Pos.y += sinf(m_scale) * m_velocity[i];
+			p.WorldPos(Pos);
+			WVPMatrics[i] = p.GetWVPTrans().Transpose();
+			WorldMatrices[i] = p.GetWorldTrans().Transpose();
+		}
 
-		p.Scale(0.04f, 0.04f, 0.04f);
-		p.WorldPos(0.0f, 6.0f, 10.0f);
-		m_pEffect->SetWVP(p.GetWVPTrans());
-		m_pEffect->SetWorldMatrix(p.GetWorldTrans());
-		m_pMesh3->Render();
+		m_pMesh->Render(NUM_INSTANCES, WVPMatrics, WorldMatrices);
+
+		RenderFPS();
 
 		glutSwapBuffers();
 	}
+
 
 	void KeyboardCB(OGLDEV_KEY OgldevKey, OGLDEV_KEY_STATE State)
 	{
@@ -173,27 +177,44 @@ public:
 
 private:
 
-	BasicLightingTechnique* m_pEffect;
+	void CalcPositions()
+	{
+		for (unsigned int i = 0; i < NUM_ROWS; i++) {
+			for (unsigned int j = 0; j < NUM_COLS; j++) {
+				unsigned int Index = i * NUM_COLS + j;
+				m_positions[Index].x = (float)j;
+				m_positions[Index].y = RandomFloat() * 5.0f;
+				m_positions[Index].z = (float)i;
+				m_velocity[Index] = RandomFloat();
+				if (i & 1) {
+					m_velocity[Index] *= (-1.0f);
+				}
+			}
+		}
+	}
+
+	LightingTechnique* m_pEffect;
 	Camera* m_pGameCamera;
 	float m_scale;
 	DirectionalLight m_directionalLight;
-	BasicMesh* m_pMesh1;
-	BasicMesh* m_pMesh2;
-	BasicMesh* m_pMesh3;
+	Mesh* m_pMesh;
 	PersProjInfo m_persProjInfo;
+	Vector3f m_positions[NUM_INSTANCES];
+	float m_velocity[NUM_INSTANCES];
 };
 
 
 int main(int argc, char** argv)
 {
-	//    Magick::InitializeMagick(*argv);
 	GLUTBackendInit(argc, argv, true, false);
 
-	if (!GLUTBackendCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false, "Tutorial 32")) {
+	if (!GLUTBackendCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false, "Tutorial 33")) {
 		return 1;
 	}
 
-	Tutorial32* pApp = new Tutorial32();
+	SRANDOM;
+
+	Tutorial33* pApp = new Tutorial33();
 
 	if (!pApp->Init()) {
 		return 1;
