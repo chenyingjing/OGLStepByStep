@@ -127,41 +127,12 @@ static tdogl::Texture* LoadTexture(const char *textureFile) {
 }
 
 static void LoadMainAsset() {
-	//gTank.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.cs", "shader/lighting.es", "shader/lighting.fs");
-	gTank.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.fs");
-    //gTank.drawType = GL_TRIANGLES;
-    //gTank.drawStart = 0;
-    //gTank.drawCount = 2 * 3;
-    //gTank.texture = LoadTexture("diffuse.png");
-    //gTank.displacementTexture = LoadTexture("heightmap.png");
-    gTank.shininess = 80.0;
-    gTank.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
-    
-    //glGenVertexArrays(1, &gTank.vao);
-    //glBindVertexArray(gTank.vao);
 
-	gTank.mesh.LoadMesh("../../../Content/phoenix_ugv.md2");
-
-
-}
-
-static void LoadSecondAsset() {
-
-	gHheli.shaders = gTank.shaders;// LoadShaders("shader/lighting.vs", "shader/lighting.fs");
-	gHheli.shininess = 80.0;
-	gHheli.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
-
-	gHheli.mesh.LoadMesh("../../../Content/hheli.obj");
-
-}
-
-static void LoadThirdAsset() {
-
-	gJeep.shaders = gTank.shaders;// LoadShaders("shader/lighting.vs", "shader/lighting.fs");
+	gJeep.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.fs");
 	gJeep.shininess = 80.0;
 	gJeep.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
-	gJeep.mesh.LoadMesh("../../../Content/jeep.obj");
+	gJeep.mesh.LoadMesh("../../../Content/spider.obj");
 
 }
 
@@ -178,31 +149,11 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 static void CreateInstances() {
-    ModelInstance tank;
-    tank.asset = &gTank;
-    float groundScale = 0.1;
-    //glm::mat4 rotateMat = glm::rotate(glm::mat4(), glm::radians(180.0f), glm::vec3(0, 0, 1));
-    //rotateMat = glm::rotate(rotateMat, glm::radians(90.0f), glm::vec3(1, 0, 0));
-    //glm::mat4 rotateMat1 = translate(-1.5, 0, 0) * glm::rotate(rotateMat, glm::radians(15.0f), glm::vec3(0, 0, 1));
-    tank.transform = tank.originalTransform = translate(-6, -2, -10) * scale(groundScale, groundScale, groundScale);
-    gInstances.push_back(tank);
-    
-    //ModelInstance monkey1;
-    //monkey1.asset = &gTank;
-    //glm::mat4 rotateMat2 = translate(1.5, 0, 0) * glm::rotate(rotateMat, glm::radians(-15.0f), glm::vec3(0, 0, 1));
-    //monkey1.transform = rotateMat2;
-    //gInstances.push_back(monkey1);
-
-	ModelInstance hheli;
-	hheli.asset = &gHheli;
-	groundScale = 0.04f;
-	hheli.transform = hheli.originalTransform = translate(6, -2, -10) *scale(groundScale, groundScale, groundScale);
-	gInstances.push_back(hheli);
 
 	ModelInstance jeep;
 	jeep.asset = &gJeep;
-	groundScale = 0.01f;
-	jeep.transform = jeep.originalTransform = translate(0, 6, -10) *scale(groundScale, groundScale, groundScale);
+	float groundScale = 0.01f;
+	jeep.transform = jeep.originalTransform = translate(0, 6, -10) * glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(0, 1, 0)) *scale(groundScale, groundScale, groundScale);
 	gInstances.push_back(jeep);
 
 }
@@ -218,9 +169,9 @@ void Update(float secondsElapsed, GLFWwindow* window) {
 	gDegreesRotated += secondsElapsed * degreesPerSecond;
 	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
 	//gInstances.front().transform = translate(-6, -2, -10) * scale(0.1, 0.1, 0.1) * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));
-	for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
-		it->transform = it->originalTransform * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));;
-	}
+	//for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
+	//	it->transform = it->originalTransform * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));;
+	//}
 
 	//move position of camera based on WASD keys
 	const float moveSpeed = 4.0; //units per second
@@ -432,8 +383,6 @@ int main(void)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
 	LoadMainAsset();
-	LoadSecondAsset();
-	LoadThirdAsset();
 
 	CreateInstances();
 
