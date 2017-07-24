@@ -90,7 +90,7 @@ struct Light {
 
 ModelAsset gTank;
 ModelAsset gHheli;
-ModelAsset gJeep;
+ModelAsset gSpider;
 
 std::list<ModelInstance> gInstances;
 
@@ -128,11 +128,11 @@ static tdogl::Texture* LoadTexture(const char *textureFile) {
 
 static void LoadMainAsset() {
 
-	gJeep.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.fs");
-	gJeep.shininess = 80.0;
-	gJeep.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+	gSpider.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.fs");
+	gSpider.shininess = 80.0;
+	gSpider.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
-	gJeep.mesh.LoadMesh("../../../Content/spider.obj");
+	gSpider.mesh.LoadMesh("../../../Content/spider.obj");
 
 }
 
@@ -151,7 +151,7 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 static void CreateInstances() {
 
 	ModelInstance jeep;
-	jeep.asset = &gJeep;
+	jeep.asset = &gSpider;
 	float groundScale = 0.01f;
 	jeep.transform = jeep.originalTransform = translate(0, 6, -10) * glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(0, 1, 0)) *scale(groundScale, groundScale, groundScale);
 	gInstances.push_back(jeep);
@@ -390,10 +390,11 @@ int main(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
-    gCamera.setPosition(glm::vec3(3, 7, 20));
+	//gCamera.setPosition(glm::vec3(7, 3, 0));
+	gCamera.setPosition(glm::vec3(3, 7, 0));
 	gCamera.offsetOrientation(10, 0);
 	gCamera.setViewportAspectRatio((float)WINDOW_WIDTH / (float)WINDOW_HEIGHT);
-	gCamera.setNearAndFarPlanes(0.5f, 100.0f);
+	gCamera.setNearAndFarPlanes(0.01f, 1000.0f);
     
     Light directionalLight;
     directionalLight.position = glm::vec4(1, 0.8, 0.6, 0); //w == 0 indications a directional light
