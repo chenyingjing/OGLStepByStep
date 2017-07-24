@@ -151,10 +151,12 @@ static void LoadMainAsset() {
 
 	gSpider.mesh.LoadMesh("../../../Content/spider.obj");
 
-	//SetColorUniform(gSpider.shaders, 0, glm::vec4(1.0f, 0.5f, 0.5f, 1.0f));
-	//SetColorUniform(gSpider.shaders, 1, glm::vec4(0.5f, 1.0f, 1.0f, 1.0f));
-	//SetColorUniform(gSpider.shaders, 2, glm::vec4(1.0f, 0.5f, 1.0f, 1.0f));
-	//SetColorUniform(gSpider.shaders, 3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	gSpider.shaders->use();
+	SetColorUniform(gSpider.shaders, 0, glm::vec4(1.0f, 0.5f, 0.5f, 1.0f));
+	SetColorUniform(gSpider.shaders, 1, glm::vec4(0.5f, 1.0f, 1.0f, 1.0f));
+	SetColorUniform(gSpider.shaders, 2, glm::vec4(1.0f, 0.5f, 1.0f, 1.0f));
+	SetColorUniform(gSpider.shaders, 3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	gSpider.shaders->stopUsing();
 
 }
 
@@ -344,13 +346,7 @@ static void RenderInstance(const ModelInstance& inst) {
     
     shaders->setUniform("materialShininess", asset->shininess);
     shaders->setUniform("materialSpecularColor", asset->specularColor);
-
-	SetColorUniform(shaders, 0, glm::vec4(1.0f, 0.5f, 0.5f, 1.0f));
-	SetColorUniform(shaders, 1, glm::vec4(0.5f, 1.0f, 1.0f, 1.0f));
-	SetColorUniform(shaders, 2, glm::vec4(1.0f, 0.5f, 1.0f, 1.0f));
-	SetColorUniform(shaders, 3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-
-    
+   
 	glm::mat4 WVPMatrics[NUM_INSTANCES];
 	glm::mat4 WorldMatrices[NUM_INSTANCES];
 
