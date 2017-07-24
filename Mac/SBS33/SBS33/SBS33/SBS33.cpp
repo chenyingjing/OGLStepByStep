@@ -53,7 +53,7 @@ struct Light {
 	glm::vec3 coneDirection;
 };
 
-ModelAsset gJeep;
+ModelAsset gSpider;
 ModelAsset gMonkey;
 ModelAsset gHheli;
 
@@ -75,28 +75,12 @@ tdogl::Texture* LoadTexture(const char *textureFile) {
 }
 
 static void LoadMainAsset() {
-	gJeep.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
-	gJeep.shininess = 80.0;
-	gJeep.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+	gSpider.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
+	gSpider.shininess = 80.0;
+	gSpider.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
-    gJeep.mesh.LoadMesh("jeep.obj");
+    gSpider.mesh.LoadMesh("spider.obj");
 
-}
-
-static void LoadSecondAsset() {
-    gMonkey.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
-    gMonkey.shininess = 80.0;
-    gMonkey.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
-
-    gMonkey.mesh.LoadMesh("model.obj");
-}
-
-static void LoadThirdAsset() {
-    gHheli.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
-    gHheli.shininess = 80.0;
-    gHheli.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
-    
-    gHheli.mesh.LoadMesh("hheli.obj");
 }
 
 // convenience function that returns a translation matrix
@@ -111,23 +95,11 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 static void CreateInstances() {
-	ModelInstance jeep;
-	jeep.asset = &gJeep;
+	ModelInstance spider;
+	spider.asset = &gSpider;
     GLfloat mscale = 0.01f;
-	jeep.transform = jeep.originalTransform = translate(0, 6, -10) * scale(mscale, mscale, mscale);
-	gInstances.push_back(jeep);
-
-    ModelInstance monkey;
-    monkey.asset = &gMonkey;
-    mscale = 1.0f;
-    monkey.transform = monkey.originalTransform = translate(-6, -2, -10);
-    gInstances.push_back(monkey);
-
-    ModelInstance hheli;
-    hheli.asset = &gHheli;
-    mscale = 0.04f;
-    hheli.transform = hheli.originalTransform = translate(6, -2, -10) * scale(mscale, mscale, mscale);
-    gInstances.push_back(hheli);
+    spider.transform = spider.originalTransform = translate(0, 6, -10) * glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(0, 1, 0)) * scale(mscale, mscale, mscale);
+	gInstances.push_back(spider);
 }
 
 // records how far the y axis has been scrolled
@@ -140,9 +112,9 @@ void Update(float secondsElapsed, GLFWwindow* window) {
 	//const GLfloat degreesPerSecond = 0.0f;
 	gDegreesRotated += secondsElapsed * degreesPerSecond;
 	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
-    for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
-        it->transform = it->originalTransform * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));
-    }
+//    for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
+//        it->transform = it->originalTransform * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));
+//    }
 
 	//move position of camera based on WASD keys
 	const float moveSpeed = 4.0; //units per second
@@ -343,8 +315,6 @@ int main(void)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	LoadMainAsset();
-    LoadSecondAsset();
-    LoadThirdAsset();
 
 	CreateInstances();
 

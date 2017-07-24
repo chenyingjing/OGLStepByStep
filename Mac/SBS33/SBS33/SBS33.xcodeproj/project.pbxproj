@@ -7,13 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2355F0501F262B59002C9A73 /* hheli.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 2355EECC1F262B59002C9A73 /* hheli.bmp */; };
-		2355F0511F262B59002C9A73 /* hheli.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 2355EECD1F262B59002C9A73 /* hheli.mtl */; };
-		2355F0521F262B59002C9A73 /* hheli.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2355EECE1F262B59002C9A73 /* hheli.obj */; };
-		2355F0531F262B59002C9A73 /* jeep.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 2355EECF1F262B59002C9A73 /* jeep.mtl */; };
-		2355F0541F262B59002C9A73 /* jeep.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2355EED01F262B59002C9A73 /* jeep.obj */; };
-		2355F0551F262B59002C9A73 /* jeep_army.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2355EED11F262B59002C9A73 /* jeep_army.jpg */; };
-		2355F0561F262B59002C9A73 /* jeep_rood.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2355EED21F262B59002C9A73 /* jeep_rood.jpg */; };
 		2355F0571F262B59002C9A73 /* .editorconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2355EED51F262B59002C9A73 /* .editorconfig */; };
 		2355F0581F262B59002C9A73 /* color4.inl in Resources */ = {isa = PBXBuildFile; fileRef = 2355EEDD1F262B59002C9A73 /* color4.inl */; };
 		2355F0591F262B59002C9A73 /* material.inl in Resources */ = {isa = PBXBuildFile; fileRef = 2355EEEE1F262B59002C9A73 /* material.inl */; };
@@ -158,7 +151,7 @@
 		2355F0F51F262B59002C9A73 /* model.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 2355F0381F262B59002C9A73 /* model.mtl */; };
 		2355F0F61F262B59002C9A73 /* model.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2355F0391F262B59002C9A73 /* model.obj */; };
 		2355F0F71F262B59002C9A73 /* momo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2355F03A1F262B59002C9A73 /* momo.png */; };
-		2355F0F91F262B59002C9A73 /* SBS22.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2355F0411F262B59002C9A73 /* SBS22.cpp */; };
+		2355F0F91F262B59002C9A73 /* SBS33.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2355F0411F262B59002C9A73 /* SBS33.cpp */; };
 		2355F0FA1F262B59002C9A73 /* Bitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2355F0441F262B59002C9A73 /* Bitmap.cpp */; };
 		2355F0FB1F262B59002C9A73 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2355F0461F262B59002C9A73 /* Camera.cpp */; };
 		2355F0FC1F262B59002C9A73 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2355F0481F262B59002C9A73 /* Program.cpp */; };
@@ -173,17 +166,17 @@
 		2355F10B1F262C21002C9A73 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2355EF061F262B59002C9A73 /* libassimp.3.3.1.dylib */; };
 		2355F10C1F262C21002C9A73 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2355EF061F262B59002C9A73 /* libassimp.3.3.1.dylib */; };
 		2355F10D1F262C21002C9A73 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2355EF061F262B59002C9A73 /* libassimp.3.3.1.dylib */; };
+		2355F1111F262D55002C9A73 /* spider.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 2355F10E1F262D55002C9A73 /* spider.mtl */; };
+		2355F1121F262D55002C9A73 /* spider.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2355F10F1F262D55002C9A73 /* spider.obj */; };
+		2355F1211F263104002C9A73 /* drkwood2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2355F11C1F263104002C9A73 /* drkwood2.png */; };
+		2355F1221F263104002C9A73 /* engineflare1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2355F11D1F263104002C9A73 /* engineflare1.png */; };
+		2355F1231F263104002C9A73 /* SpiderTex.png in Resources */ = {isa = PBXBuildFile; fileRef = 2355F11E1F263104002C9A73 /* SpiderTex.png */; };
+		2355F1241F263104002C9A73 /* wal67ar_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 2355F11F1F263104002C9A73 /* wal67ar_small.png */; };
+		2355F1251F263104002C9A73 /* wal69ar_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 2355F1201F263104002C9A73 /* wal69ar_small.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2355EEB41F262AE8002C9A73 /* SBS33.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SBS33.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		2355EECC1F262B59002C9A73 /* hheli.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = hheli.bmp; sourceTree = "<group>"; };
-		2355EECD1F262B59002C9A73 /* hheli.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hheli.mtl; sourceTree = "<group>"; };
-		2355EECE1F262B59002C9A73 /* hheli.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hheli.obj; sourceTree = "<group>"; };
-		2355EECF1F262B59002C9A73 /* jeep.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jeep.mtl; sourceTree = "<group>"; };
-		2355EED01F262B59002C9A73 /* jeep.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jeep.obj; sourceTree = "<group>"; };
-		2355EED11F262B59002C9A73 /* jeep_army.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jeep_army.jpg; sourceTree = "<group>"; };
-		2355EED21F262B59002C9A73 /* jeep_rood.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jeep_rood.jpg; sourceTree = "<group>"; };
 		2355EED51F262B59002C9A73 /* .editorconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .editorconfig; sourceTree = "<group>"; };
 		2355EED61F262B59002C9A73 /* ai_assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ai_assert.h; sourceTree = "<group>"; };
 		2355EED71F262B59002C9A73 /* anim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = anim.h; sourceTree = "<group>"; };
@@ -531,7 +524,7 @@
 		2355F03C1F262B59002C9A73 /* ogldev_math_3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_math_3d.h; sourceTree = "<group>"; };
 		2355F03F1F262B59002C9A73 /* ogldev_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_types.h; sourceTree = "<group>"; };
 		2355F0401F262B59002C9A73 /* ogldev_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_util.h; sourceTree = "<group>"; };
-		2355F0411F262B59002C9A73 /* SBS22.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SBS22.cpp; sourceTree = "<group>"; };
+		2355F0411F262B59002C9A73 /* SBS33.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SBS33.cpp; sourceTree = "<group>"; };
 		2355F0421F262B59002C9A73 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		2355F0441F262B59002C9A73 /* Bitmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bitmap.cpp; sourceTree = "<group>"; };
 		2355F0451F262B59002C9A73 /* Bitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bitmap.h; sourceTree = "<group>"; };
@@ -548,6 +541,13 @@
 		2355F1041F262BE8002C9A73 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		2355F1061F262BF7002C9A73 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		2355F1081F262C03002C9A73 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		2355F10E1F262D55002C9A73 /* spider.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = spider.mtl; sourceTree = "<group>"; };
+		2355F10F1F262D55002C9A73 /* spider.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = spider.obj; sourceTree = "<group>"; };
+		2355F11C1F263104002C9A73 /* drkwood2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drkwood2.png; sourceTree = "<group>"; };
+		2355F11D1F263104002C9A73 /* engineflare1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = engineflare1.png; sourceTree = "<group>"; };
+		2355F11E1F263104002C9A73 /* SpiderTex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SpiderTex.png; sourceTree = "<group>"; };
+		2355F11F1F263104002C9A73 /* wal67ar_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wal67ar_small.png; sourceTree = "<group>"; };
+		2355F1201F263104002C9A73 /* wal69ar_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wal69ar_small.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -604,7 +604,7 @@
 				2355F0361F262B59002C9A73 /* mesh.h */,
 				2355F0371F262B59002C9A73 /* momo */,
 				2355F03B1F262B59002C9A73 /* ogldev */,
-				2355F0411F262B59002C9A73 /* SBS22.cpp */,
+				2355F0411F262B59002C9A73 /* SBS33.cpp */,
 				2355F0421F262B59002C9A73 /* stb_image.h */,
 				2355F0431F262B59002C9A73 /* tdogl */,
 				2355F04E1F262B59002C9A73 /* vertex-shader.txt */,
@@ -615,13 +615,13 @@
 		2355EECB1F262B58002C9A73 /* asset */ = {
 			isa = PBXGroup;
 			children = (
-				2355EECC1F262B59002C9A73 /* hheli.bmp */,
-				2355EECD1F262B59002C9A73 /* hheli.mtl */,
-				2355EECE1F262B59002C9A73 /* hheli.obj */,
-				2355EECF1F262B59002C9A73 /* jeep.mtl */,
-				2355EED01F262B59002C9A73 /* jeep.obj */,
-				2355EED11F262B59002C9A73 /* jeep_army.jpg */,
-				2355EED21F262B59002C9A73 /* jeep_rood.jpg */,
+				2355F11C1F263104002C9A73 /* drkwood2.png */,
+				2355F11D1F263104002C9A73 /* engineflare1.png */,
+				2355F11E1F263104002C9A73 /* SpiderTex.png */,
+				2355F11F1F263104002C9A73 /* wal67ar_small.png */,
+				2355F1201F263104002C9A73 /* wal69ar_small.png */,
+				2355F10E1F262D55002C9A73 /* spider.mtl */,
+				2355F10F1F262D55002C9A73 /* spider.obj */,
 			);
 			path = asset;
 			sourceTree = "<group>";
@@ -1208,21 +1208,23 @@
 				2355F0901F262B59002C9A73 /* matrix_transform.inl in Resources */,
 				2355F07A1F262B59002C9A73 /* type_mat2x4.inl in Resources */,
 				2355F0751F262B59002C9A73 /* type_gentype.inl in Resources */,
-				2355F0551F262B59002C9A73 /* jeep_army.jpg in Resources */,
 				2355F0671F262B59002C9A73 /* func_exponential.inl in Resources */,
 				2355F0711F262B59002C9A73 /* intrinsic_integer.inl in Resources */,
 				2355F0C31F262B59002C9A73 /* raw_data.inl in Resources */,
 				2355F0F01F262B59002C9A73 /* MagickCore.pc in Resources */,
+				2355F1241F263104002C9A73 /* wal67ar_small.png in Resources */,
 				2355F0A61F262B59002C9A73 /* extented_min_max.inl in Resources */,
 				2355F0581F262B59002C9A73 /* color4.inl in Resources */,
 				2355F0CB1F262B59002C9A73 /* std_based_type.inl in Resources */,
 				2355F0B01F262B59002C9A73 /* log_base.inl in Resources */,
+				2355F1121F262D55002C9A73 /* spider.obj in Resources */,
 				2355F0951F262B59002C9A73 /* reciprocal.inl in Resources */,
 				2355F0AC1F262B59002C9A73 /* hash.inl in Resources */,
 				2355F0701F262B59002C9A73 /* intrinsic_geometric.inl in Resources */,
 				2355F05A1F262B59002C9A73 /* matrix3x3.inl in Resources */,
 				2355F05E1F262B59002C9A73 /* vector3.inl in Resources */,
 				2355F0C91F262B59002C9A73 /* simd_vec4.inl in Resources */,
+				2355F1221F263104002C9A73 /* engineflare1.png in Resources */,
 				2355F0D51F262B59002C9A73 /* libfreetype.la in Resources */,
 				2355F0971F262B59002C9A73 /* type_precision.inl in Resources */,
 				2355F0C81F262B59002C9A73 /* simd_quat.inl in Resources */,
@@ -1235,22 +1237,20 @@
 				2355F0F61F262B59002C9A73 /* model.obj in Resources */,
 				2355F0D21F262B59002C9A73 /* wrap.inl in Resources */,
 				2355F0AE1F262B59002C9A73 /* intersect.inl in Resources */,
-				2355F0511F262B59002C9A73 /* hheli.mtl in Resources */,
 				2355F06C1F262B59002C9A73 /* func_trigonometric.inl in Resources */,
 				2355F05D1F262B59002C9A73 /* vector2.inl in Resources */,
 				2355F0F21F262B59002C9A73 /* MagickWand.pc in Resources */,
 				2355F0691F262B59002C9A73 /* func_integer.inl in Resources */,
 				2355F0BF1F262B59002C9A73 /* perpendicular.inl in Resources */,
+				2355F1211F263104002C9A73 /* drkwood2.png in Resources */,
 				2355F0F71F262B59002C9A73 /* momo.png in Resources */,
 				2355F08B1F262B59002C9A73 /* constants.inl in Resources */,
 				2355F0661F262B59002C9A73 /* func_common.inl in Resources */,
 				2355F0B81F262B59002C9A73 /* mixed_product.inl in Resources */,
 				2355F07C1F262B59002C9A73 /* type_mat3x3.inl in Resources */,
 				2355F0AF1F262B59002C9A73 /* io.inl in Resources */,
-				2355F0541F262B59002C9A73 /* jeep.obj in Resources */,
 				2355F0A11F262B59002C9A73 /* compatibility.inl in Resources */,
 				2355F06A1F262B59002C9A73 /* func_matrix.inl in Resources */,
-				2355F0561F262B59002C9A73 /* jeep_rood.jpg in Resources */,
 				2355F0631F262B59002C9A73 /* fragment-shader.txt in Resources */,
 				2355F06F1F262B59002C9A73 /* intrinsic_exponential.inl in Resources */,
 				2355F0A41F262B59002C9A73 /* euler_angles.inl in Resources */,
@@ -1273,7 +1273,6 @@
 				2355F09C1F262B59002C9A73 /* bit.inl in Resources */,
 				2355F0E61F262B59002C9A73 /* libpng16.la in Resources */,
 				2355F0B31F262B59002C9A73 /* matrix_interpolation.inl in Resources */,
-				2355F0521F262B59002C9A73 /* hheli.obj in Resources */,
 				2355F09A1F262B59002C9A73 /* vec1.inl in Resources */,
 				2355F06D1F262B59002C9A73 /* func_vector_relational.inl in Resources */,
 				2355F0BD1F262B59002C9A73 /* optimum_pow.inl in Resources */,
@@ -1286,10 +1285,10 @@
 				2355F06B1F262B59002C9A73 /* func_packing.inl in Resources */,
 				2355F0B91F262B59002C9A73 /* norm.inl in Resources */,
 				2355F0761F262B59002C9A73 /* type_half.inl in Resources */,
+				2355F1251F263104002C9A73 /* wal69ar_small.png in Resources */,
 				2355F0881F262B59002C9A73 /* type_vec4_sse2.inl in Resources */,
 				2355F0801F262B59002C9A73 /* type_mat4x4.inl in Resources */,
 				2355F0961F262B59002C9A73 /* round.inl in Resources */,
-				2355F0501F262B59002C9A73 /* hheli.bmp in Resources */,
 				2355F0EA1F262B59002C9A73 /* libtiffxx.la in Resources */,
 				2355F0681F262B59002C9A73 /* func_geometric.inl in Resources */,
 				2355F0C71F262B59002C9A73 /* simd_mat4.inl in Resources */,
@@ -1299,13 +1298,13 @@
 				2355F0BC1F262B59002C9A73 /* number_precision.inl in Resources */,
 				2355F06E1F262B59002C9A73 /* intrinsic_common.inl in Resources */,
 				2355F0CC1F262B59002C9A73 /* string_cast.inl in Resources */,
+				2355F1231F263104002C9A73 /* SpiderTex.png in Resources */,
 				2355F0CE1F262B59002C9A73 /* transform2.inl in Resources */,
 				2355F0EF1F262B59002C9A73 /* MagickCore-7.Q16HDRI.pc in Resources */,
 				2355F08E1F262B59002C9A73 /* matrix_access.inl in Resources */,
 				2355F0721F262B59002C9A73 /* intrinsic_matrix.inl in Resources */,
 				2355F0C11F262B59002C9A73 /* projection.inl in Resources */,
 				2355F0921F262B59002C9A73 /* packing.inl in Resources */,
-				2355F0531F262B59002C9A73 /* jeep.mtl in Resources */,
 				2355F0A21F262B59002C9A73 /* component_wise.inl in Resources */,
 				2355F0741F262B59002C9A73 /* intrinsic_vector_relational.inl in Resources */,
 				2355F0981F262B59002C9A73 /* type_ptr.inl in Resources */,
@@ -1316,6 +1315,7 @@
 				2355F0A91F262B59002C9A73 /* fast_trigonometry.inl in Resources */,
 				2355F0D91F262B59002C9A73 /* liblcms2.la in Resources */,
 				2355F08A1F262B59002C9A73 /* color_space.inl in Resources */,
+				2355F1111F262D55002C9A73 /* spider.mtl in Resources */,
 				2355F09B1F262B59002C9A73 /* associated_min_max.inl in Resources */,
 				2355F0B11F262B59002C9A73 /* matrix_cross_product.inl in Resources */,
 				2355F0AA1F262B59002C9A73 /* gradient_paint.inl in Resources */,
@@ -1342,7 +1342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2355F0FD1F262B59002C9A73 /* Shader.cpp in Sources */,
-				2355F0F91F262B59002C9A73 /* SBS22.cpp in Sources */,
+				2355F0F91F262B59002C9A73 /* SBS33.cpp in Sources */,
 				2355F0FB1F262B59002C9A73 /* Camera.cpp in Sources */,
 				2355F0FA1F262B59002C9A73 /* Bitmap.cpp in Sources */,
 				2355F0FE1F262B59002C9A73 /* Texture.cpp in Sources */,
