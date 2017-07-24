@@ -31,6 +31,11 @@
 #define WINDOW_WIDTH  800
 #define WINDOW_HEIGHT 600
 
+#define NUM_ROWS 50
+#define NUM_COLS 20
+#define NUM_INSTANCES NUM_ROWS * NUM_COLS
+//#define NUM_INSTANCES 1
+
 struct Particle
 {
     float Type;
@@ -77,6 +82,8 @@ struct ModelInstance {
 	ModelAsset* asset;
 	glm::mat4 transform;
 	glm::mat4 originalTransform;
+	Vector3f m_positions[NUM_INSTANCES];
+	float m_velocity[NUM_INSTANCES];
 };
 
 struct Light {
@@ -95,6 +102,16 @@ ModelAsset gSpider;
 std::list<ModelInstance> gInstances;
 
 std::vector<Light> gLights;
+
+template <typename T>
+void SetColorUniform(tdogl::Program* shaders, size_t colorIndex, const T& value) {
+	std::ostringstream ss;
+	ss << "gColor[" << colorIndex << "]";
+	std::string uniformName = ss.str();
+
+	shaders->setUniform(uniformName.c_str(), value);
+}
+
 
 static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFile2) {
 	std::vector<tdogl::Shader> shaders;
@@ -134,6 +151,11 @@ static void LoadMainAsset() {
 
 	gSpider.mesh.LoadMesh("../../../Content/spider.obj");
 
+	//SetColorUniform(gSpider.shaders, 0, glm::vec4(1.0f, 0.5f, 0.5f, 1.0f));
+	//SetColorUniform(gSpider.shaders, 1, glm::vec4(0.5f, 1.0f, 1.0f, 1.0f));
+	//SetColorUniform(gSpider.shaders, 2, glm::vec4(1.0f, 0.5f, 1.0f, 1.0f));
+	//SetColorUniform(gSpider.shaders, 3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+
 }
 
 
@@ -148,13 +170,32 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 	return glm::scale(glm::mat4(), glm::vec3(x, y, z));
 }
 
+void CalcPositions(ModelInstance &instance)
+{
+	for (unsigned int i = 0; i < NUM_ROWS; i++) {
+		for (unsigned int j = 0; j < NUM_COLS; j++) {
+			unsigned int Index = i * NUM_COLS + j;
+			instance.m_positions[Index].x = (float)j;
+			instance.m_positions[Index].y = RandomFloat() * 5.0f;
+			instance.m_positions[Index].z = (float)i;
+			instance.m_velocity[Index] = RandomFloat();
+			if (i & 1) {
+				instance.m_velocity[Index] *= (-1.0f);
+			}
+		}
+	}
+}
+
 static void CreateInstances() {
 
-	ModelInstance jeep;
-	jeep.asset = &gSpider;
+	ModelInstance spider;
+	spider.asset = &gSpider;
 	float groundScale = 0.01f;
-	jeep.transform = jeep.originalTransform = translate(0, 6, -10) * glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(0, 1, 0)) *scale(groundScale, groundScale, groundScale);
-	gInstances.push_back(jeep);
+	spider.transform = spider.originalTransform = translate(0, 6, -10) * glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(0, 1, 0)) *scale(groundScale, groundScale, groundScale);
+	//spider.transform = spider.originalTransform = glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(0, 1, 0)) *scale(groundScale, groundScale, groundScale);
+	CalcPositions(spider);
+
+	gInstances.push_back(spider);
 
 }
 
@@ -271,6 +312,7 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     shaders->setUniform(uniformName.c_str(), value);
 }
 
+
 static void RenderInstance(const ModelInstance& inst) {
     ModelAsset* asset = inst.asset;
     tdogl::Program* shaders = asset->shaders;
@@ -295,15 +337,39 @@ static void RenderInstance(const ModelInstance& inst) {
     shaders->setUniform("cameraPosition", gCamera.position());
     
     //set the shader uniforms
-    shaders->setUniform("camera", gCamera.matrix());
-    shaders->setUniform("model", inst.transform);
+    //shaders->setUniform("camera", gCamera.matrix());
+    //shaders->setUniform("model", inst.transform);
     shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
     //shaders->setUniform("gDisplacementMap", 4); //set to 4 because the texture will be bound to GL_TEXTURE4
     
     shaders->setUniform("materialShininess", asset->shininess);
     shaders->setUniform("materialSpecularColor", asset->specularColor);
+
+	SetColorUniform(shaders, 0, glm::vec4(1.0f, 0.5f, 0.5f, 1.0f));
+	SetColorUniform(shaders, 1, glm::vec4(0.5f, 1.0f, 1.0f, 1.0f));
+	SetColorUniform(shaders, 2, glm::vec4(1.0f, 0.5f, 1.0f, 1.0f));
+	SetColorUniform(shaders, 3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+
     
-	asset->mesh.Render();
+	glm::mat4 WVPMatrics[NUM_INSTANCES];
+	glm::mat4 WorldMatrices[NUM_INSTANCES];
+
+	glm::mat4 model;
+
+	static float m_scale = 0;
+	m_scale += 0.005f;
+
+	for (unsigned int i = 0; i < NUM_INSTANCES; i++) {
+		Vector3f Pos(inst.m_positions[i]);
+		Pos.y += sinf(m_scale) * inst.m_velocity[i];
+		
+		model = translate(Pos.x, Pos.y, Pos.z) * inst.originalTransform;
+		WVPMatrics[i] = gCamera.matrix() * model;//p.GetWVPTrans().Transpose();
+		WorldMatrices[i] = model;//p.GetWorldTrans().Transpose();
+	}
+
+	asset->mesh.Render(NUM_INSTANCES, WVPMatrics, WorldMatrices);
+
     
     shaders->stopUsing();
 }
@@ -386,8 +452,8 @@ int main(void)
 
 	CreateInstances();
 
-	//glClearColor(0.196078431372549f, 0.3137254901960784f, 0.5882352941176471f, 1);
-	glClearColor(0.0f, 0.0f, 0.0f, 1);
+	glClearColor(0.196078431372549f, 0.3137254901960784f, 0.5882352941176471f, 1);
+	//glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
 	//gCamera.setPosition(glm::vec3(7, 3, 0));

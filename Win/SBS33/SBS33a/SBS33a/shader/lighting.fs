@@ -1,7 +1,7 @@
-#version 410 core                                                                           
+#version 330
                                                                                             
 
-uniform mat4 model;
+//uniform mat4 model;
 uniform vec3 cameraPosition;
 
 uniform sampler2D materialTex;
@@ -21,9 +21,13 @@ uniform struct Light {
     vec3 coneDirection;
 } allLights[MAX_LIGHTS];
 
+uniform vec4 gColor[4];
+
+
 in vec2 TexCoord_FS_in;
 in vec3 Normal_FS_in;
 in vec3 WorldPos_FS_in;
+flat in int InstanceID;
 
 out vec4 finalColor;
 
@@ -32,10 +36,10 @@ out vec4 finalColor;
 vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec3 surfacePos, vec3 surfaceToCamera);
 
 void main() {
-    vec3 normal = normalize(transpose(inverse(mat3(model))) * Normal_FS_in);
-    //vec3 normal = normalize(Normal_FS_in);
-    vec3 surfacePos = vec3(model * vec4(WorldPos_FS_in, 1));
-    //vec3 surfacePos = WorldPos_FS_in;
+    //vec3 normal = normalize(transpose(inverse(mat3(model))) * Normal_FS_in);
+    vec3 normal = normalize(Normal_FS_in);
+    //vec3 surfacePos = vec3(model * vec4(WorldPos_FS_in, 1));
+    vec3 surfacePos = WorldPos_FS_in;
     //vec4 surfaceColor = texture(materialTex, fragTexCoord);
     vec4 surfaceColor = texture(materialTex, TexCoord_FS_in);
     vec3 surfaceToCamera = normalize(cameraPosition - surfacePos); //also a unit
@@ -46,7 +50,7 @@ void main() {
     }
     
     vec3 gamma = vec3(1.0/2.2);
-    finalColor = vec4(pow(linearColor, gamma), surfaceColor.a);
+    finalColor = vec4(pow(linearColor, gamma), surfaceColor.a) * gColor[InstanceID % 4];
 }
 
 vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec3 surfacePos, vec3 surfaceToCamera) {

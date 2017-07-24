@@ -143,7 +143,28 @@ bool Mesh::InitFromScene(const aiScene* pScene, const string& Filename)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices[0]) * Indices.size(), &Indices[0],
 		GL_STATIC_DRAW);
 
-	return true;
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[WVP_MAT_VB]);
+
+	GLuint WVP_LOCATION = 3;
+	for (unsigned int i = 0; i < 4; i++) {
+		glEnableVertexAttribArray(WVP_LOCATION + i);
+		glVertexAttribPointer(WVP_LOCATION + i, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4),
+			(const GLvoid*)(sizeof(GLfloat) * i * 4));
+		glVertexAttribDivisor(WVP_LOCATION + i, 1);
+	}
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[WORLD_MAT_VB]);
+
+	GLuint WORLD_LOCATION = 7;
+	for (unsigned int i = 0; i < 4; i++) {
+		glEnableVertexAttribArray(WORLD_LOCATION + i);
+		glVertexAttribPointer(WORLD_LOCATION + i, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4),
+			(const GLvoid*)(sizeof(GLfloat) * i * 4));
+		glVertexAttribDivisor(WORLD_LOCATION + i, 1);
+	}
+
+	return GLCheckError();
 }
 
 void Mesh::InitMesh(const aiMesh* paiMesh,
@@ -230,8 +251,45 @@ bool Mesh::InitMaterials(const aiScene* pScene, const std::string& Filename)
     return Ret;
 }
 
-void Mesh::Render()
+//void Mesh::Render(unsigned int NumInstances, const Matrix4f* WVPMats, const Matrix4f* WorldMats)
+//{
+//	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[WVP_MAT_VB]);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(Matrix4f) * NumInstances, WVPMats, GL_DYNAMIC_DRAW);
+//
+//	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[WORLD_MAT_VB]);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(Matrix4f) * NumInstances, WorldMats, GL_DYNAMIC_DRAW);
+//
+//	glBindVertexArray(m_VAO);
+//
+//	for (unsigned int i = 0; i < m_Entries.size(); i++) {
+//		const unsigned int MaterialIndex = m_Entries[i].MaterialIndex;
+//
+//		assert(MaterialIndex < m_Textures.size());
+//
+//		if (m_Textures[MaterialIndex]) {
+//			m_Textures[MaterialIndex]->Bind(GL_TEXTURE0);
+//		}
+//
+//		glDrawElementsInstancedBaseVertex(GL_TRIANGLES,
+//			m_Entries[i].NumIndices,
+//			GL_UNSIGNED_INT,
+//			(void*)(sizeof(unsigned int) * m_Entries[i].BaseIndex),
+//			NumInstances,
+//			m_Entries[i].BaseVertex);
+//	}
+//
+//	// Make sure the VAO is not changed from the outside
+//	glBindVertexArray(0);
+//}
+
+void Mesh::Render(unsigned int NumInstances, const glm::mat4* WVPMats, const glm::mat4* WorldMats)
 {
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[WVP_MAT_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * NumInstances, WVPMats, GL_DYNAMIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[WORLD_MAT_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * NumInstances, WorldMats, GL_DYNAMIC_DRAW);
+
 	glBindVertexArray(m_VAO);
 
 	for (unsigned int i = 0; i < m_Entries.size(); i++) {
@@ -243,10 +301,11 @@ void Mesh::Render()
 			m_Textures[MaterialIndex]->Bind(GL_TEXTURE0);
 		}
 
-		glDrawElementsBaseVertex(GL_TRIANGLES,
+		glDrawElementsInstancedBaseVertex(GL_TRIANGLES,
 			m_Entries[i].NumIndices,
 			GL_UNSIGNED_INT,
 			(void*)(sizeof(unsigned int) * m_Entries[i].BaseIndex),
+			NumInstances,
 			m_Entries[i].BaseVertex);
 	}
 

@@ -77,6 +77,9 @@
     <ClCompile Include="..\..\..\Common\ogldev_texture.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Common\math_3d.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\lighting.fs">

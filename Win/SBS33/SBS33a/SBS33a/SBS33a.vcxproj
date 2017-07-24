@@ -175,6 +175,7 @@
     <ClInclude Include="tdogl\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Common\math_3d.cpp" />
     <ClCompile Include="..\..\..\Common\ogldev_texture.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="OGLSBS33a.cpp" />
