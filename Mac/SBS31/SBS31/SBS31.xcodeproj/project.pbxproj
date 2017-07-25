@@ -15,9 +15,6 @@
 		2329CA5F1F1B21040047CDB4 /* quaternion.inl in Resources */ = {isa = PBXBuildFile; fileRef = 2329C9241F1B21040047CDB4 /* quaternion.inl */; };
 		2329CA601F1B21040047CDB4 /* vector2.inl in Resources */ = {isa = PBXBuildFile; fileRef = 2329C9291F1B21040047CDB4 /* vector2.inl */; };
 		2329CA611F1B21040047CDB4 /* vector3.inl in Resources */ = {isa = PBXBuildFile; fileRef = 2329C92B1F1B21040047CDB4 /* vector3.inl */; };
-		2329CA621F1B21040047CDB4 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2329C92E1F1B21040047CDB4 /* libassimp.3.3.1.dylib */; };
-		2329CA631F1B21040047CDB4 /* libassimp.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2329C92F1F1B21040047CDB4 /* libassimp.3.dylib */; };
-		2329CA641F1B21040047CDB4 /* libassimp.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2329C9301F1B21040047CDB4 /* libassimp.dylib */; };
 		2329CA651F1B21040047CDB4 /* diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = 2329C9311F1B21040047CDB4 /* diffuse.png */; };
 		2329CA661F1B21040047CDB4 /* filePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2329C9331F1B21040047CDB4 /* filePath.mm */; };
 		2329CA671F1B21040047CDB4 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = 2329C9341F1B21040047CDB4 /* glew.c */; };
@@ -155,6 +152,9 @@
 		2329CAF51F1B27A60047CDB4 /* monkey.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 2329CAF31F1B27A60047CDB4 /* monkey.mtl */; };
 		2329CAF61F1B27A60047CDB4 /* monkey.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2329CAF41F1B27A60047CDB4 /* monkey.obj */; };
 		2329CAF81F1B287C0047CDB4 /* white.png in Resources */ = {isa = PBXBuildFile; fileRef = 2329CAF71F1B287C0047CDB4 /* white.png */; };
+		25F4C0D21F1C585900154749 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2329C92E1F1B21040047CDB4 /* libassimp.3.3.1.dylib */; };
+		25F4C0D31F1C585900154749 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2329C92E1F1B21040047CDB4 /* libassimp.3.3.1.dylib */; };
+		25F4C0D41F1C585900154749 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2329C92E1F1B21040047CDB4 /* libassimp.3.3.1.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -507,13 +507,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25F4C0D21F1C585900154749 /* libassimp.3.3.1.dylib in Frameworks */,
+				25F4C0D31F1C585900154749 /* libassimp.3.3.1.dylib in Frameworks */,
+				25F4C0D41F1C585900154749 /* libassimp.3.3.1.dylib in Frameworks */,
 				2329CAF21F1B222B0047CDB4 /* IOKit.framework in Frameworks */,
 				2329CAF01F1B221E0047CDB4 /* OpenGL.framework in Frameworks */,
 				2329CAEE1F1B220E0047CDB4 /* CoreVideo.framework in Frameworks */,
 				2329CAEC1F1B22000047CDB4 /* Cocoa.framework in Frameworks */,
-				2329CA641F1B21040047CDB4 /* libassimp.dylib in Frameworks */,
-				2329CA631F1B21040047CDB4 /* libassimp.3.dylib in Frameworks */,
-				2329CA621F1B21040047CDB4 /* libassimp.3.3.1.dylib in Frameworks */,
 				2329CAD71F1B21050047CDB4 /* libglfw3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

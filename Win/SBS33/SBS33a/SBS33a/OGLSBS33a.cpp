@@ -18,8 +18,6 @@
 
 #include "mesh.h"
 
-#define NUM_ROWS 10
-#define NUM_COLUMNS 10
 
 #define MAX_PARTICLES 1000
 #define PARTICLE_LIFETIME 10.0f
@@ -34,7 +32,6 @@
 #define NUM_ROWS 50
 #define NUM_COLS 20
 #define NUM_INSTANCES NUM_ROWS * NUM_COLS
-//#define NUM_INSTANCES 1
 
 struct Particle
 {

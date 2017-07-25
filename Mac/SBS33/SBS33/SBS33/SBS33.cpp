@@ -20,6 +20,9 @@
 #define WINDOW_WIDTH  1200
 #define WINDOW_HEIGHT 900
 
+#define NUM_ROWS 50
+#define NUM_COLS 20
+#define NUM_INSTANCES NUM_ROWS * NUM_COLS
 
 float gDegreesRotated = 45.0f;
 tdogl::Camera gCamera;
@@ -42,6 +45,8 @@ struct ModelInstance {
 	ModelAsset* asset;
 	glm::mat4 transform;
     glm::mat4 originalTransform;
+    Vector3f m_positions[NUM_INSTANCES];
+    float m_velocity[NUM_INSTANCES];
 };
 
 struct Light {
@@ -61,6 +66,15 @@ std::list<ModelInstance> gInstances;
 
 std::vector<Light> gLights;
 
+template <typename T>
+void SetColorUniform(tdogl::Program* shaders, size_t colorIndex, const T& value) {
+    std::ostringstream ss;
+    ss << "gColor[" << colorIndex << "]";
+    std::string uniformName = ss.str();
+    
+    shaders->setUniform(uniformName.c_str(), value);
+}
+
 static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFile2) {
 	std::vector<tdogl::Shader> shaders;
 	shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile1, GL_VERTEX_SHADER));
@@ -75,12 +89,18 @@ tdogl::Texture* LoadTexture(const char *textureFile) {
 }
 
 static void LoadMainAsset() {
-	gSpider.shaders = LoadShaders("vertex-shader.txt", "fragment-shader.txt");
+	gSpider.shaders = LoadShaders("lighting.vs", "lighting.fs");
 	gSpider.shininess = 80.0;
 	gSpider.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
     gSpider.mesh.LoadMesh("spider.obj");
-
+    
+    gSpider.shaders->use();
+    SetColorUniform(gSpider.shaders, 0, glm::vec4(1.0f, 0.5f, 0.5f, 1.0f));
+    SetColorUniform(gSpider.shaders, 1, glm::vec4(0.5f, 1.0f, 1.0f, 1.0f));
+    SetColorUniform(gSpider.shaders, 2, glm::vec4(1.0f, 0.5f, 1.0f, 1.0f));
+    SetColorUniform(gSpider.shaders, 3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+    gSpider.shaders->stopUsing();
 }
 
 // convenience function that returns a translation matrix
@@ -94,11 +114,28 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 	return glm::scale(glm::mat4(), glm::vec3(x, y, z));
 }
 
+void CalcPositions(ModelInstance &instance)
+{
+    for (unsigned int i = 0; i < NUM_ROWS; i++) {
+        for (unsigned int j = 0; j < NUM_COLS; j++) {
+            unsigned int Index = i * NUM_COLS + j;
+            instance.m_positions[Index].x = (float)j;
+            instance.m_positions[Index].y = RandomFloat() * 5.0f;
+            instance.m_positions[Index].z = (float)i;
+            instance.m_velocity[Index] = RandomFloat();
+            if (i & 1) {
+                instance.m_velocity[Index] *= (-1.0f);
+            }
+        }
+    }
+}
+
 static void CreateInstances() {
 	ModelInstance spider;
 	spider.asset = &gSpider;
     GLfloat mscale = 0.01f;
     spider.transform = spider.originalTransform = translate(0, 6, -10) * glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(0, 1, 0)) * scale(mscale, mscale, mscale);
+    CalcPositions(spider);
 	gInstances.push_back(spider);
 }
 
@@ -227,27 +264,32 @@ static void RenderInstance(const ModelInstance& inst) {
 	shaders->setUniform("cameraPosition", gCamera.position());
 
 	//set the shader uniforms
-	shaders->setUniform("camera", gCamera.matrix());
-	shaders->setUniform("model", inst.transform);
+//	shaders->setUniform("camera", gCamera.matrix());
+//	shaders->setUniform("model", inst.transform);
 	shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
 
 	shaders->setUniform("materialShininess", asset->shininess);
 	shaders->setUniform("materialSpecularColor", asset->specularColor);
 
-
-								   //bind the texture
-//	glActiveTexture(GL_TEXTURE0);
-//	glBindTexture(GL_TEXTURE_2D, asset->texture->object());
-
-	//bind VAO and draw
-	glBindVertexArray(asset->vao);
-	//glDrawArrays(asset->drawType, asset->drawStart, asset->drawCount);
+    glm::mat4 WVPMatrics[NUM_INSTANCES];
+    glm::mat4 WorldMatrices[NUM_INSTANCES];
     
-    asset->mesh.Render();
+    glm::mat4 model;
     
-	//unbind everything
-	glBindVertexArray(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
+    static float m_scale = 0;
+    m_scale += 0.005f;
+    
+    for (unsigned int i = 0; i < NUM_INSTANCES; i++) {
+        Vector3f Pos(inst.m_positions[i]);
+        Pos.y += sinf(m_scale) * inst.m_velocity[i];
+        
+        model = translate(Pos.x, Pos.y, Pos.z) * inst.originalTransform;
+        WVPMatrics[i] = gCamera.matrix() * model;
+        WorldMatrices[i] = model;
+    }
+    
+    asset->mesh.Render(NUM_INSTANCES, WVPMatrics, WorldMatrices);
+    
 	shaders->stopUsing();
 }
 

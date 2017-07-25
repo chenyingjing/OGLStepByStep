@@ -16,7 +16,6 @@
 		2355F05D1F262B59002C9A73 /* vector2.inl in Resources */ = {isa = PBXBuildFile; fileRef = 2355EF011F262B59002C9A73 /* vector2.inl */; };
 		2355F05E1F262B59002C9A73 /* vector3.inl in Resources */ = {isa = PBXBuildFile; fileRef = 2355EF031F262B59002C9A73 /* vector3.inl */; };
 		2355F0621F262B59002C9A73 /* filePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2355EF0A1F262B59002C9A73 /* filePath.mm */; };
-		2355F0631F262B59002C9A73 /* fragment-shader.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2355EF0B1F262B59002C9A73 /* fragment-shader.txt */; };
 		2355F0641F262B59002C9A73 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = 2355EF0C1F262B59002C9A73 /* glew.c */; };
 		2355F0651F262B59002C9A73 /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2355EF101F262B59002C9A73 /* CMakeLists.txt */; };
 		2355F0661F262B59002C9A73 /* func_common.inl in Resources */ = {isa = PBXBuildFile; fileRef = 2355EF1A1F262B59002C9A73 /* func_common.inl */; };
@@ -157,7 +156,6 @@
 		2355F0FC1F262B59002C9A73 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2355F0481F262B59002C9A73 /* Program.cpp */; };
 		2355F0FD1F262B59002C9A73 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2355F04A1F262B59002C9A73 /* Shader.cpp */; };
 		2355F0FE1F262B59002C9A73 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2355F04C1F262B59002C9A73 /* Texture.cpp */; };
-		2355F0FF1F262B59002C9A73 /* vertex-shader.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2355F04E1F262B59002C9A73 /* vertex-shader.txt */; };
 		2355F1031F262BDB002C9A73 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2355F1021F262BDB002C9A73 /* Cocoa.framework */; };
 		2355F1051F262BE8002C9A73 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2355F1041F262BE8002C9A73 /* CoreVideo.framework */; };
 		2355F1071F262BF7002C9A73 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2355F1061F262BF7002C9A73 /* OpenGL.framework */; };
@@ -173,6 +171,9 @@
 		2355F1231F263104002C9A73 /* SpiderTex.png in Resources */ = {isa = PBXBuildFile; fileRef = 2355F11E1F263104002C9A73 /* SpiderTex.png */; };
 		2355F1241F263104002C9A73 /* wal67ar_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 2355F11F1F263104002C9A73 /* wal67ar_small.png */; };
 		2355F1251F263104002C9A73 /* wal69ar_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 2355F1201F263104002C9A73 /* wal69ar_small.png */; };
+		256F80D61F270D74009DD764 /* lighting.fs in Resources */ = {isa = PBXBuildFile; fileRef = 256F80D41F270D74009DD764 /* lighting.fs */; };
+		256F80D71F270D74009DD764 /* lighting.vs in Resources */ = {isa = PBXBuildFile; fileRef = 256F80D51F270D74009DD764 /* lighting.vs */; };
+		256F80D91F270F89009DD764 /* math_3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 256F80D81F270F89009DD764 /* math_3d.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -227,7 +228,6 @@
 		2355EF081F262B59002C9A73 /* libassimp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libassimp.dylib; sourceTree = "<group>"; };
 		2355EF091F262B59002C9A73 /* filePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filePath.h; sourceTree = "<group>"; };
 		2355EF0A1F262B59002C9A73 /* filePath.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = filePath.mm; sourceTree = "<group>"; };
-		2355EF0B1F262B59002C9A73 /* fragment-shader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "fragment-shader.txt"; sourceTree = "<group>"; };
 		2355EF0C1F262B59002C9A73 /* glew.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glew.c; sourceTree = "<group>"; };
 		2355EF0D1F262B59002C9A73 /* glew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glew.h; sourceTree = "<group>"; };
 		2355EF0E1F262B59002C9A73 /* glfw3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glfw3.h; sourceTree = "<group>"; };
@@ -536,7 +536,6 @@
 		2355F04B1F262B59002C9A73 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
 		2355F04C1F262B59002C9A73 /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
 		2355F04D1F262B59002C9A73 /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
-		2355F04E1F262B59002C9A73 /* vertex-shader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "vertex-shader.txt"; sourceTree = "<group>"; };
 		2355F1021F262BDB002C9A73 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		2355F1041F262BE8002C9A73 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		2355F1061F262BF7002C9A73 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -548,6 +547,9 @@
 		2355F11E1F263104002C9A73 /* SpiderTex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SpiderTex.png; sourceTree = "<group>"; };
 		2355F11F1F263104002C9A73 /* wal67ar_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wal67ar_small.png; sourceTree = "<group>"; };
 		2355F1201F263104002C9A73 /* wal69ar_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wal69ar_small.png; sourceTree = "<group>"; };
+		256F80D41F270D74009DD764 /* lighting.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.fs; sourceTree = "<group>"; };
+		256F80D51F270D74009DD764 /* lighting.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.vs; sourceTree = "<group>"; };
+		256F80D81F270F89009DD764 /* math_3d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = math_3d.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -589,11 +591,12 @@
 		2355EEB61F262AE8002C9A73 /* SBS33 */ = {
 			isa = PBXGroup;
 			children = (
+				256F80D81F270F89009DD764 /* math_3d.cpp */,
+				256F80D31F270D74009DD764 /* shader */,
 				2355EECB1F262B58002C9A73 /* asset */,
 				2355EED31F262B59002C9A73 /* assimp */,
 				2355EF091F262B59002C9A73 /* filePath.h */,
 				2355EF0A1F262B59002C9A73 /* filePath.mm */,
-				2355EF0B1F262B59002C9A73 /* fragment-shader.txt */,
 				2355EF0C1F262B59002C9A73 /* glew.c */,
 				2355EF0D1F262B59002C9A73 /* glew.h */,
 				2355EF0E1F262B59002C9A73 /* glfw3.h */,
@@ -607,7 +610,6 @@
 				2355F0411F262B59002C9A73 /* SBS33.cpp */,
 				2355F0421F262B59002C9A73 /* stb_image.h */,
 				2355F0431F262B59002C9A73 /* tdogl */,
-				2355F04E1F262B59002C9A73 /* vertex-shader.txt */,
 			);
 			path = SBS33;
 			sourceTree = "<group>";
@@ -1123,6 +1125,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		256F80D31F270D74009DD764 /* shader */ = {
+			isa = PBXGroup;
+			children = (
+				256F80D41F270D74009DD764 /* lighting.fs */,
+				256F80D51F270D74009DD764 /* lighting.vs */,
+			);
+			path = shader;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1194,6 +1205,7 @@
 				2355F0BB1F262B59002C9A73 /* normalize_dot.inl in Resources */,
 				2355F0871F262B59002C9A73 /* type_vec4_avx2.inl in Resources */,
 				2355F0AD1F262B59002C9A73 /* integer.inl in Resources */,
+				256F80D61F270D74009DD764 /* lighting.fs in Resources */,
 				2355F0731F262B59002C9A73 /* intrinsic_trigonometric.inl in Resources */,
 				2355F08F1F262B59002C9A73 /* matrix_inverse.inl in Resources */,
 				2355F0D71F262B59002C9A73 /* libjpeg.la in Resources */,
@@ -1251,7 +1263,6 @@
 				2355F0AF1F262B59002C9A73 /* io.inl in Resources */,
 				2355F0A11F262B59002C9A73 /* compatibility.inl in Resources */,
 				2355F06A1F262B59002C9A73 /* func_matrix.inl in Resources */,
-				2355F0631F262B59002C9A73 /* fragment-shader.txt in Resources */,
 				2355F06F1F262B59002C9A73 /* intrinsic_exponential.inl in Resources */,
 				2355F0A41F262B59002C9A73 /* euler_angles.inl in Resources */,
 				2355F0E41F262B59002C9A73 /* libpng.la in Resources */,
@@ -1306,6 +1317,7 @@
 				2355F0C11F262B59002C9A73 /* projection.inl in Resources */,
 				2355F0921F262B59002C9A73 /* packing.inl in Resources */,
 				2355F0A21F262B59002C9A73 /* component_wise.inl in Resources */,
+				256F80D71F270D74009DD764 /* lighting.vs in Resources */,
 				2355F0741F262B59002C9A73 /* intrinsic_vector_relational.inl in Resources */,
 				2355F0981F262B59002C9A73 /* type_ptr.inl in Resources */,
 				2355F0771F262B59002C9A73 /* type_mat.inl in Resources */,
@@ -1326,7 +1338,6 @@
 				2355F0941F262B59002C9A73 /* random.inl in Resources */,
 				2355F0781F262B59002C9A73 /* type_mat2x2.inl in Resources */,
 				2355F08C1F262B59002C9A73 /* epsilon.inl in Resources */,
-				2355F0FF1F262B59002C9A73 /* vertex-shader.txt in Resources */,
 				2355F0E81F262B59002C9A73 /* libtiff.la in Resources */,
 				2355F0F51F262B59002C9A73 /* model.mtl in Resources */,
 				2355F0CF1F262B59002C9A73 /* type_aligned.inl in Resources */,
@@ -1347,6 +1358,7 @@
 				2355F0FA1F262B59002C9A73 /* Bitmap.cpp in Sources */,
 				2355F0FE1F262B59002C9A73 /* Texture.cpp in Sources */,
 				2355F0FC1F262B59002C9A73 /* Program.cpp in Sources */,
+				256F80D91F270F89009DD764 /* math_3d.cpp in Sources */,
 				2355F0641F262B59002C9A73 /* glew.c in Sources */,
 				2355F0621F262B59002C9A73 /* filePath.mm in Sources */,
 				2355F0F41F262B59002C9A73 /* mesh.cpp in Sources */,
