@@ -17,36 +17,29 @@
 */
 
 #include <limits.h>
-#include <string.h>
-
 #include "ogldev_math_3d.h"
-#include "ogldev_util.h"
+#include <string>
+
 #include "lighting_technique.h"
+#include "ogldev_util.h"
 
+using namespace std;
 
-LightingTechnique::LightingTechnique()
+static const char* pEffectFile = "shaders/lighting.glsl";
+
+LightingTechnique::LightingTechnique() : GLFXTechnique(pEffectFile)
 {   
 }
 
+
 bool LightingTechnique::Init()
 {
-    if (!Technique::Init()) {
+    if (!CompileProgram("Lighting")) {
         return false;
     }
-
-    if (!AddShader(GL_VERTEX_SHADER, "lighting.vs")) {
-        return false;
-    }
-
-
-    if (!AddShader(GL_FRAGMENT_SHADER, "lighting.fs")) {
-        return false;
-    }
-
-    if (!Finalize()) {
-        return false;
-    }
-
+    
+    m_WVPLocation = GetUniformLocation("gWVP");
+    m_WorldMatrixLocation = GetUniformLocation("gWorld");
     m_colorTextureLocation = GetUniformLocation("gColorMap");
     m_eyeWorldPosLocation = GetUniformLocation("gEyeWorldPos");
     m_dirLightLocation.Color = GetUniformLocation("gDirectionalLight.Base.Color");
@@ -57,8 +50,11 @@ bool LightingTechnique::Init()
     m_matSpecularPowerLocation = GetUniformLocation("gSpecularPower");
     m_numPointLightsLocation = GetUniformLocation("gNumPointLights");
     m_numSpotLightsLocation = GetUniformLocation("gNumSpotLights");
+    m_colorLocation = GetUniformLocation("gColor");
 
     if (m_dirLightLocation.AmbientIntensity == INVALID_UNIFORM_LOCATION ||
+        m_WVPLocation == INVALID_UNIFORM_LOCATION ||
+        m_WorldMatrixLocation == INVALID_UNIFORM_LOCATION ||
         m_colorTextureLocation == INVALID_UNIFORM_LOCATION ||
         m_eyeWorldPosLocation == INVALID_UNIFORM_LOCATION ||
         m_dirLightLocation.Color == INVALID_UNIFORM_LOCATION ||
@@ -67,7 +63,8 @@ bool LightingTechnique::Init()
         m_matSpecularIntensityLocation == INVALID_UNIFORM_LOCATION ||
         m_matSpecularPowerLocation == INVALID_UNIFORM_LOCATION ||
         m_numPointLightsLocation == INVALID_UNIFORM_LOCATION ||
-        m_numSpotLightsLocation == INVALID_UNIFORM_LOCATION) {
+        m_numSpotLightsLocation == INVALID_UNIFORM_LOCATION ||
+        m_colorLocation == INVALID_UNIFORM_LOCATION) {
         return false;
     }
 
@@ -149,19 +146,18 @@ bool LightingTechnique::Init()
         }
     }
 
-    for (unsigned int i = 0; i < ARRAY_SIZE_IN_ELEMENTS(m_colorLocation) ; i++) {
-        char Name[32];
-        memset(Name, 0, sizeof(Name));
-        SNPRINTF(Name, sizeof(Name), "gColor[%d]", i);
-        
-        m_colorLocation[i] = GetUniformLocation(Name);
-        
-        if (m_colorLocation[i] == INVALID_UNIFORM_LOCATION) {
-            return false;            
-        }
-    }
-    
     return true;
+}
+
+void LightingTechnique::SetWVP(const Matrix4f& WVP)
+{
+    glUniformMatrix4fv(m_WVPLocation, 1, GL_TRUE, (const GLfloat*)WVP.m);    
+}
+
+
+void LightingTechnique::SetWorldMatrix(const Matrix4f& WorldInverse)
+{
+    glUniformMatrix4fv(m_WorldMatrixLocation, 1, GL_TRUE, (const GLfloat*)WorldInverse.m);
 }
 
 
@@ -235,7 +231,7 @@ void LightingTechnique::SetSpotLights(unsigned int NumLights, const SpotLight* p
 }
 
 
-void LightingTechnique::SetColor(unsigned int Index, const Vector4f& Color)
+void LightingTechnique::SetColor(const Vector4f& Color)
 {
-    glUniform4f(m_colorLocation[Index], Color.x, Color.y, Color.z, Color.w);
+    glUniform4f(m_colorLocation, Color.x, Color.y, Color.z, Color.w);
 }

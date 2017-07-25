@@ -88,5 +88,5 @@ void glfxDeleteEffect(int effect);
 *   effect  -- GLFX effect id
 * Return value: Log string
 **************************************************/
-std::string glfxGetEffectLog(int effect);
+const char* glfxGetEffectLog(int effect);
 #endif

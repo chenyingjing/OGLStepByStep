@@ -96,10 +96,10 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Include\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
-      <AdditionalDependencies>glew32.lib;CORE_DB_Magick++_.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;CORE_DB_Magick++_.lib;assimp.lib;glfx.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\..\..\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -133,12 +133,12 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Include\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
-      <AdditionalDependencies>glew32.lib;CORE_DB_Magick++_.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;CORE_DB_Magick++_.lib;assimp.lib;glfx.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\..\..\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -164,8 +164,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="glfx_technique.h" />
     <ClInclude Include="lighting_technique.h" />
-    <ClInclude Include="mesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Common\camera.cpp" />
@@ -188,14 +188,13 @@
     <ClCompile Include="..\..\..\Common\pipeline.cpp" />
     <ClCompile Include="..\..\..\Common\random_texture.cpp" />
     <ClCompile Include="..\..\..\Common\technique.cpp" />
+    <ClCompile Include="glfx_technique.cpp" />
     <ClCompile Include="lighting_technique.cpp" />
-    <ClCompile Include="mesh.cpp" />
     <ClCompile Include="SBS34.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Common\Makefile" />
-    <None Include="lighting.fs" />
-    <None Include="lighting.vs" />
+    <None Include="shaders\lighting.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

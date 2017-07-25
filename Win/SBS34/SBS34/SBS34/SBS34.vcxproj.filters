@@ -13,26 +13,23 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="shader">
-      <UniqueIdentifier>{47c11f46-5b82-47b8-aec4-3e1217e5ecce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common">
       <UniqueIdentifier>{9b8bd23d-8516-40f7-b646-c902ae64bf02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{47c11f46-5b82-47b8-aec4-3e1217e5ecce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lighting_technique.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mesh.h">
+    <ClInclude Include="glfx_technique.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lighting_technique.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SBS34.cpp">
@@ -98,16 +95,16 @@
     <ClCompile Include="..\..\..\Common\technique.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="glfx_technique.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="lighting.fs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="lighting.vs">
-      <Filter>shader</Filter>
-    </None>
     <None Include="..\..\..\Common\Makefile">
       <Filter>Common</Filter>
+    </None>
+    <None Include="shaders\lighting.glsl">
+      <Filter>shaders</Filter>
     </None>
   </ItemGroup>
 </Project>
