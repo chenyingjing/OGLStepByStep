@@ -15,9 +15,6 @@
 		23FB516A1F2349C300A5A083 /* quaternion.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23FB500F1F2349C300A5A083 /* quaternion.inl */; };
 		23FB516B1F2349C300A5A083 /* vector2.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23FB50141F2349C300A5A083 /* vector2.inl */; };
 		23FB516C1F2349C300A5A083 /* vector3.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23FB50161F2349C300A5A083 /* vector3.inl */; };
-		23FB516D1F2349C300A5A083 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB50191F2349C300A5A083 /* libassimp.3.3.1.dylib */; };
-		23FB516E1F2349C300A5A083 /* libassimp.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB501A1F2349C300A5A083 /* libassimp.3.dylib */; };
-		23FB516F1F2349C300A5A083 /* libassimp.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB501B1F2349C300A5A083 /* libassimp.dylib */; };
 		23FB51701F2349C300A5A083 /* filePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 23FB501D1F2349C300A5A083 /* filePath.mm */; };
 		23FB51711F2349C300A5A083 /* fragment-shader.txt in Resources */ = {isa = PBXBuildFile; fileRef = 23FB501E1F2349C300A5A083 /* fragment-shader.txt */; };
 		23FB51721F2349C300A5A083 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = 23FB501F1F2349C300A5A083 /* glew.c */; };
@@ -132,28 +129,15 @@
 		23FB51E11F2349C400A5A083 /* vector_query.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23FB51101F2349C300A5A083 /* vector_query.inl */; };
 		23FB51E21F2349C400A5A083 /* wrap.inl in Resources */ = {isa = PBXBuildFile; fileRef = 23FB51121F2349C300A5A083 /* wrap.inl */; };
 		23FB51E31F2349C400A5A083 /* configure.xml in Resources */ = {isa = PBXBuildFile; fileRef = 23FB51281F2349C300A5A083 /* configure.xml */; };
-		23FB51E41F2349C400A5A083 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB51291F2349C300A5A083 /* libfreetype.a */; };
 		23FB51E51F2349C400A5A083 /* libfreetype.la in Resources */ = {isa = PBXBuildFile; fileRef = 23FB512A1F2349C300A5A083 /* libfreetype.la */; };
-		23FB51E61F2349C400A5A083 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB512B1F2349C300A5A083 /* libjpeg.a */; };
 		23FB51E71F2349C400A5A083 /* libjpeg.la in Resources */ = {isa = PBXBuildFile; fileRef = 23FB512C1F2349C300A5A083 /* libjpeg.la */; };
-		23FB51E81F2349C400A5A083 /* liblcms2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB512D1F2349C300A5A083 /* liblcms2.a */; };
 		23FB51E91F2349C400A5A083 /* liblcms2.la in Resources */ = {isa = PBXBuildFile; fileRef = 23FB512E1F2349C300A5A083 /* liblcms2.la */; };
-		23FB51EA1F2349C400A5A083 /* libMagick++-7.Q16HDRI.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB512F1F2349C300A5A083 /* libMagick++-7.Q16HDRI.2.dylib */; };
-		23FB51EB1F2349C400A5A083 /* libMagick++-7.Q16HDRI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB51301F2349C300A5A083 /* libMagick++-7.Q16HDRI.dylib */; };
 		23FB51EC1F2349C400A5A083 /* libMagick++-7.Q16HDRI.la in Resources */ = {isa = PBXBuildFile; fileRef = 23FB51311F2349C300A5A083 /* libMagick++-7.Q16HDRI.la */; };
-		23FB51ED1F2349C400A5A083 /* libMagickCore-7.Q16HDRI.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB51321F2349C300A5A083 /* libMagickCore-7.Q16HDRI.2.dylib */; };
-		23FB51EE1F2349C400A5A083 /* libMagickCore-7.Q16HDRI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB51331F2349C300A5A083 /* libMagickCore-7.Q16HDRI.dylib */; };
 		23FB51EF1F2349C400A5A083 /* libMagickCore-7.Q16HDRI.la in Resources */ = {isa = PBXBuildFile; fileRef = 23FB51341F2349C300A5A083 /* libMagickCore-7.Q16HDRI.la */; };
-		23FB51F01F2349C400A5A083 /* libMagickWand-7.Q16HDRI.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB51351F2349C300A5A083 /* libMagickWand-7.Q16HDRI.0.dylib */; };
-		23FB51F11F2349C400A5A083 /* libMagickWand-7.Q16HDRI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB51361F2349C300A5A083 /* libMagickWand-7.Q16HDRI.dylib */; };
 		23FB51F21F2349C400A5A083 /* libMagickWand-7.Q16HDRI.la in Resources */ = {isa = PBXBuildFile; fileRef = 23FB51371F2349C300A5A083 /* libMagickWand-7.Q16HDRI.la */; };
-		23FB51F31F2349C400A5A083 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB51381F2349C300A5A083 /* libpng.a */; };
 		23FB51F41F2349C400A5A083 /* libpng.la in Resources */ = {isa = PBXBuildFile; fileRef = 23FB51391F2349C300A5A083 /* libpng.la */; };
-		23FB51F51F2349C400A5A083 /* libpng16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB513A1F2349C300A5A083 /* libpng16.a */; };
 		23FB51F61F2349C400A5A083 /* libpng16.la in Resources */ = {isa = PBXBuildFile; fileRef = 23FB513B1F2349C300A5A083 /* libpng16.la */; };
-		23FB51F71F2349C400A5A083 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB513C1F2349C300A5A083 /* libtiff.a */; };
 		23FB51F81F2349C400A5A083 /* libtiff.la in Resources */ = {isa = PBXBuildFile; fileRef = 23FB513D1F2349C300A5A083 /* libtiff.la */; };
-		23FB51F91F2349C400A5A083 /* libtiffxx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB513E1F2349C300A5A083 /* libtiffxx.a */; };
 		23FB51FA1F2349C400A5A083 /* libtiffxx.la in Resources */ = {isa = PBXBuildFile; fileRef = 23FB513F1F2349C300A5A083 /* libtiffxx.la */; };
 		23FB51FB1F2349C400A5A083 /* ImageMagick-7.Q16HDRI.pc in Resources */ = {isa = PBXBuildFile; fileRef = 23FB51411F2349C300A5A083 /* ImageMagick-7.Q16HDRI.pc */; };
 		23FB51FC1F2349C400A5A083 /* ImageMagick.pc in Resources */ = {isa = PBXBuildFile; fileRef = 23FB51421F2349C300A5A083 /* ImageMagick.pc */; };
@@ -163,12 +147,10 @@
 		23FB52001F2349C400A5A083 /* MagickCore.pc in Resources */ = {isa = PBXBuildFile; fileRef = 23FB51461F2349C300A5A083 /* MagickCore.pc */; };
 		23FB52011F2349C400A5A083 /* MagickWand-7.Q16HDRI.pc in Resources */ = {isa = PBXBuildFile; fileRef = 23FB51471F2349C300A5A083 /* MagickWand-7.Q16HDRI.pc */; };
 		23FB52021F2349C400A5A083 /* MagickWand.pc in Resources */ = {isa = PBXBuildFile; fileRef = 23FB51481F2349C300A5A083 /* MagickWand.pc */; };
-		23FB52031F2349C400A5A083 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB51491F2349C300A5A083 /* libglfw3.a */; };
 		23FB52041F2349C400A5A083 /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23FB514A1F2349C300A5A083 /* mesh.cpp */; };
 		23FB52051F2349C400A5A083 /* model.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23FB514D1F2349C300A5A083 /* model.mtl */; };
 		23FB52061F2349C400A5A083 /* model.obj in Resources */ = {isa = PBXBuildFile; fileRef = 23FB514E1F2349C300A5A083 /* model.obj */; };
 		23FB52071F2349C400A5A083 /* momo.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FB514F1F2349C300A5A083 /* momo.png */; };
-		23FB52081F2349C400A5A083 /* ogldev_texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23FB51521F2349C300A5A083 /* ogldev_texture.cpp */; };
 		23FB52091F2349C400A5A083 /* SBS22.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23FB51561F2349C300A5A083 /* SBS22.cpp */; };
 		23FB520A1F2349C400A5A083 /* Bitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23FB51591F2349C300A5A083 /* Bitmap.cpp */; };
 		23FB520B1F2349C400A5A083 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23FB515B1F2349C300A5A083 /* Camera.cpp */; };
@@ -188,6 +170,10 @@
 		23FB52261F2350A200A5A083 /* jeep.obj in Resources */ = {isa = PBXBuildFile; fileRef = 23FB521F1F2350A200A5A083 /* jeep.obj */; };
 		23FB52271F2350A200A5A083 /* jeep_army.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 23FB52201F2350A200A5A083 /* jeep_army.jpg */; };
 		23FB52281F2350A200A5A083 /* jeep_rood.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 23FB52211F2350A200A5A083 /* jeep_rood.jpg */; };
+		25E2235F1F25F31C00308287 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB51491F2349C300A5A083 /* libglfw3.a */; };
+		25E223601F25F32B00308287 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB50191F2349C300A5A083 /* libassimp.3.3.1.dylib */; };
+		25E223611F25F32B00308287 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB50191F2349C300A5A083 /* libassimp.3.3.1.dylib */; };
+		25E223621F25F32B00308287 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FB50191F2349C300A5A083 /* libassimp.3.3.1.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -537,8 +523,6 @@
 		23FB514E1F2349C300A5A083 /* model.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model.obj; sourceTree = "<group>"; };
 		23FB514F1F2349C300A5A083 /* momo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = momo.png; sourceTree = "<group>"; };
 		23FB51511F2349C300A5A083 /* ogldev_math_3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_math_3d.h; sourceTree = "<group>"; };
-		23FB51521F2349C300A5A083 /* ogldev_texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ogldev_texture.cpp; sourceTree = "<group>"; };
-		23FB51531F2349C300A5A083 /* ogldev_texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_texture.h; sourceTree = "<group>"; };
 		23FB51541F2349C300A5A083 /* ogldev_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_types.h; sourceTree = "<group>"; };
 		23FB51551F2349C300A5A083 /* ogldev_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_util.h; sourceTree = "<group>"; };
 		23FB51561F2349C300A5A083 /* SBS22.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SBS22.cpp; sourceTree = "<group>"; };
@@ -573,27 +557,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25E223601F25F32B00308287 /* libassimp.3.3.1.dylib in Frameworks */,
+				25E223611F25F32B00308287 /* libassimp.3.3.1.dylib in Frameworks */,
+				25E223621F25F32B00308287 /* libassimp.3.3.1.dylib in Frameworks */,
+				25E2235F1F25F31C00308287 /* libglfw3.a in Frameworks */,
 				23FB52191F234A9E00A5A083 /* IOKit.framework in Frameworks */,
 				23FB52171F234A8C00A5A083 /* OpenGL.framework in Frameworks */,
 				23FB52151F234A7D00A5A083 /* CoreVideo.framework in Frameworks */,
 				23FB52131F234A7000A5A083 /* Cocoa.framework in Frameworks */,
-				23FB516F1F2349C300A5A083 /* libassimp.dylib in Frameworks */,
-				23FB52031F2349C400A5A083 /* libglfw3.a in Frameworks */,
-				23FB51F11F2349C400A5A083 /* libMagickWand-7.Q16HDRI.dylib in Frameworks */,
-				23FB51EA1F2349C400A5A083 /* libMagick++-7.Q16HDRI.2.dylib in Frameworks */,
-				23FB51E81F2349C400A5A083 /* liblcms2.a in Frameworks */,
-				23FB516E1F2349C300A5A083 /* libassimp.3.dylib in Frameworks */,
-				23FB51F01F2349C400A5A083 /* libMagickWand-7.Q16HDRI.0.dylib in Frameworks */,
-				23FB51F51F2349C400A5A083 /* libpng16.a in Frameworks */,
-				23FB516D1F2349C300A5A083 /* libassimp.3.3.1.dylib in Frameworks */,
-				23FB51E61F2349C400A5A083 /* libjpeg.a in Frameworks */,
-				23FB51EE1F2349C400A5A083 /* libMagickCore-7.Q16HDRI.dylib in Frameworks */,
-				23FB51F91F2349C400A5A083 /* libtiffxx.a in Frameworks */,
-				23FB51E41F2349C400A5A083 /* libfreetype.a in Frameworks */,
-				23FB51ED1F2349C400A5A083 /* libMagickCore-7.Q16HDRI.2.dylib in Frameworks */,
-				23FB51EB1F2349C400A5A083 /* libMagick++-7.Q16HDRI.dylib in Frameworks */,
-				23FB51F31F2349C400A5A083 /* libpng.a in Frameworks */,
-				23FB51F71F2349C400A5A083 /* libtiff.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1107,8 +1078,6 @@
 			isa = PBXGroup;
 			children = (
 				23FB51511F2349C300A5A083 /* ogldev_math_3d.h */,
-				23FB51521F2349C300A5A083 /* ogldev_texture.cpp */,
-				23FB51531F2349C300A5A083 /* ogldev_texture.h */,
 				23FB51541F2349C300A5A083 /* ogldev_types.h */,
 				23FB51551F2349C300A5A083 /* ogldev_util.h */,
 			);
@@ -1379,7 +1348,6 @@
 				23FB520C1F2349C400A5A083 /* Program.cpp in Sources */,
 				23FB520A1F2349C400A5A083 /* Bitmap.cpp in Sources */,
 				23FB52091F2349C400A5A083 /* SBS22.cpp in Sources */,
-				23FB52081F2349C400A5A083 /* ogldev_texture.cpp in Sources */,
 				23FB520B1F2349C400A5A083 /* Camera.cpp in Sources */,
 				23FB51721F2349C300A5A083 /* glew.c in Sources */,
 				23FB520D1F2349C400A5A083 /* Shader.cpp in Sources */,
@@ -1498,7 +1466,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyj.SBS32;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SYSTEM_HEADER_SEARCH_PATHS = "/Users/aa64mac/Documents/thirdpartylib/ImageMagick-7.0.5/include/**";
+				SYSTEM_HEADER_SEARCH_PATHS = "/Users/aa64mac/Documents/thirdpartylib/ImageMagick-7.0.5/include/** \"$(SRCROOT)/../../../../../../../thirdpartylib/assimp-3.3.1/include\"/**";
 			};
 			name = Debug;
 		};
@@ -1519,7 +1487,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyj.SBS32;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SYSTEM_HEADER_SEARCH_PATHS = "/Users/aa64mac/Documents/thirdpartylib/ImageMagick-7.0.5/include/**";
+				SYSTEM_HEADER_SEARCH_PATHS = "/Users/aa64mac/Documents/thirdpartylib/ImageMagick-7.0.5/include/** \"$(SRCROOT)/../../../../../../../thirdpartylib/assimp-3.3.1/include\"/**";
 			};
 			name = Release;
 		};
