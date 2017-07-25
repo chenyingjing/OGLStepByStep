@@ -34,7 +34,7 @@ LightingTechnique::LightingTechnique() : GLFXTechnique(pEffectFile)
 
 bool LightingTechnique::Init()
 {
-    if (!CompileProgram("Lighting")) {
+    if (!CompileProgram("Lighting1")) {
         return false;
     }
     

@@ -148,7 +148,7 @@ shader FSmain(in VSOutput FSin, out vec4 FragColor)
     FragColor = texture(gColorMap, In.TexCoord.xy) * TotalLight + gColor;     
 }
 
-program Lighting
+program Lighting1
 {
     vs(330)=VSmain();
     fs(330)=FSmain();
