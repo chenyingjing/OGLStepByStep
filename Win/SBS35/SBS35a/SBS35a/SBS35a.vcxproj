@@ -164,6 +164,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="gbuffer.h" />
     <ClInclude Include="glew.h" />
     <ClInclude Include="glfw3.h" />
     <ClInclude Include="mesh.h" />
@@ -177,6 +178,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\Common\math_3d.cpp" />
     <ClCompile Include="..\..\..\Common\ogldev_texture.cpp" />
+    <ClCompile Include="gbuffer.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="OGLSBS35a.cpp" />
     <ClCompile Include="tdogl\Bitmap.cpp" />

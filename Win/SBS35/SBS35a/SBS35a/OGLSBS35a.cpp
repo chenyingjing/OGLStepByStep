@@ -18,6 +18,8 @@
 
 #include "mesh.h"
 
+#include "gbuffer.h"
+
 #define NUM_ROWS 10
 #define NUM_COLUMNS 10
 
@@ -95,6 +97,8 @@ ModelAsset gJeep;
 std::list<ModelInstance> gInstances;
 
 std::vector<Light> gLights;
+
+GBuffer m_gbuffer;
 
 static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFile2) {
 	std::vector<tdogl::Shader> shaders;
@@ -315,6 +319,14 @@ static void RenderInstance(const ModelInstance& inst) {
     shaders->stopUsing();
 }
 
+bool Init()
+{
+	if (!m_gbuffer.Init(WINDOW_WIDTH, WINDOW_HEIGHT)) {
+		return false;
+	}
+	return true;
+}
+
 void Render(float millsElapsed, GLFWwindow* window)
 {
 	// clear everything
@@ -389,8 +401,11 @@ int main(void)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-	LoadMainAsset();
+	if (!Init()) {
+		return -1;
+	}
 
+	LoadMainAsset();
 	CreateInstances();
 
 	//glClearColor(0.196078431372549f, 0.3137254901960784f, 0.5882352941176471f, 1);

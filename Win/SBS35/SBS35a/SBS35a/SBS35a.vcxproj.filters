@@ -51,6 +51,9 @@
     <ClInclude Include="tdogl\Texture.h">
       <Filter>tdogl</Filter>
     </ClInclude>
+    <ClInclude Include="gbuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mesh.cpp">
@@ -79,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Common\ogldev_texture.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="gbuffer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
