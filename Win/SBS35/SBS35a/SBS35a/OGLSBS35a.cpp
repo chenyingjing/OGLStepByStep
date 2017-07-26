@@ -145,27 +145,6 @@ static void LoadMainAsset() {
 
 }
 
-static void LoadSecondAsset() {
-
-	gHheli.shaders = gTank.shaders;// LoadShaders("shader/lighting.vs", "shader/lighting.fs");
-	gHheli.shininess = 80.0;
-	gHheli.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
-
-	gHheli.mesh.LoadMesh("../../../Content/hheli.obj");
-
-}
-
-static void LoadThirdAsset() {
-
-	gJeep.shaders = gTank.shaders;// LoadShaders("shader/lighting.vs", "shader/lighting.fs");
-	gJeep.shininess = 80.0;
-	gJeep.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
-
-	gJeep.mesh.LoadMesh("../../../Content/jeep.obj");
-
-}
-
-
 // convenience function that returns a translation matrix
 glm::mat4 translate(GLfloat x, GLfloat y, GLfloat z) {
 	return glm::translate(glm::mat4(), glm::vec3(x, y, z));
@@ -181,30 +160,9 @@ static void CreateInstances() {
     ModelInstance tank;
     tank.asset = &gTank;
     float groundScale = 0.1;
-    //glm::mat4 rotateMat = glm::rotate(glm::mat4(), glm::radians(180.0f), glm::vec3(0, 0, 1));
-    //rotateMat = glm::rotate(rotateMat, glm::radians(90.0f), glm::vec3(1, 0, 0));
-    //glm::mat4 rotateMat1 = translate(-1.5, 0, 0) * glm::rotate(rotateMat, glm::radians(15.0f), glm::vec3(0, 0, 1));
-    tank.transform = tank.originalTransform = translate(-6, -2, -10) * scale(groundScale, groundScale, groundScale);
+    tank.transform = tank.originalTransform = translate(-0.8f, -1.0f, -12.0f) * scale(groundScale, groundScale, groundScale);
     gInstances.push_back(tank);
     
-    //ModelInstance monkey1;
-    //monkey1.asset = &gTank;
-    //glm::mat4 rotateMat2 = translate(1.5, 0, 0) * glm::rotate(rotateMat, glm::radians(-15.0f), glm::vec3(0, 0, 1));
-    //monkey1.transform = rotateMat2;
-    //gInstances.push_back(monkey1);
-
-	ModelInstance hheli;
-	hheli.asset = &gHheli;
-	groundScale = 0.04f;
-	hheli.transform = hheli.originalTransform = translate(6, -2, -10) *scale(groundScale, groundScale, groundScale);
-	gInstances.push_back(hheli);
-
-	ModelInstance jeep;
-	jeep.asset = &gJeep;
-	groundScale = 0.01f;
-	jeep.transform = jeep.originalTransform = translate(0, 6, -10) *scale(groundScale, groundScale, groundScale);
-	gInstances.push_back(jeep);
-
 }
 
 // records how far the y axis has been scrolled
@@ -432,8 +390,6 @@ int main(void)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
 	LoadMainAsset();
-	LoadSecondAsset();
-	LoadThirdAsset();
 
 	CreateInstances();
 
