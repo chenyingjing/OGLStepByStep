@@ -18,6 +18,8 @@
 
 #include "mesh.h"
 
+#define NUM_ROWS 10
+#define NUM_COLUMNS 10
 
 #define MAX_PARTICLES 1000
 #define PARTICLE_LIFETIME 10.0f
@@ -26,12 +28,8 @@
 #define PARTICLE_TYPE_SHELL 1.0f
 #define PARTICLE_TYPE_SECONDARY_SHELL 2.0f
 
-#define WINDOW_WIDTH  800
-#define WINDOW_HEIGHT 600
-
-#define NUM_ROWS 50
-#define NUM_COLS 20
-#define NUM_INSTANCES NUM_ROWS * NUM_COLS
+#define WINDOW_WIDTH  1200
+#define WINDOW_HEIGHT 900
 
 struct Particle
 {
@@ -79,8 +77,6 @@ struct ModelInstance {
 	ModelAsset* asset;
 	glm::mat4 transform;
 	glm::mat4 originalTransform;
-	Vector3f m_positions[NUM_INSTANCES];
-	float m_velocity[NUM_INSTANCES];
 };
 
 struct Light {
@@ -94,21 +90,11 @@ struct Light {
 
 ModelAsset gTank;
 ModelAsset gHheli;
-ModelAsset gSpider;
+ModelAsset gJeep;
 
 std::list<ModelInstance> gInstances;
 
 std::vector<Light> gLights;
-
-template <typename T>
-void SetColorUniform(tdogl::Program* shaders, size_t colorIndex, const T& value) {
-	std::ostringstream ss;
-	ss << "gColor[" << colorIndex << "]";
-	std::string uniformName = ss.str();
-
-	shaders->setUniform(uniformName.c_str(), value);
-}
-
 
 static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFile2) {
 	std::vector<tdogl::Shader> shaders;
@@ -141,19 +127,41 @@ static tdogl::Texture* LoadTexture(const char *textureFile) {
 }
 
 static void LoadMainAsset() {
+	//gTank.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.cs", "shader/lighting.es", "shader/lighting.fs");
+	gTank.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.fs");
+    //gTank.drawType = GL_TRIANGLES;
+    //gTank.drawStart = 0;
+    //gTank.drawCount = 2 * 3;
+    //gTank.texture = LoadTexture("diffuse.png");
+    //gTank.displacementTexture = LoadTexture("heightmap.png");
+    gTank.shininess = 80.0;
+    gTank.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    
+    //glGenVertexArrays(1, &gTank.vao);
+    //glBindVertexArray(gTank.vao);
 
-	gSpider.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.fs");
-	gSpider.shininess = 80.0;
-	gSpider.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+	gTank.mesh.LoadMesh("../../../Content/phoenix_ugv.md2");
 
-	gSpider.mesh.LoadMesh("../../../Content/spider.obj");
 
-	gSpider.shaders->use();
-	SetColorUniform(gSpider.shaders, 0, glm::vec4(1.0f, 0.5f, 0.5f, 1.0f));
-	SetColorUniform(gSpider.shaders, 1, glm::vec4(0.5f, 1.0f, 1.0f, 1.0f));
-	SetColorUniform(gSpider.shaders, 2, glm::vec4(1.0f, 0.5f, 1.0f, 1.0f));
-	SetColorUniform(gSpider.shaders, 3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-	gSpider.shaders->stopUsing();
+}
+
+static void LoadSecondAsset() {
+
+	gHheli.shaders = gTank.shaders;// LoadShaders("shader/lighting.vs", "shader/lighting.fs");
+	gHheli.shininess = 80.0;
+	gHheli.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+
+	gHheli.mesh.LoadMesh("../../../Content/hheli.obj");
+
+}
+
+static void LoadThirdAsset() {
+
+	gJeep.shaders = gTank.shaders;// LoadShaders("shader/lighting.vs", "shader/lighting.fs");
+	gJeep.shininess = 80.0;
+	gJeep.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+
+	gJeep.mesh.LoadMesh("../../../Content/jeep.obj");
 
 }
 
@@ -169,32 +177,33 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 	return glm::scale(glm::mat4(), glm::vec3(x, y, z));
 }
 
-void CalcPositions(ModelInstance &instance)
-{
-	for (unsigned int i = 0; i < NUM_ROWS; i++) {
-		for (unsigned int j = 0; j < NUM_COLS; j++) {
-			unsigned int Index = i * NUM_COLS + j;
-			instance.m_positions[Index].x = (float)j;
-			instance.m_positions[Index].y = RandomFloat() * 5.0f;
-			instance.m_positions[Index].z = (float)i;
-			instance.m_velocity[Index] = RandomFloat();
-			if (i & 1) {
-				instance.m_velocity[Index] *= (-1.0f);
-			}
-		}
-	}
-}
-
 static void CreateInstances() {
+    ModelInstance tank;
+    tank.asset = &gTank;
+    float groundScale = 0.1;
+    //glm::mat4 rotateMat = glm::rotate(glm::mat4(), glm::radians(180.0f), glm::vec3(0, 0, 1));
+    //rotateMat = glm::rotate(rotateMat, glm::radians(90.0f), glm::vec3(1, 0, 0));
+    //glm::mat4 rotateMat1 = translate(-1.5, 0, 0) * glm::rotate(rotateMat, glm::radians(15.0f), glm::vec3(0, 0, 1));
+    tank.transform = tank.originalTransform = translate(-6, -2, -10) * scale(groundScale, groundScale, groundScale);
+    gInstances.push_back(tank);
+    
+    //ModelInstance monkey1;
+    //monkey1.asset = &gTank;
+    //glm::mat4 rotateMat2 = translate(1.5, 0, 0) * glm::rotate(rotateMat, glm::radians(-15.0f), glm::vec3(0, 0, 1));
+    //monkey1.transform = rotateMat2;
+    //gInstances.push_back(monkey1);
 
-	ModelInstance spider;
-	spider.asset = &gSpider;
-	float groundScale = 0.01f;
-	spider.transform = spider.originalTransform = translate(0, 6, -10) * glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(0, 1, 0)) *scale(groundScale, groundScale, groundScale);
-	//spider.transform = spider.originalTransform = glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(0, 1, 0)) *scale(groundScale, groundScale, groundScale);
-	CalcPositions(spider);
+	ModelInstance hheli;
+	hheli.asset = &gHheli;
+	groundScale = 0.04f;
+	hheli.transform = hheli.originalTransform = translate(6, -2, -10) *scale(groundScale, groundScale, groundScale);
+	gInstances.push_back(hheli);
 
-	gInstances.push_back(spider);
+	ModelInstance jeep;
+	jeep.asset = &gJeep;
+	groundScale = 0.01f;
+	jeep.transform = jeep.originalTransform = translate(0, 6, -10) *scale(groundScale, groundScale, groundScale);
+	gInstances.push_back(jeep);
 
 }
 
@@ -209,9 +218,9 @@ void Update(float secondsElapsed, GLFWwindow* window) {
 	gDegreesRotated += secondsElapsed * degreesPerSecond;
 	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
 	//gInstances.front().transform = translate(-6, -2, -10) * scale(0.1, 0.1, 0.1) * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));
-	//for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
-	//	it->transform = it->originalTransform * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));;
-	//}
+	for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
+		it->transform = it->originalTransform * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));;
+	}
 
 	//move position of camera based on WASD keys
 	const float moveSpeed = 4.0; //units per second
@@ -311,7 +320,6 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     shaders->setUniform(uniformName.c_str(), value);
 }
 
-
 static void RenderInstance(const ModelInstance& inst) {
     ModelAsset* asset = inst.asset;
     tdogl::Program* shaders = asset->shaders;
@@ -336,33 +344,15 @@ static void RenderInstance(const ModelInstance& inst) {
     shaders->setUniform("cameraPosition", gCamera.position());
     
     //set the shader uniforms
-    //shaders->setUniform("camera", gCamera.matrix());
-    //shaders->setUniform("model", inst.transform);
+    shaders->setUniform("camera", gCamera.matrix());
+    shaders->setUniform("model", inst.transform);
     shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
     //shaders->setUniform("gDisplacementMap", 4); //set to 4 because the texture will be bound to GL_TEXTURE4
     
     shaders->setUniform("materialShininess", asset->shininess);
     shaders->setUniform("materialSpecularColor", asset->specularColor);
-   
-	glm::mat4 WVPMatrics[NUM_INSTANCES];
-	glm::mat4 WorldMatrices[NUM_INSTANCES];
-
-	glm::mat4 model;
-
-	static float m_scale = 0;
-	m_scale += 0.005f;
-
-	for (unsigned int i = 0; i < NUM_INSTANCES; i++) {
-		Vector3f Pos(inst.m_positions[i]);
-		Pos.y += sinf(m_scale) * inst.m_velocity[i];
-		
-		model = translate(Pos.x, Pos.y, Pos.z) * inst.originalTransform;
-		WVPMatrics[i] = gCamera.matrix() * model;//p.GetWVPTrans().Transpose();
-		WorldMatrices[i] = model;//p.GetWorldTrans().Transpose();
-	}
-
-	asset->mesh.Render(NUM_INSTANCES, WVPMatrics, WorldMatrices);
-
+    
+	asset->mesh.Render();
     
     shaders->stopUsing();
 }
@@ -442,18 +432,19 @@ int main(void)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
 	LoadMainAsset();
+	LoadSecondAsset();
+	LoadThirdAsset();
 
 	CreateInstances();
 
-	glClearColor(0.196078431372549f, 0.3137254901960784f, 0.5882352941176471f, 1);
-	//glClearColor(0.0f, 0.0f, 0.0f, 1);
+	//glClearColor(0.196078431372549f, 0.3137254901960784f, 0.5882352941176471f, 1);
+	glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
-	//gCamera.setPosition(glm::vec3(7, 3, 0));
-	gCamera.setPosition(glm::vec3(3, 7, 0));
+    gCamera.setPosition(glm::vec3(3, 7, 20));
 	gCamera.offsetOrientation(10, 0);
 	gCamera.setViewportAspectRatio((float)WINDOW_WIDTH / (float)WINDOW_HEIGHT);
-	gCamera.setNearAndFarPlanes(0.01f, 1000.0f);
+	gCamera.setNearAndFarPlanes(0.5f, 100.0f);
     
     Light directionalLight;
     directionalLight.position = glm::vec4(1, 0.8, 0.6, 0); //w == 0 indications a directional light

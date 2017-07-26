@@ -60,7 +60,7 @@ public:
 
     bool LoadMesh(const std::string& Filename);
 
-	//void Render(unsigned int NumInstances, const Matrix4f* WVPMats, const Matrix4f* WorldMats);
+	void Render();
 	void Render(unsigned int NumInstances, const glm::mat4* WVPMats, const glm::mat4* WorldMats);
 
 private:
