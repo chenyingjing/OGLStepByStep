@@ -308,7 +308,8 @@ static void RenderInstance(const ModelInstance& inst) {
     //set the shader uniforms
     shaders->setUniform("camera", gCamera.matrix());
     shaders->setUniform("model", inst.transform);
-    shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+    //shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+	shaders->setUniform("gColorMap", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
     //shaders->setUniform("gDisplacementMap", 4); //set to 4 because the texture will be bound to GL_TEXTURE4
     
     shaders->setUniform("materialShininess", asset->shininess);
@@ -338,27 +339,27 @@ void DSGeometryPassInstance(const ModelInstance& inst) {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	shaders->setUniform("numLights", (int)gLights.size());
+	//shaders->setUniform("numLights", (int)gLights.size());
 
-	for (size_t i = 0; i < gLights.size(); ++i) {
-		SetLightUniform(shaders, "position", i, gLights[i].position);
-		SetLightUniform(shaders, "intensities", i, gLights[i].intensities);
-		SetLightUniform(shaders, "attenuation", i, gLights[i].attenuation);
-		SetLightUniform(shaders, "ambientCoefficient", i, gLights[i].ambientCoefficient);
-		SetLightUniform(shaders, "coneAngle", i, gLights[i].coneAngle);
-		SetLightUniform(shaders, "coneDirection", i, gLights[i].coneDirection);
-	}
+	//for (size_t i = 0; i < gLights.size(); ++i) {
+	//	SetLightUniform(shaders, "position", i, gLights[i].position);
+	//	SetLightUniform(shaders, "intensities", i, gLights[i].intensities);
+	//	SetLightUniform(shaders, "attenuation", i, gLights[i].attenuation);
+	//	SetLightUniform(shaders, "ambientCoefficient", i, gLights[i].ambientCoefficient);
+	//	SetLightUniform(shaders, "coneAngle", i, gLights[i].coneAngle);
+	//	SetLightUniform(shaders, "coneDirection", i, gLights[i].coneDirection);
+	//}
 
-	shaders->setUniform("cameraPosition", gCamera.position());
+	//shaders->setUniform("cameraPosition", gCamera.position());
 
 	//set the shader uniforms
-	shaders->setUniform("camera", gCamera.matrix());
 	shaders->setUniform("model", inst.transform);
-	shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+	shaders->setUniform("camera", gCamera.matrix());
+	shaders->setUniform("gColorMap", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
 										   //shaders->setUniform("gDisplacementMap", 4); //set to 4 because the texture will be bound to GL_TEXTURE4
 
-	shaders->setUniform("materialShininess", asset->shininess);
-	shaders->setUniform("materialSpecularColor", asset->specularColor);
+	//shaders->setUniform("materialShininess", asset->shininess);
+	//shaders->setUniform("materialSpecularColor", asset->specularColor);
 
 	asset->mesh.Render();
 
