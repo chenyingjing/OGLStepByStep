@@ -178,6 +178,7 @@
 		23F896A11F2C30190079DA89 /* jeep_rood.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 23F8969D1F2C30190079DA89 /* jeep_rood.jpg */; };
 		23F896A21F2C30190079DA89 /* jeep.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23F8969E1F2C30190079DA89 /* jeep.mtl */; };
 		23F896A31F2C30190079DA89 /* jeep.obj in Resources */ = {isa = PBXBuildFile; fileRef = 23F8969F1F2C30190079DA89 /* jeep.obj */; };
+		23F896A61F2C48220079DA89 /* gbuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23F896A41F2C48220079DA89 /* gbuffer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -558,6 +559,8 @@
 		23F8969D1F2C30190079DA89 /* jeep_rood.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jeep_rood.jpg; sourceTree = "<group>"; };
 		23F8969E1F2C30190079DA89 /* jeep.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jeep.mtl; sourceTree = "<group>"; };
 		23F8969F1F2C30190079DA89 /* jeep.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jeep.obj; sourceTree = "<group>"; };
+		23F896A41F2C48220079DA89 /* gbuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gbuffer.cpp; sourceTree = "<group>"; };
+		23F896A51F2C48220079DA89 /* gbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gbuffer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -599,6 +602,8 @@
 		23F894461F2C25FE0079DA89 /* SBS35 */ = {
 			isa = PBXGroup;
 			children = (
+				23F896A41F2C48220079DA89 /* gbuffer.cpp */,
+				23F896A51F2C48220079DA89 /* gbuffer.h */,
 				23F8945B1F2C269F0079DA89 /* asset */,
 				23F894631F2C269F0079DA89 /* assimp */,
 				23F894991F2C26A00079DA89 /* filePath.h */,
@@ -1368,6 +1373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23F896A61F2C48220079DA89 /* gbuffer.cpp in Sources */,
 				23F896821F2C26A00079DA89 /* math_3d.cpp in Sources */,
 				23F8968D1F2C26A00079DA89 /* Shader.cpp in Sources */,
 				23F895F21F2C26A00079DA89 /* glew.c in Sources */,

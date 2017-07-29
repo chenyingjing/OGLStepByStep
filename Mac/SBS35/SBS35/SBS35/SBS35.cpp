@@ -17,6 +17,8 @@
 #include <string>
 #include "mesh.h"
 
+#include "gbuffer.h"
+
 #define WINDOW_WIDTH  1200
 #define WINDOW_HEIGHT 900
 
@@ -66,6 +68,8 @@ std::list<ModelInstance> gInstances;
 
 std::vector<Light> gLights;
 
+GBuffer m_gbuffer;
+
 template <typename T>
 void SetColorUniform(tdogl::Program* shaders, size_t colorIndex, const T& value) {
     std::ostringstream ss;
@@ -108,22 +112,6 @@ glm::mat4 translate(GLfloat x, GLfloat y, GLfloat z) {
 glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 	return glm::scale(glm::mat4(), glm::vec3(x, y, z));
 }
-
-//void CalcPositions(ModelInstance &instance)
-//{
-//    for (unsigned int i = 0; i < NUM_ROWS; i++) {
-//        for (unsigned int j = 0; j < NUM_COLS; j++) {
-//            unsigned int Index = i * NUM_COLS + j;
-//            instance.m_positions[Index].x = (float)j;
-//            instance.m_positions[Index].y = RandomFloat() * 5.0f;
-//            instance.m_positions[Index].z = (float)i;
-//            instance.m_velocity[Index] = RandomFloat();
-//            if (i & 1) {
-//                instance.m_velocity[Index] *= (-1.0f);
-//            }
-//        }
-//    }
-//}
 
 static void CreateInstances() {
 	ModelInstance jeep;
@@ -289,17 +277,92 @@ static void RenderInstance(const ModelInstance& inst) {
 	shaders->stopUsing();
 }
 
+bool Init()
+{
+    if (!m_gbuffer.Init(WINDOW_WIDTH, WINDOW_HEIGHT)) {
+        return false;
+    }
+    return true;
+}
+
+void DSGeometryPassInstance(const ModelInstance& inst) {
+    ModelAsset* asset = inst.asset;
+    tdogl::Program* shaders = asset->shaders;
+    
+    //bind the shaders
+    shaders->use();
+    
+    m_gbuffer.BindForWriting();
+    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    //shaders->setUniform("numLights", (int)gLights.size());
+    
+    //for (size_t i = 0; i < gLights.size(); ++i) {
+    //	SetLightUniform(shaders, "position", i, gLights[i].position);
+    //	SetLightUniform(shaders, "intensities", i, gLights[i].intensities);
+    //	SetLightUniform(shaders, "attenuation", i, gLights[i].attenuation);
+    //	SetLightUniform(shaders, "ambientCoefficient", i, gLights[i].ambientCoefficient);
+    //	SetLightUniform(shaders, "coneAngle", i, gLights[i].coneAngle);
+    //	SetLightUniform(shaders, "coneDirection", i, gLights[i].coneDirection);
+    //}
+    
+    //shaders->setUniform("cameraPosition", gCamera.position());
+    
+    //set the shader uniforms
+    shaders->setUniform("model", inst.transform);
+    shaders->setUniform("camera", gCamera.matrix());
+    shaders->setUniform("gColorMap", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+    //shaders->setUniform("gDisplacementMap", 4); //set to 4 because the texture will be bound to GL_TEXTURE4
+    
+    //shaders->setUniform("materialShininess", asset->shininess);
+    //shaders->setUniform("materialSpecularColor", asset->specularColor);
+    
+    asset->mesh.Render();
+    
+    shaders->stopUsing();
+}
+
+void DSGeometryPass()
+{
+    for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
+        DSGeometryPassInstance(*it);
+    }
+}
+
+void DSLightPass()
+{
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    m_gbuffer.BindForReading();
+    
+    GLint HalfWidth = (GLint)(WINDOW_WIDTH / 2.0f);
+    GLint HalfHeight = (GLint)(WINDOW_HEIGHT / 2.0f);
+    
+
+    m_gbuffer.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_POSITION);
+    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, HalfWidth, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+    
+    m_gbuffer.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
+    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0, HalfHeight, HalfWidth, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+    
+    m_gbuffer.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
+    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, HalfWidth, HalfHeight, WINDOW_WIDTH, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+    
+    m_gbuffer.SetReadBuffer(GBuffer::GBUFFER_TEXTURE_TYPE_TEXCOORD);
+    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, HalfWidth, 0, WINDOW_WIDTH, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+}
+
+
 void Render(GLFWwindow* window)
 {
-	// clear everything
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	std::list<ModelInstance>::const_iterator it;
-	for (it = gInstances.begin(); it != gInstances.end(); ++it) {
-		RenderInstance(*it);
-	}
-
-	glfwSwapBuffers(window);
+    DSGeometryPass();
+    DSLightPass();
+    
+    glfwSwapBuffers(window);
 }
 
 int main(void)
@@ -352,8 +415,11 @@ int main(void)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	LoadMainAsset();
-
+    if (!Init()) {
+        return -1;
+    }
+    
+    LoadMainAsset();
 	CreateInstances();
 
 	//glClearColor(0.196078431372549f, 0.3137254901960784f, 0.5882352941176471f, 1);
