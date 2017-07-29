@@ -151,7 +151,7 @@
 		23FB52051F2349C400A5A083 /* model.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23FB514D1F2349C300A5A083 /* model.mtl */; };
 		23FB52061F2349C400A5A083 /* model.obj in Resources */ = {isa = PBXBuildFile; fileRef = 23FB514E1F2349C300A5A083 /* model.obj */; };
 		23FB52071F2349C400A5A083 /* momo.png in Resources */ = {isa = PBXBuildFile; fileRef = 23FB514F1F2349C300A5A083 /* momo.png */; };
-		23FB52091F2349C400A5A083 /* SBS22.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23FB51561F2349C300A5A083 /* SBS22.cpp */; };
+		23FB52091F2349C400A5A083 /* SBS32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23FB51561F2349C300A5A083 /* SBS32.cpp */; };
 		23FB520A1F2349C400A5A083 /* Bitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23FB51591F2349C300A5A083 /* Bitmap.cpp */; };
 		23FB520B1F2349C400A5A083 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23FB515B1F2349C300A5A083 /* Camera.cpp */; };
 		23FB520C1F2349C400A5A083 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23FB515D1F2349C300A5A083 /* Program.cpp */; };
@@ -525,7 +525,7 @@
 		23FB51511F2349C300A5A083 /* ogldev_math_3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_math_3d.h; sourceTree = "<group>"; };
 		23FB51541F2349C300A5A083 /* ogldev_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_types.h; sourceTree = "<group>"; };
 		23FB51551F2349C300A5A083 /* ogldev_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_util.h; sourceTree = "<group>"; };
-		23FB51561F2349C300A5A083 /* SBS22.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SBS22.cpp; sourceTree = "<group>"; };
+		23FB51561F2349C300A5A083 /* SBS32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SBS32.cpp; sourceTree = "<group>"; };
 		23FB51571F2349C300A5A083 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		23FB51591F2349C300A5A083 /* Bitmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bitmap.cpp; sourceTree = "<group>"; };
 		23FB515A1F2349C300A5A083 /* Bitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bitmap.h; sourceTree = "<group>"; };
@@ -606,7 +606,7 @@
 				23FB514B1F2349C300A5A083 /* mesh.h */,
 				23FB514C1F2349C300A5A083 /* momo */,
 				23FB51501F2349C300A5A083 /* ogldev */,
-				23FB51561F2349C300A5A083 /* SBS22.cpp */,
+				23FB51561F2349C300A5A083 /* SBS32.cpp */,
 				23FB51571F2349C300A5A083 /* stb_image.h */,
 				23FB51581F2349C300A5A083 /* tdogl */,
 				23FB51631F2349C300A5A083 /* vertex-shader.txt */,
@@ -1347,7 +1347,7 @@
 			files = (
 				23FB520C1F2349C400A5A083 /* Program.cpp in Sources */,
 				23FB520A1F2349C400A5A083 /* Bitmap.cpp in Sources */,
-				23FB52091F2349C400A5A083 /* SBS22.cpp in Sources */,
+				23FB52091F2349C400A5A083 /* SBS32.cpp in Sources */,
 				23FB520B1F2349C400A5A083 /* Camera.cpp in Sources */,
 				23FB51721F2349C300A5A083 /* glew.c in Sources */,
 				23FB520D1F2349C400A5A083 /* Shader.cpp in Sources */,

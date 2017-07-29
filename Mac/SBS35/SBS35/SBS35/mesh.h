@@ -63,7 +63,7 @@ public:
     bool LoadMesh(const std::string& Filename);
 
     void Render(unsigned int NumInstances, const glm::mat4* WVPMats, const glm::mat4* WorldMats);
-
+    void Render();
 private:
     bool InitFromScene(const aiScene* pScene, const std::string& Filename);
     void InitMesh(const aiMesh* paiMesh,

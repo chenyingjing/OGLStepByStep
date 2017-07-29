@@ -158,7 +158,7 @@
 		23F896841F2C26A00079DA89 /* model.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23F895C81F2C26A00079DA89 /* model.mtl */; };
 		23F896851F2C26A00079DA89 /* model.obj in Resources */ = {isa = PBXBuildFile; fileRef = 23F895C91F2C26A00079DA89 /* model.obj */; };
 		23F896861F2C26A00079DA89 /* momo.png in Resources */ = {isa = PBXBuildFile; fileRef = 23F895CA1F2C26A00079DA89 /* momo.png */; };
-		23F896871F2C26A00079DA89 /* SBS33.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23F895CF1F2C26A00079DA89 /* SBS33.cpp */; };
+		23F896871F2C26A00079DA89 /* SBS35.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23F895CF1F2C26A00079DA89 /* SBS35.cpp */; };
 		23F896881F2C26A00079DA89 /* lighting.fs in Resources */ = {isa = PBXBuildFile; fileRef = 23F895D11F2C26A00079DA89 /* lighting.fs */; };
 		23F896891F2C26A00079DA89 /* lighting.vs in Resources */ = {isa = PBXBuildFile; fileRef = 23F895D21F2C26A00079DA89 /* lighting.vs */; };
 		23F8968A1F2C26A00079DA89 /* Bitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23F895D51F2C26A00079DA89 /* Bitmap.cpp */; };
@@ -174,6 +174,10 @@
 		23F896971F2C28440079DA89 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F896961F2C28440079DA89 /* CoreVideo.framework */; };
 		23F896991F2C28540079DA89 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F896981F2C28540079DA89 /* OpenGL.framework */; };
 		23F8969B1F2C28610079DA89 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F8969A1F2C28610079DA89 /* IOKit.framework */; };
+		23F896A01F2C30190079DA89 /* jeep_army.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 23F8969C1F2C30190079DA89 /* jeep_army.jpg */; };
+		23F896A11F2C30190079DA89 /* jeep_rood.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 23F8969D1F2C30190079DA89 /* jeep_rood.jpg */; };
+		23F896A21F2C30190079DA89 /* jeep.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 23F8969E1F2C30190079DA89 /* jeep.mtl */; };
+		23F896A31F2C30190079DA89 /* jeep.obj in Resources */ = {isa = PBXBuildFile; fileRef = 23F8969F1F2C30190079DA89 /* jeep.obj */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -532,7 +536,7 @@
 		23F895CC1F2C26A00079DA89 /* ogldev_math_3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_math_3d.h; sourceTree = "<group>"; };
 		23F895CD1F2C26A00079DA89 /* ogldev_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_types.h; sourceTree = "<group>"; };
 		23F895CE1F2C26A00079DA89 /* ogldev_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_util.h; sourceTree = "<group>"; };
-		23F895CF1F2C26A00079DA89 /* SBS33.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SBS33.cpp; sourceTree = "<group>"; };
+		23F895CF1F2C26A00079DA89 /* SBS35.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SBS35.cpp; sourceTree = "<group>"; };
 		23F895D11F2C26A00079DA89 /* lighting.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.fs; sourceTree = "<group>"; };
 		23F895D21F2C26A00079DA89 /* lighting.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.vs; sourceTree = "<group>"; };
 		23F895D31F2C26A00079DA89 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
@@ -550,6 +554,10 @@
 		23F896961F2C28440079DA89 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		23F896981F2C28540079DA89 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		23F8969A1F2C28610079DA89 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		23F8969C1F2C30190079DA89 /* jeep_army.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jeep_army.jpg; sourceTree = "<group>"; };
+		23F8969D1F2C30190079DA89 /* jeep_rood.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jeep_rood.jpg; sourceTree = "<group>"; };
+		23F8969E1F2C30190079DA89 /* jeep.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jeep.mtl; sourceTree = "<group>"; };
+		23F8969F1F2C30190079DA89 /* jeep.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jeep.obj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -606,7 +614,7 @@
 				23F895C61F2C26A00079DA89 /* mesh.h */,
 				23F895C71F2C26A00079DA89 /* momo */,
 				23F895CB1F2C26A00079DA89 /* ogldev */,
-				23F895CF1F2C26A00079DA89 /* SBS33.cpp */,
+				23F895CF1F2C26A00079DA89 /* SBS35.cpp */,
 				23F895D01F2C26A00079DA89 /* shader */,
 				23F895D31F2C26A00079DA89 /* stb_image.h */,
 				23F895D41F2C26A00079DA89 /* tdogl */,
@@ -617,6 +625,10 @@
 		23F8945B1F2C269F0079DA89 /* asset */ = {
 			isa = PBXGroup;
 			children = (
+				23F8969C1F2C30190079DA89 /* jeep_army.jpg */,
+				23F8969D1F2C30190079DA89 /* jeep_rood.jpg */,
+				23F8969E1F2C30190079DA89 /* jeep.mtl */,
+				23F8969F1F2C30190079DA89 /* jeep.obj */,
 				23F8945C1F2C269F0079DA89 /* drkwood2.png */,
 				23F8945D1F2C269F0079DA89 /* engineflare1.png */,
 				23F8945E1F2C269F0079DA89 /* spider.mtl */,
@@ -1268,6 +1280,7 @@
 				23F896381F2C26A00079DA89 /* gradient_paint.inl in Resources */,
 				23F896431F2C26A00079DA89 /* matrix_operation.inl in Resources */,
 				23F8961F1F2C26A00079DA89 /* noise.inl in Resources */,
+				23F896A11F2C30190079DA89 /* jeep_rood.jpg in Resources */,
 				23F895EC1F2C26A00079DA89 /* vector2.inl in Resources */,
 				23F896001F2C26A00079DA89 /* intrinsic_matrix.inl in Resources */,
 				23F895E01F2C26A00079DA89 /* engineflare1.png in Resources */,
@@ -1289,6 +1302,7 @@
 				23F896141F2C26A00079DA89 /* type_vec4_avx.inl in Resources */,
 				23F8960D1F2C26A00079DA89 /* type_mat4x3.inl in Resources */,
 				23F895FD1F2C26A00079DA89 /* intrinsic_exponential.inl in Resources */,
+				23F896A01F2C30190079DA89 /* jeep_army.jpg in Resources */,
 				23F895F61F2C26A00079DA89 /* func_geometric.inl in Resources */,
 				23F896331F2C26A00079DA89 /* extend.inl in Resources */,
 				23F895F51F2C26A00079DA89 /* func_exponential.inl in Resources */,
@@ -1314,6 +1328,7 @@
 				23F8961A1F2C26A00079DA89 /* epsilon.inl in Resources */,
 				23F896201F2C26A00079DA89 /* packing.inl in Resources */,
 				23F896051F2C26A00079DA89 /* type_mat.inl in Resources */,
+				23F896A31F2C30190079DA89 /* jeep.obj in Resources */,
 				23F896161F2C26A00079DA89 /* type_vec4_sse2.inl in Resources */,
 				23F896741F2C26A00079DA89 /* libpng16.la in Resources */,
 				23F896271F2C26A00079DA89 /* ulp.inl in Resources */,
@@ -1342,6 +1357,7 @@
 				23F8966D1F2C26A00079DA89 /* libMagickCore-7.Q16HDRI.la in Resources */,
 				23F895E11F2C26A00079DA89 /* spider.mtl in Resources */,
 				23F896191F2C26A00079DA89 /* constants.inl in Resources */,
+				23F896A21F2C30190079DA89 /* jeep.mtl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1361,7 +1377,7 @@
 				23F8968C1F2C26A00079DA89 /* Program.cpp in Sources */,
 				23F896831F2C26A00079DA89 /* mesh.cpp in Sources */,
 				23F895F11F2C26A00079DA89 /* filePath.mm in Sources */,
-				23F896871F2C26A00079DA89 /* SBS33.cpp in Sources */,
+				23F896871F2C26A00079DA89 /* SBS35.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

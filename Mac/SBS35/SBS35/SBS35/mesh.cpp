@@ -253,6 +253,32 @@ bool Mesh::InitMaterials(const aiScene* pScene, const std::string& Filename)
     return Ret;
 }
 
+void Mesh::Render()
+{
+    glBindVertexArray(m_VAO);
+    
+    for (unsigned int i = 0 ; i < m_Entries.size() ; i++) {
+        const unsigned int MaterialIndex = m_Entries[i].MaterialIndex;
+        
+        assert(MaterialIndex < m_Textures.size());
+        
+        if (m_Textures[MaterialIndex]) {
+            //m_Textures[MaterialIndex]->Bind(GL_TEXTURE0);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, m_Textures[MaterialIndex]->object());
+        }
+        
+        glDrawElementsBaseVertex(GL_TRIANGLES,
+                                 m_Entries[i].NumIndices,
+                                 GL_UNSIGNED_INT,
+                                 (void*)(sizeof(unsigned int) * m_Entries[i].BaseIndex),
+                                 m_Entries[i].BaseVertex);
+    }
+    
+    // Make sure the VAO is not changed from the outside
+    glBindVertexArray(0);
+}
+
 void Mesh::Render(unsigned int NumInstances, const glm::mat4* WVPMats, const glm::mat4* WorldMats)
 {
     glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[WVP_MAT_VB]);
