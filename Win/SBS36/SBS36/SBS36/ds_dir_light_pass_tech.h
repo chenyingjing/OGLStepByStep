@@ -15,42 +15,30 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GBUFFER_H
-#define	GBUFFER_H
+#ifndef DS_DIR_LIGHT_PASS_TECH_H
+#define	DS_DIR_LIGHT_PASS_TECH_H
 
-#include <GL/glew.h>
+#include "ds_light_pass_tech.h"
+#include "ogldev_lights_common.h"
 
-#define GBUFFER_POSITION_TEXTURE_UNIT 0
-#define GBUFFER_DIFFUSE_TEXTURE_UNIT  1
-#define GBUFFER_NORMAL_TEXTURE_UNIT   2
-
-class GBuffer
-{
+class DSDirLightPassTech : public DSLightPassTech {
 public:
 
-	enum GBUFFER_TEXTURE_TYPE {
-		GBUFFER_TEXTURE_TYPE_POSITION,
-		GBUFFER_TEXTURE_TYPE_DIFFUSE,
-		GBUFFER_TEXTURE_TYPE_NORMAL,
-		GBUFFER_NUM_TEXTURES
-	};
+    DSDirLightPassTech();
+    
+    virtual bool Init();
 
-    GBuffer();
-
-    ~GBuffer();
-
-    bool Init(unsigned int WindowWidth, unsigned int WindowHeight);
-
-    void BindForWriting();
-
-    void BindForReading();  
+    void SetDirectionalLight(const DirectionalLight& Light);
 
 private:
 
-    GLuint m_fbo;
-    GLuint m_textures[GBUFFER_NUM_TEXTURES];
-    GLuint m_depthTexture;
+    struct {
+        GLuint Color;
+        GLuint AmbientIntensity;
+        GLuint DiffuseIntensity;
+        GLuint Direction;
+    } m_dirLightLocation;
 };
 
-#endif	/* SHADOWMAPFBO_H */
 
+#endif

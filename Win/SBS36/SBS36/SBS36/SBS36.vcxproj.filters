@@ -90,6 +90,15 @@
     <ClCompile Include="..\..\..\Common\technique.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="ds_dir_light_pass_tech.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ds_light_pass_tech.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ds_point_light_pass_tech.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ds_geom_pass_tech.h">
@@ -98,12 +107,30 @@
     <ClInclude Include="gbuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ds_dir_light_pass_tech.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ds_light_pass_tech.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ds_point_light_pass_tech.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\geometry_pass.fs">
       <Filter>shaders</Filter>
     </None>
     <None Include="shaders\geometry_pass.vs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\dir_light_pass.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\light_pass.vs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\point_light_pass.fs">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

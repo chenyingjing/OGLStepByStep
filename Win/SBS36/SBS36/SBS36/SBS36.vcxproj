@@ -96,7 +96,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Include\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <AdditionalDependencies>glew32.lib;CORE_DB_Magick++_.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -133,7 +133,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Include\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -184,17 +184,26 @@
     <ClCompile Include="..\..\..\Common\pipeline.cpp" />
     <ClCompile Include="..\..\..\Common\random_texture.cpp" />
     <ClCompile Include="..\..\..\Common\technique.cpp" />
+    <ClCompile Include="ds_dir_light_pass_tech.cpp" />
     <ClCompile Include="ds_geom_pass_tech.cpp" />
+    <ClCompile Include="ds_light_pass_tech.cpp" />
+    <ClCompile Include="ds_point_light_pass_tech.cpp" />
     <ClCompile Include="gbuffer.cpp" />
     <ClCompile Include="SBS36.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ds_dir_light_pass_tech.h" />
     <ClInclude Include="ds_geom_pass_tech.h" />
+    <ClInclude Include="ds_light_pass_tech.h" />
+    <ClInclude Include="ds_point_light_pass_tech.h" />
     <ClInclude Include="gbuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\dir_light_pass.fs" />
     <None Include="shaders\geometry_pass.fs" />
     <None Include="shaders\geometry_pass.vs" />
+    <None Include="shaders\light_pass.vs" />
+    <None Include="shaders\point_light_pass.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
