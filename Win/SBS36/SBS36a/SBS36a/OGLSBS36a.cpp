@@ -245,7 +245,7 @@ static void CreateInstances() {
 static void CreateLightInstances() {
 	LightInstance light1;
 	light1.asset = &gLight1;
-	light1.transform = translate(0.0f, 0.0f, 0.0f);
+	light1.transform = translate(gLight1.light.position.x, gLight1.light.position.y, gLight1.light.position.z);
 	gLightInstances.push_back(light1);
 
 	//LightInstance light2;
@@ -512,10 +512,19 @@ void DSPointLightsPassInstance(const LightInstance& inst) {
 	//bind the shaders
 	shaders->use();
 	shaders->setUniform("gEyeWorldPos", gCamera.position());
-	shaders->setUniform("gColorMap", 1);
 	
+	shaders->setUniform("gPositionMap", 0);
+	shaders->setUniform("gColorMap", 1);
+	shaders->setUniform("gNormalMap", 2);
 	shaders->setUniform("gScreenSize", (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
 	
+	shaders->setUniform("gPointLight.Base.Color", asset->light.intensities.r, asset->light.intensities.g, asset->light.intensities.b);
+	shaders->setUniform("gPointLight.Base.AmbientIntensity", asset->light.ambientCoefficient);
+	shaders->setUniform("gPointLight.Position", asset->light.position.x, asset->light.position.y, asset->light.position.z);
+	shaders->setUniform("gPointLight.Base.DiffuseIntensity", 1.0f);
+	shaders->setUniform("gPointLight.Atten.Constant", 1.0f);
+	shaders->setUniform("gPointLight.Atten.Linear", 0.0f);
+	shaders->setUniform("gPointLight.Atten.Exp", asset->light.attenuation);
 	//shaders->setUniform("camera", gCamera.matrix());
 	//shaders->setUniform("model", inst.transform);
 	float BSphereScale = CalcPointLightBSphere(*asset);// m_pointLight[i]);
