@@ -88,10 +88,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader\lighting.fs">
+    <None Include="shader\geometry_pass.vs">
       <Filter>shader</Filter>
     </None>
-    <None Include="shader\lighting.vs">
+    <None Include="shader\geometry_pass.fs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\dir_light_pass.fs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\light_pass.vs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\point_light_pass.fs">
       <Filter>shader</Filter>
     </None>
   </ItemGroup>

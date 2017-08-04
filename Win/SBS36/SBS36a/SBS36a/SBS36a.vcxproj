@@ -96,7 +96,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Include\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;CORE_DB_Magick++_.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -133,7 +133,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Include\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -188,8 +188,11 @@
     <ClCompile Include="tdogl\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader\lighting.fs" />
-    <None Include="shader\lighting.vs" />
+    <None Include="shader\dir_light_pass.fs" />
+    <None Include="shader\geometry_pass.fs" />
+    <None Include="shader\geometry_pass.vs" />
+    <None Include="shader\light_pass.vs" />
+    <None Include="shader\point_light_pass.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
