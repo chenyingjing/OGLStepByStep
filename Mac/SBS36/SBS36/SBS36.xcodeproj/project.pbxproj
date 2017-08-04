@@ -164,8 +164,6 @@
 		238A97471F346528000B8DBA /* model.obj in Resources */ = {isa = PBXBuildFile; fileRef = 238A96861F346527000B8DBA /* model.obj */; };
 		238A97481F346528000B8DBA /* momo.png in Resources */ = {isa = PBXBuildFile; fileRef = 238A96871F346527000B8DBA /* momo.png */; };
 		238A97491F346528000B8DBA /* SBS36.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 238A968C1F346527000B8DBA /* SBS36.cpp */; };
-		238A974A1F346528000B8DBA /* lighting.fs in Resources */ = {isa = PBXBuildFile; fileRef = 238A968E1F346527000B8DBA /* lighting.fs */; };
-		238A974B1F346528000B8DBA /* lighting.vs in Resources */ = {isa = PBXBuildFile; fileRef = 238A968F1F346527000B8DBA /* lighting.vs */; };
 		238A974C1F346528000B8DBA /* Bitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 238A96921F346527000B8DBA /* Bitmap.cpp */; };
 		238A974D1F346528000B8DBA /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 238A96941F346527000B8DBA /* Camera.cpp */; };
 		238A974E1F346528000B8DBA /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 238A96961F346527000B8DBA /* Program.cpp */; };
@@ -179,6 +177,14 @@
 		238A975B1F3465DF000B8DBA /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 238A95511F346527000B8DBA /* libassimp.3.3.1.dylib */; };
 		238A975C1F3465DF000B8DBA /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 238A95511F346527000B8DBA /* libassimp.3.3.1.dylib */; };
 		238A975D1F3465DF000B8DBA /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 238A95511F346527000B8DBA /* libassimp.3.3.1.dylib */; };
+		238A97631F346D82000B8DBA /* dir_light_pass.fs in Resources */ = {isa = PBXBuildFile; fileRef = 238A975E1F346D82000B8DBA /* dir_light_pass.fs */; };
+		238A97641F346D82000B8DBA /* geometry_pass.fs in Resources */ = {isa = PBXBuildFile; fileRef = 238A975F1F346D82000B8DBA /* geometry_pass.fs */; };
+		238A97651F346D82000B8DBA /* geometry_pass.vs in Resources */ = {isa = PBXBuildFile; fileRef = 238A97601F346D82000B8DBA /* geometry_pass.vs */; };
+		238A97661F346D82000B8DBA /* light_pass.vs in Resources */ = {isa = PBXBuildFile; fileRef = 238A97611F346D82000B8DBA /* light_pass.vs */; };
+		238A97671F346D82000B8DBA /* point_light_pass.fs in Resources */ = {isa = PBXBuildFile; fileRef = 238A97621F346D82000B8DBA /* point_light_pass.fs */; };
+		238A976B1F347323000B8DBA /* quad.obj in Resources */ = {isa = PBXBuildFile; fileRef = 238A97681F347323000B8DBA /* quad.obj */; };
+		238A976C1F347323000B8DBA /* sphere.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 238A97691F347323000B8DBA /* sphere.mtl */; };
+		238A976D1F347323000B8DBA /* sphere.obj in Resources */ = {isa = PBXBuildFile; fileRef = 238A976A1F347323000B8DBA /* sphere.obj */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -544,8 +550,6 @@
 		238A968A1F346527000B8DBA /* ogldev_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_types.h; sourceTree = "<group>"; };
 		238A968B1F346527000B8DBA /* ogldev_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_util.h; sourceTree = "<group>"; };
 		238A968C1F346527000B8DBA /* SBS36.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SBS36.cpp; sourceTree = "<group>"; };
-		238A968E1F346527000B8DBA /* lighting.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.fs; sourceTree = "<group>"; };
-		238A968F1F346527000B8DBA /* lighting.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.vs; sourceTree = "<group>"; };
 		238A96901F346527000B8DBA /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		238A96921F346527000B8DBA /* Bitmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bitmap.cpp; sourceTree = "<group>"; };
 		238A96931F346527000B8DBA /* Bitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bitmap.h; sourceTree = "<group>"; };
@@ -561,6 +565,14 @@
 		238A97551F34659E000B8DBA /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		238A97571F3465AF000B8DBA /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		238A97591F3465BD000B8DBA /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		238A975E1F346D82000B8DBA /* dir_light_pass.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = dir_light_pass.fs; sourceTree = "<group>"; };
+		238A975F1F346D82000B8DBA /* geometry_pass.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = geometry_pass.fs; sourceTree = "<group>"; };
+		238A97601F346D82000B8DBA /* geometry_pass.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = geometry_pass.vs; sourceTree = "<group>"; };
+		238A97611F346D82000B8DBA /* light_pass.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = light_pass.vs; sourceTree = "<group>"; };
+		238A97621F346D82000B8DBA /* point_light_pass.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = point_light_pass.fs; sourceTree = "<group>"; };
+		238A97681F347323000B8DBA /* quad.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = quad.obj; sourceTree = "<group>"; };
+		238A97691F347323000B8DBA /* sphere.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sphere.mtl; sourceTree = "<group>"; };
+		238A976A1F347323000B8DBA /* sphere.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sphere.obj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -630,6 +642,9 @@
 		238A95121F346527000B8DBA /* asset */ = {
 			isa = PBXGroup;
 			children = (
+				238A97681F347323000B8DBA /* quad.obj */,
+				238A97691F347323000B8DBA /* sphere.mtl */,
+				238A976A1F347323000B8DBA /* sphere.obj */,
 				238A95131F346527000B8DBA /* drkwood2.png */,
 				238A95141F346527000B8DBA /* engineflare1.png */,
 				238A95151F346527000B8DBA /* jeep.mtl */,
@@ -1117,8 +1132,11 @@
 		238A968D1F346527000B8DBA /* shader */ = {
 			isa = PBXGroup;
 			children = (
-				238A968E1F346527000B8DBA /* lighting.fs */,
-				238A968F1F346527000B8DBA /* lighting.vs */,
+				238A975E1F346D82000B8DBA /* dir_light_pass.fs */,
+				238A975F1F346D82000B8DBA /* geometry_pass.fs */,
+				238A97601F346D82000B8DBA /* geometry_pass.vs */,
+				238A97611F346D82000B8DBA /* light_pass.vs */,
+				238A97621F346D82000B8DBA /* point_light_pass.fs */,
 			);
 			path = shader;
 			sourceTree = "<group>";
@@ -1221,6 +1239,7 @@
 				238A971D1F346528000B8DBA /* transform.inl in Resources */,
 				238A972C1F346528000B8DBA /* libMagick++-7.Q16HDRI.la in Resources */,
 				238A97411F346528000B8DBA /* MagickWand-7.Q16HDRI.pc in Resources */,
+				238A97641F346D82000B8DBA /* geometry_pass.fs in Resources */,
 				238A96A81F346527000B8DBA /* color4.inl in Resources */,
 				238A971C1F346528000B8DBA /* string_cast.inl in Resources */,
 				238A96EE1F346528000B8DBA /* color_space.inl in Resources */,
@@ -1258,16 +1277,15 @@
 				238A96C61F346528000B8DBA /* type_half.inl in Resources */,
 				238A96F81F346528000B8DBA /* fast_square_root.inl in Resources */,
 				238A96A41F346527000B8DBA /* SpiderTex.png in Resources */,
-				238A974A1F346528000B8DBA /* lighting.fs in Resources */,
 				238A97211F346528000B8DBA /* vector_query.inl in Resources */,
 				238A973E1F346528000B8DBA /* Magick++.pc in Resources */,
 				238A97151F346528000B8DBA /* rotate_vector.inl in Resources */,
 				238A96E81F346528000B8DBA /* type_ptr.inl in Resources */,
 				238A97141F346528000B8DBA /* rotate_normalized_axis.inl in Resources */,
+				238A976B1F347323000B8DBA /* quad.obj in Resources */,
 				238A96DE1F346528000B8DBA /* matrix_access.inl in Resources */,
 				238A96F91F346528000B8DBA /* fast_trigonometry.inl in Resources */,
 				238A96B71F346528000B8DBA /* func_exponential.inl in Resources */,
-				238A974B1F346528000B8DBA /* lighting.vs in Resources */,
 				238A96E11F346528000B8DBA /* noise.inl in Resources */,
 				238A96DC1F346528000B8DBA /* epsilon.inl in Resources */,
 				238A970D1F346528000B8DBA /* optimum_pow.inl in Resources */,
@@ -1276,6 +1294,7 @@
 				238A96F31F346528000B8DBA /* dual_quaternion.inl in Resources */,
 				238A97161F346528000B8DBA /* scalar_relational.inl in Resources */,
 				238A97011F346528000B8DBA /* matrix_cross_product.inl in Resources */,
+				238A976C1F347323000B8DBA /* sphere.mtl in Resources */,
 				238A97171F346528000B8DBA /* simd_mat4.inl in Resources */,
 				238A973A1F346528000B8DBA /* libtiffxx.la in Resources */,
 				238A969F1F346527000B8DBA /* jeep.obj in Resources */,
@@ -1296,9 +1315,11 @@
 				238A96E61F346528000B8DBA /* round.inl in Resources */,
 				238A96BF1F346528000B8DBA /* intrinsic_exponential.inl in Resources */,
 				238A96D81F346528000B8DBA /* type_vec4_sse2.inl in Resources */,
+				238A97631F346D82000B8DBA /* dir_light_pass.fs in Resources */,
 				238A97031F346528000B8DBA /* matrix_interpolation.inl in Resources */,
 				238A96A71F346527000B8DBA /* .editorconfig in Resources */,
 				238A96DA1F346528000B8DBA /* color_space.inl in Resources */,
+				238A97671F346D82000B8DBA /* point_light_pass.fs in Resources */,
 				238A97191F346528000B8DBA /* simd_vec4.inl in Resources */,
 				238A97181F346528000B8DBA /* simd_quat.inl in Resources */,
 				238A971B1F346528000B8DBA /* std_based_type.inl in Resources */,
@@ -1325,6 +1346,7 @@
 				238A96B81F346528000B8DBA /* func_geometric.inl in Resources */,
 				238A970F1F346528000B8DBA /* perpendicular.inl in Resources */,
 				238A96F11F346528000B8DBA /* compatibility.inl in Resources */,
+				238A97651F346D82000B8DBA /* geometry_pass.vs in Resources */,
 				238A969D1F346527000B8DBA /* engineflare1.png in Resources */,
 				238A97461F346528000B8DBA /* model.mtl in Resources */,
 				238A972F1F346528000B8DBA /* libMagickCore-7.Q16HDRI.la in Resources */,
@@ -1333,6 +1355,7 @@
 				238A96E91F346528000B8DBA /* ulp.inl in Resources */,
 				238A96D71F346528000B8DBA /* type_vec4_avx2.inl in Resources */,
 				238A97381F346528000B8DBA /* libtiff.la in Resources */,
+				238A976D1F347323000B8DBA /* sphere.obj in Resources */,
 				238A96F61F346528000B8DBA /* extented_min_max.inl in Resources */,
 				238A97221F346528000B8DBA /* wrap.inl in Resources */,
 				238A96AC1F346527000B8DBA /* quaternion.inl in Resources */,
@@ -1343,6 +1366,7 @@
 				238A96E01F346528000B8DBA /* matrix_transform.inl in Resources */,
 				238A97231F346528000B8DBA /* configure.xml in Resources */,
 				238A96CC1F346528000B8DBA /* type_mat3x3.inl in Resources */,
+				238A97661F346D82000B8DBA /* light_pass.vs in Resources */,
 				238A969C1F346527000B8DBA /* drkwood2.png in Resources */,
 				238A96C01F346528000B8DBA /* intrinsic_geometric.inl in Resources */,
 				238A96D61F346528000B8DBA /* type_vec4_avx.inl in Resources */,
