@@ -163,7 +163,7 @@
 		238A97461F346528000B8DBA /* model.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 238A96851F346527000B8DBA /* model.mtl */; };
 		238A97471F346528000B8DBA /* model.obj in Resources */ = {isa = PBXBuildFile; fileRef = 238A96861F346527000B8DBA /* model.obj */; };
 		238A97481F346528000B8DBA /* momo.png in Resources */ = {isa = PBXBuildFile; fileRef = 238A96871F346527000B8DBA /* momo.png */; };
-		238A97491F346528000B8DBA /* SBS35.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 238A968C1F346527000B8DBA /* SBS35.cpp */; };
+		238A97491F346528000B8DBA /* SBS36.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 238A968C1F346527000B8DBA /* SBS36.cpp */; };
 		238A974A1F346528000B8DBA /* lighting.fs in Resources */ = {isa = PBXBuildFile; fileRef = 238A968E1F346527000B8DBA /* lighting.fs */; };
 		238A974B1F346528000B8DBA /* lighting.vs in Resources */ = {isa = PBXBuildFile; fileRef = 238A968F1F346527000B8DBA /* lighting.vs */; };
 		238A974C1F346528000B8DBA /* Bitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 238A96921F346527000B8DBA /* Bitmap.cpp */; };
@@ -543,7 +543,7 @@
 		238A96891F346527000B8DBA /* ogldev_math_3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_math_3d.h; sourceTree = "<group>"; };
 		238A968A1F346527000B8DBA /* ogldev_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_types.h; sourceTree = "<group>"; };
 		238A968B1F346527000B8DBA /* ogldev_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_util.h; sourceTree = "<group>"; };
-		238A968C1F346527000B8DBA /* SBS35.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SBS35.cpp; sourceTree = "<group>"; };
+		238A968C1F346527000B8DBA /* SBS36.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SBS36.cpp; sourceTree = "<group>"; };
 		238A968E1F346527000B8DBA /* lighting.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.fs; sourceTree = "<group>"; };
 		238A968F1F346527000B8DBA /* lighting.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.vs; sourceTree = "<group>"; };
 		238A96901F346527000B8DBA /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
@@ -619,7 +619,7 @@
 				238A96831F346527000B8DBA /* mesh.h */,
 				238A96841F346527000B8DBA /* momo */,
 				238A96881F346527000B8DBA /* ogldev */,
-				238A968C1F346527000B8DBA /* SBS35.cpp */,
+				238A968C1F346527000B8DBA /* SBS36.cpp */,
 				238A968D1F346527000B8DBA /* shader */,
 				238A96901F346527000B8DBA /* stb_image.h */,
 				238A96911F346527000B8DBA /* tdogl */,
@@ -1380,7 +1380,7 @@
 				238A974F1F346528000B8DBA /* Shader.cpp in Sources */,
 				238A97451F346528000B8DBA /* mesh.cpp in Sources */,
 				238A974D1F346528000B8DBA /* Camera.cpp in Sources */,
-				238A97491F346528000B8DBA /* SBS35.cpp in Sources */,
+				238A97491F346528000B8DBA /* SBS36.cpp in Sources */,
 				238A974C1F346528000B8DBA /* Bitmap.cpp in Sources */,
 				238A96B41F346528000B8DBA /* glew.c in Sources */,
 				238A97501F346528000B8DBA /* Texture.cpp in Sources */,
@@ -1538,6 +1538,7 @@
 				238A95111F34647C000B8DBA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
