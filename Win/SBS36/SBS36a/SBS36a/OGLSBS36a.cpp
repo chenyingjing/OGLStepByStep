@@ -109,6 +109,8 @@ LightAsset gLight1;
 LightAsset gLight2;
 LightAsset gLight3;
 
+LightAsset gDirLight;
+
 std::list<ModelInstance> gInstances;
 std::list<LightInstance> gLightInstances;
 
@@ -219,6 +221,36 @@ static void LoadLightAsset3() {
 	gLight3.mesh.LoadMesh("../../../Content/sphere.obj");
 }
 
+void LoadDirLightAsset()
+{
+	gDirLight.shaders = LoadShaders("shader/light_pass.vs", "shader/dir_light_pass.fs");
+
+	gDirLight.light.position = glm::vec4(8.0f, 2.0f, 5.0f, 0);
+	gDirLight.light.intensities = glm::vec3(0.0f, 1.0f, 1.0f);
+	gDirLight.light.attenuation = 0.1f;
+	gDirLight.light.ambientCoefficient = 0.005f;
+
+	gDirLight.shaders->use();
+	gDirLight.shaders->setUniform("gPositionMap", 0);
+	gDirLight.shaders->setUniform("gColorMap", 1);
+	gDirLight.shaders->setUniform("gNormalMap", 2);
+	gDirLight.shaders->setUniform("gScreenSize", (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
+
+	gDirLight.shaders->setUniform("gDirectionalLight.Base.Color", gDirLight.light.intensities.r, gDirLight.light.intensities.g, gDirLight.light.intensities.b);
+	gDirLight.shaders->setUniform("gDirectionalLight.Base.AmbientIntensity", gDirLight.light.ambientCoefficient);
+
+	glm::vec3 direction = glm::vec3(-gDirLight.light.position.x, -gDirLight.light.position.y, -gDirLight.light.position.z);
+	direction = glm::normalize(direction);
+
+	gDirLight.shaders->setUniform("gDirectionalLight.Direction", direction.x, direction.y, direction.z);
+	gDirLight.shaders->setUniform("gDirectionalLight.Base.DiffuseIntensity", 1.0f);
+	
+	gDirLight.shaders->stopUsing();
+
+	gDirLight.mesh.LoadMesh("../../../Content/quad.obj");
+	//gDirLight.mesh.LoadMesh("../../../Content/sphere.obj");
+}
+
 // convenience function that returns a translation matrix
 glm::mat4 translate(GLfloat x, GLfloat y, GLfloat z) {
 	return glm::translate(glm::mat4(), glm::vec3(x, y, z));
@@ -259,14 +291,6 @@ static void CreateLightInstances() {
 	light3.asset = &gLight3;
 	light3.transform = translate(gLight3.light.position.x, gLight3.light.position.y, gLight3.light.position.z);
 	gLightInstances.push_back(light3);
-
-	//LightInstance light2;
-	//light2.asset = &gLight2;
-	//gLightInstances.push_back(light2);
-
-	//LightInstance light3;
-	//light3.asset = &gLight3;
-	//gLightInstances.push_back(light3);
 }
 
 // records how far the y axis has been scrolled
@@ -435,9 +459,6 @@ void DSGeometryPassInstance(const ModelInstance& inst) {
 	//bind the shaders
 	shaders->use();
 
-
-
-
 	//set the shader uniforms
 	shaders->setUniform("model", inst.transform);
 	shaders->setUniform("camera", gCamera.matrix());
@@ -550,6 +571,17 @@ void DSPointLightsPass()
 	}
 }
 
+void DSDirectionalLightPass()
+{
+	gDirLight.shaders->use();
+	gDirLight.shaders->setUniform("gEyeWorldPos", gCamera.position());
+	glm::mat4 i = glm::rotate(glm::mat4(), glm::radians(180.0f), glm::vec3(1, 0, 0));
+	gDirLight.shaders->setUniform("gWVP", i);
+
+	gDirLight.mesh.Render();
+	gDirLight.shaders->stopUsing();
+}
+
 void Render(float millsElapsed, GLFWwindow* window)
 {
 	DSGeometryPass();
@@ -558,7 +590,7 @@ void Render(float millsElapsed, GLFWwindow* window)
 
 	DSPointLightsPass();
 
-	//DSDirectionalLightPass();
+	DSDirectionalLightPass();
 
 	glfwSwapBuffers(window);
 }
@@ -628,6 +660,7 @@ int main(void)
 	LoadLightAsset1();
 	LoadLightAsset2();
 	LoadLightAsset3();
+	LoadDirLightAsset();
 	CreateLightInstances();
 
 	//glClearColor(0.196078431372549f, 0.3137254901960784f, 0.5882352941176471f, 1);
