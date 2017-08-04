@@ -159,8 +159,8 @@ static void LoadMainAsset() {
     //glGenVertexArrays(1, &gTank.vao);
     //glBindVertexArray(gTank.vao);
 
-	//gTank.mesh.LoadMesh("../../../Content/phoenix_ugv.md2");
-	gTank.mesh.LoadMesh("../../../Content/box.obj");
+	gTank.mesh.LoadMesh("../../../Content/phoenix_ugv.md2");
+	//gTank.mesh.LoadMesh("../../../Content/box.obj");
 
 
 }
@@ -512,6 +512,10 @@ void DSPointLightsPassInstance(const LightInstance& inst) {
 	//bind the shaders
 	shaders->use();
 	shaders->setUniform("gEyeWorldPos", gCamera.position());
+	shaders->setUniform("gColorMap", 1);
+	
+	shaders->setUniform("gScreenSize", (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
+	
 	//shaders->setUniform("camera", gCamera.matrix());
 	//shaders->setUniform("model", inst.transform);
 	float BSphereScale = CalcPointLightBSphere(*asset);// m_pointLight[i]);
@@ -592,6 +596,8 @@ int main(void)
 	//glDepthFunc(GL_LESS);
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
     
 	if (!Init()) {
 		return -1;
@@ -609,7 +615,7 @@ int main(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
-    gCamera.setPosition(glm::vec3(0, 0, 70));
+    gCamera.setPosition(glm::vec3(0, 0, 60));
 	gCamera.offsetOrientation(0, 0);
 	gCamera.setViewportAspectRatio((float)WINDOW_WIDTH / (float)WINDOW_HEIGHT);
 	gCamera.setNearAndFarPlanes(0.05f, 1000.0f);
