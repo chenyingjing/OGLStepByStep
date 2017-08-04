@@ -187,11 +187,10 @@ static void LoadLightAsset2() {
 	gLight2.shaders = LoadShaders("shader/light_pass.vs", "shader/point_light_pass.fs");
 
 	gLight2.shaders->use();
-	//TODO: Set texture unit and screen size
-	//m_DSPointLightPassTech.SetPositionTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_POSITION);
-	//m_DSPointLightPassTech.SetColorTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
-	//m_DSPointLightPassTech.SetNormalTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
-	//m_DSPointLightPassTech.SetScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+	gLight2.shaders->setUniform("gPositionMap", 0);
+	gLight2.shaders->setUniform("gColorMap", 1);
+	gLight2.shaders->setUniform("gNormalMap", 2);
+	gLight2.shaders->setUniform("gScreenSize", (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
 	gLight2.shaders->stopUsing();
 
 	gLight2.light.position = glm::vec4(2.0f, 0.0f, -5.0f, 1);
@@ -206,16 +205,15 @@ static void LoadLightAsset3() {
 	gLight3.shaders = LoadShaders("shader/light_pass.vs", "shader/point_light_pass.fs");
 
 	gLight3.shaders->use();
-	//TODO: Set texture unit and screen size
-	//m_DSPointLightPassTech.SetPositionTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_POSITION);
-	//m_DSPointLightPassTech.SetColorTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE);
-	//m_DSPointLightPassTech.SetNormalTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
-	//m_DSPointLightPassTech.SetScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+	gLight3.shaders->setUniform("gPositionMap", 0);
+	gLight3.shaders->setUniform("gColorMap", 1);
+	gLight3.shaders->setUniform("gNormalMap", 2);
+	gLight3.shaders->setUniform("gScreenSize", (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
 	gLight3.shaders->stopUsing();
 
-	gLight3.light.position = glm::vec4(0.0f, 0.0f, -3.0f, 1);
+	gLight3.light.position = glm::vec4(-8.0f, -2.0f, -5.0f, 1);
 	gLight3.light.intensities = glm::vec3(0.0f, 0.0f, 1.0f);
-	gLight3.light.attenuation = 0.2f;
+	gLight3.light.attenuation = 0.1f;
 	gLight3.light.ambientCoefficient = 0.005f;
 
 	gLight3.mesh.LoadMesh("../../../Content/sphere.obj");
@@ -251,6 +249,16 @@ static void CreateLightInstances() {
 	light1.asset = &gLight1;
 	light1.transform = translate(gLight1.light.position.x, gLight1.light.position.y, gLight1.light.position.z);
 	gLightInstances.push_back(light1);
+
+	LightInstance light2;
+	light2.asset = &gLight2;
+	light2.transform = translate(gLight2.light.position.x, gLight2.light.position.y, gLight2.light.position.z);
+	gLightInstances.push_back(light2);
+
+	LightInstance light3;
+	light3.asset = &gLight3;
+	light3.transform = translate(gLight3.light.position.x, gLight3.light.position.y, gLight3.light.position.z);
+	gLightInstances.push_back(light3);
 
 	//LightInstance light2;
 	//light2.asset = &gLight2;
