@@ -99,6 +99,9 @@
     <ClCompile Include="..\..\..\Common\technique.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="null_technique.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ds_dir_light_pass_tech.h">
@@ -114,6 +117,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gbuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="null_technique.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

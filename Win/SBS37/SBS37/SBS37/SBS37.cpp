@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Tutorial 36 - Deferred Shading - Part 2
+Tutorial 37 - Deferred Shading - Part 3
 */
 
 #include <math.h>
@@ -24,25 +24,27 @@ Tutorial 36 - Deferred Shading - Part 2
 
 #include "ogldev_engine_common.h"
 #include "ogldev_app.h"
+#include "ogldev_camera.h"
 #include "ogldev_util.h"
 #include "ogldev_pipeline.h"
-#include "ogldev_camera.h"
+#include "ogldev_glut_backend.h"
+#include "ogldev_basic_mesh.h"
+#include "ogldev_lights_common.h"
+#include "gbuffer.h"
+#include "null_technique.h"
 #include "ds_geom_pass_tech.h"
 #include "ds_point_light_pass_tech.h"
 #include "ds_dir_light_pass_tech.h"
-#include "ogldev_glut_backend.h"
-#include "ogldev_basic_mesh.h"
-#include "gbuffer.h"
-#include "ogldev_lights_common.h"
+
 
 #define WINDOW_WIDTH  1280
 #define WINDOW_HEIGHT 1024
 
-class Tutorial36 : public ICallbacks, public OgldevApp
+class Tutorial37 : public ICallbacks, public OgldevApp
 {
 public:
 
-	Tutorial36()
+	Tutorial37()
 	{
 		m_pGameCamera = NULL;
 		m_scale = 0.0f;
@@ -58,7 +60,7 @@ public:
 	}
 
 
-	~Tutorial36()
+	~Tutorial37()
 	{
 		SAFE_DELETE(m_pGameCamera);
 	}
@@ -103,6 +105,13 @@ public:
 		m_DSDirLightPassTech.SetNormalTextureUnit(GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL);
 		m_DSDirLightPassTech.SetDirectionalLight(m_dirLight);
 		m_DSDirLightPassTech.SetScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		Matrix4f WVP;
+		WVP.InitIdentity();
+		m_DSDirLightPassTech.SetWVP(WVP);
+
+		if (!m_nullTech.Init()) {
+			return false;
+		}
 
 		if (!m_quad.LoadMesh("../../../Content/quad.obj")) {
 			return false;
@@ -120,8 +129,7 @@ public:
 		if (!m_fontRenderer.InitFontRenderer()) {
 			return false;
 		}
-#endif
-
+#endif        	
 		return true;
 	}
 
@@ -139,13 +147,27 @@ public:
 
 		m_pGameCamera->OnRender();
 
+		m_gbuffer.StartFrame();
+
 		DSGeometryPass();
 
-		BeginLightPasses();
+		// We need stencil to be enabled in the stencil pass to get the stencil buffer
+		// updated and we also need it in the light pass because we render the light
+		// only if the stencil passes.
+		glEnable(GL_STENCIL_TEST);
 
-		DSPointLightsPass();
+		for (unsigned int i = 0; i < ARRAY_SIZE_IN_ELEMENTS(m_pointLight); i++) {
+			DSStencilPass(i);
+			DSPointLightPass(i);
+		}
+
+		// The directional light does not need a stencil test because its volume
+		// is unlimited and the final pass simply copies the texture.
+		glDisable(GL_STENCIL_TEST);
 
 		DSDirectionalLightPass();
+
+		DSFinalPass();
 
 		RenderFPS();
 
@@ -157,7 +179,7 @@ public:
 	{
 		m_DSGeomPassTech.Enable();
 
-		m_gbuffer.BindForWriting();
+		m_gbuffer.BindForGeomPass();
 
 		// Only the geometry pass updates the depth buffer
 		glDepthMask(GL_TRUE);
@@ -165,8 +187,6 @@ public:
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glEnable(GL_DEPTH_TEST);
-
-		glDisable(GL_BLEND);
 
 		Pipeline p;
 		p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
@@ -183,50 +203,94 @@ public:
 		// When we get here the depth buffer is already populated and the stencil pass
 		// depends on it, but it does not write to it.
 		glDepthMask(GL_FALSE);
+	}
 
-		glDisable(GL_DEPTH_TEST);
+	void DSStencilPass(unsigned int PointLightIndex)
+	{
+		m_nullTech.Enable();
+
+		// Disable color/depth write and enable stencil
+		m_gbuffer.BindForStencilPass();
+		glEnable(GL_DEPTH_TEST);
+
+		glDisable(GL_CULL_FACE);
+
+		glClear(GL_STENCIL_BUFFER_BIT);
+
+		// We need the stencil test to be enabled but we want it
+		// to succeed always. Only the depth test matters.
+		glStencilFunc(GL_ALWAYS, 0, 0);
+
+		glStencilOpSeparate(GL_BACK, GL_KEEP, GL_INCR_WRAP, GL_KEEP);
+		glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_DECR_WRAP, GL_KEEP);
+
+		Pipeline p;
+		p.WorldPos(m_pointLight[PointLightIndex].Position);
+		float BBoxScale = CalcPointLightBSphere(m_pointLight[PointLightIndex]);
+		p.Scale(BBoxScale, BBoxScale, BBoxScale);
+		p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
+		p.SetPerspectiveProj(m_persProjInfo);
+
+		m_nullTech.SetWVP(p.GetWVPTrans());
+		m_bsphere.Render();
 	}
 
 
-	void BeginLightPasses()
+	void DSPointLightPass(unsigned int PointLightIndex)
 	{
+		m_gbuffer.BindForLightPass();
+
+		m_DSPointLightPassTech.Enable();
+		m_DSPointLightPassTech.SetEyeWorldPos(m_pGameCamera->GetPos());
+
+		glStencilFunc(GL_NOTEQUAL, 0, 0xFF);
+
+		glDisable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		glBlendEquation(GL_FUNC_ADD);
 		glBlendFunc(GL_ONE, GL_ONE);
 
-		m_gbuffer.BindForReading();
-		glClear(GL_COLOR_BUFFER_BIT);
-	}
-
-
-	void DSPointLightsPass()
-	{
-		m_DSPointLightPassTech.Enable();
-		m_DSPointLightPassTech.SetEyeWorldPos(m_pGameCamera->GetPos());
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_FRONT);
 
 		Pipeline p;
+		p.WorldPos(m_pointLight[PointLightIndex].Position);
+		float BBoxScale = CalcPointLightBSphere(m_pointLight[PointLightIndex]);
+		p.Scale(BBoxScale, BBoxScale, BBoxScale);
 		p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
 		p.SetPerspectiveProj(m_persProjInfo);
+		m_DSPointLightPassTech.SetWVP(p.GetWVPTrans());
+		m_DSPointLightPassTech.SetPointLight(m_pointLight[PointLightIndex]);
+		m_bsphere.Render();
+		glCullFace(GL_BACK);
 
-		for (unsigned int i = 0; i < ARRAY_SIZE_IN_ELEMENTS(m_pointLight); i++) {
-			m_DSPointLightPassTech.SetPointLight(m_pointLight[i]);
-			p.WorldPos(m_pointLight[i].Position);
-			float BSphereScale = CalcPointLightBSphere(m_pointLight[i]);
-			p.Scale(BSphereScale, BSphereScale, BSphereScale);
-			m_DSPointLightPassTech.SetWVP(p.GetWVPTrans());
-			m_bsphere.Render();
-		}
+		glDisable(GL_BLEND);
 	}
 
 
 	void DSDirectionalLightPass()
 	{
+		m_gbuffer.BindForLightPass();
+
 		m_DSDirLightPassTech.Enable();
 		m_DSDirLightPassTech.SetEyeWorldPos(m_pGameCamera->GetPos());
-		Matrix4f WVP;
-		WVP.InitIdentity();
-		m_DSDirLightPassTech.SetWVP(WVP);
+
+		glDisable(GL_DEPTH_TEST);
+		glEnable(GL_BLEND);
+		glBlendEquation(GL_FUNC_ADD);
+		glBlendFunc(GL_ONE, GL_ONE);
+
 		m_quad.Render();
+
+		glDisable(GL_BLEND);
+	}
+
+
+	void DSFinalPass()
+	{
+		m_gbuffer.BindForFinalPass();
+		glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+			0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 	}
 
 
@@ -262,7 +326,6 @@ private:
 
 		return ret;
 	}
-
 
 	void InitLights()
 	{
@@ -314,6 +377,7 @@ private:
 	DSGeomPassTech m_DSGeomPassTech;
 	DSPointLightPassTech m_DSPointLightPassTech;
 	DSDirLightPassTech m_DSDirLightPassTech;
+	NullTechnique m_nullTech;
 	Camera* m_pGameCamera;
 	float m_scale;
 	SpotLight m_spotLight;
@@ -332,11 +396,11 @@ int main(int argc, char** argv)
 {
 	GLUTBackendInit(argc, argv, true, false);
 
-	if (!GLUTBackendCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false, "Tutorial 36")) {
+	if (!GLUTBackendCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false, "Tutorial 37")) {
 		return 1;
 	}
 
-	Tutorial36* pApp = new Tutorial36();
+	Tutorial37* pApp = new Tutorial37();
 
 	if (!pApp->Init()) {
 		return 1;

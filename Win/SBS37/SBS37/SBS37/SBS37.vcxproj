@@ -189,6 +189,7 @@
     <ClCompile Include="ds_light_pass_tech.cpp" />
     <ClCompile Include="ds_point_light_pass_tech.cpp" />
     <ClCompile Include="gbuffer.cpp" />
+    <ClCompile Include="null_technique.cpp" />
     <ClCompile Include="SBS37.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +198,7 @@
     <ClInclude Include="ds_light_pass_tech.h" />
     <ClInclude Include="ds_point_light_pass_tech.h" />
     <ClInclude Include="gbuffer.h" />
+    <ClInclude Include="null_technique.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\dir_light_pass.fs" />

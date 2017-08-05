@@ -15,41 +15,25 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GBUFFER_H
-#define	GBUFFER_H
+#ifndef NULL_TECHNIQUE_H
+#define	NULL_TECHNIQUE_H
 
-#include <GL/glew.h>
+#include "technique.h"
+#include "ogldev_math_3d.h"
 
-class GBuffer
-{
+class NullTechnique : public Technique {
 public:
 
-    enum GBUFFER_TEXTURE_TYPE {
-            GBUFFER_TEXTURE_TYPE_POSITION,
-            GBUFFER_TEXTURE_TYPE_DIFFUSE,
-            GBUFFER_TEXTURE_TYPE_NORMAL,
-            GBUFFER_NUM_TEXTURES
-    };
+    NullTechnique();
 
-    GBuffer();
+    virtual bool Init();
 
-    ~GBuffer();
-
-    bool Init(unsigned int WindowWidth, unsigned int WindowHeight);
-
-    void StartFrame();
-    void BindForGeomPass();
-    void BindForStencilPass();
-    void BindForLightPass();
-    void BindForFinalPass();
+    void SetWVP(const Matrix4f& WVP);
 
 private:
 
-    GLuint m_fbo;
-    GLuint m_textures[GBUFFER_NUM_TEXTURES];
-    GLuint m_depthTexture;
-    GLuint m_finalTexture;
+    GLuint m_WVPLocation;
 };
 
-#endif	/* SHADOWMAPFBO_H */
 
+#endif
