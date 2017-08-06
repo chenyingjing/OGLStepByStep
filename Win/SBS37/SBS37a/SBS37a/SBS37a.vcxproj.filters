@@ -103,5 +103,11 @@
     <None Include="shader\point_light_pass.fs">
       <Filter>shader</Filter>
     </None>
+    <None Include="shader\null_technique.fs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\null_technique.vs">
+      <Filter>shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

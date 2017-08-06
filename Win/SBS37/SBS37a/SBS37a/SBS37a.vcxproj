@@ -192,6 +192,8 @@
     <None Include="shader\geometry_pass.fs" />
     <None Include="shader\geometry_pass.vs" />
     <None Include="shader\light_pass.vs" />
+    <None Include="shader\null_technique.fs" />
+    <None Include="shader\null_technique.vs" />
     <None Include="shader\point_light_pass.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

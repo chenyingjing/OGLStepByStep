@@ -114,5 +114,5 @@ void main()
 	vec3 Normal = texture(gNormalMap, TexCoord).xyz;
 	Normal = normalize(Normal);
 
-    FragColor = vec4(Color, 1.0) * CalcPointLight(WorldPos, Normal) + vec4(0.05, 0.05, 0.05, 0.0);
+    FragColor = vec4(Color, 1.0) * CalcPointLight(WorldPos, Normal);
 }
