@@ -185,6 +185,8 @@
 		239F16591F36BF550085813B /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 239F14461F36BE9A0085813B /* libassimp.3.3.1.dylib */; };
 		239F165A1F36BF550085813B /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 239F14461F36BE9A0085813B /* libassimp.3.3.1.dylib */; };
 		239F165B1F36BF550085813B /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 239F14461F36BE9A0085813B /* libassimp.3.3.1.dylib */; };
+		239F165E1F36C1BE0085813B /* null_technique.fs in Resources */ = {isa = PBXBuildFile; fileRef = 239F165C1F36C1BE0085813B /* null_technique.fs */; };
+		239F165F1F36C1BE0085813B /* null_technique.vs in Resources */ = {isa = PBXBuildFile; fileRef = 239F165D1F36C1BE0085813B /* null_technique.vs */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -573,6 +575,8 @@
 		239F16531F36BF2E0085813B /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		239F16551F36BF390085813B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		239F16571F36BF450085813B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		239F165C1F36C1BE0085813B /* null_technique.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = null_technique.fs; sourceTree = "<group>"; };
+		239F165D1F36C1BE0085813B /* null_technique.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = null_technique.vs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1132,6 +1136,8 @@
 		239F15821F36BE9B0085813B /* shader */ = {
 			isa = PBXGroup;
 			children = (
+				239F165C1F36C1BE0085813B /* null_technique.fs */,
+				239F165D1F36C1BE0085813B /* null_technique.vs */,
 				239F15831F36BE9B0085813B /* dir_light_pass.fs */,
 				239F15841F36BE9B0085813B /* geometry_pass.fs */,
 				239F15851F36BE9B0085813B /* geometry_pass.vs */,
@@ -1348,6 +1354,8 @@
 				239F162A1F36BE9B0085813B /* libMagickCore-7.Q16HDRI.la in Resources */,
 				239F15A41F36BE9B0085813B /* material.inl in Resources */,
 				239F16411F36BE9B0085813B /* model.mtl in Resources */,
+				239F165F1F36C1BE0085813B /* null_technique.vs in Resources */,
+				239F165E1F36C1BE0085813B /* null_technique.fs in Resources */,
 				239F16051F36BE9B0085813B /* normal.inl in Resources */,
 				239F15951F36BE9B0085813B /* engineflare1.png in Resources */,
 				239F15B21F36BE9B0085813B /* func_exponential.inl in Resources */,
@@ -1562,6 +1570,7 @@
 				239F14031F36BDDA0085813B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

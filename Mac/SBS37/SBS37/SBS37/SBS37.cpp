@@ -54,6 +54,7 @@ struct Light {
 
 struct LightAsset {
     tdogl::Program* shaders;
+    tdogl::Program* nullShaders;
     Mesh mesh;
     Light light;
 };
@@ -132,9 +133,11 @@ static void LoadLightAsset1() {
     
     gLight1.light.position = glm::vec4(-10, 1.5f, -9.0f, 1);
     gLight1.light.intensities = glm::vec3(0.0f, 1.0f, 0.0f);
-    gLight1.light.attenuation = 0.01f;
+    gLight1.light.attenuation = 0.001f;
     gLight1.light.ambientCoefficient = 0.005f;
     
+    gLight1.nullShaders = LoadShaders("null_technique.vs", "null_technique.fs");
+
     gLight1.mesh.LoadMesh("sphere.obj");
 }
 
@@ -150,9 +153,11 @@ static void LoadLightAsset2() {
     
     gLight2.light.position = glm::vec4(2.0f, 0.0f, -5.0f, 1);
     gLight2.light.intensities = glm::vec3(1.0f, 0.0f, 0.0f);
-    gLight2.light.attenuation = 0.02f;
+    gLight2.light.attenuation = 0.002f;
     gLight2.light.ambientCoefficient = 0.005f;
     
+    gLight2.nullShaders = LoadShaders("null_technique.vs", "null_technique.fs");
+
     gLight2.mesh.LoadMesh("sphere.obj");
 }
 
@@ -168,9 +173,11 @@ static void LoadLightAsset3() {
     
     gLight3.light.position = glm::vec4(-8.0f, -2.0f, -5.0f, 1);
     gLight3.light.intensities = glm::vec3(0.0f, 0.0f, 1.0f);
-    gLight3.light.attenuation = 0.01f;
+    gLight3.light.attenuation = 0.001f;
     gLight3.light.ambientCoefficient = 0.005f;
     
+    gLight3.nullShaders = LoadShaders("null_technique.vs", "null_technique.fs");
+
     gLight3.mesh.LoadMesh("sphere.obj");
 }
 
@@ -180,7 +187,7 @@ void LoadDirLightAsset()
     
     gDirLight.light.position = glm::vec4(8.0f, 2.0f, 5.0f, 0);
     gDirLight.light.intensities = glm::vec3(0.0f, 1.0f, 1.0f);
-    gDirLight.light.attenuation = 0.1f;
+    gDirLight.light.attenuation = 0.01f;
     gDirLight.light.ambientCoefficient = 0.005f;
     
     gDirLight.shaders->use();
@@ -419,18 +426,15 @@ void DSGeometryPassInstance(const ModelInstance& inst) {
     shaders->setUniform("model", inst.transform);
     shaders->setUniform("camera", gCamera.matrix());
     shaders->setUniform("gColorMap", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
-    //shaders->setUniform("gDisplacementMap", 4); //set to 4 because the texture will be bound to GL_TEXTURE4
-    
     
     asset->mesh.Render();
     
     shaders->stopUsing();
-
 }
 
 void DSGeometryPass()
 {
-    m_gbuffer.BindForWriting();
+    m_gbuffer.BindForGeomPass();
     
     glDepthMask(GL_TRUE);
     
@@ -438,15 +442,11 @@ void DSGeometryPass()
     
     glEnable(GL_DEPTH_TEST);
     
-    glDisable(GL_BLEND);
-    
     for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
         DSGeometryPassInstance(*it);
     }
     
     glDepthMask(GL_FALSE);
-    
-    glDisable(GL_DEPTH_TEST);
 }
 
 //void DSLightPass()
@@ -474,15 +474,15 @@ void DSGeometryPass()
 //    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, HalfWidth, 0, WINDOW_WIDTH, HalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 //}
 
-void BeginLightPasses()
-{
-    glEnable(GL_BLEND);
-    glBlendEquation(GL_FUNC_ADD);
-    glBlendFunc(GL_ONE, GL_ONE);
-    
-    m_gbuffer.BindForReading();
-    glClear(GL_COLOR_BUFFER_BIT);
-}
+//void BeginLightPasses()
+//{
+//    glEnable(GL_BLEND);
+//    glBlendEquation(GL_FUNC_ADD);
+//    glBlendFunc(GL_ONE, GL_ONE);
+//    
+//    m_gbuffer.BindForReading();
+//    glClear(GL_COLOR_BUFFER_BIT);
+//}
 
 float CalcPointLightBSphere(const LightAsset& Light)
 {
@@ -499,6 +499,8 @@ float CalcPointLightBSphere(const LightAsset& Light)
 }
 
 void DSPointLightsPassInstance(const LightInstance& inst) {
+    m_gbuffer.BindForLightPass();
+    
     LightAsset* asset = inst.asset;
     tdogl::Program* shaders = asset->shaders;
     
@@ -506,6 +508,17 @@ void DSPointLightsPassInstance(const LightInstance& inst) {
     shaders->use();
     
     shaders->setUniform("gEyeWorldPos", gCamera.position());
+    
+    glStencilFunc(GL_NOTEQUAL, 0, 0xFF);
+    
+    glDisable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendEquation(GL_FUNC_ADD);
+    glBlendFunc(GL_ONE, GL_ONE);
+    
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_FRONT);
+    
     shaders->setUniform("gPointLight.Base.Color", asset->light.intensities.r, asset->light.intensities.g, asset->light.intensities.b);
     shaders->setUniform("gPointLight.Base.AmbientIntensity", asset->light.ambientCoefficient);
     shaders->setUniform("gPointLight.Position", asset->light.position.x, asset->light.position.y, asset->light.position.z);
@@ -513,12 +526,14 @@ void DSPointLightsPassInstance(const LightInstance& inst) {
     shaders->setUniform("gPointLight.Atten.Constant", 1.0f);
     shaders->setUniform("gPointLight.Atten.Linear", 0.0f);
     shaders->setUniform("gPointLight.Atten.Exp", asset->light.attenuation);
-    //shaders->setUniform("camera", gCamera.matrix());
-    //shaders->setUniform("model", inst.transform);
-    float BSphereScale = CalcPointLightBSphere(*asset);// m_pointLight[i]);
+    float BSphereScale = CalcPointLightBSphere(*asset);
     shaders->setUniform("gWVP", gCamera.matrix() * inst.transform * scale(BSphereScale, BSphereScale, BSphereScale));
     asset->mesh.Render();
     shaders->stopUsing();
+    
+    glCullFace(GL_BACK);
+    
+    glDisable(GL_BLEND);
 }
 
 void DSPointLightsPass()
@@ -530,25 +545,80 @@ void DSPointLightsPass()
 
 void DSDirectionalLightPass()
 {
+    m_gbuffer.BindForLightPass();
+    
     gDirLight.shaders->use();
     gDirLight.shaders->setUniform("gEyeWorldPos", gCamera.position());
     glm::mat4 i = glm::rotate(glm::mat4(), glm::radians(180.0f), glm::vec3(1, 0, 0));
     gDirLight.shaders->setUniform("gWVP", i);
     
+    glDisable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendEquation(GL_FUNC_ADD);
+    glBlendFunc(GL_ONE, GL_ONE);
+    
     gDirLight.mesh.Render();
     gDirLight.shaders->stopUsing();
+    
+    glDisable(GL_BLEND);
+}
+
+void DSStencilPass(const LightInstance& inst)
+{
+    LightAsset* asset = inst.asset;
+    tdogl::Program* nullShaders = asset->nullShaders;
+    
+    //bind the shaders
+    nullShaders->use();
+    
+    m_gbuffer.BindForStencilPass();
+    glEnable(GL_DEPTH_TEST);
+    
+    glDisable(GL_CULL_FACE);
+    
+    glClear(GL_STENCIL_BUFFER_BIT);
+    
+    
+    // We need the stencil test to be enabled but we want it
+    // to succeed always. Only the depth test matters.
+    glStencilFunc(GL_ALWAYS, 0, 0);
+    
+    glStencilOpSeparate(GL_BACK, GL_KEEP, GL_INCR_WRAP, GL_KEEP);
+    glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_DECR_WRAP, GL_KEEP);
+    
+    float BSphereScale = CalcPointLightBSphere(*asset);
+    nullShaders->setUniform("gWVP", gCamera.matrix() * inst.transform * scale(BSphereScale, BSphereScale, BSphereScale));
+    asset->mesh.Render();
+    nullShaders->stopUsing();
+}
+
+void DSFinalPass()
+{
+    m_gbuffer.BindForFinalPass();
+    glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+                      0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 }
 
 void Render(GLFWwindow* window)
 {
-
+    m_gbuffer.StartFrame();
+    
     DSGeometryPass();
     //DSLightPass();
-    BeginLightPasses();
+    //BeginLightPasses();
+    glEnable(GL_STENCIL_TEST);
     
-    DSPointLightsPass();
+    //DSPointLightsPass();
+    for (auto it = gLightInstances.begin(); it != gLightInstances.end(); ++it) {
+        DSStencilPass(*it);
+        DSPointLightsPassInstance(*it);
+    }
+    
+    glDisable(GL_STENCIL_TEST);
     
     DSDirectionalLightPass();
+    
+    DSFinalPass();
     
     glfwSwapBuffers(window);
 }
@@ -598,8 +668,8 @@ int main(void)
 	std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
 
 	// OpenGL settings
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
+//	glEnable(GL_DEPTH_TEST);
+//	glDepthFunc(GL_LESS);
 //	glEnable(GL_BLEND);
 //	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
