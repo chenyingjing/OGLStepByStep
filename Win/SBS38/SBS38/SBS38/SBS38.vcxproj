@@ -96,7 +96,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Include\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <AdditionalDependencies>glew32.lib;CORE_DB_Magick++_.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -133,7 +133,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Include\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -164,14 +164,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ds_dir_light_pass_tech.h" />
-    <ClInclude Include="ds_geom_pass_tech.h" />
-    <ClInclude Include="ds_light_pass_tech.h" />
-    <ClInclude Include="ds_point_light_pass_tech.h" />
-    <ClInclude Include="gbuffer.h" />
-    <ClInclude Include="null_technique.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\..\Common\camera.cpp" />
     <ClCompile Include="..\..\..\Common\cubemap_texture.cpp" />
     <ClCompile Include="..\..\..\Common\glut_backend.cpp" />
@@ -192,22 +184,15 @@
     <ClCompile Include="..\..\..\Common\pipeline.cpp" />
     <ClCompile Include="..\..\..\Common\random_texture.cpp" />
     <ClCompile Include="..\..\..\Common\technique.cpp" />
-    <ClCompile Include="ds_dir_light_pass_tech.cpp" />
-    <ClCompile Include="ds_geom_pass_tech.cpp" />
-    <ClCompile Include="ds_light_pass_tech.cpp" />
-    <ClCompile Include="ds_point_light_pass_tech.cpp" />
-    <ClCompile Include="gbuffer.cpp" />
-    <ClCompile Include="null_technique.cpp" />
     <ClCompile Include="SBS38.cpp" />
+    <ClCompile Include="skinning_technique.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\dir_light_pass.fs" />
-    <None Include="shaders\geometry_pass.fs" />
-    <None Include="shaders\geometry_pass.vs" />
-    <None Include="shaders\light_pass.vs" />
-    <None Include="shaders\null_technique.fs" />
-    <None Include="shaders\null_technique.vs" />
-    <None Include="shaders\point_light_pass.fs" />
+    <ClInclude Include="skinning_technique.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\skinning.fs" />
+    <None Include="shaders\skinning.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -21,44 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ds_dir_light_pass_tech.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ds_geom_pass_tech.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ds_light_pass_tech.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ds_point_light_pass_tech.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gbuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="null_technique.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="ds_dir_light_pass_tech.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ds_geom_pass_tech.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ds_light_pass_tech.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ds_point_light_pass_tech.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gbuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="null_technique.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SBS38.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -122,27 +84,20 @@
     <ClCompile Include="..\..\..\Common\technique.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="skinning_technique.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\dir_light_pass.fs">
+    <ClInclude Include="skinning_technique.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\skinning.fs">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\geometry_pass.fs">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="shaders\geometry_pass.vs">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="shaders\light_pass.vs">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="shaders\null_technique.fs">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="shaders\null_technique.vs">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="shaders\point_light_pass.fs">
+    <None Include="shaders\skinning.vs">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>
