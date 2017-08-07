@@ -187,6 +187,7 @@
 		233A7FEC1F38383100BD31E7 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 233A7DD51F38377000BD31E7 /* libassimp.3.3.1.dylib */; };
 		233A7FED1F38383100BD31E7 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 233A7DD51F38377000BD31E7 /* libassimp.3.3.1.dylib */; };
 		233A7FEE1F38383100BD31E7 /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 233A7DD51F38377000BD31E7 /* libassimp.3.3.1.dylib */; };
+		233A7FF11F3839AD00BD31E7 /* ogldev_skinned_mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 233A7FEF1F3839AD00BD31E7 /* ogldev_skinned_mesh.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -577,6 +578,8 @@
 		233A7FE61F3837EF00BD31E7 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		233A7FE81F3837FD00BD31E7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		233A7FEA1F38380B00BD31E7 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		233A7FEF1F3839AD00BD31E7 /* ogldev_skinned_mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ogldev_skinned_mesh.cpp; sourceTree = "<group>"; };
+		233A7FF01F3839AD00BD31E7 /* ogldev_skinned_mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_skinned_mesh.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -618,6 +621,8 @@
 		233A7D7E1F3836DE00BD31E7 /* SBS38 */ = {
 			isa = PBXGroup;
 			children = (
+				233A7FEF1F3839AD00BD31E7 /* ogldev_skinned_mesh.cpp */,
+				233A7FF01F3839AD00BD31E7 /* ogldev_skinned_mesh.h */,
 				233A7D931F38377000BD31E7 /* asset */,
 				233A7DA21F38377000BD31E7 /* assimp */,
 				233A7DD81F38377000BD31E7 /* filePath.h */,
@@ -1409,6 +1414,7 @@
 				233A7FD51F38377100BD31E7 /* SBS38.cpp in Sources */,
 				233A7F3E1F38377100BD31E7 /* filePath.mm in Sources */,
 				233A7FDF1F38377100BD31E7 /* Program.cpp in Sources */,
+				233A7FF11F3839AD00BD31E7 /* ogldev_skinned_mesh.cpp in Sources */,
 				233A7FE01F38377100BD31E7 /* Shader.cpp in Sources */,
 				233A7F3F1F38377100BD31E7 /* gbuffer.cpp in Sources */,
 				233A7FDE1F38377100BD31E7 /* Camera.cpp in Sources */,
@@ -1570,6 +1576,7 @@
 				233A7D921F3836DE00BD31E7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

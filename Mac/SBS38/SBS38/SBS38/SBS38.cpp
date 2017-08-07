@@ -15,7 +15,7 @@
 #include<list>
 #include <sstream>
 #include <string>
-#include "mesh.h"
+#include "ogldev_skinned_mesh.h"
 
 #include "gbuffer.h"
 
@@ -40,7 +40,7 @@ struct ModelAsset {
 	GLint drawCount;
 	GLfloat shininess;
 	glm::vec3 specularColor;
-    Mesh mesh;
+    SkinnedMesh mesh;
 };
 
 struct Light {
@@ -55,7 +55,7 @@ struct Light {
 struct LightAsset {
     tdogl::Program* shaders;
     tdogl::Program* nullShaders;
-    Mesh mesh;
+    SkinnedMesh mesh;
     Light light;
 };
 
