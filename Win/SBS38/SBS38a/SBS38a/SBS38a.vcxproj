@@ -177,7 +177,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Common\math_3d.cpp" />
-    <ClCompile Include="..\..\..\Common\ogldev_app.cpp" />
     <ClCompile Include="..\..\..\Common\ogldev_texture.cpp" />
     <ClCompile Include="..\..\..\Common\ogldev_util.cpp" />
     <ClCompile Include="gbuffer.cpp" />

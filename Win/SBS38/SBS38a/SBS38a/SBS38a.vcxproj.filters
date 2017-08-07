@@ -77,19 +77,16 @@
     <ClCompile Include="tdogl\Texture.cpp">
       <Filter>tdogl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Common\math_3d.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Common\ogldev_texture.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="ogldev_skinned_mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Common\ogldev_app.cpp">
+    <ClCompile Include="..\..\..\Common\ogldev_util.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Common\ogldev_util.cpp">
+    <ClCompile Include="..\..\..\Common\math_3d.cpp">
       <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>

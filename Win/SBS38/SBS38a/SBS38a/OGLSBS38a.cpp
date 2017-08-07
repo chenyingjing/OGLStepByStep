@@ -16,11 +16,6 @@
 #include <sstream>
 #include <string>
 
-//#include "mesh.h"
-
-//#include "gbuffer.h"
-#include "ogldev_app.h"
-#include "ogldev_util.h"
 #include "ogldev_skinned_mesh.h"
 
 #define NUM_ROWS 10
