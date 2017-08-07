@@ -16,10 +16,11 @@
 #include <sstream>
 #include <string>
 
-#include "mesh.h"
+//#include "mesh.h"
 
-#include "gbuffer.h"
-
+//#include "gbuffer.h"
+#include "ogldev_app.h"
+#include "ogldev_util.h"
 #include "ogldev_skinned_mesh.h"
 
 #define NUM_ROWS 10
@@ -51,6 +52,8 @@ bool isWireframe = false;
 float gDispFactor = 0.25;
 //float gTLToSet = 1.0f;
 //float gTL = 1.0f;
+
+long long m_startTime;
 
 struct ModelAsset {
 	tdogl::Program* psUpdateShaders;
@@ -103,7 +106,7 @@ struct LightInstance {
 	glm::mat4 transform;
 };
 
-ModelAsset gTank;
+ModelAsset gBob;
 ModelAsset gHheli;
 ModelAsset gJeep;
 
@@ -118,7 +121,7 @@ std::list<LightInstance> gLightInstances;
 
 std::vector<Light> gLights;
 
-GBuffer m_gbuffer;
+//GBuffer m_gbuffer;
 
 static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFile2) {
 	std::vector<tdogl::Shader> shaders;
@@ -151,101 +154,119 @@ static tdogl::Texture* LoadTexture(const char *textureFile) {
 }
 
 static void LoadMainAsset() {
-	gTank.shaders = LoadShaders("shader/geometry_pass.vs", "shader/geometry_pass.fs");
-    gTank.shininess = 80.0;
-    gTank.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+	gBob.shaders = LoadShaders("shader/skinning.vs", "shader/skinning.fs");
+    gBob.shininess = 80.0;
+    gBob.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
-	gTank.mesh.LoadMesh("../../../Content/phoenix_ugv.md2");
-}
-
-static void LoadLightAsset1() {
-	gLight1.shaders = LoadShaders("shader/light_pass.vs", "shader/point_light_pass.fs");
-
-	gLight1.shaders->use();
-	gLight1.shaders->setUniform("gPositionMap", 0);
-	gLight1.shaders->setUniform("gColorMap", 1);
-	gLight1.shaders->setUniform("gNormalMap", 2);
-	gLight1.shaders->setUniform("gScreenSize", (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
-	gLight1.shaders->stopUsing();
-
-	gLight1.light.position = glm::vec4(-10, 1.5f, -9.0f, 1);
-	gLight1.light.intensities = glm::vec3(0.0f, 1.0f, 0.0f);
-	gLight1.light.attenuation = 0.1f;
-	gLight1.light.ambientCoefficient = 0.005f;
-
-	gLight1.nullShaders = LoadShaders("shader/null_technique.vs", "shader/null_technique.fs");
-
-	gLight1.mesh.LoadMesh("../../../Content/sphere.obj");
-}
-
-static void LoadLightAsset2() {
-	gLight2.shaders = LoadShaders("shader/light_pass.vs", "shader/point_light_pass.fs");
-
-	gLight2.shaders->use();
-	gLight2.shaders->setUniform("gPositionMap", 0);
-	gLight2.shaders->setUniform("gColorMap", 1);
-	gLight2.shaders->setUniform("gNormalMap", 2);
-	gLight2.shaders->setUniform("gScreenSize", (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
-	gLight2.shaders->stopUsing();
-
-	gLight2.light.position = glm::vec4(2.0f, 0.0f, -5.0f, 1);
-	gLight2.light.intensities = glm::vec3(1.0f, 0.0f, 0.0f);
-	gLight2.light.attenuation = 0.2f;
-	gLight2.light.ambientCoefficient = 0.005f;
-
-	gLight2.nullShaders = LoadShaders("shader/null_technique.vs", "shader/null_technique.fs");
-
-	gLight2.mesh.LoadMesh("../../../Content/sphere.obj");
-}
-
-static void LoadLightAsset3() {
-	gLight3.shaders = LoadShaders("shader/light_pass.vs", "shader/point_light_pass.fs");
-
-	gLight3.shaders->use();
-	gLight3.shaders->setUniform("gPositionMap", 0);
-	gLight3.shaders->setUniform("gColorMap", 1);
-	gLight3.shaders->setUniform("gNormalMap", 2);
-	gLight3.shaders->setUniform("gScreenSize", (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
-	gLight3.shaders->stopUsing();
-
-	gLight3.light.position = glm::vec4(-8.0f, -2.0f, -5.0f, 1);
-	gLight3.light.intensities = glm::vec3(0.0f, 0.0f, 1.0f);
-	gLight3.light.attenuation = 0.1f;
-	gLight3.light.ambientCoefficient = 0.005f;
-
-	gLight3.nullShaders = LoadShaders("shader/null_technique.vs", "shader/null_technique.fs");
-
-	gLight3.mesh.LoadMesh("../../../Content/sphere.obj");
-}
-
-void LoadDirLightAsset()
-{
-	gDirLight.shaders = LoadShaders("shader/light_pass.vs", "shader/dir_light_pass.fs");
-
 	gDirLight.light.position = glm::vec4(8.0f, 2.0f, 5.0f, 0);
-	gDirLight.light.intensities = glm::vec3(0.0f, 1.0f, 1.0f);
+	gDirLight.light.intensities = glm::vec3(1.0f, 1.0f, 1.0f);
 	gDirLight.light.attenuation = 0.1f;
 	gDirLight.light.ambientCoefficient = 0.005f;
 
-	gDirLight.shaders->use();
-	gDirLight.shaders->setUniform("gPositionMap", 0);
-	gDirLight.shaders->setUniform("gColorMap", 1);
-	gDirLight.shaders->setUniform("gNormalMap", 2);
-	gDirLight.shaders->setUniform("gScreenSize", (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
 
-	gDirLight.shaders->setUniform("gDirectionalLight.Base.Color", gDirLight.light.intensities.r, gDirLight.light.intensities.g, gDirLight.light.intensities.b);
-	gDirLight.shaders->setUniform("gDirectionalLight.Base.AmbientIntensity", gDirLight.light.ambientCoefficient);
-
+	gBob.shaders->use();
+	gBob.shaders->setUniform("gColorMap", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+	gBob.shaders->setUniform("gDirectionalLight.Base.Color", gDirLight.light.intensities.r, gDirLight.light.intensities.g, gDirLight.light.intensities.b);
+	gBob.shaders->setUniform("gDirectionalLight.Base.AmbientIntensity", gDirLight.light.ambientCoefficient);
 	glm::vec3 direction = glm::vec3(-gDirLight.light.position.x, -gDirLight.light.position.y, -gDirLight.light.position.z);
 	direction = glm::normalize(direction);
+	gBob.shaders->setUniform("gDirectionalLight.Direction", direction.x, direction.y, direction.z);
+	gBob.shaders->setUniform("gDirectionalLight.Base.DiffuseIntensity", 1.0f);
+	gBob.shaders->setUniform("gMatSpecularIntensity", 0.0f);
+	gBob.shaders->setUniform("gSpecularPower", 0.0f);
+	gBob.shaders->stopUsing();
 
-	gDirLight.shaders->setUniform("gDirectionalLight.Direction", direction.x, direction.y, direction.z);
-	gDirLight.shaders->setUniform("gDirectionalLight.Base.DiffuseIntensity", 1.0f);
-	
-	gDirLight.shaders->stopUsing();
-
-	gDirLight.mesh.LoadMesh("../../../Content/quad.obj");
+	gBob.mesh.LoadMesh("../../../Content/boblampclean.md5mesh");
 }
+
+//static void LoadLightAsset1() {
+//	gLight1.shaders = LoadShaders("shader/light_pass.vs", "shader/point_light_pass.fs");
+//
+//	gLight1.shaders->use();
+//	gLight1.shaders->setUniform("gPositionMap", 0);
+//	gLight1.shaders->setUniform("gColorMap", 1);
+//	gLight1.shaders->setUniform("gNormalMap", 2);
+//	gLight1.shaders->setUniform("gScreenSize", (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
+//	gLight1.shaders->stopUsing();
+//
+//	gLight1.light.position = glm::vec4(-10, 1.5f, -9.0f, 1);
+//	gLight1.light.intensities = glm::vec3(0.0f, 1.0f, 0.0f);
+//	gLight1.light.attenuation = 0.1f;
+//	gLight1.light.ambientCoefficient = 0.005f;
+//
+//	gLight1.nullShaders = LoadShaders("shader/null_technique.vs", "shader/null_technique.fs");
+//
+//	gLight1.mesh.LoadMesh("../../../Content/sphere.obj");
+//}
+//
+//static void LoadLightAsset2() {
+//	gLight2.shaders = LoadShaders("shader/light_pass.vs", "shader/point_light_pass.fs");
+//
+//	gLight2.shaders->use();
+//	gLight2.shaders->setUniform("gPositionMap", 0);
+//	gLight2.shaders->setUniform("gColorMap", 1);
+//	gLight2.shaders->setUniform("gNormalMap", 2);
+//	gLight2.shaders->setUniform("gScreenSize", (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
+//	gLight2.shaders->stopUsing();
+//
+//	gLight2.light.position = glm::vec4(2.0f, 0.0f, -5.0f, 1);
+//	gLight2.light.intensities = glm::vec3(1.0f, 0.0f, 0.0f);
+//	gLight2.light.attenuation = 0.2f;
+//	gLight2.light.ambientCoefficient = 0.005f;
+//
+//	gLight2.nullShaders = LoadShaders("shader/null_technique.vs", "shader/null_technique.fs");
+//
+//	gLight2.mesh.LoadMesh("../../../Content/sphere.obj");
+//}
+//
+//static void LoadLightAsset3() {
+//	gLight3.shaders = LoadShaders("shader/light_pass.vs", "shader/point_light_pass.fs");
+//
+//	gLight3.shaders->use();
+//	gLight3.shaders->setUniform("gPositionMap", 0);
+//	gLight3.shaders->setUniform("gColorMap", 1);
+//	gLight3.shaders->setUniform("gNormalMap", 2);
+//	gLight3.shaders->setUniform("gScreenSize", (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
+//	gLight3.shaders->stopUsing();
+//
+//	gLight3.light.position = glm::vec4(-8.0f, -2.0f, -5.0f, 1);
+//	gLight3.light.intensities = glm::vec3(0.0f, 0.0f, 1.0f);
+//	gLight3.light.attenuation = 0.1f;
+//	gLight3.light.ambientCoefficient = 0.005f;
+//
+//	gLight3.nullShaders = LoadShaders("shader/null_technique.vs", "shader/null_technique.fs");
+//
+//	gLight3.mesh.LoadMesh("../../../Content/sphere.obj");
+//}
+
+//void LoadDirLightAsset()
+//{
+//	gDirLight.shaders = LoadShaders("shader/light_pass.vs", "shader/dir_light_pass.fs");
+//
+//	gDirLight.light.position = glm::vec4(8.0f, 2.0f, 5.0f, 0);
+//	gDirLight.light.intensities = glm::vec3(0.0f, 1.0f, 1.0f);
+//	gDirLight.light.attenuation = 0.1f;
+//	gDirLight.light.ambientCoefficient = 0.005f;
+//
+//	gDirLight.shaders->use();
+//	gDirLight.shaders->setUniform("gPositionMap", 0);
+//	gDirLight.shaders->setUniform("gColorMap", 1);
+//	gDirLight.shaders->setUniform("gNormalMap", 2);
+//	gDirLight.shaders->setUniform("gScreenSize", (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
+//
+//	gDirLight.shaders->setUniform("gDirectionalLight.Base.Color", gDirLight.light.intensities.r, gDirLight.light.intensities.g, gDirLight.light.intensities.b);
+//	gDirLight.shaders->setUniform("gDirectionalLight.Base.AmbientIntensity", gDirLight.light.ambientCoefficient);
+//
+//	glm::vec3 direction = glm::vec3(-gDirLight.light.position.x, -gDirLight.light.position.y, -gDirLight.light.position.z);
+//	direction = glm::normalize(direction);
+//
+//	gDirLight.shaders->setUniform("gDirectionalLight.Direction", direction.x, direction.y, direction.z);
+//	gDirLight.shaders->setUniform("gDirectionalLight.Base.DiffuseIntensity", 1.0f);
+//	
+//	gDirLight.shaders->stopUsing();
+//
+//	gDirLight.mesh.LoadMesh("../../../Content/quad.obj");
+//}
 
 // convenience function that returns a translation matrix
 glm::mat4 translate(GLfloat x, GLfloat y, GLfloat z) {
@@ -258,35 +279,30 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 static void CreateInstances() {
-    ModelInstance tank;
-    tank.asset = &gTank;
-    float groundScale = 0.1;
-    tank.transform = tank.originalTransform = translate(0.0f, 0.0f, -12.0f) * scale(groundScale, groundScale, groundScale);
-    gInstances.push_back(tank);
-    
-	ModelInstance tank1;
-	tank1.asset = &gTank;
-	//float groundScale = 0.1;
-	tank1.transform = tank1.originalTransform = translate(-15.0f, 0.0f, -12.0f) * scale(groundScale, groundScale, groundScale);
-	gInstances.push_back(tank1);
+    ModelInstance bob;
+    bob.asset = &gBob;
+    float modelScale = 0.5;
+	bob.transform = bob.originalTransform = translate(0.0f, -5.0f, -12.0f) *scale(modelScale, modelScale, modelScale)
+		* glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0));
+    gInstances.push_back(bob);
 }
 
-static void CreateLightInstances() {
-	LightInstance light1;
-	light1.asset = &gLight1;
-	light1.transform = translate(gLight1.light.position.x, gLight1.light.position.y, gLight1.light.position.z);
-	gLightInstances.push_back(light1);
-
-	LightInstance light2;
-	light2.asset = &gLight2;
-	light2.transform = translate(gLight2.light.position.x, gLight2.light.position.y, gLight2.light.position.z);
-	gLightInstances.push_back(light2);
-
-	LightInstance light3;
-	light3.asset = &gLight3;
-	light3.transform = translate(gLight3.light.position.x, gLight3.light.position.y, gLight3.light.position.z);
-	gLightInstances.push_back(light3);
-}
+//static void CreateLightInstances() {
+//	LightInstance light1;
+//	light1.asset = &gLight1;
+//	light1.transform = translate(gLight1.light.position.x, gLight1.light.position.y, gLight1.light.position.z);
+//	gLightInstances.push_back(light1);
+//
+//	LightInstance light2;
+//	light2.asset = &gLight2;
+//	light2.transform = translate(gLight2.light.position.x, gLight2.light.position.y, gLight2.light.position.z);
+//	gLightInstances.push_back(light2);
+//
+//	LightInstance light3;
+//	light3.asset = &gLight3;
+//	light3.transform = translate(gLight3.light.position.x, gLight3.light.position.y, gLight3.light.position.z);
+//	gLightInstances.push_back(light3);
+//}
 
 // records how far the y axis has been scrolled
 void OnScroll(GLFWwindow* window, double deltaX, double deltaY) {
@@ -300,7 +316,7 @@ void Update(float secondsElapsed, GLFWwindow* window) {
 	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
 	//gInstances.front().transform = translate(-6, -2, -10) * scale(0.1, 0.1, 0.1) * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));
 	for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
-		it->transform = it->originalTransform * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));;
+		//it->transform = it->originalTransform * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));;
 	}
 
 	//move position of camera based on WASD keys
@@ -401,13 +417,57 @@ void SetLightUniform(tdogl::Program* shaders, const char* propertyName, size_t l
     shaders->setUniform(uniformName.c_str(), value);
 }
 
+float GetRunningTime()
+{
+	float RunningTime = (float)((double)GetCurrentTimeMillis() - (double)m_startTime) / 1000.0f;
+	return RunningTime;
+}
+
+
 static void RenderInstance(const ModelInstance& inst) {
     ModelAsset* asset = inst.asset;
     tdogl::Program* shaders = asset->shaders;
     
     //bind the shaders
     shaders->use();
-    
+
+	vector<Matrix4f> Transforms;
+
+	float RunningTime = GetRunningTime();
+
+	inst.asset->mesh.BoneTransform(RunningTime, Transforms);
+
+	for (uint i = 0; i < Transforms.size(); i++) {
+		//m_pEffect->SetBoneTransform(i, Transforms[i]);
+		char Name[128];
+		memset(Name, 0, sizeof(Name));
+		SNPRINTF(Name, sizeof(Name), "gBones[%d]", i);
+		shaders->setUniformMatrix4(Name, Transforms[i]);
+	}
+
+	//m_pEffect->SetEyeWorldPos(m_pGameCamera->GetPos());
+	shaders->setUniform("gEyeWorldPos", gCamera.position());
+
+	//Pipeline p;
+	//p.SetCamera(m_pGameCamera->GetPos(), m_pGameCamera->GetTarget(), m_pGameCamera->GetUp());
+	//p.SetPerspectiveProj(m_persProjInfo);
+	//p.Scale(0.1f, 0.1f, 0.1f);
+
+	//Vector3f Pos(m_position);
+	//p.WorldPos(Pos);
+	//p.Rotate(270.0f, 180.0f, 0.0f);
+	//m_pEffect->SetWVP(p.GetWVPTrans());
+	//m_pEffect->SetWorldMatrix(p.GetWorldTrans());
+
+	shaders->setUniform("gWVP", gCamera.matrix() * inst.transform);
+	shaders->setUniform("gWorld", inst.transform);
+
+	asset->mesh.Render();
+
+	shaders->stopUsing();
+
+
+/*    
 //    shaders->setUniform("gShadowMap", 1);
 //    
     shaders->setUniform("numLights", (int)gLights.size());
@@ -428,58 +488,46 @@ static void RenderInstance(const ModelInstance& inst) {
     shaders->setUniform("camera", gCamera.matrix());
     shaders->setUniform("model", inst.transform);
     //shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
-	shaders->setUniform("gColorMap", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
     //shaders->setUniform("gDisplacementMap", 4); //set to 4 because the texture will be bound to GL_TEXTURE4
     
     shaders->setUniform("materialShininess", asset->shininess);
     shaders->setUniform("materialSpecularColor", asset->specularColor);
-    
-	asset->mesh.Render();
-    
-    shaders->stopUsing();
+*/
 }
 
-bool Init()
-{
-	if (!m_gbuffer.Init(WINDOW_WIDTH, WINDOW_HEIGHT)) {
-		return false;
-	}
-	return true;
-}
+//void DSGeometryPassInstance(const ModelInstance& inst) {
+//	ModelAsset* asset = inst.asset;
+//	tdogl::Program* shaders = asset->shaders;
+//
+//	//bind the shaders
+//	shaders->use();
+//
+//	//set the shader uniforms
+//	shaders->setUniform("model", inst.transform);
+//	shaders->setUniform("camera", gCamera.matrix());
+//	shaders->setUniform("gColorMap", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+//
+//	asset->mesh.Render();
+//
+//	shaders->stopUsing();
+//}
 
-void DSGeometryPassInstance(const ModelInstance& inst) {
-	ModelAsset* asset = inst.asset;
-	tdogl::Program* shaders = asset->shaders;
-
-	//bind the shaders
-	shaders->use();
-
-	//set the shader uniforms
-	shaders->setUniform("model", inst.transform);
-	shaders->setUniform("camera", gCamera.matrix());
-	shaders->setUniform("gColorMap", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
-
-	asset->mesh.Render();
-
-	shaders->stopUsing();
-}
-
-void DSGeometryPass()
-{
-	m_gbuffer.BindForGeomPass();
-
-	glDepthMask(GL_TRUE);
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glEnable(GL_DEPTH_TEST);
-
-	for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
-		DSGeometryPassInstance(*it);
-	}
-
-	glDepthMask(GL_FALSE);
-}
+//void DSGeometryPass()
+//{
+//	m_gbuffer.BindForGeomPass();
+//
+//	glDepthMask(GL_TRUE);
+//
+//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//
+//	glEnable(GL_DEPTH_TEST);
+//
+//	for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
+//		DSGeometryPassInstance(*it);
+//	}
+//
+//	glDepthMask(GL_FALSE);
+//}
 
 //void DSLightPass()
 //{
@@ -515,57 +563,57 @@ void DSGeometryPass()
 //	glClear(GL_COLOR_BUFFER_BIT);
 //}
 
-float CalcPointLightBSphere(const LightAsset& Light)
-{
-	//Light.light.attenuation
-	float MaxChannel = fmax(fmax(Light.light.intensities.r, Light.light.intensities.g), Light.light.intensities.b);
+//float CalcPointLightBSphere(const LightAsset& Light)
+//{
+//	//Light.light.attenuation
+//	float MaxChannel = fmax(fmax(Light.light.intensities.r, Light.light.intensities.g), Light.light.intensities.b);
+//
+//	//float ret = (-Light.Attenuation.Linear + sqrtf(Light.Attenuation.Linear * Light.Attenuation.Linear - 4 * Light.Attenuation.Exp * (Light.Attenuation.Exp - 256 * MaxChannel * Light.DiffuseIntensity)))
+//	//	/
+//	//	(2 * Light.Attenuation.Exp);
+//	float ret = (0 + sqrtf(0 - 4 * Light.light.attenuation * (Light.light.attenuation - 256 * MaxChannel * 1)))
+//		/
+//		(2 * Light.light.attenuation);
+//	return ret;
+//}
 
-	//float ret = (-Light.Attenuation.Linear + sqrtf(Light.Attenuation.Linear * Light.Attenuation.Linear - 4 * Light.Attenuation.Exp * (Light.Attenuation.Exp - 256 * MaxChannel * Light.DiffuseIntensity)))
-	//	/
-	//	(2 * Light.Attenuation.Exp);
-	float ret = (0 + sqrtf(0 - 4 * Light.light.attenuation * (Light.light.attenuation - 256 * MaxChannel * 1)))
-		/
-		(2 * Light.light.attenuation);
-	return ret;
-}
-
-void DSPointLightsPassInstance(const LightInstance& inst) {
-	m_gbuffer.BindForLightPass();
-	
-	LightAsset* asset = inst.asset;
-	tdogl::Program* shaders = asset->shaders;
-
-	//bind the shaders
-	shaders->use();
-	
-	shaders->setUniform("gEyeWorldPos", gCamera.position());
-
-	glStencilFunc(GL_NOTEQUAL, 0, 0xFF);
-
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendEquation(GL_FUNC_ADD);
-	glBlendFunc(GL_ONE, GL_ONE);
-
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
-
-	shaders->setUniform("gPointLight.Base.Color", asset->light.intensities.r, asset->light.intensities.g, asset->light.intensities.b);
-	shaders->setUniform("gPointLight.Base.AmbientIntensity", asset->light.ambientCoefficient);
-	shaders->setUniform("gPointLight.Position", asset->light.position.x, asset->light.position.y, asset->light.position.z);
-	shaders->setUniform("gPointLight.Base.DiffuseIntensity", 1.0f);
-	shaders->setUniform("gPointLight.Atten.Constant", 1.0f);
-	shaders->setUniform("gPointLight.Atten.Linear", 0.0f);
-	shaders->setUniform("gPointLight.Atten.Exp", asset->light.attenuation);
-	float BSphereScale = CalcPointLightBSphere(*asset);
-	shaders->setUniform("gWVP", gCamera.matrix() * inst.transform * scale(BSphereScale, BSphereScale, BSphereScale));
-	asset->mesh.Render();
-	shaders->stopUsing();
-
-	glCullFace(GL_BACK);
-
-	glDisable(GL_BLEND);
-}
+//void DSPointLightsPassInstance(const LightInstance& inst) {
+//	m_gbuffer.BindForLightPass();
+//	
+//	LightAsset* asset = inst.asset;
+//	tdogl::Program* shaders = asset->shaders;
+//
+//	//bind the shaders
+//	shaders->use();
+//	
+//	shaders->setUniform("gEyeWorldPos", gCamera.position());
+//
+//	glStencilFunc(GL_NOTEQUAL, 0, 0xFF);
+//
+//	glDisable(GL_DEPTH_TEST);
+//	glEnable(GL_BLEND);
+//	glBlendEquation(GL_FUNC_ADD);
+//	glBlendFunc(GL_ONE, GL_ONE);
+//
+//	glEnable(GL_CULL_FACE);
+//	glCullFace(GL_FRONT);
+//
+//	shaders->setUniform("gPointLight.Base.Color", asset->light.intensities.r, asset->light.intensities.g, asset->light.intensities.b);
+//	shaders->setUniform("gPointLight.Base.AmbientIntensity", asset->light.ambientCoefficient);
+//	shaders->setUniform("gPointLight.Position", asset->light.position.x, asset->light.position.y, asset->light.position.z);
+//	shaders->setUniform("gPointLight.Base.DiffuseIntensity", 1.0f);
+//	shaders->setUniform("gPointLight.Atten.Constant", 1.0f);
+//	shaders->setUniform("gPointLight.Atten.Linear", 0.0f);
+//	shaders->setUniform("gPointLight.Atten.Exp", asset->light.attenuation);
+//	float BSphereScale = CalcPointLightBSphere(*asset);
+//	shaders->setUniform("gWVP", gCamera.matrix() * inst.transform * scale(BSphereScale, BSphereScale, BSphereScale));
+//	asset->mesh.Render();
+//	shaders->stopUsing();
+//
+//	glCullFace(GL_BACK);
+//
+//	glDisable(GL_BLEND);
+//}
 
 //void DSPointLightsPass()
 //{
@@ -574,88 +622,101 @@ void DSPointLightsPassInstance(const LightInstance& inst) {
 //	}
 //}
 
-void DSDirectionalLightPass()
-{
-	m_gbuffer.BindForLightPass();
-	
-	gDirLight.shaders->use();
-	gDirLight.shaders->setUniform("gEyeWorldPos", gCamera.position());
-	glm::mat4 i = glm::rotate(glm::mat4(), glm::radians(180.0f), glm::vec3(1, 0, 0));
-	gDirLight.shaders->setUniform("gWVP", i);
+//void DSDirectionalLightPass()
+//{
+//	m_gbuffer.BindForLightPass();
+//	
+//	gDirLight.shaders->use();
+//	gDirLight.shaders->setUniform("gEyeWorldPos", gCamera.position());
+//	glm::mat4 i = glm::rotate(glm::mat4(), glm::radians(180.0f), glm::vec3(1, 0, 0));
+//	gDirLight.shaders->setUniform("gWVP", i);
+//
+//	glDisable(GL_DEPTH_TEST);
+//	glEnable(GL_BLEND);
+//	glBlendEquation(GL_FUNC_ADD);
+//	glBlendFunc(GL_ONE, GL_ONE);
+//
+//	gDirLight.mesh.Render();
+//	gDirLight.shaders->stopUsing();
+//
+//	glDisable(GL_BLEND);
+//}
 
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendEquation(GL_FUNC_ADD);
-	glBlendFunc(GL_ONE, GL_ONE);
+//void DSStencilPass(const LightInstance& inst)
+//{
+//	LightAsset* asset = inst.asset;
+//	tdogl::Program* nullShaders = asset->nullShaders;
+//
+//	//bind the shaders
+//	nullShaders->use();
+//
+//	m_gbuffer.BindForStencilPass();
+//	glEnable(GL_DEPTH_TEST);
+//
+//	glDisable(GL_CULL_FACE);
+//
+//	glClear(GL_STENCIL_BUFFER_BIT);
+//
+//
+//	// We need the stencil test to be enabled but we want it
+//	// to succeed always. Only the depth test matters.
+//	glStencilFunc(GL_ALWAYS, 0, 0);
+//
+//	glStencilOpSeparate(GL_BACK, GL_KEEP, GL_INCR_WRAP, GL_KEEP);
+//	glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_DECR_WRAP, GL_KEEP);
+//
+//	float BSphereScale = CalcPointLightBSphere(*asset);
+//	nullShaders->setUniform("gWVP", gCamera.matrix() * inst.transform * scale(BSphereScale, BSphereScale, BSphereScale));
+//	asset->mesh.Render();
+//	nullShaders->stopUsing();
+//}
 
-	gDirLight.mesh.Render();
-	gDirLight.shaders->stopUsing();
-
-	glDisable(GL_BLEND);
-}
-
-void DSStencilPass(const LightInstance& inst)
-{
-	LightAsset* asset = inst.asset;
-	tdogl::Program* nullShaders = asset->nullShaders;
-
-	//bind the shaders
-	nullShaders->use();
-
-	m_gbuffer.BindForStencilPass();
-	glEnable(GL_DEPTH_TEST);
-
-	glDisable(GL_CULL_FACE);
-
-	glClear(GL_STENCIL_BUFFER_BIT);
-
-
-	// We need the stencil test to be enabled but we want it
-	// to succeed always. Only the depth test matters.
-	glStencilFunc(GL_ALWAYS, 0, 0);
-
-	glStencilOpSeparate(GL_BACK, GL_KEEP, GL_INCR_WRAP, GL_KEEP);
-	glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_DECR_WRAP, GL_KEEP);
-
-	float BSphereScale = CalcPointLightBSphere(*asset);
-	nullShaders->setUniform("gWVP", gCamera.matrix() * inst.transform * scale(BSphereScale, BSphereScale, BSphereScale));
-	asset->mesh.Render();
-	nullShaders->stopUsing();
-}
-
-void DSFinalPass()
-{
-	m_gbuffer.BindForFinalPass();
-	glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-		0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-}
+//void DSFinalPass()
+//{
+//	m_gbuffer.BindForFinalPass();
+//	glBlitFramebuffer(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+//		0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+//}
 
 void Render(float millsElapsed, GLFWwindow* window)
 {
-	m_gbuffer.StartFrame();
+	//m_gbuffer.StartFrame();
 
-	DSGeometryPass();
+	//DSGeometryPass();
 	//DSLightPass();
 	//BeginLightPasses();
-	glEnable(GL_STENCIL_TEST);
+	//glEnable(GL_STENCIL_TEST);
 
 	//DSPointLightsPass();
-	for (auto it = gLightInstances.begin(); it != gLightInstances.end(); ++it) {
-		DSStencilPass(*it);
-		DSPointLightsPassInstance(*it);
-	}
+	//for (auto it = gLightInstances.begin(); it != gLightInstances.end(); ++it) {
+	//	DSStencilPass(*it);
+	//	DSPointLightsPassInstance(*it);
+	//}
 	
-	glDisable(GL_STENCIL_TEST);
+	//glDisable(GL_STENCIL_TEST);
 
-	DSDirectionalLightPass();
+	//DSDirectionalLightPass();
 
-	DSFinalPass();
+	//DSFinalPass();
+
+	// clear everything
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	std::list<ModelInstance>::const_iterator it;
+	GLenum error2 = glGetError();
+	if (error2 != GL_NO_ERROR)
+		std::cerr << "OpenGL Error2 " << error2 << std::endl;
+	for (it = gInstances.begin(); it != gInstances.end(); ++it) {
+		RenderInstance(*it);
+	}
 
 	glfwSwapBuffers(window);
 }
 
 int main(void)
 {
+	m_startTime = GetCurrentTimeMillis();
+
 	GLFWwindow* window;
 
 	/* Initialize the library */
@@ -709,18 +770,14 @@ int main(void)
 	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
     
-	if (!Init()) {
-		return -1;
-	}
-
 	LoadMainAsset();
 	CreateInstances();
 
-	LoadLightAsset1();
-	LoadLightAsset2();
-	LoadLightAsset3();
-	LoadDirLightAsset();
-	CreateLightInstances();
+	//LoadLightAsset1();
+	//LoadLightAsset2();
+	//LoadLightAsset3();
+	//LoadDirLightAsset();
+	//CreateLightInstances();
 
 	//glClearColor(0.196078431372549f, 0.3137254901960784f, 0.5882352941176471f, 1);
 	glClearColor(0.0f, 0.0f, 0.0f, 1);

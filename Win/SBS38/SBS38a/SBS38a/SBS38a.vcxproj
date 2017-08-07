@@ -96,7 +96,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Include\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;CORE_DB_Magick++_.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -133,7 +133,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Include\assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -177,7 +177,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Common\math_3d.cpp" />
+    <ClCompile Include="..\..\..\Common\ogldev_app.cpp" />
     <ClCompile Include="..\..\..\Common\ogldev_texture.cpp" />
+    <ClCompile Include="..\..\..\Common\ogldev_util.cpp" />
     <ClCompile Include="gbuffer.cpp" />
     <ClCompile Include="ogldev_skinned_mesh.cpp" />
     <ClCompile Include="OGLSBS38a.cpp" />
@@ -188,13 +190,8 @@
     <ClCompile Include="tdogl\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader\dir_light_pass.fs" />
-    <None Include="shader\geometry_pass.fs" />
-    <None Include="shader\geometry_pass.vs" />
-    <None Include="shader\light_pass.vs" />
-    <None Include="shader\null_technique.fs" />
-    <None Include="shader\null_technique.vs" />
-    <None Include="shader\point_light_pass.fs" />
+    <None Include="shader\skinning.fs" />
+    <None Include="shader\skinning.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

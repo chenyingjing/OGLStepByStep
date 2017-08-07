@@ -86,27 +86,18 @@
     <ClCompile Include="ogldev_skinned_mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Common\ogldev_app.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Common\ogldev_util.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader\dir_light_pass.fs">
+    <None Include="shader\skinning.fs">
       <Filter>shader</Filter>
     </None>
-    <None Include="shader\geometry_pass.fs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="shader\geometry_pass.vs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="shader\light_pass.vs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="shader\null_technique.fs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="shader\null_technique.vs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="shader\point_light_pass.fs">
+    <None Include="shader\skinning.vs">
       <Filter>shader</Filter>
     </None>
   </ItemGroup>
