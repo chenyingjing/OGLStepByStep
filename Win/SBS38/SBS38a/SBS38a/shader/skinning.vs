@@ -24,14 +24,7 @@ void main()
     BoneTransform     += gBones[BoneIDs[3]] * Weights[3];
 
     vec4 PosL    = BoneTransform * vec4(Position, 1.0);
-	if (PosL.x == 1000)
-	{
     gl_Position  = gWVP * PosL;
-	}
-	else
-	{
-    gl_Position  = gWVP * vec4(Position, 1.0);
-	}
     TexCoord0    = TexCoord;
     vec4 NormalL = BoneTransform * vec4(Normal, 0.0);
     Normal0      = (gWorld * NormalL).xyz;
