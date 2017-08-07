@@ -118,10 +118,10 @@ static void LoadMainAsset() {
     gBob.shininess = 80.0;
     gBob.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
-    gDirLight.light.position = glm::vec4(0.0f, 100.0f, 230.0f, 0);
+    gDirLight.light.position = glm::vec4(0.0f, -10.0f, 13.0f, 0);
     gDirLight.light.intensities = glm::vec3(1.0f, 1.0f, 1.0f);
     gDirLight.light.attenuation = 0.001f;
-    gDirLight.light.ambientCoefficient = 0.05f;
+    gDirLight.light.ambientCoefficient = 0.005f;
     
     
     gBob.shaders->use();
