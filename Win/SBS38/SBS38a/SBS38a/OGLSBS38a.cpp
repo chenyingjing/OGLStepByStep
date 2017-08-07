@@ -20,6 +20,8 @@
 
 #include "gbuffer.h"
 
+#include "ogldev_skinned_mesh.h"
+
 #define NUM_ROWS 10
 #define NUM_COLUMNS 10
 
@@ -71,7 +73,7 @@ struct ModelAsset {
 	GLint drawCount;
 	GLfloat shininess;
 	glm::vec3 specularColor;
-	Mesh mesh;
+	SkinnedMesh mesh;
 };
 
 struct Light {
@@ -86,7 +88,7 @@ struct Light {
 struct LightAsset {
 	tdogl::Program* shaders;
 	tdogl::Program* nullShaders;
-	Mesh mesh;
+	SkinnedMesh mesh;
 	Light light;
 };
 

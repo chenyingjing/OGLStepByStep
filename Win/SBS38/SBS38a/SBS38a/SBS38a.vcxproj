@@ -167,7 +167,7 @@
     <ClInclude Include="gbuffer.h" />
     <ClInclude Include="glew.h" />
     <ClInclude Include="glfw3.h" />
-    <ClInclude Include="mesh.h" />
+    <ClInclude Include="ogldev_skinned_mesh.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="tdogl\Bitmap.h" />
     <ClInclude Include="tdogl\Camera.h" />
@@ -179,7 +179,7 @@
     <ClCompile Include="..\..\..\Common\math_3d.cpp" />
     <ClCompile Include="..\..\..\Common\ogldev_texture.cpp" />
     <ClCompile Include="gbuffer.cpp" />
-    <ClCompile Include="mesh.cpp" />
+    <ClCompile Include="ogldev_skinned_mesh.cpp" />
     <ClCompile Include="OGLSBS38a.cpp" />
     <ClCompile Include="tdogl\Bitmap.cpp" />
     <ClCompile Include="tdogl\Camera.cpp" />
