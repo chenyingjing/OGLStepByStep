@@ -527,12 +527,12 @@ void RenderPass()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     gShadowMapFBO.BindForReading(GL_TEXTURE1);
-    RenderInstance1(gInstances.back());
+    //RenderInstance1(gInstances.back());
 
-	//std::list<ModelInstance>::const_iterator it;
-	//for (it = gInstances.begin(); it != gInstances.end(); ++it) {
-	//	RenderInstance(*it);
-	//}
+	std::list<ModelInstance>::const_iterator it;
+	for (it = gInstances.begin(); it != gInstances.end(); ++it) {
+		RenderInstance(*it);
+	}
     
 }
 
