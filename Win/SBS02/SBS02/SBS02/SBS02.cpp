@@ -19,7 +19,7 @@ Tutorial 02 - Hello dot!
 */
 
 #include <stdio.h>
-#include "glew.h"
+#include <GL/glew.h>
 #include "freeglut.h"
 #include "ogldev_math_3d.h"
 
