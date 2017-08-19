@@ -184,15 +184,19 @@
     <ClCompile Include="..\..\..\Common\pipeline.cpp" />
     <ClCompile Include="..\..\..\Common\random_texture.cpp" />
     <ClCompile Include="..\..\..\Common\technique.cpp" />
+    <ClCompile Include="mesh.cpp" />
     <ClCompile Include="SBS39.cpp" />
-    <ClCompile Include="skinning_technique.cpp" />
+    <ClCompile Include="silhouette_technique.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="skinning_technique.h" />
+    <None Include="shaders\silhouette.fs" />
+    <None Include="shaders\silhouette.gs" />
+    <None Include="shaders\silhouette.vs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\skinning.fs" />
-    <None Include="shaders\skinning.vs" />
+    <ClInclude Include="engine_common.h" />
+    <ClInclude Include="mesh.h" />
+    <ClInclude Include="silhouette_technique.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

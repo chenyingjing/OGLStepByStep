@@ -24,9 +24,6 @@
     <ClCompile Include="SBS39.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="skinning_technique.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Common\camera.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -87,18 +84,33 @@
     <ClCompile Include="..\..\..\Common\technique.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="silhouette_technique.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="skinning_technique.h">
+    <None Include="shaders\silhouette.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\silhouette.gs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\silhouette.vs">
+      <Filter>shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="engine_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="shaders\skinning.fs">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="shaders\skinning.vs">
-      <Filter>shaders</Filter>
-    </None>
+    <ClInclude Include="mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="silhouette_technique.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
