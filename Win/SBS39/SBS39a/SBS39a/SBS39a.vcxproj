@@ -164,10 +164,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="gbuffer.h" />
+    <ClInclude Include="engine_common.h" />
     <ClInclude Include="glew.h" />
     <ClInclude Include="glfw3.h" />
-    <ClInclude Include="ogldev_skinned_mesh.h" />
+    <ClInclude Include="mesh.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="tdogl\Bitmap.h" />
     <ClInclude Include="tdogl\Camera.h" />
@@ -179,8 +179,7 @@
     <ClCompile Include="..\..\..\Common\math_3d.cpp" />
     <ClCompile Include="..\..\..\Common\ogldev_texture.cpp" />
     <ClCompile Include="..\..\..\Common\ogldev_util.cpp" />
-    <ClCompile Include="gbuffer.cpp" />
-    <ClCompile Include="ogldev_skinned_mesh.cpp" />
+    <ClCompile Include="mesh.cpp" />
     <ClCompile Include="OGLSBS39a.cpp" />
     <ClCompile Include="tdogl\Bitmap.cpp" />
     <ClCompile Include="tdogl\Camera.cpp" />
@@ -189,8 +188,11 @@
     <ClCompile Include="tdogl\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader\skinning.fs" />
-    <None Include="shader\skinning.vs" />
+    <None Include="shader\lighting.fs" />
+    <None Include="shader\lighting.vs" />
+    <None Include="shader\silhouette.fs" />
+    <None Include="shader\silhouette.gs" />
+    <None Include="shader\silhouette.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

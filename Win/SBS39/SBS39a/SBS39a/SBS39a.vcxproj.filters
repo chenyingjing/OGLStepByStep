@@ -24,16 +24,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gbuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="glew.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="glfw3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ogldev_skinned_mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stb_image.h">
@@ -54,14 +48,14 @@
     <ClInclude Include="tdogl\Texture.h">
       <Filter>tdogl</Filter>
     </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gbuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ogldev_skinned_mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OGLSBS39a.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -89,12 +83,24 @@
     <ClCompile Include="tdogl\Texture.cpp">
       <Filter>tdogl</Filter>
     </ClCompile>
+    <ClCompile Include="mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader\skinning.fs">
+    <None Include="shader\silhouette.fs">
       <Filter>shader</Filter>
     </None>
-    <None Include="shader\skinning.vs">
+    <None Include="shader\silhouette.gs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\silhouette.vs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\lighting.fs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\lighting.vs">
       <Filter>shader</Filter>
     </None>
   </ItemGroup>
