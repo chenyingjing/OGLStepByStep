@@ -41,7 +41,7 @@ namespace tdogl {
          */
         Texture(const Bitmap& bitmap,
                 GLint minMagFiler = GL_LINEAR,
-                GLint wrapMode = GL_CLAMP_TO_EDGE);
+                GLint wrapMode = GL_MIRRORED_REPEAT);
         
         /**
          Deletes the texture object with glDeleteTextures

@@ -15,7 +15,7 @@
 #include<list>
 #include <sstream>
 #include <string>
-#include "ogldev_skinned_mesh.h"
+#include "mesh.h"
 
 #include "gbuffer.h"
 
@@ -34,6 +34,7 @@ long long m_startTime;
 
 struct ModelAsset {
 	tdogl::Program* shaders;
+    tdogl::Program* silhouetteShaders;
 	tdogl::Texture* texture;
 	GLuint vbo;
 	GLuint vao;
@@ -42,7 +43,7 @@ struct ModelAsset {
 	GLint drawCount;
 	GLfloat shininess;
 	glm::vec3 specularColor;
-    SkinnedMesh mesh;
+    Mesh mesh;
 };
 
 struct Light {
@@ -57,7 +58,7 @@ struct Light {
 struct LightAsset {
     tdogl::Program* shaders;
     tdogl::Program* nullShaders;
-    SkinnedMesh mesh;
+    Mesh mesh;
     Light light;
 };
 
@@ -74,7 +75,7 @@ struct LightInstance {
     glm::mat4 transform;
 };
 
-ModelAsset gBob;
+ModelAsset gBox;
 ModelAsset gMonkey;
 ModelAsset gHheli;
 
@@ -107,6 +108,14 @@ static tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFi
 	return new tdogl::Program(shaders);
 }
 
+tdogl::Program* LoadShaders(const char *shaderFile1, const char *shaderFile2, const char *shaderFile3) {
+    std::vector<tdogl::Shader> shaders;
+    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile1, GL_VERTEX_SHADER));
+    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile2, GL_GEOMETRY_SHADER));
+    shaders.push_back(tdogl::Shader::shaderFromFile(shaderFile3, GL_FRAGMENT_SHADER));
+    return new tdogl::Program(shaders);
+}
+
 tdogl::Texture* LoadTexture(const char *textureFile) {
 	tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(textureFile);
 	//bmp.flipVertically();
@@ -114,29 +123,13 @@ tdogl::Texture* LoadTexture(const char *textureFile) {
 }
 
 static void LoadMainAsset() {
-    gBob.shaders = LoadShaders("skinning.vs", "skinning.fs");
-    gBob.shininess = 80.0;
-    gBob.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    gBox.shaders = LoadShaders("lighting.vs", "lighting.fs");
+    gBox.silhouetteShaders = LoadShaders("silhouette.vs", "silhouette.gs", "silhouette.fs");
+    gBox.shininess = 80.0;
+    gBox.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
-    gDirLight.light.position = glm::vec4(0.0f, -10.0f, 13.0f, 0);
-    gDirLight.light.intensities = glm::vec3(1.0f, 1.0f, 1.0f);
-    gDirLight.light.attenuation = 0.001f;
-    gDirLight.light.ambientCoefficient = 0.005f;
-    
-    
-    gBob.shaders->use();
-    gBob.shaders->setUniform("gColorMap", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
-    gBob.shaders->setUniform("gDirectionalLight.Base.Color", gDirLight.light.intensities.r, gDirLight.light.intensities.g, gDirLight.light.intensities.b);
-    gBob.shaders->setUniform("gDirectionalLight.Base.AmbientIntensity", gDirLight.light.ambientCoefficient);
-    glm::vec3 direction = glm::vec3(-gDirLight.light.position.x, -gDirLight.light.position.y, -gDirLight.light.position.z);
-    direction = glm::normalize(direction);
-    gBob.shaders->setUniform("gDirectionalLight.Direction", direction.x, direction.y, direction.z);
-    gBob.shaders->setUniform("gDirectionalLight.Base.DiffuseIntensity", 1.0f);
-    gBob.shaders->setUniform("gMatSpecularIntensity", 0.0f);
-    gBob.shaders->setUniform("gSpecularPower", 0.0f);
-    gBob.shaders->stopUsing();
-    
-    gBob.mesh.LoadMesh("boblampclean.md5mesh");
+    gBox.mesh.LoadMesh("box.obj", true);
+    //gBox.mesh.LoadMesh("jeep.obj", false);
 
 }
 
@@ -152,12 +145,12 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 }
 
 static void CreateInstances() {
-    ModelInstance bob;
-    bob.asset = &gBob;
-    float modelScale = 0.8;
-    bob.transform = bob.originalTransform = translate(0.0f, -26.0f, -12.0f) *scale(modelScale, modelScale, modelScale)
-    * glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0));
-    gInstances.push_back(bob);
+    ModelInstance box;
+    box.asset = &gBox;
+    float modelScale = 1;
+    box.transform = box.originalTransform = translate(0.0f, 0.0f, 0.0f) *scale(modelScale, modelScale, modelScale);
+    //* glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0));
+    gInstances.push_back(box);
 }
 
 // records how far the y axis has been scrolled
@@ -275,28 +268,50 @@ static void RenderInstance(const ModelInstance& inst) {
     //bind the shaders
     shaders->use();
     
-    vector<Matrix4f> Transforms;
+    //    shaders->setUniform("gShadowMap", 1);
+    //
+    shaders->setUniform("numLights", (int)gLights.size());
     
-    float RunningTime = GetRunningTime();
-    
-    inst.asset->mesh.BoneTransform(RunningTime, Transforms);
-    
-    for (uint i = 0; i < Transforms.size(); i++) {
-        //m_pEffect->SetBoneTransform(i, Transforms[i]);
-        char Name[128];
-        memset(Name, 0, sizeof(Name));
-        SNPRINTF(Name, sizeof(Name), "gBones[%d]", i);
-        shaders->setUniformMatrix4(Name, Transforms[i], 1, true);
+    for (size_t i = 0; i < gLights.size(); ++i) {
+        SetLightUniform(shaders, "position", i, gLights[i].position);
+        SetLightUniform(shaders, "intensities", i, gLights[i].intensities);
+        SetLightUniform(shaders, "attenuation", i, gLights[i].attenuation);
+        SetLightUniform(shaders, "ambientCoefficient", i, gLights[i].ambientCoefficient);
+        SetLightUniform(shaders, "coneAngle", i, gLights[i].coneAngle);
+        SetLightUniform(shaders, "coneDirection", i, gLights[i].coneDirection);
     }
     
-    shaders->setUniform("gEyeWorldPos", gCamera.position());
+    shaders->setUniform("cameraPosition", gCamera.position());
     
-    shaders->setUniform("gWVP", gCamera.matrix() * inst.transform);
-    shaders->setUniform("gWorld", inst.transform);
+    //set the shader uniforms
+    shaders->setUniform("camera", gCamera.matrix());
+    shaders->setUniform("model", inst.transform);
+    shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+    //shaders->setUniform("gDisplacementMap", 4); //set to 4 because the texture will be bound to GL_TEXTURE4
+    
+    shaders->setUniform("materialShininess", asset->shininess);
+    shaders->setUniform("materialSpecularColor", asset->specularColor);
     
     asset->mesh.Render();
     
     shaders->stopUsing();
+    
+    
+    tdogl::Program* silhouetteShaders = asset->silhouetteShaders;
+    silhouetteShaders->use();
+    silhouetteShaders->setUniform("gWorld", inst.transform);
+    silhouetteShaders->setUniform("gWVP", gCamera.matrix() * inst.transform);
+    silhouetteShaders->setUniform("gLightPos", glm::vec3(gLights[0].position.x * 10, gLights[0].position.y * 10, gLights[0].position.z * 10));
+    //silhouetteShaders->setUniform("gLightPos", glm::vec3(0, 10, 0));
+    
+    //glLineWidth(1.9f);
+    GLenum error3 = glGetError();
+    if (error3 != GL_NO_ERROR)
+        std::cerr << "OpenGL Error3 " << error3 << std::endl;
+    
+    asset->mesh.Render();
+    silhouetteShaders->stopUsing();
+    
 
 }
 
@@ -363,8 +378,8 @@ int main(void)
 	std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
 
 	// OpenGL settings
-//	glEnable(GL_DEPTH_TEST);
-//	glDepthFunc(GL_LESS);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
 //	glEnable(GL_BLEND);
 //	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glCullFace(GL_BACK);
@@ -383,8 +398,8 @@ int main(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 
-    gCamera.setPosition(glm::vec3(0, 0, 60));
-    gCamera.offsetOrientation(0, 0);
+    gCamera.setPosition(glm::vec3(0, 3, 10));
+    gCamera.offsetOrientation(10, 0);
     gCamera.setViewportAspectRatio((float)WINDOW_WIDTH / (float)WINDOW_HEIGHT);
     gCamera.setNearAndFarPlanes(0.01f, 1000.0f);
 
@@ -402,7 +417,7 @@ int main(void)
 	directionalLight.intensities = glm::vec3(0.4, 0.4, 0.4);
 	directionalLight.ambientCoefficient = 0.06f;
 
-	gLights.push_back(spotlight);
+	//gLights.push_back(spotlight);
 	gLights.push_back(directionalLight);
 
 	double lastTime = glfwGetTime();

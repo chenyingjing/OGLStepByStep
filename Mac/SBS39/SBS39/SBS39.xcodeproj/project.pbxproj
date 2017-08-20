@@ -172,11 +172,8 @@
 		232962311F493F9A0044A0D2 /* model.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 232961641F493F9A0044A0D2 /* model.mtl */; };
 		232962321F493F9A0044A0D2 /* model.obj in Resources */ = {isa = PBXBuildFile; fileRef = 232961651F493F9A0044A0D2 /* model.obj */; };
 		232962331F493F9A0044A0D2 /* momo.png in Resources */ = {isa = PBXBuildFile; fileRef = 232961661F493F9A0044A0D2 /* momo.png */; };
-		232962341F493F9A0044A0D2 /* ogldev_skinned_mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2329616B1F493F9A0044A0D2 /* ogldev_skinned_mesh.cpp */; };
 		232962351F493F9A0044A0D2 /* ogldev_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2329616D1F493F9A0044A0D2 /* ogldev_util.cpp */; };
-		232962361F493F9A0044A0D2 /* SBS38.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2329616E1F493F9A0044A0D2 /* SBS38.cpp */; };
-		232962371F493F9A0044A0D2 /* skinning.fs in Resources */ = {isa = PBXBuildFile; fileRef = 232961701F493F9A0044A0D2 /* skinning.fs */; };
-		232962381F493F9A0044A0D2 /* skinning.vs in Resources */ = {isa = PBXBuildFile; fileRef = 232961711F493F9A0044A0D2 /* skinning.vs */; };
+		232962361F493F9A0044A0D2 /* SBS39.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2329616E1F493F9A0044A0D2 /* SBS39.cpp */; };
 		232962391F493F9A0044A0D2 /* Bitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 232961741F493F9A0044A0D2 /* Bitmap.cpp */; };
 		2329623A1F493F9A0044A0D2 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 232961761F493F9A0044A0D2 /* Camera.cpp */; };
 		2329623B1F493F9A0044A0D2 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 232961781F493F9A0044A0D2 /* Program.cpp */; };
@@ -190,6 +187,15 @@
 		232962461F4940350044A0D2 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 232962451F4940350044A0D2 /* CoreVideo.framework */; };
 		232962481F4940410044A0D2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 232962471F4940410044A0D2 /* OpenGL.framework */; };
 		2329624A1F49404D0044A0D2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 232962491F49404D0044A0D2 /* IOKit.framework */; };
+		232962501F4944610044A0D2 /* lighting.fs in Resources */ = {isa = PBXBuildFile; fileRef = 2329624B1F4944610044A0D2 /* lighting.fs */; };
+		232962511F4944610044A0D2 /* lighting.vs in Resources */ = {isa = PBXBuildFile; fileRef = 2329624C1F4944610044A0D2 /* lighting.vs */; };
+		232962521F4944610044A0D2 /* silhouette.fs in Resources */ = {isa = PBXBuildFile; fileRef = 2329624D1F4944610044A0D2 /* silhouette.fs */; };
+		232962531F4944610044A0D2 /* silhouette.gs in Resources */ = {isa = PBXBuildFile; fileRef = 2329624E1F4944610044A0D2 /* silhouette.gs */; };
+		232962541F4944610044A0D2 /* silhouette.vs in Resources */ = {isa = PBXBuildFile; fileRef = 2329624F1F4944610044A0D2 /* silhouette.vs */; };
+		232962571F4944BE0044A0D2 /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 232962551F4944BE0044A0D2 /* mesh.cpp */; };
+		2329625C1F4949480044A0D2 /* box.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 232962591F4949480044A0D2 /* box.mtl */; };
+		2329625D1F4949480044A0D2 /* box.obj in Resources */ = {isa = PBXBuildFile; fileRef = 2329625A1F4949480044A0D2 /* box.obj */; };
+		232962601F4949D90044A0D2 /* bricks.png in Resources */ = {isa = PBXBuildFile; fileRef = 2329625F1F4949D90044A0D2 /* bricks.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -562,12 +568,8 @@
 		232961681F493F9A0044A0D2 /* ogldev_math_3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_math_3d.h; sourceTree = "<group>"; };
 		232961691F493F9A0044A0D2 /* ogldev_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_types.h; sourceTree = "<group>"; };
 		2329616A1F493F9A0044A0D2 /* ogldev_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_util.h; sourceTree = "<group>"; };
-		2329616B1F493F9A0044A0D2 /* ogldev_skinned_mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ogldev_skinned_mesh.cpp; sourceTree = "<group>"; };
-		2329616C1F493F9A0044A0D2 /* ogldev_skinned_mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogldev_skinned_mesh.h; sourceTree = "<group>"; };
 		2329616D1F493F9A0044A0D2 /* ogldev_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ogldev_util.cpp; sourceTree = "<group>"; };
-		2329616E1F493F9A0044A0D2 /* SBS38.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SBS38.cpp; sourceTree = "<group>"; };
-		232961701F493F9A0044A0D2 /* skinning.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = skinning.fs; sourceTree = "<group>"; };
-		232961711F493F9A0044A0D2 /* skinning.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = skinning.vs; sourceTree = "<group>"; };
+		2329616E1F493F9A0044A0D2 /* SBS39.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SBS39.cpp; sourceTree = "<group>"; };
 		232961721F493F9A0044A0D2 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		232961741F493F9A0044A0D2 /* Bitmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bitmap.cpp; sourceTree = "<group>"; };
 		232961751F493F9A0044A0D2 /* Bitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bitmap.h; sourceTree = "<group>"; };
@@ -583,6 +585,17 @@
 		232962451F4940350044A0D2 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		232962471F4940410044A0D2 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		232962491F49404D0044A0D2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		2329624B1F4944610044A0D2 /* lighting.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.fs; sourceTree = "<group>"; };
+		2329624C1F4944610044A0D2 /* lighting.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.vs; sourceTree = "<group>"; };
+		2329624D1F4944610044A0D2 /* silhouette.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = silhouette.fs; sourceTree = "<group>"; };
+		2329624E1F4944610044A0D2 /* silhouette.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = silhouette.gs; sourceTree = "<group>"; };
+		2329624F1F4944610044A0D2 /* silhouette.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = silhouette.vs; sourceTree = "<group>"; };
+		232962551F4944BE0044A0D2 /* mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mesh.cpp; sourceTree = "<group>"; };
+		232962561F4944BE0044A0D2 /* mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesh.h; sourceTree = "<group>"; };
+		232962581F4947610044A0D2 /* engine_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = engine_common.h; sourceTree = "<group>"; };
+		232962591F4949480044A0D2 /* box.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = box.mtl; sourceTree = "<group>"; };
+		2329625A1F4949480044A0D2 /* box.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = box.obj; sourceTree = "<group>"; };
+		2329625F1F4949D90044A0D2 /* bricks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bricks.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -624,6 +637,9 @@
 		23295FD41F493EEE0044A0D2 /* SBS39 */ = {
 			isa = PBXGroup;
 			children = (
+				232962581F4947610044A0D2 /* engine_common.h */,
+				232962551F4944BE0044A0D2 /* mesh.cpp */,
+				232962561F4944BE0044A0D2 /* mesh.h */,
 				23295FE91F493F9A0044A0D2 /* asset */,
 				23295FFF1F493F9A0044A0D2 /* assimp */,
 				232960351F493F9A0044A0D2 /* filePath.h */,
@@ -639,10 +655,8 @@
 				232961621F493F9A0044A0D2 /* math_3d.cpp */,
 				232961631F493F9A0044A0D2 /* momo */,
 				232961671F493F9A0044A0D2 /* ogldev */,
-				2329616B1F493F9A0044A0D2 /* ogldev_skinned_mesh.cpp */,
-				2329616C1F493F9A0044A0D2 /* ogldev_skinned_mesh.h */,
 				2329616D1F493F9A0044A0D2 /* ogldev_util.cpp */,
-				2329616E1F493F9A0044A0D2 /* SBS38.cpp */,
+				2329616E1F493F9A0044A0D2 /* SBS39.cpp */,
 				2329616F1F493F9A0044A0D2 /* shader */,
 				232961721F493F9A0044A0D2 /* stb_image.h */,
 				232961731F493F9A0044A0D2 /* tdogl */,
@@ -653,6 +667,9 @@
 		23295FE91F493F9A0044A0D2 /* asset */ = {
 			isa = PBXGroup;
 			children = (
+				2329625F1F4949D90044A0D2 /* bricks.png */,
+				232962591F4949480044A0D2 /* box.mtl */,
+				2329625A1F4949480044A0D2 /* box.obj */,
 				23295FEA1F493F9A0044A0D2 /* boblampclean.md5anim */,
 				23295FEB1F493F9A0044A0D2 /* boblampclean.md5mesh */,
 				23295FEC1F493F9A0044A0D2 /* drkwood2.png */,
@@ -1150,8 +1167,11 @@
 		2329616F1F493F9A0044A0D2 /* shader */ = {
 			isa = PBXGroup;
 			children = (
-				232961701F493F9A0044A0D2 /* skinning.fs */,
-				232961711F493F9A0044A0D2 /* skinning.vs */,
+				2329624B1F4944610044A0D2 /* lighting.fs */,
+				2329624C1F4944610044A0D2 /* lighting.vs */,
+				2329624D1F4944610044A0D2 /* silhouette.fs */,
+				2329624E1F4944610044A0D2 /* silhouette.gs */,
+				2329624F1F4944610044A0D2 /* silhouette.vs */,
 			);
 			path = shader;
 			sourceTree = "<group>";
@@ -1244,7 +1264,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				232962031F493F9A0044A0D2 /* simd_mat4.inl in Resources */,
-				232962381F493F9A0044A0D2 /* skinning.vs in Resources */,
 				232961D21F493F9A0044A0D2 /* round.inl in Resources */,
 				232961901F493F9A0044A0D2 /* SpiderTex.png in Resources */,
 				232961DA1F493F9A0044A0D2 /* color_space.inl in Resources */,
@@ -1265,11 +1284,13 @@
 				2329620A1F493F9A0044A0D2 /* transform2.inl in Resources */,
 				232961D61F493F9A0044A0D2 /* vec1.inl in Resources */,
 				232961D91F493F9A0044A0D2 /* closest_point.inl in Resources */,
+				232962601F4949D90044A0D2 /* bricks.png in Resources */,
 				232962091F493F9A0044A0D2 /* transform.inl in Resources */,
 				2329618B1F493F9A0044A0D2 /* round_grill.png in Resources */,
 				232961991F493F9A0044A0D2 /* vector2.inl in Resources */,
 				232962281F493F9A0044A0D2 /* ImageMagick.pc in Resources */,
 				232961B61F493F9A0044A0D2 /* type_mat2x4.inl in Resources */,
+				232962521F4944610044A0D2 /* silhouette.fs in Resources */,
 				232961AF1F493F9A0044A0D2 /* intrinsic_trigonometric.inl in Resources */,
 				232961B81F493F9A0044A0D2 /* type_mat3x3.inl in Resources */,
 				232962151F493F9A0044A0D2 /* liblcms2.la in Resources */,
@@ -1277,7 +1298,6 @@
 				232961FD1F493F9A0044A0D2 /* projection.inl in Resources */,
 				232961C11F493F9A0044A0D2 /* type_vec4.inl in Resources */,
 				232961D31F493F9A0044A0D2 /* type_precision.inl in Resources */,
-				232962371F493F9A0044A0D2 /* skinning.fs in Resources */,
 				232961E11F493F9A0044A0D2 /* extend.inl in Resources */,
 				232961E91F493F9A0044A0D2 /* integer.inl in Resources */,
 				232961EF1F493F9A0044A0D2 /* matrix_interpolation.inl in Resources */,
@@ -1293,6 +1313,7 @@
 				232961D71F493F9A0044A0D2 /* associated_min_max.inl in Resources */,
 				232961E61F493F9A0044A0D2 /* gradient_paint.inl in Resources */,
 				232961FE1F493F9A0044A0D2 /* quaternion.inl in Resources */,
+				232962511F4944610044A0D2 /* lighting.vs in Resources */,
 				232962221F493F9A0044A0D2 /* libpng16.la in Resources */,
 				232962011F493F9A0044A0D2 /* rotate_vector.inl in Resources */,
 				232962021F493F9A0044A0D2 /* scalar_relational.inl in Resources */,
@@ -1301,6 +1322,7 @@
 				232961FC1F493F9A0044A0D2 /* polar_coordinates.inl in Resources */,
 				232961851F493F9A0044A0D2 /* iron_grill.png in Resources */,
 				232961DC1F493F9A0044A0D2 /* common.inl in Resources */,
+				2329625C1F4949480044A0D2 /* box.mtl in Resources */,
 				232961BE1F493F9A0044A0D2 /* type_vec1.inl in Resources */,
 				232961C21F493F9A0044A0D2 /* type_vec4_avx.inl in Resources */,
 				232961ED1F493F9A0044A0D2 /* matrix_cross_product.inl in Resources */,
@@ -1317,11 +1339,13 @@
 				232961B41F493F9A0044A0D2 /* type_mat2x2.inl in Resources */,
 				232961971F493F9A0044A0D2 /* matrix4x4.inl in Resources */,
 				2329622E1F493F9A0044A0D2 /* MagickWand.pc in Resources */,
+				232962501F4944610044A0D2 /* lighting.fs in Resources */,
 				232961FA1F493F9A0044A0D2 /* orthonormalize.inl in Resources */,
 				232961DE1F493F9A0044A0D2 /* component_wise.inl in Resources */,
 				232961D51F493F9A0044A0D2 /* ulp.inl in Resources */,
 				232961891F493F9A0044A0D2 /* jeep_rood.jpg in Resources */,
 				232961A11F493F9A0044A0D2 /* CMakeLists.txt in Resources */,
+				2329625D1F4949480044A0D2 /* box.obj in Resources */,
 				232962111F493F9A0044A0D2 /* libfreetype.la in Resources */,
 				2329620F1F493F9A0044A0D2 /* configure.xml in Resources */,
 				232961F81F493F9A0044A0D2 /* number_precision.inl in Resources */,
@@ -1330,6 +1354,7 @@
 				232962081F493F9A0044A0D2 /* string_cast.inl in Resources */,
 				2329618D1F493F9A0044A0D2 /* sphere.obj in Resources */,
 				232961AB1F493F9A0044A0D2 /* intrinsic_exponential.inl in Resources */,
+				232962541F4944610044A0D2 /* silhouette.vs in Resources */,
 				232961F11F493F9A0044A0D2 /* matrix_operation.inl in Resources */,
 				232961BC1F493F9A0044A0D2 /* type_mat4x4.inl in Resources */,
 				232961911F493F9A0044A0D2 /* wal67ar_small.png in Resources */,
@@ -1376,6 +1401,7 @@
 				232961C51F493F9A0044A0D2 /* bitfield.inl in Resources */,
 				232961F91F493F9A0044A0D2 /* optimum_pow.inl in Resources */,
 				232961881F493F9A0044A0D2 /* jeep_army.jpg in Resources */,
+				232962531F4944610044A0D2 /* silhouette.gs in Resources */,
 				2329622B1F493F9A0044A0D2 /* MagickCore-7.Q16HDRI.pc in Resources */,
 				2329618F1F493F9A0044A0D2 /* spider.obj in Resources */,
 				232962311F493F9A0044A0D2 /* model.mtl in Resources */,
@@ -1418,15 +1444,15 @@
 			files = (
 				2329623B1F493F9A0044A0D2 /* Program.cpp in Sources */,
 				232962391F493F9A0044A0D2 /* Bitmap.cpp in Sources */,
+				232962571F4944BE0044A0D2 /* mesh.cpp in Sources */,
 				232962301F493F9A0044A0D2 /* math_3d.cpp in Sources */,
 				2329619E1F493F9A0044A0D2 /* filePath.mm in Sources */,
 				232962351F493F9A0044A0D2 /* ogldev_util.cpp in Sources */,
 				2329623A1F493F9A0044A0D2 /* Camera.cpp in Sources */,
 				2329619F1F493F9A0044A0D2 /* gbuffer.cpp in Sources */,
 				2329623C1F493F9A0044A0D2 /* Shader.cpp in Sources */,
-				232962361F493F9A0044A0D2 /* SBS38.cpp in Sources */,
+				232962361F493F9A0044A0D2 /* SBS39.cpp in Sources */,
 				2329623D1F493F9A0044A0D2 /* Texture.cpp in Sources */,
-				232962341F493F9A0044A0D2 /* ogldev_skinned_mesh.cpp in Sources */,
 				232961A01F493F9A0044A0D2 /* glew.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1582,6 +1608,7 @@
 				23295FE81F493EEF0044A0D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
