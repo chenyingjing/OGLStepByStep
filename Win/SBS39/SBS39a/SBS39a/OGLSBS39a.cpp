@@ -51,15 +51,6 @@ float gDispFactor = 0.25;
 long long m_startTime;
 
 struct ModelAsset {
-	//tdogl::Program* psUpdateShaders;
- //   bool m_isFirst;
- //   unsigned int m_currVB;
- //   unsigned int m_currTFB;
- //   float m_time = 0;
- //   GLuint m_particleBuffer[2];
- //   GLuint m_transformFeedback[2];
-    
-    
 	tdogl::Program* shaders;
 	tdogl::Program* silhouetteShaders;
 	tdogl::Texture* texture;
@@ -110,8 +101,6 @@ LightAsset gLight1;
 LightAsset gLight2;
 LightAsset gLight3;
 
-//LightAsset gDirLight;
-
 std::list<ModelInstance> gInstances;
 std::list<LightInstance> gLightInstances;
 
@@ -153,24 +142,6 @@ static void LoadMainAsset() {
     gBox.shininess = 80.0;
     gBox.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
-	//gDirLight.light.position = glm::vec4(0.0f, -10.0f, 13.0f, 0);
-	//gDirLight.light.intensities = glm::vec3(1.0f, 1.0f, 1.0f);
-	//gDirLight.light.attenuation = 0.001f;
-	//gDirLight.light.ambientCoefficient = 0.005f;
-
-
-	//gBox.shaders->use();
-	//gBox.shaders->setUniform("gColorMap", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
-	//gBox.shaders->setUniform("gDirectionalLight.Base.Color", gDirLight.light.intensities.r, gDirLight.light.intensities.g, gDirLight.light.intensities.b);
-	//gBox.shaders->setUniform("gDirectionalLight.Base.AmbientIntensity", gDirLight.light.ambientCoefficient);
-	//glm::vec3 direction = glm::vec3(-gDirLight.light.position.x, -gDirLight.light.position.y, -gDirLight.light.position.z);
-	//direction = glm::normalize(direction);
-	//gBox.shaders->setUniform("gDirectionalLight.Direction", direction.x, direction.y, direction.z);
-	//gBox.shaders->setUniform("gDirectionalLight.Base.DiffuseIntensity", 1.0f);
-	//gBox.shaders->setUniform("gMatSpecularIntensity", 0.0f);
-	//gBox.shaders->setUniform("gSpecularPower", 0.0f);
-	//gBox.shaders->stopUsing();
-
 	gBox.mesh.LoadMesh("../../../Content/box.obj", true);
 }
 
@@ -314,37 +285,6 @@ float GetRunningTime()
 
 
 static void RenderInstance(const ModelInstance& inst) {
- //   ModelAsset* asset = inst.asset;
- //   tdogl::Program* shaders = asset->shaders;
- //   
- //   //bind the shaders
- //   shaders->use();
-
-	//vector<Matrix4f> Transforms;
-
-	//float RunningTime = GetRunningTime();
-
-	//inst.asset->mesh.BoneTransform(RunningTime, Transforms);
-
-	//for (uint i = 0; i < Transforms.size(); i++) {
-	//	//m_pEffect->SetBoneTransform(i, Transforms[i]);
-	//	char Name[128];
-	//	memset(Name, 0, sizeof(Name));
-	//	SNPRINTF(Name, sizeof(Name), "gBones[%d]", i);
-	//	shaders->setUniformMatrix4(Name, Transforms[i], 1, true);
-	//}
-
-	//shaders->setUniform("gEyeWorldPos", gCamera.position());
-
-	//shaders->setUniform("gWVP", gCamera.matrix() * inst.transform);
-	//shaders->setUniform("gWorld", inst.transform);
-
-	//asset->mesh.Render();
-
-	//shaders->stopUsing();
-
-
-
 	ModelAsset* asset = inst.asset;
 	tdogl::Program* shaders = asset->shaders;
 
@@ -364,7 +304,6 @@ static void RenderInstance(const ModelInstance& inst) {
 		SetLightUniform(shaders, "coneDirection", i, gLights[i].coneDirection);
 	}
 
-
 	shaders->setUniform("cameraPosition", gCamera.position());
 
 	//set the shader uniforms
@@ -380,6 +319,17 @@ static void RenderInstance(const ModelInstance& inst) {
 
 	shaders->stopUsing();
 
+
+	tdogl::Program* silhouetteShaders = asset->silhouetteShaders;
+	silhouetteShaders->use();
+	silhouetteShaders->setUniform("gWorld", inst.transform);
+	silhouetteShaders->setUniform("gWVP", gCamera.matrix() * inst.transform);
+	silhouetteShaders->setUniform("gLightPos", glm::vec3(gLights[0].position.x * 10, gLights[0].position.y * 10, gLights[0].position.z * 10));
+	//silhouetteShaders->setUniform("gLightPos", glm::vec3(0, 10, 0));
+
+	glLineWidth(5.0f);
+	asset->mesh.Render();
+	silhouetteShaders->stopUsing();
 }
 
 void Render(float millsElapsed, GLFWwindow* window)
@@ -448,8 +398,8 @@ int main(void)
 	std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
 
 	// OpenGL settings
-	//glEnable(GL_DEPTH_TEST);
-	//glDepthFunc(GL_LESS);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glCullFace(GL_BACK);
