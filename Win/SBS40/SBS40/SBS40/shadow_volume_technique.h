@@ -28,12 +28,16 @@ public:
 
     virtual bool Init();
 
-    void SetWVP(const Matrix4f& WVP);
+	void SetWVP(const Matrix4f& WVP);
+	void SetWorldMatrix(const Matrix4f& WorldInverse);
     void SetLightPos(const Vector3f& Pos);
-    
+	void SetVP(const Matrix4f& VP);
+
 private:
-    
-    GLuint m_WVPLocation;
+
+	GLuint m_VPLocation;
+	GLuint m_WVPLocation;
+	GLuint m_WorldMatrixLocation;
     GLuint m_lightPosLocation;
 };
 

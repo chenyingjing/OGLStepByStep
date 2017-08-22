@@ -55,7 +55,7 @@ public:
 		m_pGameCamera = NULL;
 		m_scale = 0.0f;
 		m_pointLight.Color = Vector3f(1.0f, 1.0f, 1.0f);
-		m_pointLight.Position = Vector3f(0.0f, 10.0f, 0.0f);
+		m_pointLight.Position = Vector3f(10.0f, 10.0f, 0.0f);
 
 		m_persProjInfo.FOV = 60.0f;
 		m_persProjInfo.Height = WINDOW_HEIGHT;
@@ -238,7 +238,9 @@ private:
 		p.SetPerspectiveProj(m_persProjInfo);
 		m_boxOrientation.m_rotation = Vector3f(0, m_scale, 0);
 		p.Orient(m_boxOrientation);
-		m_ShadowVolTech.SetWVP(p.GetWVPTrans());
+		//m_ShadowVolTech.SetWVP(p.GetWVPTrans());
+		m_ShadowVolTech.SetWorldMatrix(p.GetWorldTrans());
+		m_ShadowVolTech.SetVP(p.GetVPTrans());
 		m_box.Render();
 
 		// Restore local stuff
