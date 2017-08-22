@@ -20,31 +20,30 @@
 #include <string>
 
 
-#include "silhouette_technique.h"
-#include "ogldev_util.h"
+#include "shadow_volume_technique.h"
 
 using namespace std;
 
-SilhouetteTechnique::SilhouetteTechnique()
+ShadowVolumeTechnique::ShadowVolumeTechnique()
 {   
 }
 
 
-bool SilhouetteTechnique::Init()
+bool ShadowVolumeTechnique::Init()
 {
     if (!Technique::Init()) {
         return false;
     }
 
-    if (!AddShader(GL_VERTEX_SHADER, "shaders/silhouette.vs")) {
+    if (!AddShader(GL_VERTEX_SHADER, "shaders/shadow_volume.vs")) {
         return false;
     }
 
-    if (!AddShader(GL_GEOMETRY_SHADER, "shaders/silhouette.gs")) {
+    if (!AddShader(GL_GEOMETRY_SHADER, "shaders/shadow_volume.gs")) {
         return false;
     }
 
-    if (!AddShader(GL_FRAGMENT_SHADER, "shaders/silhouette.fs")) {
+    if (!AddShader(GL_FRAGMENT_SHADER, "shaders/shadow_volume.fs")) {
         return false;
     }
 
@@ -53,26 +52,24 @@ bool SilhouetteTechnique::Init()
     }
     
     m_WVPLocation = GetUniformLocation("gWVP");
-    m_WorldMatrixLocation = GetUniformLocation("gWorld");
     m_lightPosLocation = GetUniformLocation("gLightPos");
 
+    if (m_WVPLocation == INVALID_UNIFORM_LOCATION ||
+        m_lightPosLocation == INVALID_UNIFORM_LOCATION) {
+        return false;
+    }
+            
     return true;
 }
 
 
-void SilhouetteTechnique::SetWVP(const Matrix4f& WVP)
+void ShadowVolumeTechnique::SetWVP(const Matrix4f& WVP)
 {
     glUniformMatrix4fv(m_WVPLocation, 1, GL_TRUE, (const GLfloat*)WVP.m);    
 }
 
 
-void SilhouetteTechnique::SetWorldMatrix(const Matrix4f& WorldInverse)
-{
-    glUniformMatrix4fv(m_WorldMatrixLocation, 1, GL_TRUE, (const GLfloat*)WorldInverse.m);
-}
-
-
-void SilhouetteTechnique::SetLightPos(const Vector3f& Pos)
+void ShadowVolumeTechnique::SetLightPos(const Vector3f& Pos)
 {
     glUniform3f(m_lightPosLocation, Pos.x, Pos.y, Pos.z);
 }

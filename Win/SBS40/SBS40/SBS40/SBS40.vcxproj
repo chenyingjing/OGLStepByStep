@@ -164,11 +164,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="engine_common.h" />
-    <ClInclude Include="mesh.h" />
-    <ClInclude Include="silhouette_technique.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\..\Common\camera.cpp" />
     <ClCompile Include="..\..\..\Common\cubemap_texture.cpp" />
     <ClCompile Include="..\..\..\Common\glut_backend.cpp" />
@@ -190,13 +185,22 @@
     <ClCompile Include="..\..\..\Common\random_texture.cpp" />
     <ClCompile Include="..\..\..\Common\technique.cpp" />
     <ClCompile Include="mesh.cpp" />
+    <ClCompile Include="null_technique.cpp" />
     <ClCompile Include="SBS40.cpp" />
-    <ClCompile Include="silhouette_technique.cpp" />
+    <ClCompile Include="shadow_volume_technique.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\silhouette.fs" />
-    <None Include="shaders\silhouette.gs" />
-    <None Include="shaders\silhouette.vs" />
+    <None Include="shaders\null_technique.fs" />
+    <None Include="shaders\null_technique.vs" />
+    <None Include="shaders\shadow_volume.fs" />
+    <None Include="shaders\shadow_volume.gs" />
+    <None Include="shaders\shadow_volume.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="engine_common.h" />
+    <ClInclude Include="mesh.h" />
+    <ClInclude Include="null_technique.h" />
+    <ClInclude Include="shadow_volume_technique.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

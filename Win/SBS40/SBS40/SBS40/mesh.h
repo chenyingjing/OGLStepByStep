@@ -61,6 +61,7 @@ struct Edge
     uint b;
 };
 
+
 struct Neighbors
 {
     uint n1;
@@ -99,6 +100,7 @@ struct Neighbors
         return 0;
     }
 };
+
 
 struct CompareEdges
 {
