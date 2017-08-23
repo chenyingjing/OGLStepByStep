@@ -182,7 +182,7 @@
     <ClCompile Include="..\..\..\Common\ogldev_util.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="ogldev_skinned_mesh.cpp" />
-    <ClCompile Include="OGLSBS39a.cpp" />
+    <ClCompile Include="OGLSBS40a.cpp" />
     <ClCompile Include="tdogl\Bitmap.cpp" />
     <ClCompile Include="tdogl\Camera.cpp" />
     <ClCompile Include="tdogl\Program.cpp" />

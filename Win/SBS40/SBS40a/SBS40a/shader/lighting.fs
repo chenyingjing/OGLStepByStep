@@ -46,7 +46,8 @@ void main() {
     }
     
     vec3 gamma = vec3(1.0/2.2);
-    finalColor = vec4(pow(linearColor, gamma), surfaceColor.a);
+    //finalColor = vec4(pow(linearColor, gamma), surfaceColor.a);
+    finalColor = vec4(linearColor, surfaceColor.a);
 }
 
 vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec3 surfacePos, vec3 surfaceToCamera) {

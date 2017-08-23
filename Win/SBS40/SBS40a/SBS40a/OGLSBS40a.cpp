@@ -94,6 +94,8 @@ struct LightInstance {
 };
 
 ModelAsset gBox;
+ModelAsset gGround;
+
 ModelAsset gHheli;
 ModelAsset gJeep;
 
@@ -136,13 +138,23 @@ static tdogl::Texture* LoadTexture(const char *textureFile) {
 	return new tdogl::Texture(bmp);
 }
 
-static void LoadMainAsset() {
+void LoadMainAsset() {
 	gBox.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.fs");
 	gBox.silhouetteShaders = LoadShaders("shader/silhouette.vs", "shader/silhouette.gs", "shader/silhouette.fs");
     gBox.shininess = 80.0;
     gBox.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
 	gBox.mesh.LoadMesh("../../../Content/box.obj", true);
+}
+
+void LoadGroundAsset()
+{
+	gGround.shaders = LoadShaders("shader/lighting.vs", "shader/lighting.fs");
+	gGround.silhouetteShaders = LoadShaders("shader/silhouette.vs", "shader/silhouette.gs", "shader/silhouette.fs");
+	gGround.shininess = 0.0;
+	gGround.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+	gGround.mesh.LoadMesh("../../../Content/quad.obj", false);
+	gGround.texture = LoadTexture("../../../Content/test.png");
 }
 
 // convenience function that returns a translation matrix
@@ -155,13 +167,21 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 	return glm::scale(glm::mat4(), glm::vec3(x, y, z));
 }
 
-static void CreateInstances() {
+static void CreateInstances()
+{
     ModelInstance box;
     box.asset = &gBox;
     float modelScale = 1;
 	box.transform = box.originalTransform = translate(0.0f, 0.0f, 0.0f) *scale(modelScale, modelScale, modelScale);
 		//* glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0));
     gInstances.push_back(box);
+
+	ModelInstance ground;
+	ground.asset = &gGround;
+	modelScale = 10;
+	ground.transform = ground.originalTransform = translate(0.0f, -1.0f, 0.0f) *scale(modelScale, modelScale, modelScale)
+	* glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(1, 0, 0));
+	gInstances.push_back(ground);
 }
 
 // records how far the y axis has been scrolled
@@ -315,6 +335,12 @@ static void RenderInstance(const ModelInstance& inst) {
 	shaders->setUniform("materialShininess", asset->shininess);
 	shaders->setUniform("materialSpecularColor", asset->specularColor);
 
+	if (asset->texture)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, asset->texture->object());
+	}
+
 	asset->mesh.Render();
 
 	shaders->stopUsing();
@@ -406,6 +432,7 @@ int main(void)
 	glEnable(GL_CULL_FACE);
     
 	LoadMainAsset();
+	LoadGroundAsset();
 	CreateInstances();
 
 	//glClearColor(0.196078431372549f, 0.3137254901960784f, 0.5882352941176471f, 1);
@@ -418,7 +445,8 @@ int main(void)
 	gCamera.setNearAndFarPlanes(0.05f, 1000.0f);
     
     Light directionalLight;
-    directionalLight.position = glm::vec4(1, 0.8, 0.6, 0); //w == 0 indications a directional light
+	directionalLight.position = glm::vec4(1, 0.8, 0.6, 0); //w == 0 indications a directional light
+	//directionalLight.position = glm::vec4(0, 10, 0, 0); //w == 0 indications a directional light
     directionalLight.intensities = glm::vec3(0.5, 0.5, 0.5); //weak light
     directionalLight.ambientCoefficient = 0.06f;
 
