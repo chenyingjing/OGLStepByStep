@@ -180,9 +180,6 @@
 		238906191F4EA3300010034C /* SBS39.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2389054A1F4EA3300010034C /* SBS39.cpp */; };
 		2389061A1F4EA3300010034C /* lighting.fs in Resources */ = {isa = PBXBuildFile; fileRef = 2389054C1F4EA3300010034C /* lighting.fs */; };
 		2389061B1F4EA3300010034C /* lighting.vs in Resources */ = {isa = PBXBuildFile; fileRef = 2389054D1F4EA3300010034C /* lighting.vs */; };
-		2389061C1F4EA3300010034C /* silhouette.fs in Resources */ = {isa = PBXBuildFile; fileRef = 2389054E1F4EA3300010034C /* silhouette.fs */; };
-		2389061D1F4EA3300010034C /* silhouette.gs in Resources */ = {isa = PBXBuildFile; fileRef = 2389054F1F4EA3300010034C /* silhouette.gs */; };
-		2389061E1F4EA3300010034C /* silhouette.vs in Resources */ = {isa = PBXBuildFile; fileRef = 238905501F4EA3300010034C /* silhouette.vs */; };
 		2389061F1F4EA3300010034C /* Bitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 238905531F4EA3300010034C /* Bitmap.cpp */; };
 		238906201F4EA3300010034C /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 238905551F4EA3300010034C /* Camera.cpp */; };
 		238906211F4EA3300010034C /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 238905571F4EA3300010034C /* Program.cpp */; };
@@ -196,6 +193,14 @@
 		2389062E1F4EA4680010034C /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2389040B1F4EA3300010034C /* libassimp.3.3.1.dylib */; };
 		2389062F1F4EA4680010034C /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2389040B1F4EA3300010034C /* libassimp.3.3.1.dylib */; };
 		238906301F4EA4680010034C /* libassimp.3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2389040B1F4EA3300010034C /* libassimp.3.3.1.dylib */; };
+		238906381F4EA9590010034C /* basic_lighting.fs in Resources */ = {isa = PBXBuildFile; fileRef = 238906311F4EA9590010034C /* basic_lighting.fs */; };
+		238906391F4EA9590010034C /* basic_lighting.vs in Resources */ = {isa = PBXBuildFile; fileRef = 238906321F4EA9590010034C /* basic_lighting.vs */; };
+		2389063A1F4EA9590010034C /* null_technique.fs in Resources */ = {isa = PBXBuildFile; fileRef = 238906331F4EA9590010034C /* null_technique.fs */; };
+		2389063B1F4EA9590010034C /* null_technique.vs in Resources */ = {isa = PBXBuildFile; fileRef = 238906341F4EA9590010034C /* null_technique.vs */; };
+		2389063C1F4EA9590010034C /* shadow_volume.fs in Resources */ = {isa = PBXBuildFile; fileRef = 238906351F4EA9590010034C /* shadow_volume.fs */; };
+		2389063D1F4EA9590010034C /* shadow_volume.gs in Resources */ = {isa = PBXBuildFile; fileRef = 238906361F4EA9590010034C /* shadow_volume.gs */; };
+		2389063E1F4EA9590010034C /* shadow_volume.vs in Resources */ = {isa = PBXBuildFile; fileRef = 238906371F4EA9590010034C /* shadow_volume.vs */; };
+		238906401F4EAA760010034C /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 2389063F1F4EAA760010034C /* test.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -578,9 +583,6 @@
 		2389054A1F4EA3300010034C /* SBS39.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SBS39.cpp; sourceTree = "<group>"; };
 		2389054C1F4EA3300010034C /* lighting.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.fs; sourceTree = "<group>"; };
 		2389054D1F4EA3300010034C /* lighting.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lighting.vs; sourceTree = "<group>"; };
-		2389054E1F4EA3300010034C /* silhouette.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = silhouette.fs; sourceTree = "<group>"; };
-		2389054F1F4EA3300010034C /* silhouette.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = silhouette.gs; sourceTree = "<group>"; };
-		238905501F4EA3300010034C /* silhouette.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = silhouette.vs; sourceTree = "<group>"; };
 		238905511F4EA3300010034C /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		238905531F4EA3300010034C /* Bitmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bitmap.cpp; sourceTree = "<group>"; };
 		238905541F4EA3300010034C /* Bitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bitmap.h; sourceTree = "<group>"; };
@@ -596,6 +598,14 @@
 		238906281F4EA4290010034C /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		2389062A1F4EA43A0010034C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		2389062C1F4EA4470010034C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		238906311F4EA9590010034C /* basic_lighting.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = basic_lighting.fs; sourceTree = "<group>"; };
+		238906321F4EA9590010034C /* basic_lighting.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = basic_lighting.vs; sourceTree = "<group>"; };
+		238906331F4EA9590010034C /* null_technique.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = null_technique.fs; sourceTree = "<group>"; };
+		238906341F4EA9590010034C /* null_technique.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = null_technique.vs; sourceTree = "<group>"; };
+		238906351F4EA9590010034C /* shadow_volume.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadow_volume.fs; sourceTree = "<group>"; };
+		238906361F4EA9590010034C /* shadow_volume.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadow_volume.gs; sourceTree = "<group>"; };
+		238906371F4EA9590010034C /* shadow_volume.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadow_volume.vs; sourceTree = "<group>"; };
+		2389063F1F4EAA760010034C /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -667,6 +677,7 @@
 		238903BF1F4EA32F0010034C /* asset */ = {
 			isa = PBXGroup;
 			children = (
+				2389063F1F4EAA760010034C /* test.png */,
 				238903C01F4EA32F0010034C /* boblampclean.md5anim */,
 				238903C11F4EA32F0010034C /* boblampclean.md5mesh */,
 				238903C21F4EA32F0010034C /* box.mtl */,
@@ -1167,11 +1178,15 @@
 		2389054B1F4EA3300010034C /* shader */ = {
 			isa = PBXGroup;
 			children = (
+				238906311F4EA9590010034C /* basic_lighting.fs */,
+				238906321F4EA9590010034C /* basic_lighting.vs */,
+				238906331F4EA9590010034C /* null_technique.fs */,
+				238906341F4EA9590010034C /* null_technique.vs */,
+				238906351F4EA9590010034C /* shadow_volume.fs */,
+				238906361F4EA9590010034C /* shadow_volume.gs */,
+				238906371F4EA9590010034C /* shadow_volume.vs */,
 				2389054C1F4EA3300010034C /* lighting.fs */,
 				2389054D1F4EA3300010034C /* lighting.vs */,
-				2389054E1F4EA3300010034C /* silhouette.fs */,
-				2389054F1F4EA3300010034C /* silhouette.gs */,
-				238905501F4EA3300010034C /* silhouette.vs */,
 			);
 			path = shader;
 			sourceTree = "<group>";
@@ -1266,6 +1281,7 @@
 				2389056D1F4EA3300010034C /* round_grill.png in Resources */,
 				2389059A1F4EA3300010034C /* type_mat3x3.inl in Resources */,
 				238905D01F4EA3300010034C /* matrix_decompose.inl in Resources */,
+				2389063C1F4EA9590010034C /* shadow_volume.fs in Resources */,
 				2389058E1F4EA3300010034C /* intrinsic_geometric.inl in Resources */,
 				238905D31F4EA3300010034C /* matrix_operation.inl in Resources */,
 				238905E11F4EA3300010034C /* raw_data.inl in Resources */,
@@ -1280,6 +1296,7 @@
 				238905D21F4EA3300010034C /* matrix_major_storage.inl in Resources */,
 				238905791F4EA3300010034C /* matrix4x4.inl in Resources */,
 				238906081F4EA3300010034C /* libtiffxx.la in Resources */,
+				2389063A1F4EA9590010034C /* null_technique.fs in Resources */,
 				2389057C1F4EA3300010034C /* vector3.inl in Resources */,
 				238905F51F4EA3300010034C /* libjpeg.la in Resources */,
 				238905661F4EA3300010034C /* guard1_helmet.png in Resources */,
@@ -1329,7 +1346,6 @@
 				238905CB1F4EA3300010034C /* integer.inl in Resources */,
 				238906161F4EA3300010034C /* momo.png in Resources */,
 				2389058A1F4EA3300010034C /* func_trigonometric.inl in Resources */,
-				2389061E1F4EA3300010034C /* silhouette.vs in Resources */,
 				238905A41F4EA3300010034C /* type_vec4_avx.inl in Resources */,
 				238905611F4EA3300010034C /* bricks.png in Resources */,
 				238905DF1F4EA3300010034C /* projection.inl in Resources */,
@@ -1343,6 +1359,7 @@
 				238905DE1F4EA3300010034C /* polar_coordinates.inl in Resources */,
 				238906151F4EA3300010034C /* model.obj in Resources */,
 				238905ED1F4EA3300010034C /* type_aligned.inl in Resources */,
+				238906381F4EA9590010034C /* basic_lighting.fs in Resources */,
 				238906091F4EA3300010034C /* ImageMagick-7.Q16HDRI.pc in Resources */,
 				238905971F4EA3300010034C /* type_mat2x3.inl in Resources */,
 				238905A11F4EA3300010034C /* type_vec2.inl in Resources */,
@@ -1365,12 +1382,12 @@
 				238905EE1F4EA3300010034C /* vector_angle.inl in Resources */,
 				238905A81F4EA3300010034C /* color_space.inl in Resources */,
 				2389059B1F4EA3300010034C /* type_mat3x4.inl in Resources */,
-				2389061C1F4EA3300010034C /* silhouette.fs in Resources */,
 				238905C21F4EA3300010034C /* euler_angles.inl in Resources */,
 				238905DA1F4EA3300010034C /* number_precision.inl in Resources */,
 				2389061A1F4EA3300010034C /* lighting.fs in Resources */,
 				238905871F4EA3300010034C /* func_integer.inl in Resources */,
 				238905CD1F4EA3300010034C /* io.inl in Resources */,
+				2389063D1F4EA9590010034C /* shadow_volume.gs in Resources */,
 				238905AB1F4EA3300010034C /* integer.inl in Resources */,
 				238905A61F4EA3300010034C /* type_vec4_sse2.inl in Resources */,
 				238905A51F4EA3300010034C /* type_vec4_avx2.inl in Resources */,
@@ -1383,6 +1400,7 @@
 				238906101F4EA3300010034C /* MagickWand.pc in Resources */,
 				238905F31F4EA3300010034C /* libfreetype.la in Resources */,
 				238905621F4EA3300010034C /* drkwood2.png in Resources */,
+				238906391F4EA9590010034C /* basic_lighting.vs in Resources */,
 				238905911F4EA3300010034C /* intrinsic_trigonometric.inl in Resources */,
 				238905A71F4EA3300010034C /* bitfield.inl in Resources */,
 				238906061F4EA3300010034C /* libtiff.la in Resources */,
@@ -1391,12 +1409,13 @@
 				238905891F4EA3300010034C /* func_packing.inl in Resources */,
 				238905AA1F4EA3300010034C /* epsilon.inl in Resources */,
 				238905731F4EA3300010034C /* wal67ar_small.png in Resources */,
+				238906401F4EAA760010034C /* test.png in Resources */,
 				238905CA1F4EA3300010034C /* hash.inl in Resources */,
 				238905B81F4EA3300010034C /* vec1.inl in Resources */,
 				238905DD1F4EA3300010034C /* perpendicular.inl in Resources */,
 				238905781F4EA3300010034C /* matrix3x3.inl in Resources */,
-				2389061D1F4EA3300010034C /* silhouette.gs in Resources */,
 				238905B91F4EA3300010034C /* associated_min_max.inl in Resources */,
+				2389063E1F4EA9590010034C /* shadow_volume.vs in Resources */,
 				238905AC1F4EA3300010034C /* matrix_access.inl in Resources */,
 				238905C91F4EA3300010034C /* handed_coordinate_space.inl in Resources */,
 				2389060F1F4EA3300010034C /* MagickWand-7.Q16HDRI.pc in Resources */,
@@ -1429,6 +1448,7 @@
 				238905881F4EA3300010034C /* func_matrix.inl in Resources */,
 				238905691F4EA3300010034C /* jeep.obj in Resources */,
 				238905921F4EA3300010034C /* intrinsic_vector_relational.inl in Resources */,
+				2389063B1F4EA9590010034C /* null_technique.vs in Resources */,
 				238905A01F4EA3300010034C /* type_vec1.inl in Resources */,
 				238905981F4EA3300010034C /* type_mat2x4.inl in Resources */,
 				238905E71F4EA3300010034C /* simd_vec4.inl in Resources */,
@@ -1608,6 +1628,7 @@
 				238903BE1F4EA20A0010034C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

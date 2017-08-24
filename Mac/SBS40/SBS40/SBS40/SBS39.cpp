@@ -32,7 +32,8 @@ long long m_startTime;
 
 struct ModelAsset {
 	tdogl::Program* shaders;
-    tdogl::Program* silhouetteShaders;
+    tdogl::Program* nullShaders;
+    tdogl::Program* shadowVolShaders;
 	tdogl::Texture* texture;
 	GLuint vbo;
 	GLuint vao;
@@ -74,7 +75,8 @@ struct LightInstance {
 };
 
 ModelAsset gBox;
-ModelAsset gMonkey;
+ModelAsset gGround;
+
 ModelAsset gHheli;
 
 LightAsset gLight1;
@@ -120,15 +122,27 @@ tdogl::Texture* LoadTexture(const char *textureFile) {
 	return new tdogl::Texture(bmp);
 }
 
-static void LoadMainAsset() {
+void LoadMainAsset() {
     gBox.shaders = LoadShaders("lighting.vs", "lighting.fs");
-    gBox.silhouetteShaders = LoadShaders("silhouette.vs", "silhouette.gs", "silhouette.fs");
+    //gBox.shaders = LoadShaders("basic_lighting.vs", "basic_lighting.fs");
+    gBox.nullShaders = LoadShaders("null_technique.vs", "null_technique.fs");
+    gBox.shadowVolShaders = LoadShaders("shadow_volume.vs", "shadow_volume.gs", "shadow_volume.fs");
     gBox.shininess = 80.0;
     gBox.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     
     gBox.mesh.LoadMesh("box.obj", true);
-    //gBox.mesh.LoadMesh("jeep.obj", false);
+}
 
+void LoadGroundAsset()
+{
+    gGround.shaders = LoadShaders("lighting.vs", "lighting.fs");
+    gGround.nullShaders = LoadShaders("null_technique.vs", "null_technique.fs");
+    gGround.shadowVolShaders = LoadShaders("shadow_volume.vs", "shadow_volume.gs", "shadow_volume.fs");
+    //gGround.silhouetteShaders = LoadShaders("silhouette.vs", "silhouette.gs", "silhouette.fs");
+    gGround.shininess = 0.0;
+    gGround.specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    gGround.mesh.LoadMesh("quad.obj", false);
+    gGround.texture = LoadTexture("test.png");
 }
 
 // convenience function that returns a translation matrix
@@ -142,13 +156,21 @@ glm::mat4 scale(GLfloat x, GLfloat y, GLfloat z) {
 	return glm::scale(glm::mat4(), glm::vec3(x, y, z));
 }
 
-static void CreateInstances() {
+static void CreateInstances()
+{
     ModelInstance box;
     box.asset = &gBox;
     float modelScale = 1;
-    box.transform = box.originalTransform = translate(0.0f, 0.0f, 0.0f) *scale(modelScale, modelScale, modelScale);
+    box.transform = box.originalTransform = translate(0.0f, 0.5f, 0.0f) *scale(modelScale, modelScale, modelScale);
     //* glm::rotate(glm::mat4(), glm::radians(-90.0f), glm::vec3(1, 0, 0));
     gInstances.push_back(box);
+    
+    ModelInstance ground;
+    ground.asset = &gGround;
+    modelScale = 10;
+    ground.transform = ground.originalTransform = translate(0.0f, -1.0f, 0.0f) *scale(modelScale, modelScale, modelScale)
+    * glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(1, 0, 0));
+    gInstances.push_back(ground);
 }
 
 // records how far the y axis has been scrolled
@@ -157,10 +179,11 @@ void OnScroll(GLFWwindow* window, double deltaX, double deltaY) {
 }
 
 void Update(float secondsElapsed, GLFWwindow* window) {
-	const GLfloat degreesPerSecond = 40.0f;
+	const GLfloat degreesPerSecond = 10.0f;
 	//const GLfloat degreesPerSecond = 0.0f;
 	gDegreesRotated += secondsElapsed * degreesPerSecond;
 	while (gDegreesRotated > 360.0f) gDegreesRotated -= 360.0f;
+    gInstances.front().transform = gInstances.front().originalTransform * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));
 //    for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
 //        it->transform = it->originalTransform * glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0, 1, 0));
 //    }
@@ -259,7 +282,7 @@ float GetRunningTime()
     return RunningTime;
 }
 
-static void RenderInstance(const ModelInstance& inst) {
+void RenderShadowedSceneInstance(const ModelInstance& inst) {
     ModelAsset* asset = inst.asset;
     tdogl::Program* shaders = asset->shaders;
     
@@ -274,7 +297,9 @@ static void RenderInstance(const ModelInstance& inst) {
         SetLightUniform(shaders, "position", i, gLights[i].position);
         SetLightUniform(shaders, "intensities", i, gLights[i].intensities);
         SetLightUniform(shaders, "attenuation", i, gLights[i].attenuation);
-        SetLightUniform(shaders, "ambientCoefficient", i, gLights[i].ambientCoefficient);
+        //SetLightUniform(shaders, "ambientCoefficient", i, gLights[i].ambientCoefficient);
+        SetLightUniform(shaders, "ambientCoefficient", i, 0.0f);
+        SetLightUniform(shaders, "dCoefficient", i, 1.0f);
         SetLightUniform(shaders, "coneAngle", i, gLights[i].coneAngle);
         SetLightUniform(shaders, "coneDirection", i, gLights[i].coneDirection);
     }
@@ -290,41 +315,173 @@ static void RenderInstance(const ModelInstance& inst) {
     shaders->setUniform("materialShininess", asset->shininess);
     shaders->setUniform("materialSpecularColor", asset->specularColor);
     
+    if (asset->texture)
+    {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, asset->texture->object());
+    }
+    
     asset->mesh.Render();
     
     shaders->stopUsing();
+}
+
+void RenderSceneIntoDepthInstance(const ModelInstance& inst)
+{
+    ModelAsset* asset = inst.asset;
+    tdogl::Program* nullShaders = asset->nullShaders;
     
+    //bind the shaders
+    nullShaders->use();
     
-    tdogl::Program* silhouetteShaders = asset->silhouetteShaders;
-    silhouetteShaders->use();
-    silhouetteShaders->setUniform("gWorld", inst.transform);
-    silhouetteShaders->setUniform("gWVP", gCamera.matrix() * inst.transform);
-    silhouetteShaders->setUniform("gLightPos", glm::vec3(gLights[0].position.x * 10, gLights[0].position.y * 10, gLights[0].position.z * 10));
-    //silhouetteShaders->setUniform("gLightPos", glm::vec3(0, 10, 0));
-    
-    //glLineWidth(1.9f);
-    GLenum error3 = glGetError();
-    if (error3 != GL_NO_ERROR)
-        std::cerr << "OpenGL Error3 " << error3 << std::endl;
+    nullShaders->setUniform("camera", gCamera.matrix());
+    nullShaders->setUniform("model", inst.transform);
     
     asset->mesh.Render();
-    silhouetteShaders->stopUsing();
     
-
+    nullShaders->stopUsing();
 }
+
+void RenderSceneIntoDepth()
+{
+    glDrawBuffer(GL_NONE);
+    
+    for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
+        RenderSceneIntoDepthInstance(*it);
+    }
+}
+
+void RenderShadowVolIntoStencilInstance(const ModelInstance& inst)
+{
+    ModelAsset* asset = inst.asset;
+    tdogl::Program* shadowVolShaders = asset->shadowVolShaders;
+    
+    //bind the shaders
+    shadowVolShaders->use();
+    
+    shadowVolShaders->setUniform("gLightPos", glm::vec3(gLights[0].position.x, gLights[0].position.y, gLights[0].position.z));
+    shadowVolShaders->setUniform("gWorld", inst.transform);
+    shadowVolShaders->setUniform("gVP", gCamera.matrix());
+    
+    asset->mesh.Render();
+    
+    shadowVolShaders->stopUsing();
+}
+
+void RenderShadowVolIntoStencil()
+{
+    glDepthMask(GL_FALSE);
+    glEnable(GL_DEPTH_CLAMP);
+    glDisable(GL_CULL_FACE);
+    
+    // We need the stencil test to be enabled but we want it
+    // to succeed always. Only the depth test matters.
+    glStencilFunc(GL_ALWAYS, 0, 0xff);
+    
+    glStencilOpSeparate(GL_BACK, GL_KEEP, GL_INCR_WRAP, GL_KEEP);
+    glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_DECR_WRAP, GL_KEEP);
+    
+    //for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
+    //	RenderShadowVolIntoStencilInstance(*it);
+    //}
+    auto it = gInstances.begin();
+    RenderShadowVolIntoStencilInstance(*it);
+    
+    // Restore local stuff
+    glDisable(GL_DEPTH_CLAMP);
+    glEnable(GL_CULL_FACE);
+}
+
+void RenderShadowedScene()
+{
+    glDrawBuffer(GL_BACK);
+    
+    // Draw only if the corresponding stencil value is zero
+    glStencilFunc(GL_EQUAL, 0x0, 0xFF);
+    
+    // prevent update to the stencil buffer
+    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+    
+    for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
+        RenderShadowedSceneInstance(*it);
+    }
+}
+
+void RenderAmbientLightInstance(const ModelInstance& inst)
+{
+    ModelAsset* asset = inst.asset;
+    tdogl::Program* shaders = asset->shaders;
+    
+    //bind the shaders
+    shaders->use();
+    
+    //    shaders->setUniform("gShadowMap", 1);
+    //
+    shaders->setUniform("numLights", (int)gLights.size());
+    
+    for (size_t i = 0; i < gLights.size(); ++i) {
+        SetLightUniform(shaders, "position", i, gLights[i].position);
+        SetLightUniform(shaders, "intensities", i, gLights[i].intensities);
+        SetLightUniform(shaders, "attenuation", i, gLights[i].attenuation);
+        SetLightUniform(shaders, "ambientCoefficient", i, gLights[i].ambientCoefficient);
+        SetLightUniform(shaders, "dCoefficient", i, 0.0f);
+        SetLightUniform(shaders, "coneAngle", i, gLights[i].coneAngle);
+        SetLightUniform(shaders, "coneDirection", i, gLights[i].coneDirection);
+    }
+    
+    shaders->setUniform("cameraPosition", gCamera.position());
+    
+    //set the shader uniforms
+    shaders->setUniform("camera", gCamera.matrix());
+    shaders->setUniform("model", inst.transform);
+    shaders->setUniform("materialTex", 0); //set to 0 because the texture will be bound to GL_TEXTURE0
+    //shaders->setUniform("gDisplacementMap", 4); //set to 4 because the texture will be bound to GL_TEXTURE4
+    
+    shaders->setUniform("materialShininess", asset->shininess);
+    shaders->setUniform("materialSpecularColor", asset->specularColor);
+    
+    if (asset->texture)
+    {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, asset->texture->object());
+    }
+    
+    asset->mesh.Render();
+    
+    shaders->stopUsing();
+}
+
+void RenderAmbientLight()
+{
+    glEnable(GL_BLEND);
+    glBlendEquation(GL_FUNC_ADD);
+    glBlendFunc(GL_ONE, GL_ONE);
+    
+    for (auto it = gInstances.begin(); it != gInstances.end(); ++it) {
+        RenderAmbientLightInstance(*it);
+    }
+    
+    glDisable(GL_BLEND);
+}
+
 
 void Render(GLFWwindow* window)
 {
-    // clear everything
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glDepthMask(GL_TRUE);
     
-    std::list<ModelInstance>::const_iterator it;
-    GLenum error2 = glGetError();
-    if (error2 != GL_NO_ERROR)
-        std::cerr << "OpenGL Error2 " << error2 << std::endl;
-    for (it = gInstances.begin(); it != gInstances.end(); ++it) {
-        RenderInstance(*it);
-    }
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    
+    RenderSceneIntoDepth();
+    
+    glEnable(GL_STENCIL_TEST);
+    
+    RenderShadowVolIntoStencil();
+    
+    RenderShadowedScene();
+    
+    glDisable(GL_STENCIL_TEST);
+    
+    RenderAmbientLight();
     
     glfwSwapBuffers(window);
 }
@@ -384,13 +541,8 @@ int main(void)
     glEnable(GL_CULL_FACE);
     
     LoadMainAsset();
-	CreateInstances();
-    
-//    LoadLightAsset1();
-//    LoadLightAsset2();
-//    LoadLightAsset3();
-//    LoadDirLightAsset();
-//    CreateLightInstances();
+    LoadGroundAsset();
+    CreateInstances();
 
 	//glClearColor(0.196078431372549f, 0.3137254901960784f, 0.5882352941176471f, 1);
 	glClearColor(0.0f, 0.0f, 0.0f, 1);
