@@ -100,13 +100,25 @@
     <None Include="shader\lighting.vs">
       <Filter>shader</Filter>
     </None>
-    <None Include="shader\silhouette.fs">
+    <None Include="shader\null_technique.fs">
       <Filter>shader</Filter>
     </None>
-    <None Include="shader\silhouette.gs">
+    <None Include="shader\null_technique.vs">
       <Filter>shader</Filter>
     </None>
-    <None Include="shader\silhouette.vs">
+    <None Include="shader\shadow_volume.fs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\shadow_volume.gs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\shadow_volume.vs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\basic_lighting.fs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\basic_lighting.vs">
       <Filter>shader</Filter>
     </None>
   </ItemGroup>

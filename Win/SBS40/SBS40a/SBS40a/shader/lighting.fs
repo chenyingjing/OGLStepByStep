@@ -17,6 +17,7 @@ uniform struct Light {
     vec3 intensities; //a.k.a the color of the light
     float attenuation;
     float ambientCoefficient;
+    float dCoefficient;
     float coneAngle;
     vec3 coneDirection;
 } allLights[MAX_LIGHTS];
@@ -46,8 +47,8 @@ void main() {
     }
     
     vec3 gamma = vec3(1.0/2.2);
-    //finalColor = vec4(pow(linearColor, gamma), surfaceColor.a);
-    finalColor = vec4(linearColor, surfaceColor.a);
+    finalColor = vec4(pow(linearColor, gamma), surfaceColor.a);
+    //finalColor = vec4(linearColor, surfaceColor.a);
 }
 
 vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec3 surfacePos, vec3 surfaceToCamera) {
@@ -63,14 +64,17 @@ vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec3 surfacePos, ve
         float distanceToLight = length(light.position.xyz - surfacePos);
         attenuation = 1.0 / (1.0 + light.attenuation * pow(distanceToLight, 2));
         
-        //cone restrictions (affects attenuation)
-        float spotFactor = dot(-surfaceToLight, normalize(light.coneDirection));
-        float lightToSurfaceAngle = degrees(acos(spotFactor));
-        if(lightToSurfaceAngle > light.coneAngle){
-            attenuation = 0.0;
-        } else {
-            float cutoff = cos(radians(light.coneAngle));
-            attenuation *= (1.0 - (1.0 - spotFactor) * 1.0/(1.0 - cutoff));
+        if (light.coneAngle == 3600.0)
+        {
+            //cone restrictions (affects attenuation)
+            float spotFactor = dot(-surfaceToLight, normalize(light.coneDirection));
+            float lightToSurfaceAngle = degrees(acos(spotFactor));
+            if(lightToSurfaceAngle > light.coneAngle){
+                attenuation = 0.0;
+            } else {
+                float cutoff = cos(radians(light.coneAngle));
+                attenuation *= (1.0 - (1.0 - spotFactor) * 1.0/(1.0 - cutoff));
+            }
         }
     }
     
@@ -79,13 +83,13 @@ vec3 ApplyLight(Light light, vec3 surfaceColor, vec3 normal, vec3 surfacePos, ve
     
     //diffuse
     float diffuseCoefficient = max(0.0, dot(normal, surfaceToLight));
-    vec3 diffuse = diffuseCoefficient * surfaceColor.rgb * light.intensities;
+    vec3 diffuse = light.dCoefficient * diffuseCoefficient * surfaceColor.rgb * light.intensities;
     
     //specular
     float specularCoefficient = 0.0;
     if(diffuseCoefficient > 0.0)
         specularCoefficient = pow(max(0.0, dot(surfaceToCamera, reflect(-surfaceToLight, normal))), materialShininess);
-    vec3 specular = specularCoefficient * materialSpecularColor * light.intensities;
+    vec3 specular = light.dCoefficient * specularCoefficient * materialSpecularColor * light.intensities;
     
     //linear color (color before gamma correction)
     return ambient + attenuation*(diffuse + specular);

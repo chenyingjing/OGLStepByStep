@@ -190,11 +190,15 @@
     <ClCompile Include="tdogl\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shader\basic_lighting.fs" />
+    <None Include="shader\basic_lighting.vs" />
     <None Include="shader\lighting.fs" />
     <None Include="shader\lighting.vs" />
-    <None Include="shader\silhouette.fs" />
-    <None Include="shader\silhouette.gs" />
-    <None Include="shader\silhouette.vs" />
+    <None Include="shader\null_technique.fs" />
+    <None Include="shader\null_technique.vs" />
+    <None Include="shader\shadow_volume.fs" />
+    <None Include="shader\shadow_volume.gs" />
+    <None Include="shader\shadow_volume.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
